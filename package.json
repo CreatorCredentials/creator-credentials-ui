@@ -11,6 +11,8 @@
   "scripts": {
     "build": "next build",
     "changeset:build": "pnpm tsc ./.changeset/changelog.generator.ts",
+    "docker:base:dev": "docker compose --env-file .env.dev -f docker/docker-compose.local.yaml",
+    "docker:base:prod": "docker compose --env-file .env.dev -f docker/docker-compose.prod.yaml",
     "lint": "next lint --max-warnings=0",
     "prepare": "husky install",
     "prettier:check": "prettier -c .",
@@ -18,6 +20,8 @@
     "pre-commit": "lint-staged",
     "pre-push": "pnpm prettier:check && pnpm lint && pnpm test:unit --run && pnpm changeset status",
     "start:dev": "next dev -p $FRONTEND_APP_PORT",
+    "start:docker": "pnpm docker:base:dev up -V",
+    "start:docker:prod": "pnpm docker:base:prod up",
     "start:local": "next dev",
     "start:prod": "next start -p $FRONTEND_APP_PORT",
     "start:prod:local": "next start",
