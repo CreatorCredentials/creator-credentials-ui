@@ -9,12 +9,30 @@
   },
   "packageManager": "pnpm@8.8.0",
   "scripts": {
-    "changeset:build": "pnpm tsc ./.changeset/changelog.generator.ts"
+    "build": "next build",
+    "changeset:build": "pnpm tsc ./.changeset/changelog.generator.ts",
+    "lint": "next lint --max-warnings=0",
+    "start:dev": "next dev -p $FRONTEND_APP_PORT",
+    "start:local": "next dev",
+    "start:prod": "next start -p $FRONTEND_APP_PORT",
+    "start:prod:local": "next start"
+  },
+  "dependencies": {
+    "next": "13.5.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
     "@changesets/types": "5.2.1",
     "@types/node": "20.8.6",
+    "@types/react": "18.2.28",
+    "@types/react-dom": "18.2.13",
+    "autoprefixer": "10.4.16",
+    "eslint": "8.51.0",
+    "eslint-config-next": "13.5.4",
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
   }
 }
