@@ -1,6 +1,10 @@
-import '@/globals.css';
+import 'globals.css';
+import { appWithTranslation } from 'next-i18next';
+import { FC } from 'react';
 import type { AppProps } from 'next/app';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+const App: FC<AppProps> = ({ Component, pageProps }) => (
+  <Component {...pageProps} />
+);
+
+export default appWithTranslation(App);
