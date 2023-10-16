@@ -45,3 +45,4 @@ Dockerfile*
 
 # Ignored files
 .changeset/changelog.generator.js
+public/mockServiceWorker.js

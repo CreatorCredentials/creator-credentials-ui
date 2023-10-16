@@ -8,6 +8,8 @@ services:
       dockerfile: ./docker/Dockerfile.local
       context: ../
     environment:
+      API_MOCKING: ${API_MOCKING}
+      API_URL: ${API_URL}
       FRONTEND_APP_PORT: ${FRONTEND_APP_PORT}
     ports:
       - ${FRONTEND_APP_PORT}:${FRONTEND_APP_PORT}
