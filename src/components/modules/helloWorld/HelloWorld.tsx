@@ -4,6 +4,8 @@ import { useSendHelloWorldMutation } from '@/shared/mutations/useSendHelloWorldM
 
 export const HelloWorld = () => {
   const { t } = useTranslation('common');
+  const [getData, setGetData] = useState(null);
+  const [postData, setPostData] = useState(null);
 
   const { data: getHelloWorldData, isLoading } = useHelloWorldQuery();
   const { mutateAsync, data: sendHelloWorldData } = useSendHelloWorldMutation();
