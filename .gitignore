@@ -1,0 +1,10 @@
+# Dependencies
+/node_modules
+
+# Environment variables
+.env*
+!.env.dev
+
+# IDE
+.vscode/settings.json
+.idea
