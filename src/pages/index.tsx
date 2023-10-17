@@ -1,7 +1,8 @@
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import { HelloWorld } from '@/components/modules/helloWorld/HelloWorld';
 import { getI18nProps } from '@/shared/utils/i18n';
-import { axios } from '@/shared/utils/axios';
+import { helloWorldQueryOptions } from '@/shared/queries/useHelloWorldQuery';
 
 export default function Home() {
   return (
@@ -12,16 +13,14 @@ export default function Home() {
 }
 
 export const getServerSideProps = (async (ctx) => {
-  try {
-    const response = await axios.get('/hello-world');
-    console.info(response.data);
-  } catch (err) {
-    console.error('Could not fetch ....');
-  }
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(helloWorldQueryOptions);
 
   return {
     props: {
       ...(await getI18nProps(ctx.locale)),
+      dehydratedState: dehydrate(queryClient),
     },
   };
 }) satisfies GetServerSideProps;
