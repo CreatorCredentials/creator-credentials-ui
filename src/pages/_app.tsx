@@ -1,32 +1,29 @@
+import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'globals.css';
 import { appWithTranslation } from 'next-i18next';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { config } from '@/shared/constants/config';
-import { initMocks } from 'mocks';
-
-const ENABLE_MOCKING = config.API_MOCKING === 'enabled';
+import { initMocks } from '@/mocks/index';
+import { MocksProvider } from '@/components/providers/MocksProvider/MocksProvider';
+import { createQueryClient } from '@/shared/utils/queryClient';
 
 function CreatorCredentialsApp({ Component, pageProps }: AppProps) {
-  const [shouldRender, setShouldRender] = useState(!ENABLE_MOCKING);
+  const [queryClient] = useState(() => createQueryClient());
 
-  useEffect(() => {
-    async function initMocks() {
-      const { initMocks } = await import('mocks');
-      await initMocks();
-      setShouldRender(true);
-    }
+  console.info('CreatorCredentialsApp');
 
-    if (ENABLE_MOCKING) {
-      initMocks();
-    }
-  }, []);
-
-  if (!shouldRender) {
-    return null;
-  }
-
-  return <Component {...pageProps} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <MocksProvider>
+          <Component {...pageProps} />
+        </MocksProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </Hydrate>
+    </QueryClientProvider>
+  );
 }
 
 CreatorCredentialsApp.getInitialProps = async (
@@ -34,7 +31,9 @@ CreatorCredentialsApp.getInitialProps = async (
 ): Promise<AppInitialProps> => {
   const ctx = await App.getInitialProps(context);
 
-  await initMocks();
+  if (config.API_MOCKING === 'enabled') {
+    await initMocks();
+  }
 
   return { ...ctx };
 };

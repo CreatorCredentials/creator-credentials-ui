@@ -22,7 +22,8 @@
     "paths": {
       "@/components/*": ["./components/*"],
       "@/public/*": ["../public/*"],
-      "@/shared/*": ["./shared/*"]
+      "@/shared/*": ["./shared/*"],
+      "@/mocks/*": ["./mocks/*"]
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
