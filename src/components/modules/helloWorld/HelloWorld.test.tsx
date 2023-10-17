@@ -1,21 +1,23 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { expect } from 'vitest';
+import { render } from '@/shared/utils/testUtils';
 import { HelloWorld } from './HelloWorld';
 
 describe('Hello World', () => {
-  it('should correctly translate', () => {
-    render(<HelloWorld />);
-    expect(screen.getByText('hello-world')).toBeInTheDocument();
-  });
-
-  it('should fetch data on mount', () => {
+  it('should correctly translate', async () => {
     render(<HelloWorld />);
 
-    waitFor(() => expect(screen.getByText('GET MSW!')).toBeInTheDocument());
+    expect(await screen.findByText('hello-world')).toBeInTheDocument();
   });
 
-  it('should call the API on button click', () => {
+  it('should fetch data on mount', async () => {
+    render(<HelloWorld />);
+
+    expect(await screen.findByText('GET MSW!')).toBeInTheDocument();
+  });
+
+  it('should call the API on button click', async () => {
     render(<HelloWorld />);
 
     const button = screen.getByRole('button');
@@ -25,6 +27,6 @@ describe('Hello World', () => {
       userEvent.click(button);
     });
 
-    waitFor(() => expect(screen.getByText('POST MSW!')).toBeInTheDocument());
+    expect(await screen.findByText('POST MSW!')).toBeInTheDocument();
   });
 });
