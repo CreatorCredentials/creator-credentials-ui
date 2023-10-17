@@ -47,6 +47,9 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
+      - name: 🪪 Check licenses
+        run: pnpm check:licenses
+
       - name: 🧐 Prettier
         run: pnpm prettier:check
 

@@ -11,6 +11,7 @@
   "scripts": {
     "build": "next build",
     "changeset:build": "pnpm tsc ./.changeset/changelog.generator.ts",
+    "check:licenses": "node check-licenses.js",
     "docker:base:dev": "docker compose --env-file .env.dev -f docker/docker-compose.local.yaml",
     "docker:base:prod": "docker compose --env-file .env.dev -f docker/docker-compose.prod.yaml",
     "lint": "next lint --max-warnings=0",
@@ -67,6 +68,7 @@
     "eslint-plugin-tailwindcss": "3.13.0",
     "husky": "8.0.3",
     "jsdom": "22.1.0",
+    "license-checker-rseidelsohn": "4.2.10",
     "lint-staged": "15.0.1",
     "postcss": "8.4.31",
     "prettier": "3.0.3",
