@@ -1,0 +1,22 @@
+{
+  "header": "Short info about the website and login procedure",
+  "userTypes": {
+    "creator": "I'm a Creator",
+    "issuer": "I'm an Issuer"
+  },
+  "card": {
+    "description": "Please enter your e-mail address. We will send you a e-mail to verify your address."
+  },
+  "form": {
+    "termsAndConditions": "I agree for <link1>Terms & Conditions</link1>"
+  },
+  "verification": {
+    "title": "Verification",
+    "description": "We sent you an e-mail to verify control of your address.",
+    "resend": "Resend e-mail",
+    "goBack": "Go back"
+  },
+  "error": {
+    "send-email": "Apologies for the inconvenience. We encountered an issue on our end preventing the email from being sent. Please try again later."
+  }
+}
