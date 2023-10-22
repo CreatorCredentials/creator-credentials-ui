@@ -69,6 +69,22 @@ module.exports = {
             name: 'react-i18next',
             message: 'Import from "next-i18next".',
           },
+          {
+            name: 'axios',
+            message: 'Import from "@/api/axios".',
+          },
+          {
+            name: 'react-hot-toast',
+            message: 'Use "@/shared/utils/useToast" instead.',
+          },
+          {
+            name: 'clsx',
+            message: 'Use "@/shared/utils/clsxm" instead.',
+          },
+          {
+            name: 'tailwind-merge',
+            message: 'Use "@/shared/utils/clsxm" instead.',
+          },
         ],
       },
     ],
