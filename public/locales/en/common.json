@@ -1,3 +1,13 @@
 {
-  "hello-world": "Hello world!"
+  "login": "Login",
+  "send": "Send",
+  "email": "e-mail",
+  "navigation": {
+    "home": "Home Page",
+    "verification": "Verification",
+    "issuers": "Issuers",
+    "credentials": "Credentials",
+    "profile": "Profile",
+    "signout": "Sign-out"
+  }
 }

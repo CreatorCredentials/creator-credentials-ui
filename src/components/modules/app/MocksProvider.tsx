@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { config } from '@/shared/constants/config';
 
 const ENABLE_MOCKING = config.API_MOCKING === 'enabled';
 
-const initMocks = async (cb: (success: boolean) => void) => {
-  if (!ENABLE_MOCKING) {
-    return cb(true);
-  }
-
+const initMocks = async () => {
   console.info('Initializing mocks...');
 
   const { initMocks } = await import('@/mocks/index');
 
   await initMocks();
-
-  if (cb) {
-    cb(true);
-  }
 };
 
 export type MocksProviderProps = {
@@ -24,15 +16,17 @@ export type MocksProviderProps = {
 };
 
 export const MocksProvider = ({ children }: MocksProviderProps) => {
-  const [initialized, setInitialized] = useState(false);
+  const mocksInitialized = useRef(false);
 
   useEffect(() => {
-    initMocks(setInitialized);
-  }, []);
+    if (mocksInitialized.current === false && ENABLE_MOCKING) {
+      initMocks();
+    }
 
-  if (!initialized) {
-    return null;
-  }
+    return () => {
+      mocksInitialized.current = true;
+    };
+  }, []);
 
   return <>{children}</>;
 };

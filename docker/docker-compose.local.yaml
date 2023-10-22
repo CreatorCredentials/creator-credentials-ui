@@ -9,8 +9,12 @@ services:
       context: ../
     environment:
       API_MOCKING: ${API_MOCKING}
+      DEBUG_I18N: ${DEBUG_I18N}
       API_URL: ${API_URL}
       FRONTEND_APP_PORT: ${FRONTEND_APP_PORT}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL_INTERNAL: ${NEXTAUTH_URL_INTERNAL}
     ports:
       - ${FRONTEND_APP_PORT}:${FRONTEND_APP_PORT}
     volumes:
