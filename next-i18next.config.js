@@ -1,5 +1,7 @@
 module.exports = {
-  debug: process.env.NODE_ENV === 'development',
+  debug:
+    process.env.NODE_ENV === 'development' &&
+    process.env.DEBUG_I18N === 'enabled',
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],

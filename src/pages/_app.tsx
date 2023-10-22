@@ -1,28 +1,60 @@
+import 'globals.css';
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import 'globals.css';
+import { Flowbite } from 'flowbite-react';
 import { appWithTranslation } from 'next-i18next';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
+import { Inter } from 'next/font/google';
 import { useState } from 'react';
+// eslint-disable-next-line no-restricted-imports
+import { Toaster } from 'react-hot-toast';
+import { SessionProvider } from 'next-auth/react';
+import { createQueryClient } from '@/shared/utils/queryClient';
+import { clsxm } from '@/shared/utils/clsxm';
+import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { config } from '@/shared/constants/config';
 import { initMocks } from '@/mocks/index';
-import { MocksProvider } from '@/components/providers/MocksProvider/MocksProvider';
-import { createQueryClient } from '@/shared/utils/queryClient';
+import { flowbiteTheme } from '@/components/flowbite.theme';
+import { SidebarLayout } from '@/components/layouts/sidebarLayout/SidebarLayout';
+import { AppMetadata, MocksProvider } from '@/components/modules/app';
 
-function CreatorCredentialsApp({ Component, pageProps }: AppProps) {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const inter = Inter({ subsets: ['latin'] });
+
+function CreatorCredentialsApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const [queryClient] = useState(() => createQueryClient());
 
-  console.info('CreatorCredentialsApp');
+  const getLayout =
+    Component.getLayout || ((page) => <SidebarLayout>{page}</SidebarLayout>);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <MocksProvider>
-          <Component {...pageProps} />
-        </MocksProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
-    </QueryClientProvider>
+    <>
+      <AppMetadata />
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <MocksProvider>
+              <Flowbite theme={{ theme: flowbiteTheme }}>
+                <div className={clsxm(inter.className, 'contents')}>
+                  {getLayout(<Component {...pageProps} />)}
+                </div>
+                <Toaster position="top-right" />
+              </Flowbite>
+            </MocksProvider>
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              position="bottom-right"
+            />
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
+    </>
   );
 }
 
