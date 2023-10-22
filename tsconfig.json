@@ -23,12 +23,14 @@
       "@/components/*": ["./components/*"],
       "@/public/*": ["../public/*"],
       "@/shared/*": ["./shared/*"],
-      "@/mocks/*": ["./mocks/*"]
+      "@/mocks/*": ["./mocks/*"],
+      "@/api/*": ["./api/*"]
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [
     "next-env.d.ts",
+    "src/shared/typings/next-auth.d.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx",
     ".next/types/**/*.ts"
