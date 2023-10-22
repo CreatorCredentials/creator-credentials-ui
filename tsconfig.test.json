@@ -4,6 +4,11 @@
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "noEmit": true
   },
-  "include": ["next-env.d.ts", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "src/shared/typings/next-auth.d.ts",
+    "./src/**/*.test.ts",
+    "./src/**/*.test.tsx"
+  ],
   "exclude": ["node_modules"]
 }
