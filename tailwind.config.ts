@@ -1,5 +1,29 @@
 import flowBitePlugin from 'flowbite/plugin';
+import plugin from 'tailwindcss/plugin';
 import type { Config } from 'tailwindcss';
+
+const customPlugin = plugin(({ addComponents, theme }) => {
+  addComponents({
+    '.scrollbar': {
+      scrollbarColor: `${theme('colors.secondary')} transparent`,
+      scrollbarWidth: 'auto',
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+        borderRadius: theme('spacing.2'),
+      },
+      '&::-webkit-scrollbar': {
+        width: theme('spacing.2'),
+        height: theme('spacing.2'),
+      },
+      '&::-webkit-scrollbar-thumb': {
+        borderRadius: theme('spacing.2'),
+        backgroundColor: theme('colors.secondary'),
+        width: theme('spacing.2'),
+        height: theme('spacing.2'),
+      },
+    },
+  });
+});
 
 const config: Config = {
   content: [
@@ -41,9 +65,12 @@ const config: Config = {
         base: ['1rem', '150%'],
         sm: ['0.875rem', '150%'],
       },
+      spacing: {
+        '19': '4.75rem',
+      },
     },
   },
-  plugins: [flowBitePlugin],
+  plugins: [flowBitePlugin, customPlugin],
 };
 
 export default config;
