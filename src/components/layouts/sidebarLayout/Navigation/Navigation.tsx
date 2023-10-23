@@ -1,11 +1,4 @@
 import { Sidebar } from 'flowbite-react';
-import { BiCaptions } from 'react-icons/bi';
-import {
-  HiHome,
-  HiOutlineCheck,
-  HiOutlineOfficeBuilding,
-} from 'react-icons/hi';
-
 import { BrandImage } from '@/components/shared/BrandImage';
 import { NavigationItem } from './NavigationItem';
 import { NavigationRoute } from './NavigationRoute';
@@ -15,22 +8,22 @@ const MAIN_ROUTES: NavigationRoute[] = [
   {
     labelKey: 'navigation.home',
     href: '/home',
-    icon: HiHome,
+    iconName: 'Home',
   },
   {
     labelKey: 'navigation.verification',
     href: '/verification',
-    icon: HiOutlineCheck,
+    iconName: 'BadgeCheck',
   },
   {
     labelKey: 'navigation.issuers',
     href: '/issuers',
-    icon: HiOutlineOfficeBuilding,
+    iconName: 'Building',
   },
   {
     labelKey: 'navigation.credentials',
     href: '/credentials',
-    icon: BiCaptions,
+    iconName: 'Caption',
   },
 ];
 
@@ -38,7 +31,7 @@ const SUB_ROUTES: NavigationRoute[] = [
   {
     labelKey: 'navigation.profile',
     href: '/profile',
-    icon: HiOutlineOfficeBuilding,
+    iconName: 'UserSettings',
   },
 ];
 

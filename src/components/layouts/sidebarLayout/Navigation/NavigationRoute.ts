@@ -1,5 +1,7 @@
+import { IconName } from '@/components/shared/Icon';
+
 export type NavigationRoute = {
   labelKey: string;
   href: string;
-  icon: React.ReactNode;
+  iconName: IconName;
 };

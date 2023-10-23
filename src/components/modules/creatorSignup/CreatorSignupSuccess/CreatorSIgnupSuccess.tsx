@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'flowbite-react';
 import { useTranslation } from 'next-i18next';
-import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { Icon } from '@/components/shared/Icon';
 import { CreatorSignupCard } from '../CreatorSignupCard/CreatorSignupCard';
 
 type CreatorSignupSuccessProps = {
@@ -37,7 +37,10 @@ export const CreatorSIgnupSuccess = ({
             disabled={isLoading}
             color="outline"
           >
-            <HiArrowNarrowLeft className="me-2 h-5 w-5" />
+            <Icon
+              icon="ArrowLeft"
+              className="me-2 h-5 w-5"
+            />
             <p>{t('verification.goBack')}</p>
           </Button>
         </div>
