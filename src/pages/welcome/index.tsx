@@ -1,11 +1,10 @@
-import { Button } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
-import { ElementType, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import { UserCard } from '@/components/modules/welcome/UserCard/UserCard';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
+import { LinkButton } from '@/components/shared/LinkButton';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
 
@@ -23,25 +22,23 @@ const WelcomePage: NextPageWithLayout = () => {
           title={t('issuer.title')}
           subtitle={t('issuer.description')}
         >
-          <Button
-            as={Link as ElementType}
+          <LinkButton
             href="/auth/signup/creator"
             color="secondary"
           >
             {t('login', { ns: 'common' })}
-          </Button>
+          </LinkButton>
         </UserCard>
         <UserCard
           title={t('creator.title')}
           subtitle={t('creator.description')}
         >
-          <Button
-            as={Link as ElementType}
+          <LinkButton
             href="/auth/signup/creator"
             color="primary"
           >
             {t('login', { ns: 'common' })}
-          </Button>
+          </LinkButton>
         </UserCard>
       </section>
     </main>
