@@ -21,3 +21,7 @@ body {
     }
   }
 }
+
+.anchor__button--disabled {
+  @apply cursor-not-allowed bg-grey-3 border-grey-3 pointer-events-none;
+}

@@ -6,9 +6,10 @@ import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 export interface LinkProps extends NextLinkProps {
   children: ReactNode;
   className?: ClassValue;
+  disabled?: boolean;
 }
 
-export const NavLink = ({ className, children, href }: LinkProps) => {
+export const NavLink = ({ className, children, disabled, href }: LinkProps) => {
   const { asPath } = useRouter();
 
   const isActive = asPath === href;
@@ -18,6 +19,7 @@ export const NavLink = ({ className, children, href }: LinkProps) => {
       href={href}
       className={clsxm(className, {
         'font-bold': isActive,
+        'anchor__button--disabled': disabled,
       })}
     >
       {children}
