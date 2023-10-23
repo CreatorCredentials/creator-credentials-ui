@@ -7,11 +7,23 @@ import {
   RefreshTokenPayload,
   RefreshTokenResponse,
 } from '@/api/requests/refreshToken';
+import { UserRole } from '@/shared/typings/UserRole';
+import { BaseUserData } from '@/shared/typings/BaseUserData';
 import { MOCK_API_URL } from '../config';
 
-const LOGIN_CODE = '123456';
 const ACCESS_TOKEN = 'XXXYYYZZZ';
 const REFRESH_TOKEN = 'ZZZWWWOOODD';
+
+const CODE_TO_USER_MAP: Record<string, BaseUserData> = {
+  creator: {
+    id: 'creator-id',
+    role: UserRole.Creator,
+  },
+  issuer: {
+    id: 'issuer-id',
+    role: UserRole.Creator,
+  },
+};
 
 export const authHandlers = [
   rest.post<SignInWithEmailCodePayload>(
@@ -20,15 +32,12 @@ export const authHandlers = [
       const { code } = await req.json<SignInWithEmailCodePayload>();
       const delay = ctx.delay(500);
 
-      if (code === LOGIN_CODE) {
+      if (Object.keys(CODE_TO_USER_MAP).includes(code)) {
         return res(
           delay,
           ctx.status(200),
           ctx.json<SignInWithEmailCodeResponse>({
-            user: {
-              id: '123',
-              name: 'John Doe',
-            },
+            user: CODE_TO_USER_MAP[code],
             backendTokens: {
               accessToken: ACCESS_TOKEN,
               refreshToken: REFRESH_TOKEN,

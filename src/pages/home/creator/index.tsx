@@ -12,6 +12,7 @@ import { PageDescriptionCard } from '@/components/modules/home/PageDescriptionCa
 import { SelectIssuerCard } from '@/components/modules/home/creator/SelectIssuerCard';
 import { AddNewCredentialCard } from '@/components/modules/home/creator/AddNewCredentialCard';
 import { VerifyWalletCard } from '@/components/modules/home/creator/VerifyWalletCard';
+import { UserRole } from '@/shared/typings/UserRole';
 
 const HomePage: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -38,6 +39,9 @@ export const getServerSideProps = withAuth(
         ...(await getI18nProps(ctx.locale, ['home', 'home-creator'])),
       },
     };
+  },
+  {
+    roles: UserRole.Creator,
   },
 ) satisfies GetServerSideProps;
 
