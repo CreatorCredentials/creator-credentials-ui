@@ -1,4 +1,6 @@
+import { UserRole } from './UserRole';
+
 export type BaseUserData = {
   id: string;
-  name: string;
+  role: UserRole;
 };

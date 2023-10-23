@@ -7,6 +7,8 @@ import { BackendTokens } from './BackendTokens';
 import { SessionError } from './SessionError';
 
 declare module 'next-auth' {
+  interface User extends BaseUserData {}
+
   interface Session {
     user: BaseUserData;
     backendTokens: BackendTokens;

@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getSession } from 'next-auth/react';
 import { SessionError } from '@/shared/typings/SessionError';
+import { UserRole } from '@/shared/typings/UserRole';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -10,6 +11,7 @@ export function withAuth<
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
   options?: {
     redirect?: string;
+    roles?: UserRole | UserRole[];
   },
 ) {
   return async function withAuthUserTokenSSR(
@@ -17,7 +19,11 @@ export function withAuth<
   ) {
     const session = await getSession(context);
 
-    if (!session || session.error === SessionError.RefreshAccessTokenError) {
+    if (
+      !session ||
+      session.error === SessionError.RefreshAccessTokenError ||
+      (options?.roles && !isUserRoleEligible(session.user.role, options.roles))
+    ) {
       return {
         redirect: {
           destination: options?.redirect || '/welcome',
@@ -29,3 +35,14 @@ export function withAuth<
     return handler(context);
   };
 }
+
+const isUserRoleEligible = (
+  userRole: UserRole,
+  eligibleRoles: UserRole | UserRole[],
+) => {
+  if (Array.isArray(eligibleRoles)) {
+    return eligibleRoles.includes(userRole);
+  }
+
+  return userRole === eligibleRoles;
+};
