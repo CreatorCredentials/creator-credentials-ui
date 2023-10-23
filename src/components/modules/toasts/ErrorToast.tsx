@@ -1,5 +1,4 @@
 import React from 'react';
-import { HiX } from 'react-icons/hi';
 import { ToastCard } from './ToastCard';
 
 type ErrorToastProps = {
@@ -8,7 +7,7 @@ type ErrorToastProps = {
 
 export const ErrorToast = ({ children }: ErrorToastProps) => (
   <ToastCard
-    icon={HiX}
+    iconName="Close"
     iconClassName="bg-alert bg-opacity-20 text-alert"
   >
     {children}

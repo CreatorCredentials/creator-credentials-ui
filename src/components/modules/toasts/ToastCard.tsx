@@ -1,18 +1,18 @@
 import React from 'react';
 import { Toast } from 'flowbite-react';
-import { IconType } from 'react-icons';
 import { clsxm } from '@/shared/utils/clsxm';
+import { Icon, IconName } from '@/components/shared/Icon';
 
 type ToastCardProps = {
   children: React.ReactNode;
   className?: string;
   iconClassName?: string;
-  icon: IconType;
+  iconName: IconName;
 };
 
 export const ToastCard = ({
   children,
-  icon: Icon,
+  iconName,
   className,
   iconClassName,
 }: ToastCardProps) => (
@@ -23,7 +23,10 @@ export const ToastCard = ({
         iconClassName,
       )}
     >
-      <Icon className="h-5 w-5" />
+      <Icon
+        icon={iconName}
+        className="h-5 w-5"
+      />
     </div>
     <div className={clsxm('ml-3 font-normal text-black', className)}>
       {children}

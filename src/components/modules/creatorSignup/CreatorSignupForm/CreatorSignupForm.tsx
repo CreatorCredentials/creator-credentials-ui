@@ -1,10 +1,10 @@
 import { Button } from 'flowbite-react';
 import { Trans, useTranslation } from 'next-i18next';
 import { useFormContext } from 'react-hook-form';
-import { HiOutlineArrowRight } from 'react-icons/hi';
 import { FormEventHandler } from 'react';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
+import { Icon } from '@/components/shared/Icon';
 import { CreatorSignupFormContextType } from './CreatorSignupFormContextType';
 
 export type CreatorSignupFormProps = {
@@ -67,7 +67,10 @@ export const CreatorSignupForm = ({
           color="primary"
         >
           <p>{t('send', { ns: 'common' })}</p>
-          <HiOutlineArrowRight className="ms-2 h-5 w-5" />
+          <Icon
+            icon="ArrowRight"
+            className="ms-2"
+          />
         </Button>
       </div>
     </form>

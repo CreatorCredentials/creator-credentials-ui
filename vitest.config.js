@@ -1,9 +1,10 @@
 import viteReact from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [viteReact(), viteTsconfigPaths()],
+  plugins: [viteReact(), viteTsconfigPaths(), svgr()],
   test: {
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
