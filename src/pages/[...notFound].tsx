@@ -5,7 +5,7 @@ const NotFoundPage: NextPage = () => null;
 // eslint-disable-next-line require-await
 export const getServerSideProps = (async () => ({
   redirect: {
-    destination: '/home',
+    destination: '/',
     permanent: false,
   },
 })) satisfies GetServerSideProps;

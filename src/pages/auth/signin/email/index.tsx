@@ -1,9 +1,9 @@
-import { getCsrfToken, signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React, { ReactElement, useCallback, useEffect, useRef } from 'react';
 import { Spinner } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
+import { getCsrfToken, signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { ReactElement, useCallback, useEffect, useRef } from 'react';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 
@@ -27,7 +27,12 @@ const EmailLoginPage: NextPageWithLayout<EmailLoginPageProps> = ({
         csrfToken,
         redirect: false,
       });
-      router.replace(response?.ok ? '/home' : '/auth/error');
+
+      if (!response?.ok) {
+        throw new Error('Coud not sign in');
+      }
+
+      router.replace('/');
     } catch (err) {
       router.replace('/auth/error');
     }

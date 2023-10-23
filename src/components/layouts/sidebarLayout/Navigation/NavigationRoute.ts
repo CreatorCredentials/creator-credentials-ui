@@ -4,4 +4,5 @@ export type NavigationRoute = {
   labelKey: string;
   href: string;
   iconName: IconName;
+  exact?: boolean;
 };

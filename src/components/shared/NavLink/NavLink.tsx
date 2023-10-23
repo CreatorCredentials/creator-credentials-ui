@@ -7,12 +7,21 @@ export interface LinkProps extends NextLinkProps {
   children: ReactNode;
   className?: ClassValue;
   disabled?: boolean;
+  exact?: boolean;
 }
 
-export const NavLink = ({ className, children, disabled, href }: LinkProps) => {
+export const NavLink = ({
+  className,
+  children,
+  disabled,
+  exact,
+  href,
+}: LinkProps) => {
   const { asPath } = useRouter();
 
-  const isActive = asPath.startsWith(href.toString());
+  const isActive = exact
+    ? asPath === href.toString()
+    : asPath.startsWith(href.toString());
 
   return (
     <NextLink
