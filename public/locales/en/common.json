@@ -2,6 +2,9 @@
   "login": "Login",
   "send": "Send",
   "email": "e-mail",
+  "select": "Select",
+  "add": "Add",
+  "start": "Start",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

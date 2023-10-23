@@ -1,0 +1,18 @@
+{
+  "select-issuer": {
+    "title": "Select an issuer",
+    "subtitle": "Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers.",
+    "badge": "Issuer"
+  },
+  "add-credential": {
+    "title": "Add new credential",
+    "subtitle": "Static websites are now used to bootstrap lots of websites ",
+    "badge": "Credentials",
+    "connect-issuer-warning": "\nYou need to connect with issuer before you add new credentials."
+  },
+  "verify-wallet": {
+    "title": "Verify your waller",
+    "subtitle": "Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers.",
+    "badge": "Verification"
+  }
+}
