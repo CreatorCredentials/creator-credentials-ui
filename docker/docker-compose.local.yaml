@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  dev-creator-credentials-ui:
+    container_name: dev-creator-credentials-ui
+    image: dev-creator-credentials-ui
+    build:
+      dockerfile: ./docker/Dockerfile.local
+      context: ../
+    environment:
+      API_MOCKING: ${API_MOCKING}
+      API_URL: ${API_URL}
+      FRONTEND_APP_PORT: ${FRONTEND_APP_PORT}
+    ports:
+      - ${FRONTEND_APP_PORT}:${FRONTEND_APP_PORT}
+    volumes:
+      - ../:/usr/src/app/
+      - /usr/src/app/node_modules

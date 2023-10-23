@@ -13,8 +13,25 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["node"]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@/components/*": ["./components/*"],
+      "@/public/*": ["../public/*"],
+      "@/shared/*": ["./shared/*"],
+      "@/mocks/*": ["./mocks/*"]
+    },
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -4,7 +4,8 @@ import {
   GetDependencyReleaseLine,
 } from '@changesets/types';
 
-const REPOSITORY_URL = 'https://github.com/CreatorCredentials/creator-credentials-ui/commit/';
+const REPOSITORY_URL =
+  'https://github.com/CreatorCredentials/creator-credentials-ui/commit/';
 
 const getReleaseLine: GetReleaseLine = async (changeset, _type) => {
   const lines = changeset.summary.split('\n').map((l) => l.trimEnd());
