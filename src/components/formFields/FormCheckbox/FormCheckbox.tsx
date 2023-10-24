@@ -10,7 +10,7 @@ import { FormLabel, FormLabelProps } from '../FormLabel';
 
 export type FormCheckboxCustomProps = {
   label?: FormLabelProps['children'];
-  inputProps?: Omit<CheckboxProps, 'type' | 'ref' | 'color' | 'disabled'>;
+  inputProps?: Omit<CheckboxProps, 'type' | 'ref' | 'disabled'>;
   ref?: React.Ref<HTMLInputElement>;
   labelProps?: Omit<FormLabelProps, 'children'>;
 };

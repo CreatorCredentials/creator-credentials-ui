@@ -1,0 +1,41 @@
+{
+  "header": "Short info about the website and login procedure",
+  "title": "I'm an issuer",
+  "steps": {
+    "details": {
+      "tab-label": "Sign up details",
+      "subtitle": "Please enter your e-mail address. We will send you an e-mail to verify your address."
+    },
+    "email": {
+      "tab-label": "E-mail address",
+      "subtitle": "Please enter your e-mail address. We will send you an e-mail to verify your address and enter the service."
+    },
+    "verification": {
+      "title": "Verification",
+      "subtitle": "We sent you an e-mail to verify control of your address."
+    }
+  },
+  "form-fields": {
+    "web-domain": {
+      "label": "Web domain",
+      "placeholder": "E.g., liccium.com"
+    },
+    "company-name": {
+      "label": "Company name (official name of legal entity)",
+      "placeholder": "E.g., Liccium B.V."
+    },
+    "terms-and-conditions": {
+      "label": "I agree for <link1>Terms & Conditions</link1>"
+    },
+    "address": {
+      "label": "Your e-mail address",
+      "placeholder": "E.g., john"
+    }
+  },
+  "buttons": {
+    "resend-email": "Resend e-mail"
+  },
+  "errors": {
+    "send-email": "Apologies for the inconvenience. We encountered an issue on our end preventing the email from being sent. Please try again later."
+  }
+}

@@ -48,7 +48,7 @@ export const HomeCard = ({
               icon: (
                 <Icon
                   icon="ArrowRight"
-                  className="ms-2 h-5 w-5"
+                  className="ms-2 h-4 w-4"
                 />
               ),
             })}
