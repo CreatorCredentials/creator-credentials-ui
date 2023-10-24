@@ -15,7 +15,10 @@ export const Icon = ({ icon, className }: Props) => {
 
   return (
     <i
-      className={clsxm('flex h-5 w-5 items-center justify-center', className)}
+      className={clsxm(
+        'flex h-5 w-5 items-center justify-center stroke-2',
+        className,
+      )}
       aria-hidden="true"
       role="img"
       title={icon}
