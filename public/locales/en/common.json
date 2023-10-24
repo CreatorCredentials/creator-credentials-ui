@@ -5,6 +5,8 @@
   "select": "Select",
   "add": "Add",
   "start": "Start",
+  "next": "Next",
+  "go-back": "Go back",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",
