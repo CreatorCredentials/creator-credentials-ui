@@ -40,7 +40,7 @@ const config: Config = {
         secondary: '#998FE0',
         'secondary-hover': '#6258A6',
         white: '#FFFFFF',
-        background: '#F6F7F9',
+        background: '#E7E3E0',
         grey: {
           1: '#EDEFF1',
           2: '#DDE0E4',
