@@ -17,7 +17,7 @@ export const NavigationItem = ({
       icon={() => (
         <Icon
           icon={iconName}
-          className="text-grey-4"
+          className="stroke-2"
         />
       )}
       {...linkProps}

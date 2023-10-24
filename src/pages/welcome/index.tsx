@@ -27,7 +27,7 @@ const WelcomePage: NextPageWithLayout = () => {
             href="/auth/login/issuer"
             color="secondary"
           >
-            {t('login', { ns: 'common' })}
+            {t('log-in', { ns: 'common' })}
           </LinkButton>
           <LinkButton
             href="/auth/signup/issuer"
@@ -45,7 +45,7 @@ const WelcomePage: NextPageWithLayout = () => {
             href="/auth/signup/creator"
             color="primary"
           >
-            {t('login', { ns: 'common' })}
+            {t('log-in', { ns: 'common' })}
           </LinkButton>
           <LinkButton
             href="/auth/signup/creator"

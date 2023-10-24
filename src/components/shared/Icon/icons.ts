@@ -22,5 +22,6 @@ export const icons = {
   Close: lazy(() => import('@/public/images/icons/close.svg')),
   Home: lazy(() => import('@/public/images/icons/home.svg')),
   PenNib: lazy(() => import('@/public/images/icons/pen-nib.svg')),
+  Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
   UserSettings: lazy(() => import('@/public/images/icons/user-settings.svg')),
 };

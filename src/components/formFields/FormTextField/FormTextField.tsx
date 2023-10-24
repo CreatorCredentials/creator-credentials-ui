@@ -6,12 +6,14 @@ import {
   UseControllerProps,
   useController,
 } from 'react-hook-form';
+import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { FormLabel, FormLabelProps } from '../FormLabel';
 
 export type FormTextFieldCustomProps = {
   label?: FormLabelProps['children'];
   inputProps?: TextInputProps;
   labelProps?: Omit<FormLabelProps, 'children'>;
+  className?: string | ClassValue;
 };
 
 export type FormTextFieldProps<
@@ -24,6 +26,7 @@ export const FormTextField = <T extends FieldValues, P extends FieldPath<T>>({
   inputProps,
   labelProps,
   disabled,
+  className,
   ...controllerProps
 }: FormTextFieldProps<T, P>) => {
   const fieldId = useId();
@@ -49,7 +52,7 @@ export const FormTextField = <T extends FieldValues, P extends FieldPath<T>>({
   };
 
   return (
-    <div>
+    <div className={clsxm(className)}>
       {label && (
         <FormLabel
           htmlFor={fieldId}

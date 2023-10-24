@@ -1,5 +1,6 @@
 {
   "login": "Login",
+  "log-in": "Log in",
   "send": "Send",
   "email": "e-mail",
   "select": "Select",
@@ -7,6 +8,7 @@
   "start": "Start",
   "next": "Next",
   "go-back": "Go back",
+  "sign-up": "Sign up",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",
