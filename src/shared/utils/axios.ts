@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-restricted-imports
 import _axios from 'axios';
 import { config } from '@/shared/constants/config';
 
