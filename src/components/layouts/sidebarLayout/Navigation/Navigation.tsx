@@ -70,11 +70,11 @@ export const Navigation = () => {
       : ISSUER_ROUTES;
 
   return (
-    <Sidebar className="relative flex w-[11.5rem] flex-col border-e-2 border-gray-200">
+    <Sidebar className="flex w-[11.5rem] flex-col border-e-2 border-gray-200">
       <Sidebar.Items className="h-full">
-        <Sidebar.ItemGroup className="flex h-full flex-col justify-between">
+        <Sidebar.ItemGroup className="relative flex h-full flex-col justify-between">
           <div className="pt-[7.75rem]">
-            <BrandImage />
+            <BrandImage containerClassName="left-0 right-0 top-0 m-auto" />
             {routes.map((props) => (
               <NavigationItem
                 {...props}
