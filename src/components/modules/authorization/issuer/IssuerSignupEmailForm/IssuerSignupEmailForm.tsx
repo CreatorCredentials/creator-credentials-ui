@@ -80,9 +80,6 @@ export const IssuerSignupEmailForm = ({
           name="termsAndConditions"
           control={control}
           disabled={isLoading}
-          inputProps={{
-            color: 'secondary',
-          }}
           labelProps={{
             className: 'text-base',
           }}

@@ -70,34 +70,29 @@ export const Navigation = () => {
       : ISSUER_ROUTES;
 
   return (
-    <nav className="flex flex-col">
-      <Sidebar
-        aria-label="Default sidebar example"
-        className="relative flex w-[11.5rem] border-e-2 border-gray-200"
-      >
-        <Sidebar.Items className="h-full">
-          <Sidebar.ItemGroup className="flex h-full flex-col justify-between">
-            <div className="pt-[7.75rem]">
-              <BrandImage />
-              {routes.map((props) => (
-                <NavigationItem
-                  {...props}
-                  key={props.href}
-                />
-              ))}
-            </div>
-            <div>
-              {SUB_ROUTES.map((props) => (
-                <NavigationItem
-                  {...props}
-                  key={props.href}
-                />
-              ))}
-              <NavigationSignOutButton />
-            </div>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
-    </nav>
+    <Sidebar className="relative flex w-[11.5rem] flex-col border-e-2 border-gray-200">
+      <Sidebar.Items className="h-full">
+        <Sidebar.ItemGroup className="flex h-full flex-col justify-between">
+          <div className="pt-[7.75rem]">
+            <BrandImage />
+            {routes.map((props) => (
+              <NavigationItem
+                {...props}
+                key={props.href}
+              />
+            ))}
+          </div>
+          <div>
+            {SUB_ROUTES.map((props) => (
+              <NavigationItem
+                {...props}
+                key={props.href}
+              />
+            ))}
+            <NavigationSignOutButton />
+          </div>
+        </Sidebar.ItemGroup>
+      </Sidebar.Items>
+    </Sidebar>
   );
 };

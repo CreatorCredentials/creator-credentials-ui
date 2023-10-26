@@ -3,14 +3,10 @@ import { CustomFlowbiteTheme } from 'flowbite-react';
 export const flowbiteTheme: CustomFlowbiteTheme = {
   button: {
     color: {
-      secondary:
-        'text-white bg-secondary border border-secondary hover:bg-secondary-hover focus:ring-4 focus:ring-secondary-hover disabled:bg-grey-3 disabled:border-grey-3',
       primary:
         'text-white bg-primary border border-primary hover:bg-primary-hover focus:ring-4 focus:ring-primary-hover disabled:bg-grey-3 disabled:border-grey-3',
       outline:
         'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white',
-      'outline-secondary':
-        'text-secondary bg-white border border-secondary hover:border-secondary-hover hover:text-secondary-hover focus:ring-4 focus:ring-secondary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white',
     },
     size: {
       md: 'text-sm px-3 py-1.5 font-normal',
@@ -40,8 +36,6 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
           'focus:ring-primary dark:ring-offset-primary dark:focus:ring-primary text-primary disabled:text-grey-3 hover:text-primary-hover',
         primary:
           'focus:ring-primary dark:ring-offset-primary dark:focus:ring-primary text-primary disabled:text-grey-3 hover:text-primary-hover',
-        secondary:
-          'focus:ring-secondary dark:ring-offset-secondary dark:focus:ring-secondary text-secondary disabled:text-grey-3 hover:text-secondary-hover',
       },
     },
   },

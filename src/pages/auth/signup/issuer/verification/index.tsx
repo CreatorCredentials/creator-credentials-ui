@@ -39,7 +39,6 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
       <AuthVerificationCard
         title={t('steps.verification.title')}
         subtitle={t('steps.verification.subtitle')}
-        color="secondary"
         goBackHandler={goBackHandler}
         resendVerificationEmailHandler={resendVerificationEmailHandler}
         isLoading={isLoading}
