@@ -19,13 +19,13 @@ export const ToastCard = ({
   <Toast>
     <div
       className={clsxm(
-        'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+        'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg p-2.5',
         iconClassName,
       )}
     >
       <Icon
         icon={iconName}
-        className="h-5 w-5"
+        className="h-full w-full"
       />
     </div>
     <div className={clsxm('ml-3 font-normal text-black', className)}>
