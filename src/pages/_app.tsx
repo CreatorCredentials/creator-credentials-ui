@@ -1,9 +1,6 @@
 import 'globals.css';
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import 'globals.css';
-import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Flowbite } from 'flowbite-react';
 import { appWithTranslation } from 'next-i18next';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
