@@ -31,7 +31,7 @@ const CODE_TO_USER_MAP: Record<string, BaseUserData> = {
   },
   issuer: {
     id: 'issuer-id',
-    role: UserRole.Creator,
+    role: UserRole.Issuer,
   },
 };
 
