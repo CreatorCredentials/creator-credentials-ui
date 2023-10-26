@@ -1,18 +1,28 @@
 import { rest } from 'msw';
+import { LoginPayload, LoginResponse } from '@/api/requests/logIn';
+import {
+  RefreshTokenPayload,
+  RefreshTokenResponse,
+} from '@/api/requests/refreshToken';
 import {
   SignInWithEmailCodePayload,
   SignInWithEmailCodeResponse,
 } from '@/api/requests/signInWithEmailCode';
 import {
-  RefreshTokenPayload,
-  RefreshTokenResponse,
-} from '@/api/requests/refreshToken';
-import { UserRole } from '@/shared/typings/UserRole';
+  SignupCreatorPayload,
+  SignupCreatorResponse,
+} from '@/api/requests/signupCreator';
+import {
+  SignupIssuerPayload,
+  SignupIssuerResponse,
+} from '@/api/requests/signupIssuer';
 import { BaseUserData } from '@/shared/typings/BaseUserData';
+import { UserRole } from '@/shared/typings/UserRole';
 import { MOCK_API_URL } from '../config';
 
 const ACCESS_TOKEN = 'XXXYYYZZZ';
 const REFRESH_TOKEN = 'ZZZWWWOOODD';
+const ALLOWED_DOMAINS = ['liccium.com'];
 
 const CODE_TO_USER_MAP: Record<string, BaseUserData> = {
   creator: {
@@ -70,6 +80,49 @@ export const authHandlers = [
       }
 
       return res(delay, ctx.status(401));
+    },
+  ),
+  rest.post<LoginPayload, LoginResponse>(
+    `${MOCK_API_URL}/auth/login`,
+    async (req, res, ctx) => {
+      const { email } = await req.json();
+      const delay = ctx.delay(1000);
+
+      if (email.includes('@liccium.com')) {
+        return res(delay, ctx.status(200));
+      }
+
+      return res(delay, ctx.status(400));
+    },
+  ),
+  rest.post<SignupIssuerPayload, SignupIssuerResponse>(
+    `${MOCK_API_URL}/auth/signup/issuer`,
+    async (req, res, ctx) => {
+      const { email } = await req.json();
+      const delay = ctx.delay(1000);
+
+      if (
+        ALLOWED_DOMAINS.some((allowedDomain) => email.includes(allowedDomain))
+      ) {
+        return res(delay, ctx.status(200));
+      }
+
+      return res(delay, ctx.status(500));
+    },
+  ),
+  rest.post<SignupCreatorPayload, SignupCreatorResponse>(
+    `${MOCK_API_URL}/creator/signup`,
+    async (req, res, ctx) => {
+      const { email } = await req.json();
+      const delay = ctx.delay(1000);
+
+      if (
+        ALLOWED_DOMAINS.some((allowedDomain) => email.includes(allowedDomain))
+      ) {
+        return res(delay, ctx.status(200));
+      }
+
+      return res(delay, ctx.status(400));
     },
   ),
 ];

@@ -42,7 +42,7 @@ const WelcomePage: NextPageWithLayout = () => {
           iconName="PenNib"
         >
           <LinkButton
-            href="/auth/signup/creator"
+            href="/auth/login/creator"
             color="primary"
           >
             {t('log-in', { ns: 'common' })}

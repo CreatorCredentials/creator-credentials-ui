@@ -19,7 +19,7 @@ export const AuthVerificationCard = ({
   resendVerificationEmailHandler,
   goBackHandler,
 }: AuthVerificationCardProps) => {
-  const { t } = useTranslation('signup');
+  const { t } = useTranslation('common');
 
   return (
     <BaseAuthFormCard
@@ -33,7 +33,7 @@ export const AuthVerificationCard = ({
           onClick={resendVerificationEmailHandler}
           color="primary"
         >
-          {t('verification.resend')}
+          {t('resend-email')}
           <Icon
             icon="Refresh"
             className="ms-2 h-4 w-4"
@@ -48,7 +48,7 @@ export const AuthVerificationCard = ({
             icon="ArrowLeft"
             className="me-2 h-4 w-4"
           />
-          <p>{t('verification.goBack')}</p>
+          <p>{t('go-back')}</p>
         </Button>
       </div>
     </BaseAuthFormCard>
