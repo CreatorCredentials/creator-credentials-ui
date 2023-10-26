@@ -11,11 +11,10 @@ export const NavigationSignOutButton = () => {
 
   const signOutHandler = async () => {
     try {
+      router.push('/welcome');
       await signOut({
         redirect: false,
       });
-
-      router.push('/welcome');
     } catch (err) {
       console.error(err);
     }
@@ -29,7 +28,7 @@ export const NavigationSignOutButton = () => {
       icon={() => (
         <Icon
           icon="ArrowLeftToBracket"
-          className="me-2 text-grey-4"
+          className="text-grey-4"
         />
       )}
     >

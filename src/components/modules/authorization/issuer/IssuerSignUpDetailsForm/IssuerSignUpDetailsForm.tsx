@@ -54,7 +54,7 @@ export const IssuerSignupDetailsForm = ({
           type="submit"
           disabled={!isValid || isLoading}
           isProcessing={isLoading}
-          color="secondary"
+          color="primary"
         >
           <p>{t('next', { ns: 'common' })}</p>
           <Icon

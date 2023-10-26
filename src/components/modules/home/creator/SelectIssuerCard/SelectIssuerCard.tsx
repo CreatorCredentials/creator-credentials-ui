@@ -12,7 +12,6 @@ export const SelectIssuerCard = () => {
       title={t('select-issuer.title')}
       badge={{
         iconName: 'Building',
-        color: 'primary',
         label: t('select-issuer.badge'),
       }}
       renderFooter={({ icon }) => (

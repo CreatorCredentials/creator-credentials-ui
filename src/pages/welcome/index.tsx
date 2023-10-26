@@ -25,13 +25,13 @@ const WelcomePage: NextPageWithLayout = () => {
         >
           <LinkButton
             href="/auth/login/issuer"
-            color="secondary"
+            color="primary"
           >
             {t('log-in', { ns: 'common' })}
           </LinkButton>
           <LinkButton
             href="/auth/signup/issuer"
-            color="outline-secondary"
+            color="outline"
           >
             {t('sign-up', { ns: 'common' })}
           </LinkButton>

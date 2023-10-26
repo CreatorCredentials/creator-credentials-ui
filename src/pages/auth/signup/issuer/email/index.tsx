@@ -105,7 +105,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                       type="submit"
                       disabled={!isValid || !termsAndConditions || isLoading}
                       isProcessing={isLoading}
-                      color="secondary"
+                      color="primary"
                     >
                       <p>{t('send', { ns: 'common' })}</p>
                       <Icon
@@ -114,7 +114,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                       />
                     </Button>
                     <Button
-                      color="outline-secondary"
+                      color="outline"
                       onClick={goBackHandler}
                       disabled={isLoading}
                     >

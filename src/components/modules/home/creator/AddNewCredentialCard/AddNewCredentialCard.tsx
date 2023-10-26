@@ -20,7 +20,6 @@ export const AddNewCredentialCard = ({
       className={className}
       badge={{
         iconName: 'Caption',
-        color: 'primary',
         label: t('add-credential.badge'),
       }}
       renderFooter={({ icon }) => (

@@ -1,6 +1,5 @@
 import { Card } from 'flowbite-react';
 import React from 'react';
-import { clsxm } from '@/shared/utils/clsxm';
 import { Icon, IconName } from '@/components/shared/Icon';
 import { CardBadge } from '../CardBadge';
 
@@ -10,7 +9,6 @@ type HomeCardProps = {
   renderFooter?: (renderProps: { icon: React.ReactNode }) => React.ReactNode;
   className?: string;
   badge?: {
-    color: 'primary' | 'secondary';
     iconName: IconName;
     label: string;
   };
@@ -30,11 +28,7 @@ export const HomeCard = ({
           {badge && (
             <CardBadge
               iconName={badge.iconName}
-              className={clsxm({
-                'bg-primary/10 px-2 text-primary': badge.color === 'primary',
-                'bg-secondary/10 px-2 text-secondary':
-                  badge.color === 'secondary',
-              })}
+              className="bg-cyan-600/10 px-2 text-primary"
             >
               {badge.label}
             </CardBadge>

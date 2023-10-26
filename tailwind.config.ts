@@ -5,7 +5,7 @@ import type { Config } from 'tailwindcss';
 const customPlugin = plugin(({ addComponents, theme }) => {
   addComponents({
     '.scrollbar': {
-      scrollbarColor: `${theme('colors.secondary')} transparent`,
+      scrollbarColor: `${theme('colors.grey-2')} transparent`,
       scrollbarWidth: 'auto',
       '&::-webkit-scrollbar-track': {
         background: 'transparent',
@@ -17,7 +17,7 @@ const customPlugin = plugin(({ addComponents, theme }) => {
       },
       '&::-webkit-scrollbar-thumb': {
         borderRadius: theme('spacing.2'),
-        backgroundColor: theme('colors.secondary'),
+        backgroundColor: theme('colors.grey-2'),
         width: theme('spacing.2'),
         height: theme('spacing.2'),
       },
@@ -35,10 +35,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#00A9B6',
-        'primary-hover': '#007881',
-        secondary: '#998FE0',
-        'secondary-hover': '#6258A6',
+        primary: '#1559DD',
+        'primary-hover': '#083B9F',
         white: '#FFFFFF',
         background: '#E7E3E0',
         grey: {

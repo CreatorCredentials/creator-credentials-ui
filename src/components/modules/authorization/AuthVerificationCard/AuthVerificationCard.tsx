@@ -6,7 +6,6 @@ import { BaseAuthFormCard } from '../BaseAuthFormCard';
 
 type AuthVerificationCardProps = {
   isLoading: boolean;
-  color: 'primary' | 'secondary';
   title: string;
   subtitle: string;
   goBackHandler: () => void;
@@ -15,7 +14,6 @@ type AuthVerificationCardProps = {
 
 export const AuthVerificationCard = ({
   isLoading,
-  color,
   title,
   subtitle,
   resendVerificationEmailHandler,
@@ -33,7 +31,7 @@ export const AuthVerificationCard = ({
           isProcessing={isLoading}
           disabled={isLoading}
           onClick={resendVerificationEmailHandler}
-          color={color}
+          color="primary"
         >
           {t('verification.resend')}
           <Icon
@@ -44,7 +42,7 @@ export const AuthVerificationCard = ({
         <Button
           onClick={goBackHandler}
           disabled={isLoading}
-          color={`outline-${color}`}
+          color="outline"
         >
           <Icon
             icon="ArrowLeft"
