@@ -5,6 +5,7 @@ import { FormState, useFormContext } from 'react-hook-form';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
+import { config } from '@/shared/constants/config';
 import { IssuerSignupEmailFormContextType } from './IssuerSignupEmailForm.types';
 
 const emailWithDomainInputTheme: CustomFlowbiteTheme['textInput'] = {
@@ -70,7 +71,7 @@ export const IssuerSignupEmailForm = ({
                 link1: (
                   <a
                     className="underline underline-offset-[3px]"
-                    href="https://www.google.com"
+                    href={config.TERMS_AND_CONDITIONS_URL}
                     target="_blank"
                   />
                 ),
