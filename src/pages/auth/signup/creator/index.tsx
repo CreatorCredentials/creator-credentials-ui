@@ -5,18 +5,18 @@ import { ReactElement, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useSignupCreator } from '@/api/mutations/useSignupCreator';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
-import { CreatorSignupCard } from '@/components/modules/creatorSignup/CreatorSignupCard/CreatorSignupCard';
-import { CreatorSignupForm } from '@/components/modules/creatorSignup/CreatorSignupForm/CreatorSignupForm';
-import { CreatorSignupFormContextType } from '@/components/modules/creatorSignup/CreatorSignupForm/CreatorSignupFormContextType';
-import { creatorSignupFormDefaultValues } from '@/components/modules/creatorSignup/CreatorSignupForm/creatorSignupFormDefaultValues';
-import { CreatorSignupFormSchema } from '@/components/modules/creatorSignup/CreatorSignupForm/creatorSignupFormSchema';
-import { CreatorSIgnupSuccess } from '@/components/modules/creatorSignup/CreatorSignupSuccess/CreatorSIgnupSuccess';
+import { CreatorSignupFormContextType } from '@/components/modules/authorization/creator/CreatorSignupForm/CreatorSignupFormContextType';
+import { creatorSignupFormDefaultValues } from '@/components/modules/authorization/creator/CreatorSignupForm/creatorSignupFormDefaultValues';
+import { CreatorSignupFormSchema } from '@/components/modules/authorization/creator/CreatorSignupForm/creatorSignupFormSchema';
 import { useToast } from '@/shared/hooks/useToast';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
+import { AuthVerificationCard } from '@/components/modules/authorization/AuthVerificationCard/AuthVerificationCard';
+import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
+import { CreatorSignupForm } from '@/components/modules/authorization/creator/CreatorSignupForm/CreatorSignupForm';
 
 const CreatorSignupPage: NextPageWithLayout = () => {
-  const { t } = useTranslation('signup');
+  const { t } = useTranslation('creator-signup');
   const toast = useToast();
   const [emailSent, setEmailSent] = useState(false);
 
@@ -53,19 +53,22 @@ const CreatorSignupPage: NextPageWithLayout = () => {
     }
   };
 
-  const resetHandler = () => {
-    form.reset();
+  const goBackHandler = () => {
     resetSignupMutation();
     setEmailSent(false);
   };
 
   if (emailSent) {
     return (
-      <CreatorSIgnupSuccess
-        isLoading={isLoading}
-        resendVerificationEmailHandler={resendVerificationEmailHandler}
-        resetHandler={resetHandler}
-      />
+      <main className="flex flex-1 flex-col items-center justify-center">
+        <AuthVerificationCard
+          title={t('verification.title')}
+          subtitle={t('verification.subtitle')}
+          isLoading={isLoading}
+          resendVerificationEmailHandler={resendVerificationEmailHandler}
+          goBackHandler={goBackHandler}
+        />
+      </main>
     );
   }
 
@@ -74,9 +77,9 @@ const CreatorSignupPage: NextPageWithLayout = () => {
       <header>
         <h1 className="text-xl">{t('header')}</h1>
       </header>
-      <CreatorSignupCard
-        title={t('userTypes.creator')}
-        description={t('card.description')}
+      <BaseAuthFormCard
+        title={t('title')}
+        subtitle={t('card.description')}
       >
         <FormProvider {...form}>
           <div className="flex-1 px-[6.53rem]">
@@ -86,7 +89,7 @@ const CreatorSignupPage: NextPageWithLayout = () => {
             />
           </div>
         </FormProvider>
-      </CreatorSignupCard>
+      </BaseAuthFormCard>
     </main>
   );
 };
@@ -98,7 +101,7 @@ CreatorSignupPage.getLayout = (page: ReactElement) => {
 export const getServerSideProps = (async (ctx) => {
   return {
     props: {
-      ...(await getI18nProps(ctx.locale, ['signup'])),
+      ...(await getI18nProps(ctx.locale, ['creator-signup'])),
     },
   };
 }) satisfies GetServerSideProps;

@@ -5,6 +5,7 @@ import { FormEventHandler } from 'react';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
 import { Icon } from '@/components/shared/Icon';
+import { config } from '@/shared/constants/config';
 import { CreatorSignupFormContextType } from './CreatorSignupFormContextType';
 
 export type CreatorSignupFormProps = {
@@ -16,7 +17,7 @@ export const CreatorSignupForm = ({
   handleSubmit,
   isLoading,
 }: CreatorSignupFormProps) => {
-  const { t } = useTranslation('signup');
+  const { t } = useTranslation('creator-signup');
   const {
     control,
     watch,
@@ -39,13 +40,13 @@ export const CreatorSignupForm = ({
       <FormCheckbox
         label={
           <Trans
-            i18nKey="form.termsAndConditions"
+            i18nKey="form.terms-and-conditions"
             t={t}
             components={{
               link1: (
                 <a
                   className="underline underline-offset-[3px]"
-                  href="https://www.google.com"
+                  href={config.TERMS_AND_CONDITIONS_URL}
                   target="_blank"
                 />
               ),
