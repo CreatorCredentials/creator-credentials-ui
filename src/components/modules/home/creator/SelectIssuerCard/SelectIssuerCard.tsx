@@ -10,10 +10,7 @@ export const SelectIssuerCard = () => {
   return (
     <HomeCard
       title={t('select-issuer.title')}
-      badge={{
-        iconName: 'Building',
-        label: t('select-issuer.badge'),
-      }}
+      badgeType="issuer"
       renderFooter={({ icon }) => (
         <Button
           color="primary"

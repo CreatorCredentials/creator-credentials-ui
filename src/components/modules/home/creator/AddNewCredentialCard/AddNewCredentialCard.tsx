@@ -18,10 +18,7 @@ export const AddNewCredentialCard = ({
     <HomeCard
       title={t('add-credential.title')}
       className={className}
-      badge={{
-        iconName: 'Caption',
-        label: t('add-credential.badge'),
-      }}
+      badgeType="credential"
       renderFooter={({ icon }) => (
         <>
           {!hasCredentials && (

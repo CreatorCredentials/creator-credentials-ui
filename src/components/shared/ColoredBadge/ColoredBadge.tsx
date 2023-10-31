@@ -18,7 +18,7 @@ const BADGE_PROPS_MAP: Record<
   },
   credential: {
     tKey: 'badges.credential',
-    iconName: 'Close',
+    iconName: 'Caption',
     className: 'fill-credential text-credential bg-credential/10',
   },
   creator: {
@@ -28,7 +28,7 @@ const BADGE_PROPS_MAP: Record<
   },
   issuer: {
     tKey: 'badges.issuer',
-    iconName: 'UserSettings',
+    iconName: 'Building',
     className: 'fill-issuer text-issuer bg-issuer/10',
   },
   verified: {
