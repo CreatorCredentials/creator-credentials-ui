@@ -44,4 +44,9 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       base: 'flex rounded-lg shadow border border-neutral-100 bg-white dark:border-gray-700 dark:bg-gray-800',
     },
   },
+  tooltip: {
+    style: {
+      dark: 'bg-black text-white',
+    },
+  },
 };
