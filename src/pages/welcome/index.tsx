@@ -39,7 +39,7 @@ const WelcomePage: NextPageWithLayout = () => {
         <UserCard
           title={t('creator.title')}
           subtitle={t('creator.description')}
-          iconName="PenNib"
+          iconName="DesignServices"
         >
           <LinkButton
             href="/auth/login/creator"
