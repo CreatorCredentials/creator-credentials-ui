@@ -21,7 +21,7 @@ export const HomeCard = ({
 }: HomeCardProps) => {
   return (
     <Card className={className}>
-      <article className="flex flex-col gap-3">
+      <article className="flex flex-1 flex-col gap-3 text-black">
         <header className="flex flex-col gap-3">
           {badgeType && (
             <ColoredBadge
@@ -29,9 +29,9 @@ export const HomeCard = ({
               badgeType={badgeType}
             />
           )}
-          <h2 className="text-xl">{title}</h2>
+          <h3 className="text-xl">{title}</h3>
         </header>
-        {children}
+        <div className="flex-1 text-lg text-grey-4">{children}</div>
         <footer>
           {renderFooter &&
             renderFooter({
