@@ -10,6 +10,9 @@ function lazy(importFn: () => Promise<any>) {
 
 // https://flowbite.com/icons/
 export const icons = {
+  AccountBalanceWallet: lazy(
+    () => import('@/public/images/icons/account-balance-wallet.svg'),
+  ),
   ArrowLeft: lazy(() => import('@/public/images/icons/arrow-left.svg')),
   ArrowLeftToBracket: lazy(
     () => import('@/public/images/icons/arrow-left-to-bracket.svg'),
@@ -20,8 +23,15 @@ export const icons = {
   Caption: lazy(() => import('@/public/images/icons/caption.svg')),
   Check: lazy(() => import('@/public/images/icons/check.svg')),
   Close: lazy(() => import('@/public/images/icons/close.svg')),
+  DesignServices: lazy(
+    () => import('@/public/images/icons/design-services.svg'),
+  ),
   Home: lazy(() => import('@/public/images/icons/home.svg')),
-  PenNib: lazy(() => import('@/public/images/icons/pen-nib.svg')),
+  Info: lazy(() => import('@/public/images/icons/info.svg')),
+  Mail: lazy(() => import('@/public/images/icons/mail.svg')),
+  Metamask: lazy(() => import('@/public/images/icons/metamask.svg')),
+  Public: lazy(() => import('@/public/images/icons/public.svg')),
   Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
   UserSettings: lazy(() => import('@/public/images/icons/user-settings.svg')),
+  Warning: lazy(() => import('@/public/images/icons/warning.svg')),
 };
