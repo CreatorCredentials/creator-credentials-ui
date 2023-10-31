@@ -8,7 +8,7 @@ type ErrorToastProps = {
 export const ErrorToast = ({ children }: ErrorToastProps) => (
   <ToastCard
     iconName="Close"
-    iconClassName="bg-alert bg-opacity-20 text-alert"
+    iconClassName="bg-alert/20 fill-alert"
   >
     {children}
   </ToastCard>
