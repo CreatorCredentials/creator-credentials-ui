@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "Creator verification",
+    "subtitle": "Elevate your online presence and credibility by using our suite of verification tools. Ensure your audience and collaborators recognize and trust your authenticity and attribution."
+  },
+  "e-mail": {
+    "title": "E-mail verification",
+    "buttons": {
+      "show-details": "See credential details"
+    }
+  },
+  "metamask": {
+    "title": "Metamask",
+    "description": "Connect your Metamask wallet to digitally sign your declarations of original content.",
+    "buttons": {
+      "connect": "Connect wallet",
+      "disconnect": "Disconnect"
+    }
+  },
+  "domain": {
+    "title": "Domain verification",
+    "description": "Confirming your website ownership will reinforce trust in your content declarations.",
+    "buttons": {
+      "start-verification": "Start verification",
+      "disconnect": "Disconnect"
+    }
+  }
+}

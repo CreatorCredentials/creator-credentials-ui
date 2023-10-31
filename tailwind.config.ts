@@ -42,14 +42,18 @@ const config: Config = {
         grey: {
           1: '#EDEFF1',
           2: '#DDE0E4',
-          3: '#C6CBD2',
-          4: '#757A82',
+          3: '#ADB1B8',
+          4: '#4F545A',
         },
         black: '#17191C',
-        success: '#3E8D2B',
+        success: '#007560',
         warning: '#F59432',
         alert: '#F53E32',
         'text-gray-900': '#17191C',
+        creator: '#009CFF',
+        issuer: '#1E8A87',
+        verification: '#CA55BB',
+        credential: '#FF856C',
       },
       fontSize: {
         '2xl': [
