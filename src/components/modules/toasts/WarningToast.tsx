@@ -5,10 +5,10 @@ type SuccessToastProps = {
   children: React.ReactNode;
 };
 
-export const SuccessToast = ({ children }: SuccessToastProps) => (
+export const WarningToast = ({ children }: SuccessToastProps) => (
   <ToastCard
-    iconName="Check"
-    iconClassName="bg-success/20 fill-success"
+    iconName="Warning"
+    iconClassName="bg-warning/20 fill-warning stroke-warning"
   >
     {children}
   </ToastCard>
