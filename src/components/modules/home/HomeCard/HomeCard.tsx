@@ -32,9 +32,9 @@ export const HomeCard = ({
           <h3 className="text-xl">{title}</h3>
         </header>
         <div className="flex-1 text-lg text-grey-4">{children}</div>
-        <footer>
-          {renderFooter &&
-            renderFooter({
+        {renderFooter && (
+          <footer>
+            {renderFooter({
               icon: (
                 <Icon
                   icon="ArrowRight"
@@ -42,7 +42,8 @@ export const HomeCard = ({
                 />
               ),
             })}
-        </footer>
+          </footer>
+        )}
       </article>
     </Card>
   );

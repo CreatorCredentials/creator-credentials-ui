@@ -36,7 +36,7 @@ export const AuthVerificationCard = ({
           {t('resend-email')}
           <Icon
             icon="Refresh"
-            className="ms-2 h-4 w-4"
+            className="ms-2"
           />
         </Button>
         <Button
@@ -46,7 +46,7 @@ export const AuthVerificationCard = ({
         >
           <Icon
             icon="ArrowLeft"
-            className="me-2 h-4 w-4"
+            className="me-2"
           />
           <p>{t('go-back')}</p>
         </Button>

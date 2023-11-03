@@ -49,12 +49,12 @@ const EmailLoginPage: NextPageWithLayout<EmailLoginPageProps> = ({
   }, [signInCallback]);
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center">
       <Spinner
         size="xl"
         aria-label="Signing in..."
       />
-    </main>
+    </div>
   );
 };
 

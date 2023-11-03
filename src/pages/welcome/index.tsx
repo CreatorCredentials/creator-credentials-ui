@@ -12,16 +12,16 @@ const WelcomePage: NextPageWithLayout = () => {
   const { t } = useTranslation('welcome');
 
   return (
-    <main className="flex flex-1 flex-col items-center gap-20 pt-32">
+    <>
       <WelcomeHeader
         title={t('title')}
-        subTitle={t('subtitle')}
+        subtitle={t('subtitle')}
       />
       <section className="flex flex-wrap justify-center gap-6">
         <UserCard
           title={t('issuer.title')}
           subtitle={t('issuer.description')}
-          iconName="Building"
+          iconName="AssuredWorkload"
         >
           <LinkButton
             href="/auth/login/issuer"
@@ -55,7 +55,7 @@ const WelcomePage: NextPageWithLayout = () => {
           </LinkButton>
         </UserCard>
       </section>
-    </main>
+    </>
   );
 };
 

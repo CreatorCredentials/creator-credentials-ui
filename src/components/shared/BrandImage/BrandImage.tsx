@@ -13,7 +13,7 @@ export const BrandImage = ({
 }: BrandProps) => (
   <div
     className={clsxm(
-      'absolute h-[4.25rem] w-[3.1875rem] bg-transparent',
+      'absolute h-[4.375rem] w-[4.375rem] bg-transparent',
       containerClassName,
     )}
   >

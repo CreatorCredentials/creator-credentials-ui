@@ -14,6 +14,7 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { AuthVerificationCard } from '@/components/modules/authorization/AuthVerificationCard/AuthVerificationCard';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { CreatorSignupForm } from '@/components/modules/authorization/creator/CreatorSignupForm/CreatorSignupForm';
+import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 
 const CreatorSignupPage: NextPageWithLayout = () => {
   const { t } = useTranslation('creator-signup');
@@ -58,39 +59,38 @@ const CreatorSignupPage: NextPageWithLayout = () => {
     setEmailSent(false);
   };
 
-  if (emailSent) {
-    return (
-      <main className="flex flex-1 flex-col items-center justify-center">
-        <AuthVerificationCard
-          title={t('verification.title')}
-          subtitle={t('verification.subtitle')}
-          isLoading={isLoading}
-          resendVerificationEmailHandler={resendVerificationEmailHandler}
-          goBackHandler={goBackHandler}
-        />
-      </main>
-    );
-  }
-
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-[2.125rem]">
-      <header>
-        <h1 className="text-xl">{t('header')}</h1>
-      </header>
-      <BaseAuthFormCard
+    <>
+      <WelcomeHeader
         title={t('title')}
-        subtitle={t('card.description')}
-      >
-        <FormProvider {...form}>
-          <div className="flex-1 px-[6.53rem]">
-            <CreatorSignupForm
-              handleSubmit={handleSubmit(signupSubmitHandler)}
-              isLoading={isLoading}
-            />
-          </div>
-        </FormProvider>
-      </BaseAuthFormCard>
-    </main>
+        subtitle={t('subtitle')}
+      />
+      <section className="flex flex-1 flex-col items-center">
+        {emailSent ? (
+          <AuthVerificationCard
+            title={t('verification.title')}
+            subtitle={t('verification.subtitle')}
+            isLoading={isLoading}
+            resendVerificationEmailHandler={resendVerificationEmailHandler}
+            goBackHandler={goBackHandler}
+          />
+        ) : (
+          <BaseAuthFormCard
+            title={t('title')}
+            subtitle={t('card.description')}
+          >
+            <FormProvider {...form}>
+              <div className="flex-1 px-[6.53rem]">
+                <CreatorSignupForm
+                  handleSubmit={handleSubmit(signupSubmitHandler)}
+                  isLoading={isLoading}
+                />
+              </div>
+            </FormProvider>
+          </BaseAuthFormCard>
+        )}
+      </section>
+    </>
   );
 };
 

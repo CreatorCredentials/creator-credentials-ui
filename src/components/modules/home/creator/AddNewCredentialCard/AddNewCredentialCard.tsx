@@ -20,22 +20,15 @@ export const AddNewCredentialCard = ({
       className={className}
       badgeType="credential"
       renderFooter={({ icon }) => (
-        <>
-          {!hasCredentials && (
-            <p className="mb-4 whitespace-pre-line text-lg text-warning">
-              {t('add-credential.connect-issuer-warning')}
-            </p>
-          )}
-          <LinkButton
-            color="primary"
-            href="/credentials"
-            className="inline"
-            disabled={!hasCredentials}
-          >
-            {t('add', { ns: 'common' })}
-            {icon}
-          </LinkButton>
-        </>
+        <LinkButton
+          color="primary"
+          href="/credentials"
+          className="inline"
+          disabled={!hasCredentials}
+        >
+          {t('add', { ns: 'common' })}
+          {icon}
+        </LinkButton>
       )}
     >
       <p className="text-lg text-grey-4">{t('add-credential.subtitle')}</p>

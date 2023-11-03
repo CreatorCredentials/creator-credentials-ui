@@ -9,22 +9,24 @@ import { MetamaskVerificationCard } from '@/components/modules/verification/Meta
 import { LazyMetaMaskProvider } from '@/components/shared/LazyMetaMaskProvider';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { UserRole } from '@/shared/typings/UserRole';
 
 const CreatorVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('verification-creator');
 
   return (
-    <main className="flex flex-1 flex-col gap-8">
-      <header className="flex flex-col gap-4 text-black">
-        <h1 className="text-2xl">{t('header.title')}</h1>
-        <h2 className="text-lg">{t('header.subtitle')}</h2>
-      </header>
+    <>
+      <PageHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
       <section className="grid grid-cols-3 gap-4">
         <EmailVerificationCard email="test@creator.info" />
         <MetamaskVerificationCard />
         <DomainVerificationCard />
       </section>
-    </main>
+    </>
   );
 };
 
@@ -36,12 +38,20 @@ CreatorVerificationPage.getLayout = (page: ReactElement) => {
   );
 };
 
-export const getServerSideProps = withAuth(async (ctx) => {
-  return {
-    props: {
-      ...(await getI18nProps(ctx.locale, ['verification-creator', 'metamask'])),
-    },
-  };
-}) satisfies GetServerSideProps;
+export const getServerSideProps = withAuth(
+  async (ctx) => {
+    return {
+      props: {
+        ...(await getI18nProps(ctx.locale, [
+          'verification-creator',
+          'metamask',
+        ])),
+      },
+    };
+  },
+  {
+    roles: [UserRole.Creator],
+  },
+) satisfies GetServerSideProps;
 
 export default CreatorVerificationPage;

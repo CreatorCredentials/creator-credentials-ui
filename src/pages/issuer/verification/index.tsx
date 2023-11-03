@@ -4,10 +4,10 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
 
-const CreatorIssuersPage: NextPageWithLayout = () => {
+const IssuerVerificationPage: NextPageWithLayout = () => {
   return (
     <div className="flex flex-1 flex-col items-center justify-center">
-      <h1 className="text-2xl">Issuers Page</h1>
+      <h1 className="text-2xl">Issuer Verification Page</h1>
     </div>
   );
 };
@@ -21,8 +21,8 @@ export const getServerSideProps = withAuth(
     };
   },
   {
-    roles: [UserRole.Creator],
+    roles: [UserRole.Issuer],
   },
 ) satisfies GetServerSideProps;
 
-export default CreatorIssuersPage;
+export default IssuerVerificationPage;

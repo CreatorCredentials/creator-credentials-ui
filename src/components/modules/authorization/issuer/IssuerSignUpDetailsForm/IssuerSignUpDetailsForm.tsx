@@ -59,7 +59,7 @@ export const IssuerSignupDetailsForm = ({
           <p>{t('next', { ns: 'common' })}</p>
           <Icon
             icon="ArrowRight"
-            className="ms-2 h-4 w-4"
+            className="ms-2"
           />
         </Button>
       </div>
