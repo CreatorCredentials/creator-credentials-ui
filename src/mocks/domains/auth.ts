@@ -22,7 +22,6 @@ import { MOCK_API_URL } from '../config';
 
 const ACCESS_TOKEN = 'XXXYYYZZZ';
 const REFRESH_TOKEN = 'ZZZWWWOOODD';
-const ALLOWED_DOMAINS = ['liccium.com'];
 
 const CODE_TO_USER_MAP: Record<string, BaseUserData> = {
   creator: {
@@ -84,45 +83,26 @@ export const authHandlers = [
   ),
   rest.post<LoginPayload, LoginResponse>(
     `${MOCK_API_URL}/auth/login`,
-    async (req, res, ctx) => {
-      const { email } = await req.json();
+    (_req, res, ctx) => {
       const delay = ctx.delay(1000);
 
-      if (email.includes('@liccium.com')) {
-        return res(delay, ctx.status(200));
-      }
-
-      return res(delay, ctx.status(400));
+      return res(delay, ctx.status(200));
     },
   ),
   rest.post<SignupIssuerPayload, SignupIssuerResponse>(
     `${MOCK_API_URL}/auth/signup/issuer`,
-    async (req, res, ctx) => {
-      const { email } = await req.json();
+    (_req, res, ctx) => {
       const delay = ctx.delay(1000);
 
-      if (
-        ALLOWED_DOMAINS.some((allowedDomain) => email.includes(allowedDomain))
-      ) {
-        return res(delay, ctx.status(200));
-      }
-
-      return res(delay, ctx.status(500));
+      return res(delay, ctx.status(200));
     },
   ),
   rest.post<SignupCreatorPayload, SignupCreatorResponse>(
     `${MOCK_API_URL}/auth/signup/creator`,
-    async (req, res, ctx) => {
-      const { email } = await req.json();
+    (_req, res, ctx) => {
       const delay = ctx.delay(1000);
 
-      if (
-        ALLOWED_DOMAINS.some((allowedDomain) => email.includes(allowedDomain))
-      ) {
-        return res(delay, ctx.status(200));
-      }
-
-      return res(delay, ctx.status(400));
+      return res(delay, ctx.status(200));
     },
   ),
 ];
