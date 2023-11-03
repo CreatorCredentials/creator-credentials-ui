@@ -13,7 +13,7 @@ export const VerifyWalletCard = ({ className }: VerifyWalletCardProps) => {
 
   return (
     <HomeCard
-      title={t('verify-wallet.badge')}
+      title={t('verify-wallet.title')}
       className={className}
       badgeType="verification"
       renderFooter={({ icon }) => (

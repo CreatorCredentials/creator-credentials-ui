@@ -13,6 +13,7 @@ import { AuthVerificationCard } from '@/components/modules/authorization/AuthVer
 import { useSignupIssuer } from '@/api/mutations/useSignupIssuer';
 import { mapIssuerSignupContextFormStepsToPayload } from '@/components/modules/authorization/issuer/mapIssuerSignupContextFormStepsToPayload';
 import { useToast } from '@/shared/hooks/useToast';
+import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 
 const IssuerSignupVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('issuer-signup');
@@ -35,7 +36,11 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
   };
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-6">
+    <>
+      <WelcomeHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
       <AuthVerificationCard
         title={t('steps.verification.title')}
         subtitle={t('steps.verification.subtitle')}
@@ -43,7 +48,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
         resendVerificationEmailHandler={resendVerificationEmailHandler}
         isLoading={isLoading}
       />
-    </main>
+    </>
   );
 };
 

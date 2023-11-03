@@ -20,7 +20,7 @@ export const UserCard = ({
       <header className="flex flex-col gap-2">
         <Icon
           icon={iconName}
-          className="mx-auto h-16 w-16 stroke-grey-4 stroke-[0.5px]"
+          className="mx-auto h-22 w-22 fill-grey-4 stroke-1"
         />
         <h2 className="text-center text-2xl">
           <p>{title}</p>

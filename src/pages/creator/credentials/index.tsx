@@ -2,21 +2,27 @@ import { GetServerSideProps } from 'next';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';
+import { UserRole } from '@/shared/typings/UserRole';
 
-const CredentialsPage: NextPageWithLayout = () => {
+const CreatorCredentialsPage: NextPageWithLayout = () => {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center">
       <h1 className="text-2xl">Credentials Page</h1>
-    </main>
+    </div>
   );
 };
 
-export const getServerSideProps = withAuth(async (ctx) => {
-  return {
-    props: {
-      ...(await getI18nProps(ctx.locale)),
-    },
-  };
-}) satisfies GetServerSideProps;
+export const getServerSideProps = withAuth(
+  async (ctx) => {
+    return {
+      props: {
+        ...(await getI18nProps(ctx.locale)),
+      },
+    };
+  },
+  {
+    roles: [UserRole.Creator],
+  },
+) satisfies GetServerSideProps;
 
-export default CredentialsPage;
+export default CreatorCredentialsPage;

@@ -11,6 +11,7 @@ import { LoginFormContextType } from '@/components/modules/authorization/LoginFo
 import { useToast } from '@/shared/hooks/useToast';
 import { UserRole } from '@/shared/typings/UserRole';
 import { AuthVerificationCard } from '../AuthVerificationCard/AuthVerificationCard';
+import { WelcomeHeader } from '../../welcome/WelcomeHeader/WelcomeHeader';
 
 type LoginPageContainerProps = {
   userRole: UserRole;
@@ -55,35 +56,35 @@ export const LoginPageContainer = ({ userRole }: LoginPageContainerProps) => {
     setEmailSent(false);
   };
 
-  if (emailSent) {
-    return (
-      <main className="flex flex-1 flex-col items-center justify-center">
+  return (
+    <>
+      <WelcomeHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
+      {emailSent ? (
         <AuthVerificationCard
-          title="Verification"
-          subtitle="We have sent you an email with a link to verify your account. Please check your inbox and click on the link to verify your account."
+          title={t('verification.title')}
+          subtitle={t('verification.description')}
           isLoading={isLoading}
           resendVerificationEmailHandler={resendVerificationEmailHandler}
           goBackHandler={goBackHandler}
         />
-      </main>
-    );
-  }
-
-  return (
-    <main className="flex flex-1 flex-col items-center justify-center">
-      <BaseAuthFormCard
-        title={t(`userTypes.${userRole.toLowerCase()}`)}
-        subtitle={t('card.description')}
-      >
-        <FormProvider {...form}>
-          <div className="flex-1 px-[6.75rem]">
-            <LoginForm
-              handleSubmit={handleSubmit(signupSubmitHandler)}
-              isLoading={isLoading}
-            />
-          </div>
-        </FormProvider>
-      </BaseAuthFormCard>
-    </main>
+      ) : (
+        <BaseAuthFormCard
+          title={t(`card.titles.${userRole.toLowerCase()}`)}
+          subtitle={t('card.description')}
+        >
+          <FormProvider {...form}>
+            <div className="flex-1 px-[6.75rem]">
+              <LoginForm
+                handleSubmit={handleSubmit(signupSubmitHandler)}
+                isLoading={isLoading}
+              />
+            </div>
+          </FormProvider>
+        </BaseAuthFormCard>
+      )}
+    </>
   );
 };

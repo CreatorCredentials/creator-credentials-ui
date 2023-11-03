@@ -23,7 +23,7 @@ const ContentWithIcon = ({
   return (
     <Wrapper
       className={clsxm(
-        'flex items-center fill-grey-4',
+        'flex items-center fill-grey-4 py-1',
         {
           'cursor-pointer': Boolean(onClick),
         },
@@ -59,13 +59,13 @@ export const CardWithBadge = ({
 }: CardWithBadgeProps) => (
   <Card className={clsxm('relative', className)}>
     <article className="flex flex-1 flex-col gap-2">
-      <header className="pt-8">
+      <header className="flex flex-col gap-2">
         {badgeType && (
-          <div className="absolute left-2 top-2">
+          <div className="-ms-4 -mt-4 self-start">
             <ColoredBadge badgeType={badgeType} />
           </div>
         )}
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-2">
           <Icon
             icon={iconName}
             className="me-2 h-[5.5rem] w-[5.5rem] fill-grey-4 text-grey-4"
@@ -76,7 +76,7 @@ export const CardWithBadge = ({
       <div className="flex-1 overflow-hidden text-base text-grey-4">
         {content}
       </div>
-      <footer className="flex flex-col items-center gap-4 text-center">
+      <footer className="flex flex-col items-center gap-2 text-center">
         {footer}
       </footer>
     </article>
