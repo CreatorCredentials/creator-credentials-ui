@@ -1,14 +1,18 @@
 {
-  "userTypes": {
-    "creator": "I'm a Creator",
-    "issuer": "I'm an Issuer"
+  "header": {
+    "title": "Creator Credentials",
+    "subtitle": "Empower the Creative Community\nwith Trust and Transparency"
   },
   "card": {
-    "description": "Please enter your e-mail address. We will send you an e-mail to verify your address and enter the app."
+    "titles": {
+      "creator": "Creator Hub",
+      "issuer": "Issuer Portal"
+    },
+    "description": "Input your email below, and we'll send you a verification link to proceed."
   },
   "verification": {
-    "title": "Verification",
-    "description": "We sent you an e-mail to verify control of your address."
+    "title": "Verify your e-mail address",
+    "description": "We have sent you an e-mail to proof control of your e-mail address."
   },
   "error": {
     "send-email": "Apologies for the inconvenience. We encountered an issue on our end preventing the email from being sent. Please try again later."

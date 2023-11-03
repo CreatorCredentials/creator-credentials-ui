@@ -1,10 +1,15 @@
 {
-  "header": "Short info about the website and login procedure",
-  "title": "Issuer sign-up",
+  "header": {
+    "title": "Creator Credentials",
+    "subtitle": "Empower the Creative Community\nwith Trust and Transparency"
+  },
+  "card": {
+    "title": "Issuer Portal"
+  },
   "steps": {
     "details": {
       "tab-label": "Sign up details",
-      "subtitle": "Please enter your e-mail address. We will send you an e-mail to verify your address."
+      "subtitle": "Input your email below, and we'll send you a verification link to proceed."
     },
     "email": {
       "tab-label": "E-mail address",
