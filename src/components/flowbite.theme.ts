@@ -4,12 +4,12 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   button: {
     color: {
       primary:
-        'text-white bg-primary border border-primary hover:bg-primary-hover focus:ring-4 focus:ring-primary-hover disabled:bg-grey-3 disabled:border-grey-3',
+        'text-white bg-primary border border-primary hover:bg-primary-hover focus:ring-4 focus:ring-primary-hover disabled:bg-grey-3 disabled:border-grey-3 fill-white',
       outline:
-        'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white',
+        'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-primary',
     },
     size: {
-      md: 'text-sm px-3 py-1.5 font-normal',
+      md: 'text-sm px-4 py-1.5 font-normal text-base',
     },
     disabled: 'cursor-not-allowed bg-grey-3 hover:bg-grey-3 border-grey-3',
   },
@@ -47,6 +47,11 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   tooltip: {
     style: {
       dark: 'bg-black text-white',
+    },
+  },
+  spinner: {
+    color: {
+      info: 'fill-primary',
     },
   },
 };
