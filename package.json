@@ -5,9 +5,9 @@
   "license": "UNLICENSED",
   "engines": {
     "node": "^18",
-    "pnpm": "8.8.0"
+    "pnpm": "8.10.2"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.10.2",
   "scripts": {
     "build": "next build",
     "changeset:build": "pnpm tsc ./.changeset/changelog.generator.ts",
