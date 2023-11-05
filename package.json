@@ -4,7 +4,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "^18.18.0",
+    "node": "^18",
     "pnpm": "8.8.0"
   },
   "packageManager": "pnpm@8.8.0",
