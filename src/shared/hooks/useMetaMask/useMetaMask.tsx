@@ -9,6 +9,7 @@ import { useGenerateMetaMaskNonce } from '@/api/mutations/useGenerateMetaMaskNon
 import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
 import { config } from '@/shared/constants/config';
+import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
 
 type UseMetaMaskProps = {
   optimisticUpdate?: boolean;
@@ -28,11 +29,19 @@ export const useMetaMask = ({
     isLoading: isConnectingMutationRunning,
   } = useConnectMetaMaskWallet({
     onSuccess: () => {
-      if (!optimisticUpdate) return;
+      if (!optimisticUpdate || !account) return;
 
-      queryClient.setQueryData([QueryKeys.creatorVerifiedCredentials], {
-        metaMask: account,
-      });
+      queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+        [QueryKeys.creatorVerifiedCredentials],
+        (oldData) => {
+          if (!oldData) return;
+
+          return {
+            ...oldData,
+            metaMask: account,
+          };
+        },
+      );
     },
   });
 
@@ -41,9 +50,17 @@ export const useMetaMask = ({
       onSuccess: () => {
         if (!optimisticUpdate) return;
 
-        queryClient.setQueryData([QueryKeys.creatorVerifiedCredentials], {
-          metaMask: null,
-        });
+        queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+          [QueryKeys.creatorVerifiedCredentials],
+          (oldData) => {
+            if (!oldData) return;
+
+            return {
+              ...oldData,
+              metaMask: null,
+            };
+          },
+        );
       },
     });
 

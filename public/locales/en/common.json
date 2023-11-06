@@ -15,6 +15,7 @@
   "disconnect": "Disconnect",
   "verify": "Verify",
   "coming-soon": "Coming soon",
+  "pending": "Pending",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",
@@ -33,6 +34,7 @@
     "issuer": "Issuer"
   },
   "copy-to-clipboard": {
+    "label": "Copy to clipboard",
     "info": "Copied to clipboard",
     "error": "Failed to copy to clipboard",
     "warning": "Your browser does not support copying to clipboard"

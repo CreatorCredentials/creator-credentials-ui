@@ -4,4 +4,5 @@ export type BadgeType =
   | 'credential'
   | 'verification'
   | 'verified'
-  | 'connected';
+  | 'connected'
+  | 'pending';
