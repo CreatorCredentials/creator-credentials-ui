@@ -63,7 +63,9 @@ export const DomainVerificationCard = ({
     <CardWithBadge
       badgeType="verification"
       title={t('domain.title')}
-      iconName="Public"
+      image={{
+        iconName: 'Public',
+      }}
       className="flex-1"
       content={
         value && status !== CredentialVerificationStatus.NotStarted ? (

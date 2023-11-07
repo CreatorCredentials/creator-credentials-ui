@@ -37,7 +37,7 @@ module.exports = {
     'prettier/prettier': 'warn',
     'no-debugger': 'error',
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
-    quotes: ['warn', 'single', { allowTemplateLiterals: false }],
+    quotes: ['warn', 'single', { allowTemplateLiterals: true }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       { vars: 'all', args: 'all', argsIgnorePattern: '^_' },

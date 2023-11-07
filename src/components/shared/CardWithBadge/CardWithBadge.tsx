@@ -1,9 +1,11 @@
-import { Card } from 'flowbite-react';
+import { Card, Dropdown, DropdownItemProps } from 'flowbite-react';
 import { ReactNode } from 'react';
+import Image from 'next/image';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { ColoredBadge } from '../ColoredBadge';
 import { Icon, IconName } from '../Icon';
+import { IconButton } from '../IconButton';
 
 type ContentWithIconProps = {
   iconName: IconName;
@@ -35,7 +37,7 @@ const ContentWithIcon = ({
         icon={iconName}
         className="me-2 min-h-[1.25rem] min-w-[1.25rem]"
       />
-      <span className="break-all">{children}</span>
+      <p className="break-all">{children}</p>
     </Wrapper>
   );
 };
@@ -43,33 +45,76 @@ const ContentWithIcon = ({
 type CardWithBadgeProps = {
   badgeType?: BadgeType;
   title: string;
-  iconName: IconName;
   content: ReactNode;
   footer: ReactNode;
   className?: string | ClassValue;
+  image: { iconName: IconName } | { imageUrl: string; alt: string };
+  dropdownItems?: DropdownItemProps[];
 };
 
 export const CardWithBadge = ({
   badgeType,
   title,
-  iconName,
   content,
   footer,
   className,
+  image,
+  dropdownItems = [
+    {
+      children: 'Dropdown-item-1',
+    },
+    {
+      children: 'Dropdown-item-2',
+    },
+  ],
 }: CardWithBadgeProps) => (
   <Card className={clsxm('relative', className)}>
     <article className="flex flex-1 flex-col gap-2">
       <header className="flex flex-col gap-2">
-        {badgeType && (
-          <div className="-ms-4 -mt-4 self-start">
-            <ColoredBadge badgeType={badgeType} />
-          </div>
-        )}
+        <div className="-mt-4 flex justify-between">
+          {badgeType && (
+            <div className="-ms-4 self-start">
+              <ColoredBadge badgeType={badgeType} />
+            </div>
+          )}
+          {dropdownItems.length && (
+            <div className="relative -me-4 h-6 w-6 self-end">
+              <Dropdown
+                label=""
+                dismissOnClick={false}
+                renderTrigger={() => (
+                  <IconButton
+                    icon="MoreHoriz"
+                    className="relative p-0"
+                  />
+                )}
+              >
+                {dropdownItems.map((item, index) => (
+                  <Dropdown.Item
+                    {...item}
+                    key={item.key || index}
+                  />
+                ))}
+              </Dropdown>
+            </div>
+          )}
+        </div>
         <div className="flex flex-col items-center gap-2">
-          <Icon
-            icon={iconName}
-            className="me-2 h-[5.5rem] w-[5.5rem] fill-grey-4 text-grey-4"
-          />
+          <div className="relative me-2 h-[5.5rem] w-[5.5rem]">
+            {'iconName' in image && (
+              <Icon
+                icon={image.iconName}
+                className="h-full w-full fill-grey-4 text-grey-4"
+              />
+            )}
+            {'imageUrl' in image && (
+              <Image
+                src={image.imageUrl}
+                fill
+                alt={image.alt}
+              />
+            )}
+          </div>
           <p className="text-xl text-black">{title}</p>
         </div>
       </header>

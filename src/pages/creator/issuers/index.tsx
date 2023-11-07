@@ -1,14 +1,75 @@
+import { Spinner, Tabs, TabsComponent } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
-import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
-import { getI18nProps } from '@/shared/utils/i18n';
+import { useTranslation } from 'next-i18next';
+import { useMemo } from 'react';
+import { useCreatorIssuers } from '@/api/queries/useCreatorIssuers';
 import { withAuth } from '@/components/modules/app';
+import { IssuersList } from '@/components/modules/issuers/IssuersList';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { IssuerConnectionStatus } from '@/shared/typings/IssuerConnectionStatus';
+import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';
+import { getI18nProps } from '@/shared/utils/i18n';
+import { Issuer } from '@/shared/typings/Issuer';
+import { AvailableIssuers } from '@/components/modules/issuers/AvailableIssuers';
+
+const issuersStatusFilter =
+  (status: IssuerConnectionStatus) => (issuer: Issuer) =>
+    issuer.status === status;
 
 const CreatorIssuersPage: NextPageWithLayout = () => {
+  const { t } = useTranslation('creator-issuers');
+
+  const { data: issuers, isFetching } = useCreatorIssuers();
+
+  const { connected, pending, available } = useMemo(() => {
+    const connected =
+      issuers?.filter(issuersStatusFilter(IssuerConnectionStatus.Connected)) ||
+      [];
+
+    const pending =
+      issuers?.filter(issuersStatusFilter(IssuerConnectionStatus.Pending)) ||
+      [];
+
+    const available =
+      issuers?.filter(issuersStatusFilter(IssuerConnectionStatus.NotStarted)) ||
+      [];
+
+    return {
+      connected,
+      pending,
+      available,
+    };
+  }, [issuers]);
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
-      <h1 className="text-2xl">Issuers Page</h1>
-    </div>
+    <>
+      <PageHeader
+        title={t('header.title')}
+        subtitle={t('header.description')}
+      />
+      {isFetching ? (
+        <Spinner
+          size="xl"
+          className="absolute inset-0 m-auto"
+        />
+      ) : (
+        <TabsComponent style="underline">
+          <Tabs.Item
+            active
+            title={t('tabs.connected')}
+          >
+            <IssuersList issuers={connected} />
+          </Tabs.Item>
+          <Tabs.Item title={t('tabs.pending')}>
+            <IssuersList issuers={pending} />
+          </Tabs.Item>
+          <Tabs.Item title={t('tabs.available')}>
+            <AvailableIssuers issuers={available} />
+          </Tabs.Item>
+        </TabsComponent>
+      )}
+    </>
   );
 };
 
@@ -16,7 +77,7 @@ export const getServerSideProps = withAuth(
   async (ctx) => {
     return {
       props: {
-        ...(await getI18nProps(ctx.locale)),
+        ...(await getI18nProps(ctx.locale, ['creator-issuers', 'cards'])),
       },
     };
   },
