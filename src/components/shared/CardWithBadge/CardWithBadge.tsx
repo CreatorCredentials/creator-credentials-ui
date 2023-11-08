@@ -121,9 +121,11 @@ export const CardWithBadge = ({
       <div className="flex-1 overflow-hidden text-base text-grey-4">
         {content}
       </div>
-      <footer className="flex flex-col items-center gap-2 text-center">
-        {footer}
-      </footer>
+      {footer && (
+        <footer className="flex flex-col items-center gap-2 text-center">
+          {footer}
+        </footer>
+      )}
     </article>
   </Card>
 );

@@ -9,7 +9,7 @@ import { ColoredBadge } from '../ColoredBadge';
 
 type IssuerDetailsCardProps = {
   issuer: Issuer;
-  renderFooter?: (issuer: Issuer) => React.ReactNode;
+  renderFooter?: ((issuer: Issuer) => React.ReactNode) | null;
 };
 
 export const IssuerDetailsCard = ({
@@ -96,7 +96,11 @@ export const IssuerDetailsCard = ({
           )}
         </>
       }
-      footer={renderFooter ? renderFooter(issuer) : defaultRenderFooter()}
+      footer={
+        renderFooter
+          ? renderFooter(issuer)
+          : typeof renderFooter !== 'object' && defaultRenderFooter()
+      }
     ></CardWithBadge>
   );
 };

@@ -1,3 +1,4 @@
+import { VerifiedCredential } from './VerifiedCredential';
 import { IssuerConnectionStatus } from './IssuerConnectionStatus';
 
 export type Issuer = {
@@ -8,6 +9,9 @@ export type Issuer = {
   status: IssuerConnectionStatus;
   data: Record<string, string>;
   fees: boolean;
-  vcs: string[];
   additionalVerificationSteps?: boolean;
+};
+
+export type IssuerWithVerifiedCredentials = Issuer & {
+  vcs: VerifiedCredential[];
 };
