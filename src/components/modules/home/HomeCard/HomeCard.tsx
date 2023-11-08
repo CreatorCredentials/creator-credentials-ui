@@ -1,41 +1,37 @@
 import { Card } from 'flowbite-react';
 import React from 'react';
-import { Icon, IconName } from '@/components/shared/Icon';
-import { CardBadge } from '../CardBadge';
+import { Icon } from '@/components/shared/Icon';
+import { BadgeType } from '@/shared/typings/BadgeType';
+import { ColoredBadge } from '@/components/shared/ColoredBadge';
 
 type HomeCardProps = {
   title: string;
   children: React.ReactNode;
   renderFooter?: (renderProps: { icon: React.ReactNode }) => React.ReactNode;
   className?: string;
-  badge?: {
-    iconName: IconName;
-    label: string;
-  };
+  badgeType?: BadgeType;
 };
 
 export const HomeCard = ({
   className,
-  badge,
+  badgeType,
   renderFooter,
   children,
   title,
 }: HomeCardProps) => {
   return (
     <Card className={className}>
-      <article className="flex flex-col gap-3">
+      <article className="flex flex-1 flex-col gap-3 text-black">
         <header className="flex flex-col gap-3">
-          {badge && (
-            <CardBadge
-              iconName={badge.iconName}
-              className="bg-cyan-600/10 px-2 text-primary"
-            >
-              {badge.label}
-            </CardBadge>
+          {badgeType && (
+            <ColoredBadge
+              className="self-start"
+              badgeType={badgeType}
+            />
           )}
-          <h2 className="text-xl">{title}</h2>
+          <h3 className="text-xl">{title}</h3>
         </header>
-        {children}
+        <div className="flex-1 text-lg text-grey-4">{children}</div>
         <footer>
           {renderFooter &&
             renderFooter({

@@ -13,6 +13,8 @@
   "verified": "Verified",
   "connected": "Connected",
   "disconnect": "Disconnect",
+  "verify": "Verify",
+  "coming-soon": "Coming soon",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

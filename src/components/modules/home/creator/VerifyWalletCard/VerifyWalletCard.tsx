@@ -15,10 +15,7 @@ export const VerifyWalletCard = ({ className }: VerifyWalletCardProps) => {
     <HomeCard
       title={t('verify-wallet.badge')}
       className={className}
-      badge={{
-        iconName: 'BadgeCheck',
-        label: t('verify-wallet.badge'),
-      }}
+      badgeType="verification"
       renderFooter={({ icon }) => (
         <Button
           color="primary"
