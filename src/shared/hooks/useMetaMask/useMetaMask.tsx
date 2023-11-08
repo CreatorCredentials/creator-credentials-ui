@@ -10,6 +10,8 @@ import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
 import { config } from '@/shared/constants/config';
 import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { CredentialType } from '@/shared/typings/CredentialType';
 
 type UseMetaMaskProps = {
   optimisticUpdate?: boolean;
@@ -40,7 +42,14 @@ export const useMetaMask = ({
 
           return {
             ...oldData,
-            metaMask: account,
+            metaMask: {
+              id: account, // TODO: Replace after API implementation
+              type: CredentialType.Wallet,
+              data: {
+                address: account,
+              },
+              status: CredentialVerificationStatus.Success,
+            },
           };
         },
       );

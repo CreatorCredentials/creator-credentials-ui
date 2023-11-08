@@ -1,13 +1,10 @@
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { VerifiedCredential } from '@/shared/typings/VerifiedCredential';
 import axios, { AxiosRequestConfig } from '../axios';
 
 export type GetCreatorVerifiedCredentialsResponse = {
-  metaMask: string | null;
-  email: string;
-  domain: {
-    value: string | null;
-    status: CredentialVerificationStatus;
-  };
+  metaMask: VerifiedCredential | null;
+  email: VerifiedCredential;
+  domain: VerifiedCredential | null;
 };
 
 export const getCreatorVerifiedCredentials = (config?: AxiosRequestConfig) =>

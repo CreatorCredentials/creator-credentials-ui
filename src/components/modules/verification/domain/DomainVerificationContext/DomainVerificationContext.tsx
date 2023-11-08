@@ -23,6 +23,7 @@ export const DomainVerificationContextProvider = ({
   const [currentStep, setCurrentStep] =
     useState<DomainVerificationStep>('domain');
   const [currentTxtRecord, setCurrentTxtRecord] = useState<string>('');
+  const [domainAddress, setDomainAddress] = useState<string>('');
 
   const setTxtRecord = useCallback((txtRecord: string) => {
     setCurrentTxtRecord(txtRecord);
@@ -33,10 +34,12 @@ export const DomainVerificationContextProvider = ({
     () => ({
       currentStep,
       txtRecord: currentTxtRecord,
+      domainAddress,
+      setDomainAddress,
       setTxtRecord,
       setCurrentStep,
     }),
-    [setTxtRecord, currentStep, currentTxtRecord],
+    [currentStep, currentTxtRecord, domainAddress, setTxtRecord],
   );
 
   return (

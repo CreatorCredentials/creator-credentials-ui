@@ -12,7 +12,7 @@ import { useDomainVerificationContext } from '../DomainVerificationContext';
 
 export const DomainVerificationEnterDomainCard = () => {
   const { t } = useTranslation('domain-verification');
-  const { currentStep, setTxtRecord, setCurrentStep } =
+  const { currentStep, setTxtRecord, setCurrentStep, setDomainAddress } =
     useDomainVerificationContext();
   const toast = useToast();
 
@@ -32,6 +32,7 @@ export const DomainVerificationEnterDomainCard = () => {
     try {
       setCurrentStep('domain');
       const { txtRecord } = await mutateAsync(domain);
+      setDomainAddress(domain);
       setTxtRecord(txtRecord);
     } catch (error) {
       toast.error(t('errors.txt-record-creation'));

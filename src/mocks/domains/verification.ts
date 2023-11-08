@@ -1,15 +1,16 @@
 import { rest } from 'msw';
-import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
-import {
-  GenerateMetaMaskNoncePayload,
-  GenerateMetaMaskNonceResponse,
-} from '@/api/requests/generateMetaMaskNonce';
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { ConfirmDomainTxtRecordCreationPayload } from '@/api/requests/confirmDomainTxtRecordCreation';
 import {
   CreateTxtRecordForDomainPayload,
   CreateTxtRecordForDomainResponse,
 } from '@/api/requests/createTxtRecordForDomain';
-import { ConfirmDomainTxtRecordCreationPayload } from '@/api/requests/confirmDomainTxtRecordCreation';
+import {
+  GenerateMetaMaskNoncePayload,
+  GenerateMetaMaskNonceResponse,
+} from '@/api/requests/generateMetaMaskNonce';
+import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
+import { CredentialType } from '@/shared/typings/CredentialType';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
 
 export const verificationHandlers = [
@@ -23,9 +24,20 @@ export const verificationHandlers = [
         ctx.status(200),
         ctx.json<GetCreatorVerifiedCredentialsResponse>({
           metaMask: null,
-          email: 'test@creator.info',
+          email: {
+            id: 'email-credential-id',
+            type: CredentialType.Email,
+            data: {
+              address: 'test@creator.info',
+            },
+            status: CredentialVerificationStatus.Success,
+          },
           domain: {
-            value: null,
+            id: 'domain-credential-id',
+            type: CredentialType.Domain,
+            data: {
+              domain: 'creator.info',
+            },
             status: CredentialVerificationStatus.NotStarted,
           },
         }),
