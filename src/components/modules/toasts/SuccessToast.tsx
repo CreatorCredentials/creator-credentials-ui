@@ -8,7 +8,7 @@ type SuccessToastProps = {
 export const SuccessToast = ({ children }: SuccessToastProps) => (
   <ToastCard
     iconName="Check"
-    iconClassName="bg-success bg-opacity-20 text-success"
+    iconClassName="bg-success/20 fill-success"
   >
     {children}
   </ToastCard>

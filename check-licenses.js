@@ -3,7 +3,7 @@ const { name, version } = require('./package.json');
 
 const ROOT_PROJECT = `${name}@${version}`;
 
-const IGNORED_PACKAGES = [ROOT_PROJECT];
+const IGNORED_PACKAGES = [ROOT_PROJECT, '@metamask/sdk-react'];
 
 const ALLOWED_LICENSES = [
   'MIT',
