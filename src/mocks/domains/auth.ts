@@ -31,7 +31,7 @@ const CODE_TO_USER_MAP: Record<string, BaseUserData> = {
   },
   issuer: {
     id: 'issuer-id',
-    role: UserRole.Creator,
+    role: UserRole.Issuer,
   },
 };
 
@@ -111,7 +111,7 @@ export const authHandlers = [
     },
   ),
   rest.post<SignupCreatorPayload, SignupCreatorResponse>(
-    `${MOCK_API_URL}/creator/signup`,
+    `${MOCK_API_URL}/auth/signup/creator`,
     async (req, res, ctx) => {
       const { email } = await req.json();
       const delay = ctx.delay(1000);

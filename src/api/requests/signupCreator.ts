@@ -11,4 +11,4 @@ export const signupCreator = (payload: SignupCreatorPayload) =>
   axios.post<
     SignupCreatorPayload,
     AxiosResponse<SignupCreatorResponse, SignupCreatorPayload>
-  >('/creator/signup', payload);
+  >('/auth/signup/creator', payload);
