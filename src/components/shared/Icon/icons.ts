@@ -33,6 +33,7 @@ export const icons = {
   Check: lazy(() => import('@/public/images/icons/check.svg')),
   CheckCircle: lazy(() => import('@/public/images/icons/check-circle.svg')),
   Close: lazy(() => import('@/public/images/icons/close.svg')),
+  ContentCopy: lazy(() => import('@/public/images/icons/content-copy.svg')),
   DesignServices: lazy(
     () => import('@/public/images/icons/design-services.svg'),
   ),
@@ -46,6 +47,7 @@ export const icons = {
   Metamask: lazy(() => import('@/public/images/icons/metamask.svg')),
   Public: lazy(() => import('@/public/images/icons/public.svg')),
   Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
+  Schedule: lazy(() => import('@/public/images/icons/schedule.svg')),
   Verified: lazy(() => import('@/public/images/icons/verified.svg')),
   VerifiedFilled: lazy(
     () => import('@/public/images/icons/verified-filled.svg'),

@@ -4,6 +4,12 @@ import {
   GenerateMetaMaskNoncePayload,
   GenerateMetaMaskNonceResponse,
 } from '@/api/requests/generateMetaMaskNonce';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import {
+  CreateTxtRecordForDomainPayload,
+  CreateTxtRecordForDomainResponse,
+} from '@/api/requests/createTxtRecordForDomain';
+import { ConfirmDomainTxtRecordCreationPayload } from '@/api/requests/confirmDomainTxtRecordCreation';
 import { MOCK_API_URL } from '../config';
 
 export const verificationHandlers = [
@@ -17,6 +23,11 @@ export const verificationHandlers = [
         ctx.status(200),
         ctx.json<GetCreatorVerifiedCredentialsResponse>({
           metaMask: null,
+          email: 'test@creator.info',
+          domain: {
+            value: null,
+            status: CredentialVerificationStatus.NotStarted,
+          },
         }),
       );
     },
@@ -36,6 +47,29 @@ export const verificationHandlers = [
       const delay = ctx.delay(1000);
 
       return res(delay, ctx.status(200));
+    },
+  ),
+  rest.post<CreateTxtRecordForDomainPayload>(
+    `${MOCK_API_URL}/verification/domain/txt-record`,
+    (_req, res, ctx) => {
+      const delay = ctx.delay(500);
+
+      return res(
+        delay,
+        ctx.status(201),
+        ctx.json<CreateTxtRecordForDomainResponse>({
+          txtRecord:
+            '"cc-verification=0x3220916bf809914j82924bb8f32e1c396eba5c5 0b199a8ea7e37g6s99bcf141f1de226 4ded52ef3c0fb6cb79bd37j8237596b692dc37176ea78dc5c385fb1c"',
+        }),
+      );
+    },
+  ),
+  rest.post<ConfirmDomainTxtRecordCreationPayload>(
+    `${MOCK_API_URL}/verification/domain/confirm`,
+    (_req, res, ctx) => {
+      const delay = ctx.delay(500);
+
+      return res(delay, ctx.status(201));
     },
   ),
 ];

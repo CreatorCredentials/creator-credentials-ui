@@ -2,19 +2,19 @@ import { useTranslation } from 'next-i18next';
 import { Tooltip } from 'flowbite-react';
 import { MetamaskConnectionButton } from '@/components/shared/MetamaskConnectionButton';
 import { CardWithBadge } from '@/components/shared/CardWithBadge';
-import { useCreatorVerifiedCredentials } from '@/api/queries/useCreatorVerifiedCredentials';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 
-export const MetamaskVerificationCard = () => {
+type MetamaskVerificationCardProps = {
+  walletAddress?: string | null;
+};
+
+export const MetamaskVerificationCard = ({
+  walletAddress,
+}: MetamaskVerificationCardProps) => {
   const { t } = useTranslation('verification-creator');
   const { copy } = useCopyToClipboard();
-
-  const { data: verifiedCredentials, isLoading: isLoadingVerifiedCredentials } =
-    useCreatorVerifiedCredentials();
-
-  const walletAddress = verifiedCredentials?.metaMask;
 
   const truncatedWalletAddress = walletAddress
     ? truncateWalletAddress(walletAddress)
@@ -53,7 +53,6 @@ export const MetamaskVerificationCard = () => {
             connectLabel={t('metamask.buttons.connect')}
             disconnectLabel={t('metamask.buttons.disconnect')}
             walletAddress={walletAddress}
-            isLoadingVerifiedCredentials={isLoadingVerifiedCredentials}
           />
           {walletAddress && (
             <ColoredBadge
