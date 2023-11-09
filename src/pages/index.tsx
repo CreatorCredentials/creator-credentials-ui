@@ -1,13 +1,14 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
+import { authOptions } from './api/auth/[...nextauth]';
 
 const HomePage: NextPage = () => null;
 
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx);
+    const session = await getServerSession(ctx.req, ctx.res, authOptions);
 
     return {
       redirect: {

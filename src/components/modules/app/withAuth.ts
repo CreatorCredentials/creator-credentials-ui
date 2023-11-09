@@ -1,7 +1,8 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 import { SessionError } from '@/shared/typings/SessionError';
 import { UserRole } from '@/shared/typings/UserRole';
+import { authOptions } from '../../../pages/api/auth/[...nextauth]';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -17,7 +18,11 @@ export function withAuth<
   return async function withAuthUserTokenSSR(
     context: GetServerSidePropsContext,
   ) {
-    const session = await getSession(context);
+    const session = await getServerSession(
+      context.req,
+      context.res,
+      authOptions,
+    );
 
     if (
       !session ||
