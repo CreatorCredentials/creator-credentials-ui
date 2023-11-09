@@ -11,53 +11,81 @@ const CREATOR_ROUTES: NavigationRoute[] = [
     labelKey: 'navigation.home',
     href: '/creator',
     iconName: 'Home',
+    activeIconName: 'HomeFilled',
     exact: true,
   },
   {
     labelKey: 'navigation.verification',
     href: '/creator/verification',
-    iconName: 'BadgeCheck',
+    iconName: 'Verified',
+    activeIconName: 'VerifiedFilled',
   },
   {
     labelKey: 'navigation.issuers',
     href: '/creator/issuers',
-    iconName: 'Building',
+    iconName: 'AssuredWorkload',
+    activeIconName: 'AssuredWorkloadFilled',
   },
   {
     labelKey: 'navigation.credentials',
     href: '/creator/credentials',
     iconName: 'Caption',
+    activeIconName: 'CaptionFilled',
   },
 ];
+
+const CREATOR_SUB_ROUTES: NavigationRoute[] = [
+  {
+    labelKey: 'navigation.profile',
+    href: '/creator/profile',
+    iconName: 'AccountCircle',
+    activeIconName: 'AccountCircleFilled',
+  },
+];
+
 const ISSUER_ROUTES: NavigationRoute[] = [
   {
     labelKey: 'navigation.home',
     href: '/issuer',
     iconName: 'Home',
+    activeIconName: 'HomeFilled',
     exact: true,
   },
   {
     labelKey: 'navigation.verification',
     href: '/issuer/verification',
-    iconName: 'BadgeCheck',
+    iconName: 'Verified',
+    activeIconName: 'VerifiedFilled',
   },
   {
     labelKey: 'navigation.creators',
     href: '/issuer/creators',
-    iconName: 'Building',
+    iconName: 'DesignServices',
+    activeIconName: 'DesignServicesFilled',
+  },
+  {
+    labelKey: 'navigation.requested',
+    href: '/issuer/creators/requested',
+    suffixComponent: <NavigationItem.CountBadge>10</NavigationItem.CountBadge>,
+  },
+  {
+    labelKey: 'navigation.accepted',
+    href: '/issuer/creators/accepted',
+  },
+];
+
+const ISSUER_SUB_ROUTES: NavigationRoute[] = [
+  {
+    labelKey: 'navigation.profile',
+    href: '/issuer/profile',
+    iconName: 'AccountCircle',
+    activeIconName: 'AccountCircleFilled',
   },
   {
     labelKey: 'navigation.credentials',
     href: '/issuer/credentials',
     iconName: 'Caption',
-  },
-];
-
-const SUB_ROUTES: NavigationRoute[] = [
-  {
-    labelKey: 'navigation.profile',
-    href: '/profile',
-    iconName: 'UserSettings',
+    activeIconName: 'CaptionFilled',
   },
 ];
 
@@ -69,12 +97,17 @@ export const Navigation = () => {
       ? CREATOR_ROUTES
       : ISSUER_ROUTES;
 
+  const subRoutes =
+    session.data?.user?.role === UserRole.Creator
+      ? CREATOR_SUB_ROUTES
+      : ISSUER_SUB_ROUTES;
+
   return (
     <Sidebar className="flex w-[11.5rem] flex-col border-e-2 border-gray-200">
       <Sidebar.Items className="h-full">
         <Sidebar.ItemGroup className="relative flex h-full flex-col justify-between">
-          <div className="pt-[7.75rem]">
-            <BrandImage containerClassName="left-0 right-0 top-0 m-auto" />
+          <BrandImage containerClassName="left-0 right-0 top-4 m-auto" />
+          <div className="pt-[6rem]">
             {routes.map((props) => (
               <NavigationItem
                 {...props}
@@ -83,7 +116,7 @@ export const Navigation = () => {
             ))}
           </div>
           <div>
-            {SUB_ROUTES.map((props) => (
+            {subRoutes.map((props) => (
               <NavigationItem
                 {...props}
                 key={props.href}

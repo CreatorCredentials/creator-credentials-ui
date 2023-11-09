@@ -12,7 +12,7 @@ export const BaseAuthFormCard = ({
   subtitle,
   children,
 }: BaseAuthFormCardProps) => (
-  <Card className="w-[39rem]">
+  <Card className="w-[39rem] overflow-hidden">
     <section className="flex flex-col gap-12">
       <header className="flex flex-col gap-2">
         <h2 className="text-2xl">

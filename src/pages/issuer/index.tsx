@@ -20,26 +20,28 @@ const IssuerHomePage: NextPageWithLayout<
   const { t } = useTranslation('home-issuer');
 
   return (
-    <main className="flex flex-1 flex-col gap-6">
+    <>
       <PageHeader title={t('header.title')} />
-      <div className="flex flex-col gap-5">
-        <IssuerWelcomeCard />
-        <div className="flex gap-5">
-          <IssuerVerifyDomainCard />
-          <IssuerDidWebVerificationCard />
-        </div>
-        <section className="flex flex-col gap-5">
+      <div className="flex flex-1 flex-col gap-4">
+        <section className="flex flex-col gap-4">
+          <IssuerWelcomeCard />
+          <div className="flex gap-4">
+            <IssuerVerifyDomainCard />
+            <IssuerDidWebVerificationCard />
+          </div>
+        </section>
+        <section className="flex flex-col gap-4">
           <header>
-            <h2 className="text-xl text-black">
+            <h3 className="text-xl text-black">
               {t('qualified-certificates.title')}
-            </h2>
+            </h3>
           </header>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-4">
             <IssuerQCertVerificationCard />
           </div>
         </section>
       </div>
-    </main>
+    </>
   );
 };
 

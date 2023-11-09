@@ -22,7 +22,9 @@
     "issuers": "Issuers",
     "credentials": "Credentials",
     "profile": "Profile",
-    "signout": "Sign-out"
+    "signout": "Sign-out",
+    "requested": "Requested",
+    "accepted": "Accepted"
   },
   "badges": {
     "verification": "Verification",

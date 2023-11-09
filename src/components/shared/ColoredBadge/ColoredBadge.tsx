@@ -9,11 +9,12 @@ const BADGE_PROPS_MAP: Record<
     tKey: string;
     iconName: IconName;
     className: ClassValue;
+    iconClassName?: ClassValue;
   }
 > = {
   verification: {
     tKey: 'badges.verification',
-    iconName: 'BadgeCheck',
+    iconName: 'Verified',
     className: 'fill-verification text-verification bg-verification/5',
   },
   credential: {
@@ -28,24 +29,28 @@ const BADGE_PROPS_MAP: Record<
   },
   issuer: {
     tKey: 'badges.issuer',
-    iconName: 'Building',
+    iconName: 'AssuredWorkload',
     className: 'fill-issuer text-issuer bg-issuer/10',
   },
   verified: {
     tKey: 'verified',
-    iconName: 'BadgeCheck',
-    className: 'fill-success text-success text-base',
+    iconName: 'CheckCircle',
+    className:
+      'fill-success text-success text-base gap-2 py-2 border border-transparent',
+    iconClassName: 'h-5 w-5',
   },
   connected: {
     tKey: 'connected',
-    iconName: 'BadgeCheck',
-    className: 'fill-success text-success text-base',
+    iconName: 'CheckCircle',
+    className:
+      'fill-success text-success text-base gap-2 py-2 border border-transparent',
+    iconClassName: 'h-5 w-5',
   },
 };
 
 type ColoredBadgeProps = {
   badgeType: BadgeType;
-  className?: string | ClassValue;
+  className?: ClassValue;
 };
 
 export const ColoredBadge = ({ badgeType, className }: ColoredBadgeProps) => {
@@ -55,12 +60,13 @@ export const ColoredBadge = ({ badgeType, className }: ColoredBadgeProps) => {
     tKey,
     iconName,
     className: mapClassName,
+    iconClassName: mapIconClassName,
   } = BADGE_PROPS_MAP[badgeType];
 
   return (
     <div
       className={clsxm(
-        'inline-flex items-center justify-center self-start rounded-md px-2 py-[0.3rem]',
+        'flex items-center justify-center gap-1 self-start rounded-md px-2 py-0.5 text-sm',
         className,
         mapClassName,
       )}
@@ -68,9 +74,9 @@ export const ColoredBadge = ({ badgeType, className }: ColoredBadgeProps) => {
     >
       <Icon
         icon={iconName}
-        className="me-2 h-4 w-4"
+        className={clsxm('h-4 w-4', mapIconClassName)}
       />
-      <span className="text-sm">{t(tKey)}</span>
+      <span className="text-inherit">{t(tKey)}</span>
     </div>
   );
 };

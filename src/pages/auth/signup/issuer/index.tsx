@@ -14,9 +14,9 @@ import {
   useIssuerSignupContext,
 } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext';
 import { IssuerSignupFormStep } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.types';
-import { IssuerSignupFormStepsTabs } from '@/components/modules/authorization/issuer/IssuerSignupFormStepsTabs';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
+import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 
 const FORM_STEP: IssuerSignupFormStep = 'details';
 
@@ -42,16 +42,14 @@ const IssuerSignupDetailsPage: NextPageWithLayout = () => {
   };
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-[2.125rem]">
-      <header>
-        <h1 className="text-xl">{t('header')}</h1>
-      </header>
-      <article className="flex flex-col gap-5">
-        <header className="flex justify-center">
-          <IssuerSignupFormStepsTabs currentStep={FORM_STEP} />
-        </header>
+    <>
+      <WelcomeHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
+      <section className="flex flex-col gap-5">
         <BaseAuthFormCard
-          title={t('title')}
+          title={t('card.title')}
           subtitle={t('steps.details.subtitle')}
         >
           <FormProvider {...form}>
@@ -61,8 +59,8 @@ const IssuerSignupDetailsPage: NextPageWithLayout = () => {
             />
           </FormProvider>
         </BaseAuthFormCard>
-      </article>
-    </main>
+      </section>
+    </>
   );
 };
 

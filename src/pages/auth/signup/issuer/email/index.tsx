@@ -16,12 +16,12 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { IssuerSignupEmailFormContextType } from '@/components/modules/authorization/issuer/IssuerSignupEmailForm/IssuerSignupEmailForm.types';
 import { IssuerSignupEmailFormSchema } from '@/components/modules/authorization/issuer/IssuerSignupEmailForm/IssuerSignupEmailForm.schema';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
-import { IssuerSignupFormStepsTabs } from '@/components/modules/authorization/issuer/IssuerSignupFormStepsTabs';
 import { Icon } from '@/components/shared/Icon';
 import { useSignupIssuer } from '@/api/mutations/useSignupIssuer';
 import { mapIssuerSignupContextFormStepsToPayload } from '@/components/modules/authorization/issuer/mapIssuerSignupContextFormStepsToPayload';
 import { useToast } from '@/shared/hooks/useToast';
 import { DefaultIssuerSignupContextFormStepsValues } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.constants';
+import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 
 const FORM_STEP = 'email';
 
@@ -81,16 +81,14 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
   };
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-[2.125rem]">
-      <header>
-        <h1 className="text-xl">{t('header')}</h1>
-      </header>
-      <article className="flex flex-col gap-5">
-        <header className="flex justify-center">
-          <IssuerSignupFormStepsTabs currentStep={FORM_STEP} />
-        </header>
+    <>
+      <WelcomeHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
+      <section className="flex flex-col gap-5">
         <BaseAuthFormCard
-          title={t('title')}
+          title={t('card.title')}
           subtitle={t('steps.email.subtitle')}
         >
           <FormProvider {...form}>
@@ -99,39 +97,37 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
               className="px-[6.5rem]"
               emailInputDomain={formSteps['details'].domain}
               renderButtons={({ isValid }) => (
-                <div>
-                  <div className="flex flex-col gap-4">
-                    <Button
-                      type="submit"
-                      disabled={!isValid || !termsAndConditions || isLoading}
-                      isProcessing={isLoading}
-                      color="primary"
-                    >
-                      <p>{t('send', { ns: 'common' })}</p>
-                      <Icon
-                        icon="ArrowRight"
-                        className="ms-2 h-4 w-4"
-                      />
-                    </Button>
-                    <Button
-                      color="outline"
-                      onClick={goBackHandler}
-                      disabled={isLoading}
-                    >
-                      <Icon
-                        icon="ArrowLeft"
-                        className="me-2 h-4 w-4"
-                      />
-                      <p>{t('go-back', { ns: 'common' })}</p>
-                    </Button>
-                  </div>
+                <div className="flex flex-col gap-2.5">
+                  <Button
+                    type="submit"
+                    disabled={!isValid || !termsAndConditions || isLoading}
+                    isProcessing={isLoading}
+                    color="primary"
+                  >
+                    <p>{t('send', { ns: 'common' })}</p>
+                    <Icon
+                      icon="ArrowRight"
+                      className="ms-2"
+                    />
+                  </Button>
+                  <Button
+                    color="outline"
+                    onClick={goBackHandler}
+                    disabled={isLoading}
+                  >
+                    <Icon
+                      icon="ArrowLeft"
+                      className="me-2"
+                    />
+                    <p>{t('go-back', { ns: 'common' })}</p>
+                  </Button>
                 </div>
               )}
             />
           </FormProvider>
         </BaseAuthFormCard>
-      </article>
-    </main>
+      </section>
+    </>
   );
 };
 

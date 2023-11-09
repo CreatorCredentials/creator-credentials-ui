@@ -1,15 +1,16 @@
 {
-  "header": "Short info about the website and login procedure",
-  "title": "Creator sign-up",
+  "title": "Creator Credentials",
+  "subtitle": "Empower the Creative Community\nwith Trust and Transparency",
   "card": {
-    "description": "Please enter your e-mail address. We will send you a e-mail to verify your address."
+    "title": "Creator Hub",
+    "description": "Input your email below, and we'll send you a verification link to proceed."
   },
   "form": {
     "terms-and-conditions": "I agree for <link1>Terms & Conditions</link1>"
   },
   "verification": {
-    "title": "Verification",
-    "subtitle": "We sent you an e-mail to verify control of your address."
+    "title": "Verify your e-mail address",
+    "subtitle": "We have sent you an e-mail to proof control of your e-mail address."
   },
   "error": {
     "send-email": "Apologies for the inconvenience. We encountered an issue on our end preventing the email from being sent. Please try again later."
