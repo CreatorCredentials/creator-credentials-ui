@@ -1,6 +1,6 @@
-import { useSDK } from '@metamask/sdk-react';
+import MetaMaskSDK from '@metamask/sdk';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useToast } from '@/shared/hooks/useToast';
 import { useConnectMetaMaskWallet } from '@/api/mutations/useConnectMetaMaskWallet';
@@ -21,8 +21,10 @@ export const useMetaMask = ({
   const { t } = useTranslation('metamask');
   const queryClient = useQueryClient();
   const toast = useToast();
-  const { sdk, ready, provider, connecting, account } = useSDK();
+
   const [isWaitingForSignature, setIsWaitingForSignature] = useState(false);
+  const [account, setAccount] = useState<string>('');
+  const [sdk, setSDK] = useState<MetaMaskSDK>();
 
   const {
     mutateAsync: mutateConnectWallet,
@@ -69,21 +71,29 @@ export const useMetaMask = ({
 
   const connect = async () => {
     try {
-      if (!sdk || !provider || !ready) {
+      if (!sdk) {
         throw new Error('SDK not ready');
       }
 
-      const wallets = (await sdk.connect()) as string[] | undefined;
+      const accounts = (await sdk.connect()) as string[] | undefined;
 
-      if (!wallets?.[0]) {
+      if (!accounts?.[0]) {
         throw new Error('No connection with wallet');
       }
 
-      const from = wallets[0];
+      const from = (accounts as string[])[0];
+      setAccount(from);
+
+      const provider = await sdk.getProvider();
+
+      if (!provider) {
+        throw new Error('No provider');
+      }
+
       const { nonce } = await mutateMetaMaskNonce({ address: from });
       setIsWaitingForSignature(true);
 
-      const signature = await provider.request<string>({
+      const signature = await provider?.request<string>({
         method: 'personal_sign',
         params: [
           t('sign-message', {
@@ -106,6 +116,7 @@ export const useMetaMask = ({
         },
       });
     } catch (err) {
+      console.error(err);
       if ((err as ProviderRpcError).code) {
         // Code 4001 - User closed the MetaMask Browser extension while connecting
         // Code -32603 - User rejected the signature request
@@ -121,6 +132,24 @@ export const useMetaMask = ({
     }
   };
 
+  useEffect(() => {
+    const doAsync = async () => {
+      const clientSDK = new MetaMaskSDK({
+        checkInstallationImmediately: false,
+        dappMetadata: {
+          name: 'Creator Credentials',
+          url: window.location.host,
+        },
+        extensionOnly: true,
+        preferDesktop: true,
+      });
+      console.info('Will init');
+      await clientSDK.init();
+      setSDK(clientSDK);
+    };
+    doAsync();
+  }, []);
+
   const disconnect = async (walletAddress: string) => {
     try {
       await sdk?.terminate();
@@ -133,8 +162,7 @@ export const useMetaMask = ({
 
   const isProcessing =
     isWaitingForSignature ||
-    !ready ||
-    connecting ||
+    !sdk ||
     isLoadingNonce ||
     isDisconnecting ||
     isConnectingMutationRunning;

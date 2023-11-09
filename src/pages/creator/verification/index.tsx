@@ -1,18 +1,15 @@
 import { Spinner } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
-import { ReactElement } from 'react';
-import { useCreatorVerifiedCredentials } from '@/api/queries/useCreatorVerifiedCredentials';
-import { SidebarLayout } from '@/components/layouts/sidebarLayout/SidebarLayout';
 import { withAuth } from '@/components/modules/app';
 import { DomainVerificationCard } from '@/components/modules/verification/DomainVerificationCard';
 import { EmailVerificationCard } from '@/components/modules/verification/EmailVerificationCard';
 import { MetamaskVerificationCard } from '@/components/modules/verification/MetamaskVerificationCard';
-import { LazyMetaMaskProvider } from '@/components/shared/LazyMetaMaskProvider';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';
 import { getI18nProps } from '@/shared/utils/i18n';
+import { useCreatorVerifiedCredentials } from '@/api/queries/useCreatorVerifiedCredentials';
 
 const CreatorVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('verification-creator');
@@ -43,12 +40,6 @@ const CreatorVerificationPage: NextPageWithLayout = () => {
     </>
   );
 };
-
-CreatorVerificationPage.getLayout = (page: ReactElement) => (
-  <LazyMetaMaskProvider>
-    <SidebarLayout>{page}</SidebarLayout>
-  </LazyMetaMaskProvider>
-);
 
 export const getServerSideProps = withAuth(
   async (ctx) => {

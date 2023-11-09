@@ -5,7 +5,7 @@ export const createQueryClient = () =>
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false,
+        retry: 3,
       },
     },
   });
