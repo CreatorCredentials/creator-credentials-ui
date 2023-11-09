@@ -15,7 +15,9 @@ export const EmailVerificationCard = ({
     <CardWithBadge
       badgeType="verification"
       title={t('e-mail.title')}
-      iconName="Mail"
+      image={{
+        iconName: 'Mail',
+      }}
       className="flex-1"
       content={
         <CardWithBadge.ContentWithIcon iconName="Mail">

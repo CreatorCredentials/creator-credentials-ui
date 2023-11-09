@@ -21,7 +21,7 @@ export const PageHeader = ({
       <aside className="absolute left-5">
         <Button
           color="black"
-          href="/creator/verification"
+          href={closeButtonHref}
           as={Link as ElementType}
           size="xs"
         >

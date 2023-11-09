@@ -1,0 +1,19 @@
+{
+  "header": {
+    "title": "Your connection request"
+  },
+  "success-card": {
+    "title": "Your request has been sent",
+    "description": "Your request will be sent to the issuer. Once the credential has been issued to you we will inform you by e-mail about the result of the verification.",
+    "back-button": "Back to Home Page"
+  },
+  "card": {
+    "title": "You're about to establish a connection with the issuer below.",
+    "credentials-description": "These credentials will be presented to the chosen issuer for verification purposes.",
+    "confirmation-description": "By hitting \"confirm\", the issuer will be notified of your connection request."
+  },
+  "errors": {
+    "connection-request": "There was an error sending your connection request. Please try again later.",
+    "issuer-details": "There was an error loading the issuer details. Please try again later."
+  }
+}

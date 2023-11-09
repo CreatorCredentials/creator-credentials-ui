@@ -32,6 +32,9 @@ export const icons = {
   CaptionFilled: lazy(() => import('@/public/images/icons/caption-filled.svg')),
   Check: lazy(() => import('@/public/images/icons/check.svg')),
   CheckCircle: lazy(() => import('@/public/images/icons/check-circle.svg')),
+  CheckCircleFilled: lazy(
+    () => import('@/public/images/icons/check-circle-filled.svg'),
+  ),
   Close: lazy(() => import('@/public/images/icons/close.svg')),
   ContentCopy: lazy(() => import('@/public/images/icons/content-copy.svg')),
   DesignServices: lazy(
@@ -45,6 +48,8 @@ export const icons = {
   Info: lazy(() => import('@/public/images/icons/info.svg')),
   Mail: lazy(() => import('@/public/images/icons/mail.svg')),
   Metamask: lazy(() => import('@/public/images/icons/metamask.svg')),
+  MoreHoriz: lazy(() => import('@/public/images/icons/more-horiz.svg')),
+  Payments: lazy(() => import('@/public/images/icons/payments.svg')),
   Public: lazy(() => import('@/public/images/icons/public.svg')),
   Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
   Schedule: lazy(() => import('@/public/images/icons/schedule.svg')),

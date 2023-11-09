@@ -61,4 +61,25 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       gray: 'bg-transparent border-grey-2 text-grey-4 focus:border-black focus:ring-black',
     },
   },
+  tab: {
+    base: 'text-base',
+    tablist: {
+      base: 'inline-flex gap-8',
+      styles: {
+        underline: 'border-b-2 border-grey-3 gap-8',
+      },
+      tabitem: {
+        base: 'items-center justify-center p-4 rounded-t-lg text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500 focus:border-grey-4 focus:outline-none border-b-2 border-transparent text-gray-500',
+        styles: {
+          underline: {
+            base: '-mb-0.5 px-8 py-2',
+            active: {
+              on: 'text-base text-black border-b-2 border-black hover:border-black font-bold',
+              off: 'text-grey-4 text-base',
+            },
+          },
+        },
+      },
+    },
+  },
 };

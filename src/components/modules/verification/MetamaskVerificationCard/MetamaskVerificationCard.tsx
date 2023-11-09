@@ -30,7 +30,9 @@ export const MetamaskVerificationCard = ({
     <CardWithBadge
       badgeType="verification"
       title={t('metamask.title')}
-      iconName="Metamask"
+      image={{
+        iconName: 'Metamask',
+      }}
       className="flex-1"
       content={
         walletAddress ? (

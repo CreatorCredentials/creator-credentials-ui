@@ -16,6 +16,8 @@
   "verify": "Verify",
   "coming-soon": "Coming soon",
   "pending": "Pending",
+  "connect": "Connect",
+  "confirm": "Confirm",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",
