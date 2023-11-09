@@ -8,9 +8,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: 3.3.2
     version: 3.3.2(react-hook-form@7.47.0)
-  '@metamask/sdk-react':
-    specifier: 0.10.1
-    version: 0.10.1(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+  '@metamask/sdk':
+    specifier: 0.12.0
+    version: 0.12.0(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
   '@tanstack/react-query':
     specifier: 4.36.1
     version: 4.36.1(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
@@ -2368,8 +2368,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.10.1:
-    resolution: {integrity: sha512-lWeh1PUq114h1/44llZgBcG51uOEi5dHjnNHlcYK9Sjq/iJ4s3mp0y39DGXHEs2r6rJQRyQpryoYyPsQTF2Imw==}
+  /@metamask/sdk-communication-layer@0.12.0:
+    resolution: {integrity: sha512-wrrmPsB1i8Kec5dBUnsIqqGHvq7qbXB0KZGPgQ4wECO3glBcqtHkVT63qaP6T2r+YZnVWisegIVKA+p18/4OmA==}
     dependencies:
       cross-fetch: 3.1.6
       date-fns: 2.30.0
@@ -2384,8 +2384,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@metamask/sdk-install-modal-web@0.10.0(@types/react@18.2.28)(react-native@0.72.6):
-    resolution: {integrity: sha512-pMZeHx7XkXljYed1WCH9ek2Z4mttmpucZl+oacRb3YnMvF+aCphfx+HXabOvnX6htFSlVvxh9djibk8ox2Z9Bg==}
+  /@metamask/sdk-install-modal-web@0.12.0(@types/react@18.2.28)(react-native@0.72.6):
+    resolution: {integrity: sha512-YJjobvLDhJRt4eVOKbE1Q9YDYcDwwPkbnoPQxPxaRcFr+BWCNVPjSu7wiPnsR0JzseWbjTNy30Hkz9JIC04vIA==}
     dependencies:
       '@emotion/react': 11.11.1(@types/react@18.2.28)(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.28)(react@18.2.0)
@@ -2399,26 +2399,8 @@ packages:
       - react-native
     dev: false
 
-  /@metamask/sdk-react@0.10.1(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0):
-    resolution: {integrity: sha512-321QLnrKjLlM19Jo6BTTmUZejlfkLnxT2aKyeMI2sStrS4/8a5yHLsiba+k66rkaJPoL1qQGEOO/cMTT2EaZsA==}
-    peerDependencies:
-      react: ^18.2.0
-      react-dom: ^18.2.0
-    dependencies:
-      '@metamask/sdk': 0.10.1(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - bufferutil
-      - encoding
-      - react-native
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@metamask/sdk@0.10.1(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0):
-    resolution: {integrity: sha512-cxTWnniZG0cmvaFxf/WAf4SqPw4lHrt16cMMiefAJAsNyL3aPUh8M26fh29EdftIhUXytT9ErNGW+Nf5V4EsCQ==}
+  /@metamask/sdk@0.12.0(@types/react@18.2.28)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0):
+    resolution: {integrity: sha512-X1qptbnR6/TUf/gaBLoB0hpj0CdjiuoYqTkcVYW2Q1g7QfN7zR71Kt9r9YuEDUu8KxAnQT+LUvDd6jj5RY9e+g==}
     peerDependencies:
       react: ^18.2.0
       react-native: '*'
@@ -2431,8 +2413,8 @@ packages:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.10.1
-      '@metamask/sdk-install-modal-web': 0.10.0(@types/react@18.2.28)(react-native@0.72.6)
+      '@metamask/sdk-communication-layer': 0.12.0
+      '@metamask/sdk-install-modal-web': 0.12.0(@types/react@18.2.28)(react-native@0.72.6)
       '@react-native-async-storage/async-storage': 1.19.3(react-native@0.72.6)
       '@types/dom-screen-wake-lock': 1.0.2
       bowser: 2.11.0
@@ -2445,12 +2427,13 @@ packages:
       i18next-browser-languagedetector: 7.1.0
       obj-multiplex: 1.0.0
       pump: 3.0.0
-      qrcode-terminal: 0.12.0
+      qrcode-terminal-nooctal: 0.12.1
       react: 18.2.0
       react-i18next: 13.3.0(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
       react-native: 0.72.6(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
       react-native-webview: 11.26.1(react-native@0.72.6)(react@18.2.0)
       readable-stream: 2.3.8
+      rollup-plugin-visualizer: 5.9.2
       socket.io-client: 4.7.2
       util: 0.12.5
       uuid: 8.3.2
@@ -2459,6 +2442,7 @@ packages:
       - bufferutil
       - encoding
       - react-dom
+      - rollup
       - supports-color
       - utf-8-validate
     dev: false
@@ -4798,6 +4782,11 @@ packages:
       has-property-descriptors: 1.0.0
     dev: true
 
+  /define-lazy-prop@2.0.0:
+    resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
+    engines: {node: '>=8'}
+    dev: false
+
   /define-lazy-prop@3.0.0:
     resolution: {integrity: sha512-N+MeXYoqr3pOgn8xfyRPREN7gHakLYjhsHhWGT3fWAiL4IkAt0iDw14QiiEm2bE30c5XX5q0FtAA3CK5f9/BUg==}
     engines: {node: '>=12'}
@@ -6410,7 +6399,6 @@ packages:
     resolution: {integrity: sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==}
     engines: {node: '>=8'}
     hasBin: true
-    dev: true
 
   /is-docker@3.0.0:
     resolution: {integrity: sha512-eljcgEDlEns/7AXFosB5K/2nCM4P7FQPkGc/DWLy5rmFEWvZayGrik1d9/QIY5nJ4f9YsVvBkA6kJpHn9rISdQ==}
@@ -6608,7 +6596,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-docker: 2.2.1
-    dev: true
 
   /isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
@@ -8058,6 +8045,15 @@ packages:
     dependencies:
       is-wsl: 1.1.0
 
+  /open@8.4.2:
+    resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      define-lazy-prop: 2.0.0
+      is-docker: 2.2.1
+      is-wsl: 2.2.0
+    dev: false
+
   /open@9.1.0:
     resolution: {integrity: sha512-OS+QTnw1/4vrf+9hh1jc1jnYjzSG4ttTBB8UxOwAnInG3Uo4ssetzC1ihqaIHjLJnA5GGlRl6QlZXOTQhRBUvg==}
     engines: {node: '>=14.16'}
@@ -8494,8 +8490,8 @@ packages:
     resolution: {integrity: sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==}
     dev: false
 
-  /qrcode-terminal@0.12.0:
-    resolution: {integrity: sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==}
+  /qrcode-terminal-nooctal@0.12.1:
+    resolution: {integrity: sha512-jy/kkD0iIMDjTucB+5T6KBsnirlhegDH47vHgrj5MejchSQmi/EAMM0xMFeePgV9CJkkAapNakpVUWYgHvtdKg==}
     hasBin: true
     dev: false
 
@@ -8979,6 +8975,22 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+
+  /rollup-plugin-visualizer@5.9.2:
+    resolution: {integrity: sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==}
+    engines: {node: '>=14'}
+    hasBin: true
+    peerDependencies:
+      rollup: 2.x || 3.x
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      open: 8.4.2
+      picomatch: 2.3.1
+      source-map: 0.7.4
+      yargs: 17.7.2
+    dev: false
 
   /rollup@3.29.4:
     resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
