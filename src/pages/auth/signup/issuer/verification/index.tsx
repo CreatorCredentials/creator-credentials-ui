@@ -14,6 +14,7 @@ import { useSignupIssuer } from '@/api/mutations/useSignupIssuer';
 import { mapIssuerSignupContextFormStepsToPayload } from '@/components/modules/authorization/issuer/mapIssuerSignupContextFormStepsToPayload';
 import { useToast } from '@/shared/hooks/useToast';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
+import { UserRole } from '@/shared/typings/UserRole';
 
 const IssuerSignupVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('issuer-signup');
@@ -44,6 +45,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
       <AuthVerificationCard
         title={t('steps.verification.title')}
         subtitle={t('steps.verification.subtitle')}
+        userRole={UserRole.Issuer}
         goBackHandler={goBackHandler}
         resendVerificationEmailHandler={resendVerificationEmailHandler}
         isLoading={isLoading}

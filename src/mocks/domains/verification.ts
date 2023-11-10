@@ -10,13 +10,13 @@ import {
   CreateTxtRecordForDomainResponse,
 } from '@/api/requests/createTxtRecordForDomain';
 import { ConfirmDomainTxtRecordCreationPayload } from '@/api/requests/confirmDomainTxtRecordCreation';
-import { MOCK_API_URL } from '../config';
+import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
 
 export const verificationHandlers = [
   rest.get<GetCreatorVerifiedCredentialsResponse>(
     `${MOCK_API_URL}/users/vc`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(
         delay,
@@ -35,7 +35,7 @@ export const verificationHandlers = [
   rest.post<GenerateMetaMaskNoncePayload, GenerateMetaMaskNonceResponse>(
     `${MOCK_API_URL}/users/nonce`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(1000);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
       const randomNonce = Math.floor(Math.random() * 1000000000);
 
       return res(delay, ctx.status(200), ctx.json({ nonce: randomNonce }));
@@ -44,7 +44,7 @@ export const verificationHandlers = [
   rest.post<GenerateMetaMaskNoncePayload, GenerateMetaMaskNonceResponse>(
     `${MOCK_API_URL}/users/:walletAddress`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(1000);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(200));
     },
@@ -52,7 +52,7 @@ export const verificationHandlers = [
   rest.post<CreateTxtRecordForDomainPayload>(
     `${MOCK_API_URL}/verification/domain/txt-record`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(
         delay,
@@ -67,7 +67,7 @@ export const verificationHandlers = [
   rest.post<ConfirmDomainTxtRecordCreationPayload>(
     `${MOCK_API_URL}/verification/domain/confirm`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(201));
     },
