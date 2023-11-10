@@ -67,6 +67,7 @@ export const LoginPageContainer = ({ userRole }: LoginPageContainerProps) => {
           title={t('verification.title')}
           subtitle={t('verification.description')}
           isLoading={isLoading}
+          userRole={userRole}
           resendVerificationEmailHandler={resendVerificationEmailHandler}
           goBackHandler={goBackHandler}
         />

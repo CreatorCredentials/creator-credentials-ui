@@ -15,6 +15,7 @@ import { AuthVerificationCard } from '@/components/modules/authorization/AuthVer
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { CreatorSignupForm } from '@/components/modules/authorization/creator/CreatorSignupForm/CreatorSignupForm';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
+import { UserRole } from '@/shared/typings/UserRole';
 
 const CreatorSignupPage: NextPageWithLayout = () => {
   const { t } = useTranslation('creator-signup');
@@ -71,6 +72,7 @@ const CreatorSignupPage: NextPageWithLayout = () => {
             title={t('verification.title')}
             subtitle={t('verification.subtitle')}
             isLoading={isLoading}
+            userRole={UserRole.Creator}
             resendVerificationEmailHandler={resendVerificationEmailHandler}
             goBackHandler={goBackHandler}
           />
