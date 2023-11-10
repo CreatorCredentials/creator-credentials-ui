@@ -18,7 +18,7 @@ import {
 } from '@/api/requests/signupIssuer';
 import { BaseUserData } from '@/shared/typings/BaseUserData';
 import { UserRole } from '@/shared/typings/UserRole';
-import { MOCK_API_URL } from '../config';
+import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
 
 const ACCESS_TOKEN = 'XXXYYYZZZ';
 const REFRESH_TOKEN = 'ZZZWWWOOODD';
@@ -39,7 +39,7 @@ export const authHandlers = [
     `${MOCK_API_URL}/auth/signin/code`,
     async (req, res, ctx) => {
       const { code } = await req.json<SignInWithEmailCodePayload>();
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       if (Object.keys(CODE_TO_USER_MAP).includes(code)) {
         return res(
@@ -64,7 +64,7 @@ export const authHandlers = [
     (req, res, ctx) => {
       const token = req.headers.get('Authorization')?.split(' ')[1];
 
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       if (REFRESH_TOKEN === token) {
         return res(
@@ -84,7 +84,7 @@ export const authHandlers = [
   rest.post<LoginPayload, LoginResponse>(
     `${MOCK_API_URL}/auth/login`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(1000);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(200));
     },
@@ -92,7 +92,7 @@ export const authHandlers = [
   rest.post<SignupIssuerPayload, SignupIssuerResponse>(
     `${MOCK_API_URL}/auth/signup/issuer`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(1000);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(200));
     },
@@ -100,7 +100,7 @@ export const authHandlers = [
   rest.post<SignupCreatorPayload, SignupCreatorResponse>(
     `${MOCK_API_URL}/auth/signup/creator`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(1000);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(200));
     },

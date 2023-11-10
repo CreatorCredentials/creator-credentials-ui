@@ -9,7 +9,7 @@ import {
   GetIssuerDetailsWithCredentialsResponse,
 } from '@/api/requests/getIssuerDetailsWithCredentials';
 import { ConfirmCreatorToIssuerConnectionRequestPayload } from '@/api/requests/confirmCreatorToIssuerConnectionRequest';
-import { MOCK_API_URL } from '../config';
+import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
 
 const MOCK_CREDENTIALS: VerifiedCredential[] = [
   {
@@ -120,7 +120,7 @@ export const issuersHandlers = [
   rest.get<GetCreatorIssuersResponse>(
     `${MOCK_API_URL}/creator/issuers`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(
         delay,
@@ -134,7 +134,7 @@ export const issuersHandlers = [
   rest.get<GetIssuerDetailsWithCredentialsPayload>(
     `${MOCK_API_URL}/creator/issuers/:issuerId`,
     (req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
       const issuerId = req.params.issuerId;
 
       const issuerData = MOCK_ISSUERS.find((issuer) => issuer.id === issuerId);
@@ -155,7 +155,7 @@ export const issuersHandlers = [
   rest.post<ConfirmCreatorToIssuerConnectionRequestPayload>(
     `${MOCK_API_URL}/creator/issuers/:issuerId/confirm-request`,
     (_req, res, ctx) => {
-      const delay = ctx.delay(500);
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 
       return res(delay, ctx.status(201));
     },
