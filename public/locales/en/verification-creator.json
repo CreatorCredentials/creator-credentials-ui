@@ -24,5 +24,8 @@
       "start-verification": "Start verification",
       "disconnect": "Disconnect"
     }
+  },
+  "errors": {
+    "fetching-credentials": "Something went wrong while fetching your credentials. Please try again later."
   }
 }

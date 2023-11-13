@@ -3,7 +3,7 @@ import Link, { LinkProps } from 'next/link';
 import React, { ElementType } from 'react';
 import { clsxm } from '@/shared/utils/clsxm';
 
-type LinkButtonProps = Omit<ButtonProps & LinkProps, 'as'>;
+export type LinkButtonProps = Omit<ButtonProps & LinkProps, 'as'>;
 
 export const LinkButton = ({
   disabled,

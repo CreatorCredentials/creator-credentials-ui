@@ -46,6 +46,7 @@ export const getServerSideProps = withAuth(
       props: {
         ...(await getI18nProps(ctx.locale, [
           'creator-issuers-request',
+          'credentials-request-success-card',
           'cards',
         ])),
         issuerId,

@@ -7,18 +7,23 @@ type PageHeaderProps = {
   title: string;
   subtitle?: string;
   closeButtonHref?: string;
+  buttons?: React.ReactNode;
 };
 
 export const PageHeader = ({
   title,
   subtitle,
   closeButtonHref,
+  buttons,
 }: PageHeaderProps) => (
-  <header className="mb-6 flex flex-col gap-4 text-black">
-    <h1 className="text-2xl">{title}</h1>
+  <header className="relative mb-6 flex flex-col gap-4 text-black">
+    <div className="flex gap-11">
+      <h1 className="text-2xl">{title}</h1>
+      {buttons}
+    </div>
     {subtitle && <h2 className="text-lg">{subtitle}</h2>}
     {closeButtonHref && (
-      <aside className="absolute left-5">
+      <aside className="absolute -left-14">
         <Button
           color="black"
           href={closeButtonHref}

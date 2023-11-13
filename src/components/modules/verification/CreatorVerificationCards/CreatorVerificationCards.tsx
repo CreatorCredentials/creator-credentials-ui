@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'next-i18next';
-import { useCreatorVerifiedCredentials } from '@/api/queries/useCreatorVerifiedCredentials';
+import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { DomainVerificationCard } from '../DomainVerificationCard';
@@ -15,7 +15,7 @@ export const CreatorVerificationCards = () => {
     isFetching,
     isLoading,
     status,
-  } = useCreatorVerifiedCredentials();
+  } = useCreatorCredentials();
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;

@@ -7,6 +7,7 @@
   "add": "Add",
   "start": "Start",
   "next": "Next",
+  "back": "Back",
   "go-back": "Go back",
   "sign-up": "Sign up",
   "resend-email": "Resend e-mail",
@@ -18,6 +19,8 @@
   "pending": "Pending",
   "connect": "Connect",
   "confirm": "Confirm",
+  "download": "Download",
+  "deselect": "Deselect",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

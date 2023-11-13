@@ -8,7 +8,7 @@ import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 import { Loader } from '@/components/shared/Loader';
 import { useToast } from '@/shared/hooks/useToast';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
-import { SuccessfullCredentialRequestConfirmationCard } from '../SuccessfullCredentialRequestConfirmationCard';
+import { SuccessfullCredentialRequestConfirmationCard } from '../../../shared/SuccessfullCredentialRequestConfirmationCard';
 
 type ConnectionRequestDetailsProps = {
   issuerId: string;

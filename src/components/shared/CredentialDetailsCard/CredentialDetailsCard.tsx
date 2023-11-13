@@ -1,20 +1,23 @@
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { CredentialType } from '@/shared/typings/CredentialType';
-import { VerifiedCredential } from '@/shared/typings/VerifiedCredential';
+import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { CardWithBadge } from '../CardWithBadge';
 import { IconName } from '../Icon';
 
 const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Email]: 'Mail',
-  [CredentialType.Wallet]: 'Payments',
-  [CredentialType.Member]: 'AccountCircle',
+  [CredentialType.Wallet]: 'AccountBalanceWallet',
+  [CredentialType.Member]: 'Groups',
+  [CredentialType.Domain]: 'Public',
 };
 
 type CredentialDetailsCardProps = {
-  credential: VerifiedCredential;
-  renderFooter?: ((credential: VerifiedCredential) => React.ReactNode) | null;
+  credential: Omit<VerifiedCredentialsUnion, 'id'>;
+  renderFooter?:
+    | ((credential: Omit<VerifiedCredentialsUnion, 'id'>) => React.ReactNode)
+    | null;
 };
 
 export const CredentialDetailsCard = ({
@@ -36,17 +39,23 @@ export const CredentialDetailsCard = ({
           <p className="mb-2 text-base">
             {t(`credential.types.${type.toLowerCase()}.description`)}
           </p>
-          {data.address && (
+          {type === CredentialType.Email && 'address' in data && (
             <CardWithBadge.ContentWithIcon
               iconName="Public"
               className="whitespace-pre-wrap"
             >
-              {type === CredentialType.Email
-                ? data.address
-                : truncateWalletAddress(data.address)}
+              {data.address}
             </CardWithBadge.ContentWithIcon>
           )}
-          {data.companyName && (
+          {type === CredentialType.Wallet && 'address' in data && (
+            <CardWithBadge.ContentWithIcon
+              iconName="AccountBalanceWallet"
+              className="whitespace-pre-wrap"
+            >
+              {truncateWalletAddress(data.address)}
+            </CardWithBadge.ContentWithIcon>
+          )}
+          {'companyName' in data && data.companyName && (
             <CardWithBadge.ContentWithIcon
               iconName="AssuredWorkload"
               className="whitespace-pre-wrap"
@@ -54,7 +63,7 @@ export const CredentialDetailsCard = ({
               {data.companyName}
             </CardWithBadge.ContentWithIcon>
           )}
-          {data.requirements && (
+          {'requirements' in data && (
             <CardWithBadge.ContentWithIcon
               iconName="Caption"
               className="whitespace-pre-wrap"

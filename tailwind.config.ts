@@ -8,14 +8,17 @@ const customPlugin = plugin(({ addComponents, theme }) => {
       scrollbarColor: `${theme('colors.grey.3')} transparent`,
       scrollbarWidth: 'auto',
       '&::-webkit-scrollbar-track': {
+        zIndex: '100',
         background: theme('colors.white'),
         borderRadius: theme('spacing.2'),
       },
       '&::-webkit-scrollbar': {
+        zIndex: '100',
         width: theme('spacing.2'),
         height: theme('spacing.2'),
       },
       '&::-webkit-scrollbar-thumb': {
+        zIndex: '100',
         borderRadius: theme('spacing.2'),
         backgroundColor: theme('colors.grey.3'),
         width: theme('spacing.2'),

@@ -10,7 +10,7 @@ import { useConfirmDomainTxtRecordCreation } from '@/api/mutations/useConfirmDom
 import { useToast } from '@/shared/hooks/useToast';
 import { QueryKeys } from '@/api/queryKeys';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
+import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { useDomainVerificationContext } from '../DomainVerificationContext';
 
@@ -25,7 +25,7 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
 
   const { mutateAsync, isLoading } = useConfirmDomainTxtRecordCreation({
     onSuccess: () => {
-      queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+      queryClient.setQueryData<GetCreatorCredentialsResponse>(
         [QueryKeys.creatorVerifiedCredentials],
         (oldData) => {
           if (!oldData) return;
