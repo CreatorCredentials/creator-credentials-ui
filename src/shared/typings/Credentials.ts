@@ -36,8 +36,9 @@ export type DomainCredential = BaseCredential<
 export type MembershipCredential = BaseCredential<
   CredentialType.Member,
   {
-    companyName: string;
+    companyName?: string;
     requirements?: string;
+    validity?: string;
   }
 >;
 

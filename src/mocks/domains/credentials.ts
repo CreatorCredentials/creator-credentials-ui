@@ -9,6 +9,9 @@ import {
 } from '@/api/requests/getRequestableCredentials';
 import { SendCredentialsRequestPayload } from '@/api/requests/sendCredentialsRequest';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
+import { GetIssuerCredentialsResponse } from '@/api/requests/getIssuerCredentials';
+import { CredentialType } from '@/shared/typings/CredentialType';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
 import { MOCK_CREDENTIALS, MOCK_ISSUERS } from '../constants';
 
@@ -54,6 +57,30 @@ export const credentialsHandlers = [
                 },
               }) as VerifiedCredentialsUnion,
           ),
+        }),
+      );
+    },
+  ),
+  rest.get<GetIssuerCredentialsResponse>(
+    `${MOCK_API_URL}/issuer/credentials`,
+    (_req, res, ctx) => {
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
+
+      return res(
+        delay,
+        ctx.status(200),
+        ctx.json<GetIssuerCredentialsResponse>({
+          credentials: [
+            {
+              id: 'issuer-member-credential-id-1',
+              type: CredentialType.Member,
+              status: CredentialVerificationStatus.Success,
+              data: {
+                requirements: 'Info about requirements',
+                validity: '1 year',
+              },
+            },
+          ],
         }),
       );
     },
