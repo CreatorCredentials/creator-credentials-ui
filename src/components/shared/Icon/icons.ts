@@ -18,6 +18,7 @@ export const icons = {
     () => import('@/public/images/icons/account-circle-filled.svg'),
   ),
   Add: lazy(() => import('@/public/images/icons/add.svg')),
+  ArchiveFilled: lazy(() => import('@/public/images/icons/archive-filled.svg')),
   ArrowLeft: lazy(() => import('@/public/images/icons/arrow-left.svg')),
   ArrowLeftToBracket: lazy(
     () => import('@/public/images/icons/arrow-left-to-bracket.svg'),
@@ -46,6 +47,10 @@ export const icons = {
     () => import('@/public/images/icons/design-services-filled.svg'),
   ),
   Download: lazy(() => import('@/public/images/icons/download.svg')),
+  EventFilled: lazy(() => import('@/public/images/icons/event-filled.svg')),
+  EventTodayFilled: lazy(
+    () => import('@/public/images/icons/event-today-filled.svg'),
+  ),
   Groups: lazy(() => import('@/public/images/icons/groups.svg')),
   Home: lazy(() => import('@/public/images/icons/home.svg')),
   HomeFilled: lazy(() => import('@/public/images/icons/home-filled.svg')),
@@ -56,7 +61,11 @@ export const icons = {
   Payments: lazy(() => import('@/public/images/icons/payments.svg')),
   Public: lazy(() => import('@/public/images/icons/public.svg')),
   Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
+  Search: lazy(() => import('@/public/images/icons/search.svg')),
   Schedule: lazy(() => import('@/public/images/icons/schedule.svg')),
+  UnarchiveFilled: lazy(
+    () => import('@/public/images/icons/unarchive-filled.svg'),
+  ),
   Verified: lazy(() => import('@/public/images/icons/verified.svg')),
   VerifiedFilled: lazy(
     () => import('@/public/images/icons/verified-filled.svg'),

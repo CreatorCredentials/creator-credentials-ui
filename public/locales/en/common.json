@@ -22,6 +22,8 @@
   "download": "Download",
   "deselect": "Deselect",
   "active": "Active",
+  "accept": "Accept",
+  "reject": "Reject",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",
@@ -44,5 +46,14 @@
     "info": "Copied to clipboard",
     "error": "Failed to copy to clipboard",
     "warning": "Your browser does not support copying to clipboard"
+  },
+  "sorting": {
+    "label": "Sorting",
+    "items": {
+      "a-z": "A-Z",
+      "z-a": "Z-A",
+      "last-date": "Last date",
+      "newest-date": "Newest date"
+    }
   }
 }

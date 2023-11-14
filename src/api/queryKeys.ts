@@ -5,4 +5,5 @@ export const QueryKeys = {
   issuersByCredentials: 'issuersByCredentials',
   requestableCredentials: 'requestableCredentials',
   issuerCredentials: 'issuerCredentials',
+  issuerCreators: 'issuerCreators',
 };
