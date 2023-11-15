@@ -1,14 +1,23 @@
 import { GetServerSideProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { IssuerVerificationCards } from '@/components/modules/verification/IssuerVerificationCards';
 
 const IssuerVerificationPage: NextPageWithLayout = () => {
+  const { t } = useTranslation('issuer-verification');
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
-      <h1 className="text-2xl">Issuer Verification Page</h1>
-    </div>
+    <>
+      <PageHeader
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
+      />
+      <IssuerVerificationCards />
+    </>
   );
 };
 
@@ -16,7 +25,10 @@ export const getServerSideProps = withAuth(
   async (ctx) => {
     return {
       props: {
-        ...(await getI18nProps(ctx.locale)),
+        ...(await getI18nProps(ctx.locale, [
+          'verification-cards',
+          'issuer-verification',
+        ])),
       },
     };
   },

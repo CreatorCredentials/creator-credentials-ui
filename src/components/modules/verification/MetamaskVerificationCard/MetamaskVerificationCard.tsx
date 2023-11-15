@@ -13,7 +13,7 @@ type MetamaskVerificationCardProps = {
 export const MetamaskVerificationCard = ({
   walletAddress,
 }: MetamaskVerificationCardProps) => {
-  const { t } = useTranslation('verification-creator');
+  const { t } = useTranslation('verification-cards');
   const { copy } = useCopyToClipboard();
 
   const truncatedWalletAddress = walletAddress

@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { UserRole } from '@/shared/typings/UserRole';
 import {
   DomainVerificationContextType,
   DomainVerificationStep,
@@ -15,10 +16,12 @@ export const DomainVerificationContext =
 
 type IssuerSignupContextProviderProps = {
   children: React.ReactNode;
+  userRole: UserRole;
 };
 
 export const DomainVerificationContextProvider = ({
   children,
+  userRole,
 }: IssuerSignupContextProviderProps) => {
   const [currentStep, setCurrentStep] =
     useState<DomainVerificationStep>('domain');
@@ -35,11 +38,12 @@ export const DomainVerificationContextProvider = ({
       currentStep,
       txtRecord: currentTxtRecord,
       domainAddress,
+      userRole,
       setDomainAddress,
       setTxtRecord,
       setCurrentStep,
     }),
-    [currentStep, currentTxtRecord, domainAddress, setTxtRecord],
+    [currentStep, currentTxtRecord, domainAddress, userRole, setTxtRecord],
   );
 
   return (

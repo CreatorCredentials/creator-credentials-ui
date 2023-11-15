@@ -8,7 +8,7 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { CreatorVerificationCards } from '@/components/modules/verification/CreatorVerificationCards';
 
 const CreatorVerificationPage: NextPageWithLayout = () => {
-  const { t } = useTranslation('verification-creator');
+  const { t } = useTranslation('creator-verification');
 
   return (
     <>
@@ -26,7 +26,8 @@ export const getServerSideProps = withAuth(
     return {
       props: {
         ...(await getI18nProps(ctx.locale, [
-          'verification-creator',
+          'verification-cards',
+          'creator-verification',
           'metamask',
         ])),
       },

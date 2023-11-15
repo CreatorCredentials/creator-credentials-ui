@@ -54,3 +54,8 @@ export type CreatorCredentials = {
   domain: DomainCredential | null;
   membership: MembershipCredential[];
 };
+
+export type IssuerCredentials = {
+  domain: DomainCredential;
+  membership: MembershipCredential[];
+};

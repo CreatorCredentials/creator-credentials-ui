@@ -9,7 +9,7 @@ type EmailVerificationCardProps = {
 export const EmailVerificationCard = ({
   email,
 }: EmailVerificationCardProps) => {
-  const { t } = useTranslation('verification-creator');
+  const { t } = useTranslation('verification-cards');
 
   return (
     <CardWithBadge

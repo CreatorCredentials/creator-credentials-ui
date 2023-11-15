@@ -70,17 +70,26 @@ export const credentialsHandlers = [
         delay,
         ctx.status(200),
         ctx.json<GetIssuerCredentialsResponse>({
-          credentials: [
-            {
-              id: 'issuer-member-credential-id-1',
-              type: CredentialType.Member,
-              status: CredentialVerificationStatus.Success,
+          credentials: {
+            membership: [
+              {
+                id: 'issuer-member-credential-id-1',
+                type: CredentialType.Member,
+                status: CredentialVerificationStatus.Success,
+                data: {
+                  requirements: 'Info about requirements',
+                  validity: '1 year',
+                },
+              },
+            ],
+            domain: {
+              id: 'issuer-domain-credential-id-1',
+              type: CredentialType.Domain,
               data: {
-                requirements: 'Info about requirements',
-                validity: '1 year',
+                domain: 'https://example.com',
               },
             },
-          ],
+          },
         }),
       );
     },

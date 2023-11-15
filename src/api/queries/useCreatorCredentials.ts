@@ -15,6 +15,5 @@ export const useCreatorCredentials = (
   useQuery({
     queryKey: [QueryKeys.creatorVerifiedCredentials],
     queryFn: () => getCreatorCredentials().then((res) => res.data),
-    staleTime: 1000 * 60 * 1, // 1 minute
     ...options,
   });

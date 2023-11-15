@@ -1,17 +1,18 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Textarea } from 'flowbite-react';
 import { useTranslation } from 'next-i18next';
 import { useId } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useConfirmDomainTxtRecordCreation } from '@/api/mutations/useConfirmDomainTxtRecordCreation';
+import { QueryKeys } from '@/api/queryKeys';
+import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
+import { GetIssuerCredentialsResponse } from '@/api/requests/getIssuerCredentials';
 import { FormLabel } from '@/components/formFields/FormLabel';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { IconButton } from '@/components/shared/IconButton/IconButton';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
-import { useConfirmDomainTxtRecordCreation } from '@/api/mutations/useConfirmDomainTxtRecordCreation';
 import { useToast } from '@/shared/hooks/useToast';
-import { QueryKeys } from '@/api/queryKeys';
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { useDomainVerificationContext } from '../DomainVerificationContext';
 
 export const DomainVerificationUpdateTxtRecordCard = () => {
@@ -40,6 +41,30 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
               },
               ...oldData.domain,
               status: CredentialVerificationStatus.Pending,
+            },
+          };
+        },
+      );
+
+      queryClient.setQueryData<GetIssuerCredentialsResponse>(
+        [QueryKeys.issuerCredentials],
+        (oldData) => {
+          if (!oldData) return;
+
+          return {
+            ...oldData,
+            credentials: {
+              ...oldData.credentials,
+              domain: {
+                ...oldData.credentials.domain,
+                id: 'temp-id', // TODO: remove this when we have real id
+                type: CredentialType.Domain,
+                data: {
+                  ...oldData.credentials.domain.data,
+                  domain: domainAddress,
+                },
+                status: CredentialVerificationStatus.Pending,
+              },
             },
           };
         },
