@@ -1,5 +1,5 @@
 import { Card, Dropdown, DropdownItemProps } from 'flowbite-react';
-import { ReactNode } from 'react';
+import { ElementType, ReactNode } from 'react';
 import Image from 'next/image';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
@@ -49,7 +49,7 @@ type CardWithBadgeProps = {
   footer: ReactNode;
   className?: string | ClassValue;
   image: { iconName: IconName } | { imageUrl: string; alt: string };
-  dropdownItems?: DropdownItemProps[];
+  dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
 export const CardWithBadge = ({
@@ -82,6 +82,7 @@ export const CardWithBadge = ({
               <Dropdown
                 label=""
                 dismissOnClick={false}
+                color="outline-black"
                 renderTrigger={() => (
                   <IconButton
                     icon="MoreHoriz"
@@ -92,6 +93,7 @@ export const CardWithBadge = ({
                 {dropdownItems.map((item, index) => (
                   <Dropdown.Item
                     {...item}
+                    className={clsxm('min-w-[300px]', item.className)}
                     key={item.key || index}
                   />
                 ))}

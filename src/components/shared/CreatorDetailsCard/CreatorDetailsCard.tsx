@@ -1,11 +1,12 @@
 import React from 'react';
+import Link from 'next/link';
 import { Creator } from '@/shared/typings/Creator';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { CardWithBadge } from '../CardWithBadge';
 
 type CreatorDetailsCardProps = {
   creator: Creator;
-  renderFooter?: (creator: Creator) => React.ReactNode;
+  renderFooter?: ((creator: Creator) => React.ReactNode) | null;
 };
 
 export const CreatorDetailsCard = ({
@@ -22,6 +23,13 @@ export const CreatorDetailsCard = ({
         alt: 'Creator image',
       }}
       title={title}
+      dropdownItems={[
+        {
+          children: 'Show details',
+          as: Link,
+          href: `/issuer/creators/${creator.id}`,
+        },
+      ]}
       content={
         <>
           <CardWithBadge.ContentWithIcon

@@ -6,4 +6,5 @@ export const QueryKeys = {
   requestableCredentials: 'requestableCredentials',
   issuerCredentials: 'issuerCredentials',
   issuerCreators: 'issuerCreators',
+  credentialsRequestDetails: 'credentialsRequestDetails',
 };
