@@ -1,11 +1,11 @@
 import { Button } from 'flowbite-react';
-import { Trans, useTranslation } from 'next-i18next';
-import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 import { FormEventHandler } from 'react';
-import { FormTextField } from '@/components/formFields/FormTextField';
+import { useFormContext } from 'react-hook-form';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
+import { FormTextField } from '@/components/formFields/FormTextField';
 import { Icon } from '@/components/shared/Icon';
-import { config } from '@/shared/constants/config';
+import { TermsAndConditionsTrans } from '@/components/shared/TermsAndConditionsTrans';
 import { CreatorSignupFormContextType } from './CreatorSignupFormContextType';
 
 export type CreatorSignupFormProps = {
@@ -38,21 +38,7 @@ export const CreatorSignupForm = ({
         disabled={isLoading}
       />
       <FormCheckbox
-        label={
-          <Trans
-            i18nKey="form.terms-and-conditions"
-            t={t}
-            components={{
-              link1: (
-                <a
-                  className="underline underline-offset-[3px]"
-                  href={config.TERMS_AND_CONDITIONS_URL}
-                  target="_blank"
-                />
-              ),
-            }}
-          />
-        }
+        label={<TermsAndConditionsTrans />}
         name="termsAndConditions"
         control={control}
         disabled={isLoading}

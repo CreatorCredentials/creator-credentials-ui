@@ -103,7 +103,10 @@ CreatorSignupPage.getLayout = (page: ReactElement) => {
 export const getServerSideProps = (async (ctx) => {
   return {
     props: {
-      ...(await getI18nProps(ctx.locale, ['creator-signup'])),
+      ...(await getI18nProps(ctx.locale, [
+        'creator-signup',
+        'terms-and-conditions',
+      ])),
     },
   };
 }) satisfies GetServerSideProps;

@@ -151,7 +151,10 @@ export const getServerSideProps = (async (ctx) => {
 
   return {
     props: {
-      ...(await getI18nProps(ctx.locale, ['issuer-signup'])),
+      ...(await getI18nProps(ctx.locale, [
+        'issuer-signup',
+        'terms-and-conditions',
+      ])),
     },
   };
 }) satisfies GetServerSideProps;

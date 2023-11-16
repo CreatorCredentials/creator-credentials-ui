@@ -28,7 +28,10 @@ export const getServerSideProps = withAuth(
   async (ctx) => {
     return {
       props: {
-        ...(await getI18nProps(ctx.locale, ['creator-profile'])),
+        ...(await getI18nProps(ctx.locale, [
+          'creator-profile',
+          'terms-and-conditions',
+        ])),
       },
     };
   },

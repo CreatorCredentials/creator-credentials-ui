@@ -29,9 +29,6 @@
       "label": "Company name (official name of legal entity)",
       "placeholder": "E.g., Liccium B.V."
     },
-    "terms-and-conditions": {
-      "label": "I agree for <link1>Terms & Conditions</link1>"
-    },
     "address": {
       "label": "Your e-mail address",
       "placeholder": "E.g., john"

@@ -5,9 +5,6 @@
     "title": "Creator Hub",
     "description": "Input your email below, and we'll send you a verification link to proceed."
   },
-  "form": {
-    "terms-and-conditions": "I agree for <link1>Terms & Conditions</link1>"
-  },
   "verification": {
     "title": "Verify your e-mail address",
     "subtitle": "We have sent you an e-mail to proof control of your e-mail address."
