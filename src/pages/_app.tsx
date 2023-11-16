@@ -24,10 +24,7 @@ type AppPropsWithLayout = AppProps & {
 
 const inter = Inter({ subsets: ['latin'] });
 
-function CreatorCredentialsApp({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
+function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => createQueryClient());
 
   const getLayout =
@@ -36,7 +33,7 @@ function CreatorCredentialsApp({
   return (
     <>
       <AppMetadata />
-      <SessionProvider session={session}>
+      <SessionProvider>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <MocksProvider>
