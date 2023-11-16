@@ -5,6 +5,7 @@ import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { UserRole } from '@/shared/typings/UserRole';
 import { DomainVerificationCard } from '../DomainVerificationCard';
+import { DidWebVerificationCard } from '../did-web/DidWebVerificationCard';
 
 export const IssuerVerificationCards = () => {
   const { t } = useTranslation('verification-cards');
@@ -26,6 +27,11 @@ export const IssuerVerificationCards = () => {
       <DomainVerificationCard
         value={data.credentials.domain?.data.domain}
         status={data.credentials.domain?.status}
+        userRole={UserRole.Issuer}
+      />
+      <DidWebVerificationCard
+        value={data.credentials.didWeb?.data.domain}
+        status={data.credentials.didWeb?.status}
         userRole={UserRole.Issuer}
       />
     </section>

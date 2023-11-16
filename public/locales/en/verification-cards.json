@@ -20,5 +20,13 @@
       "start-verification": "Start verification",
       "disconnect": "Disconnect"
     }
+  },
+  "did-web": {
+    "title": "did:web verification",
+    "description": "Confirming your website ownership will reinforce trust in your content declarations.",
+    "buttons": {
+      "start-verification": "Start verification",
+      "disconnect": "Disconnect"
+    }
   }
 }

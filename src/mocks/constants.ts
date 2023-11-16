@@ -170,3 +170,29 @@ export const MOCK_CREATORS: Creator[] = [
     status: CreatorVerificationStatus.Pending,
   })),
 ];
+
+export const DID_WEB_JSON_FILE = `// 20231028173813
+// https://www.issuer.com/.well-known/did.json
+
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:issuer.com",
+  "verificationMethod": [
+    {
+      "id": "did:web:issuer.com#key-0",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:issuer.com",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "fadshgsadhasdhryhdfhsdafhsdfhsdfh"
+      }
+    }
+  ],
+  "authentication": [
+    "did:web:liccium.dev#key-0"
+  ]
+}`;
