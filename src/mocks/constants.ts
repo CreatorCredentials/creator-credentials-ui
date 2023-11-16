@@ -159,7 +159,7 @@ export const MOCK_CREATORS: Creator[] = [
     status: CreatorVerificationStatus.Accepted,
   },
   ...Array.from(Array(10).keys()).map((i) => ({
-    id: `mock-creator-${i + 5}`,
+    id: `mock-creator-${i + 10}`,
     title: `Creator ${i + 5}`,
     imageUrl: '/images/mock-creator-image.png',
     credentials: {

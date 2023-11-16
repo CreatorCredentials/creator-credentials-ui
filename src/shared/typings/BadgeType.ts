@@ -6,4 +6,5 @@ export type BadgeType =
   | 'verified'
   | 'connected'
   | 'pending'
-  | 'active';
+  | 'active'
+  | 'accepted';

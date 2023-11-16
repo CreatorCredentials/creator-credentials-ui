@@ -4,25 +4,19 @@ import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
+import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { CreatorCardAcceptRejectFooter } from '../CreatorCardAcceptRejectFooter';
 import { CreatorsFilters } from '../CreatorsFilters';
 
 export const IssuerRequestedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isFetching, isLoading } = useIssuerCreators(
-    {
-      params: {
-        status: CreatorVerificationStatus.Pending,
-        search: '',
-      },
+  const { data, status, isFetching, isLoading } = useIssuerCreators({
+    params: {
+      status: CreatorVerificationStatus.Pending,
+      search: '',
     },
-    // TODO: Decide whether we want to keep this functionality after removing MSW
-    {
-      staleTime: 60,
-      refetchOnMount: false,
-    },
-  );
+  });
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
@@ -40,9 +34,16 @@ export const IssuerRequestedCreators = () => {
           <CreatorDetailsCard
             key={creator.id}
             creator={creator}
-            renderFooter={() => (
-              <CreatorCardAcceptRejectFooter creator={creator} />
-            )}
+            renderFooter={() =>
+              creator.status === CreatorVerificationStatus.Pending ? (
+                <CreatorCardAcceptRejectFooter creator={creator} />
+              ) : (
+                <ColoredBadge
+                  badgeType="accepted"
+                  className="self-center"
+                />
+              )
+            }
           />
         ))}
       </div>
