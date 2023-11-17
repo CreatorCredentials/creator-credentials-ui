@@ -11,12 +11,7 @@
     }
   },
   "legal-documents": {
-    "title": "Legal documents",
-    "fields": {
-      "terms-and-conditions": {
-        "label": "I agreed to the following <link1>Terms & Conditions</link1>"
-      }
-    }
+    "title": "Legal documents"
   },
   "privacy": {
     "title": "Privacy",

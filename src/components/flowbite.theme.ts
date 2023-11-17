@@ -63,7 +63,7 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   },
   textarea: {
     colors: {
-      gray: 'bg-transparent border-grey-2 text-grey-4 focus:border-black focus:ring-black',
+      gray: 'bg-white border-grey-2 text-grey-4 focus:border-black focus:ring-black',
     },
   },
   tab: {
