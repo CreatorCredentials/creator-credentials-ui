@@ -67,6 +67,13 @@ const BADGE_PROPS_MAP: Record<
       'fill-success text-success text-base gap-2 py-2 border border-transparent',
     iconClassName: 'h-5 w-5',
   },
+  selected: {
+    tKey: 'selected',
+    iconName: 'CheckCircle',
+    className:
+      'fill-success text-success text-base gap-2 py-2 border border-transparent',
+    iconClassName: 'h-5 w-5',
+  },
 };
 
 type ColoredBadgeProps = {

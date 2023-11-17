@@ -27,7 +27,9 @@ export const CredentialsRequestContextProvider = ({
   const stepper = useStepper({ steps: CREDENTIALS_REQUEST_STEPS_TKEYS });
   const [selectedIssuer, setSelectedIssuer] =
     useState<IssuerWithVerifiedCredentials | null>(null);
-  const credentials = useSelect<Omit<VerifiedCredentialsUnion, 'id'>>();
+  const credentials = useSelect<Omit<VerifiedCredentialsUnion, 'id'>>({
+    singleSelection: true,
+  });
 
   const toggleIssuerSelection = useCallback(
     (issuer: IssuerWithVerifiedCredentials) => {
