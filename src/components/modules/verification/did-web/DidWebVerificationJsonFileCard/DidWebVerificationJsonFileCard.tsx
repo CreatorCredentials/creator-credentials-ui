@@ -7,7 +7,7 @@ import { QueryKeys } from '@/api/queryKeys';
 import { GetIssuerCredentialsResponse } from '@/api/requests/getIssuerCredentials';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { Icon } from '@/components/shared/Icon';
-import { useDownloadStringToFile } from '@/shared/hooks/useDownloadStringToFile/useDownloadStringToFile';
+import { useDownloadStringToFile } from '@/shared/hooks/useDownloadStringToFile';
 import { useToast } from '@/shared/hooks/useToast';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';

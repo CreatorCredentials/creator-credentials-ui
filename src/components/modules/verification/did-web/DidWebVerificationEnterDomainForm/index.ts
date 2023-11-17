@@ -1,1 +1,1 @@
-export * from './DidWebVerificationEnterDidWebForm';
+export * from './DidWebVerificationEnterDomainForm';
