@@ -8,6 +8,7 @@ import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 import { Loader } from '@/components/shared/Loader';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 import { CredentialsRequestNoIssuersCard } from '../CredentialsRequestNoIssuersCard';
@@ -56,15 +57,20 @@ export const CredentialsRequestSelectIssuer = () => {
               renderFooter={() => {
                 const selected = selectedIssuer?.id === issuer.id;
 
+                if (selected) {
+                  return (
+                    <ColoredBadge
+                      badgeType="selected"
+                      className="self-center"
+                    />
+                  );
+                }
+
                 return (
                   <Button
-                    color="outline"
+                    color="primary"
                     className="self-stretch"
                     onClick={() => toggleIssuerSelection(issuer)}
-                    disabled={
-                      Boolean(preSelectedIssuerId) ||
-                      (!selected && Boolean(selectedIssuer))
-                    }
                   >
                     {t(selected ? 'deselect' : 'select', { ns: 'common' })}
                   </Button>

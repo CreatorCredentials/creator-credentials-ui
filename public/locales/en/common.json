@@ -26,6 +26,7 @@
   "reject": "Reject",
   "accepted": "Accepted",
   "close": "Close",
+  "selected": "Selected",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

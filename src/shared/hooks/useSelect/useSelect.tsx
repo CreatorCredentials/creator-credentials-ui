@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 
 export type UseSelectProps<T extends object> = {
   defaultSelection?: T[];
+  singleSelection?: boolean;
 };
 
 export type UseSelectReturnType<T extends object> = {
@@ -13,6 +14,7 @@ export type UseSelectReturnType<T extends object> = {
 
 export const useSelect = <T extends object>({
   defaultSelection = [],
+  singleSelection,
 }: UseSelectProps<T> = {}): UseSelectReturnType<T> => {
   const [selectedItems, setSelectedItems] = useState<T[]>(defaultSelection);
 
@@ -27,6 +29,10 @@ export const useSelect = <T extends object>({
   const toggleSelection = useCallback(
     (item: T) => {
       setSelectedItems((items) => {
+        if (singleSelection) {
+          return [item];
+        }
+
         if (isSelected(item)) {
           return items.filter(
             (i) => JSON.stringify(i) !== JSON.stringify(item),
@@ -36,7 +42,7 @@ export const useSelect = <T extends object>({
         return [...items, item];
       });
     },
-    [isSelected],
+    [isSelected, singleSelection],
   );
 
   return {

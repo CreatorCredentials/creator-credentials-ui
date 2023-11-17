@@ -7,6 +7,7 @@ import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Loader } from '@/components/shared/Loader';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -38,6 +39,15 @@ export const CredentialsRequestSelectCredentials = () => {
               credential={credential}
               renderFooter={(credential) => {
                 const selected = credentials.isSelected(credential);
+
+                if (selected) {
+                  return (
+                    <ColoredBadge
+                      badgeType="selected"
+                      className="self-center"
+                    />
+                  );
+                }
 
                 return (
                   <Button
