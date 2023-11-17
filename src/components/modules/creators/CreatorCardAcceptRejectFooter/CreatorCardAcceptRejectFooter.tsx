@@ -36,8 +36,13 @@ export const CreatorCardAcceptRejectFooter = ({
           (oldData) => {
             if (!oldData) return;
 
-            const newData = oldData.creators.filter(
-              (creator) => creator.id !== creatorId,
+            const newData = oldData.creators.map((creator) =>
+              creator.id === creatorId
+                ? {
+                    ...creator,
+                    status: CreatorVerificationStatus.Accepted,
+                  }
+                : creator,
             );
 
             return {
