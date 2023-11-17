@@ -12,10 +12,14 @@ import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationS
 
 type CreatorCardAcceptRejectFooterProps = {
   creator: Creator;
+  onSuccessfullAcceptation?: () => void | Promise<void>;
+  onSuccessfulRejection?: () => void | Promise<void>;
 };
 
 export const CreatorCardAcceptRejectFooter = ({
   creator,
+  onSuccessfullAcceptation,
+  onSuccessfulRejection,
 }: CreatorCardAcceptRejectFooterProps) => {
   const { t } = useTranslation('issuer-creators');
   const toast = useToast();
@@ -84,6 +88,7 @@ export const CreatorCardAcceptRejectFooter = ({
   const acceptButtonHandler = async () => {
     try {
       await acceptAsync({ creatorId: creator.id });
+      await onSuccessfullAcceptation?.();
     } catch (error) {
       toast.error(t('requests.errors.accept-failed'));
     }
@@ -92,6 +97,7 @@ export const CreatorCardAcceptRejectFooter = ({
   const rejectButtonHandler = async () => {
     try {
       await rejectAsync({ creatorId: creator.id });
+      await onSuccessfulRejection?.();
     } catch (error) {
       toast.error(t('requests.errors.reject-failed'));
     }
