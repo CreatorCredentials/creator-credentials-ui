@@ -63,6 +63,14 @@ export const CredentialDetailsCard = ({
               {data.companyName}
             </CardWithBadge.ContentWithIcon>
           )}
+          {'validity' in data && (
+            <CardWithBadge.ContentWithIcon
+              iconName="CalendarMonth"
+              className="whitespace-pre-wrap"
+            >
+              {data.validity}
+            </CardWithBadge.ContentWithIcon>
+          )}
           {'requirements' in data && (
             <CardWithBadge.ContentWithIcon
               iconName="Caption"

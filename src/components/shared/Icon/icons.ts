@@ -29,6 +29,7 @@ export const icons = {
   AssuredWorkloadFilled: lazy(
     () => import('@/public/images/icons/assured-workload-filled.svg'),
   ),
+  CalendarMonth: lazy(() => import('@/public/images/icons/calendar-month.svg')),
   Caption: lazy(() => import('@/public/images/icons/caption.svg')),
   CaptionFilled: lazy(() => import('@/public/images/icons/caption-filled.svg')),
   Check: lazy(() => import('@/public/images/icons/check.svg')),
