@@ -9,7 +9,7 @@ import { IssuerNavigationItems } from './IssuerNavigationItems';
 export const Navigation = () => {
   const session = useSession();
 
-  const NavigationIems = useMemo(() => {
+  const NavigationItems = useMemo(() => {
     switch (session.data?.user?.role) {
       case UserRole.Creator:
         return CreatorNavigationItems;
@@ -25,7 +25,7 @@ export const Navigation = () => {
       <Sidebar.Items className="h-full">
         <Sidebar.ItemGroup className="relative flex h-full flex-col justify-between">
           <BrandImage containerClassName="left-0 right-0 top-4 m-auto" />
-          {NavigationIems && <NavigationIems />}
+          {NavigationItems && <NavigationItems />}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
