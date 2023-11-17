@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { NavLink } from '@/components/shared/NavLink';
 import { Icon } from '@/components/shared/Icon';
+import { clsxm } from '@/shared/utils/clsxm';
 import { NavigationRoute } from './NavigationRoute';
 
 type NavigationItemCountBadgeProps = {
@@ -12,7 +13,7 @@ type NavigationItemCountBadgeProps = {
 const NavigationItemCountBadge = ({
   children,
 }: NavigationItemCountBadgeProps) => (
-  <div className="absolute top-2.5 ms-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-alert text-center text-xs font-normal text-white">
+  <div className="absolute top-1 ms-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-alert text-center text-xs font-normal text-white">
     {children}
   </div>
 );
@@ -24,6 +25,7 @@ export const NavigationItem = ({
   href,
   exact,
   suffixComponent,
+  className,
   ...linkProps
 }: NavigationRoute) => {
   const { t } = useTranslation('common');
@@ -43,13 +45,11 @@ export const NavigationItem = ({
             icon={isActive ? activeIconName : iconName}
             className="fill-black"
           />
-        ) : (
-          <div className="ms-0.5">&nbsp;</div>
-        )
+        ) : null
       }
       isActive={isActive}
       href={href}
-      className="relative"
+      className={clsxm('relative', className)}
       {...linkProps}
     >
       <span>{t(labelKey)}</span>

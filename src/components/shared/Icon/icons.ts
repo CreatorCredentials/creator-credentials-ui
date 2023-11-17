@@ -63,6 +63,9 @@ export const icons = {
   Refresh: lazy(() => import('@/public/images/icons/refresh.svg')),
   Search: lazy(() => import('@/public/images/icons/search.svg')),
   Schedule: lazy(() => import('@/public/images/icons/schedule.svg')),
+  ScheduleFilled: lazy(
+    () => import('@/public/images/icons/schedule-filled.svg'),
+  ),
   UnarchiveFilled: lazy(
     () => import('@/public/images/icons/unarchive-filled.svg'),
   ),
