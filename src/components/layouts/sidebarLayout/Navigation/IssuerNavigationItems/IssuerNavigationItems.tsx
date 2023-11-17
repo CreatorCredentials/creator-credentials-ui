@@ -38,6 +38,13 @@ const ISSUER_ROUTES: NavigationRoute[] = [
     iconName: 'CheckCircle',
     activeIconName: 'CheckCircleFilled',
   },
+  {
+    labelKey: 'navigation.rejected',
+    href: '/issuer/creators/rejected',
+    className: 'text-xs ms-4 py-1.5',
+    iconName: 'DoNotDisturb',
+    activeIconName: 'DoNotDisturbFilled',
+  },
 ];
 
 const ISSUER_SUB_ROUTES: NavigationRoute[] = [

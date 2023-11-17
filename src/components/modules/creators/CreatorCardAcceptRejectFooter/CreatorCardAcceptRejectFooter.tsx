@@ -78,12 +78,31 @@ export const CreatorCardAcceptRejectFooter = ({
           (oldData) => {
             if (!oldData) return;
 
-            const newData = oldData.creators.filter(
-              (creator) => creator.id !== creatorId,
+            const newData = oldData.creators.map((creator) =>
+              creator.id === creatorId
+                ? {
+                    ...creator,
+                    status: CreatorVerificationStatus.Rejected,
+                  }
+                : creator,
             );
 
             return {
               creators: newData,
+            };
+          },
+        );
+
+        queryClient.setQueriesData<GetIssuerCreatorsResponse>(
+          [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Rejected },
+          ],
+          (oldData) => {
+            if (!oldData) return;
+
+            return {
+              creators: [creator, ...oldData.creators],
             };
           },
         );

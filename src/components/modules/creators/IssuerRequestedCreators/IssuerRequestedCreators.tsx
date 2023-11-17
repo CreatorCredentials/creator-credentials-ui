@@ -5,6 +5,7 @@ import { Loader } from '@/components/shared/Loader';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
+import { Creator } from '@/shared/typings/Creator';
 import { CreatorCardAcceptRejectFooter } from '../CreatorCardAcceptRejectFooter';
 import { CreatorsFilters } from '../CreatorsFilters';
 
@@ -17,6 +18,27 @@ export const IssuerRequestedCreators = () => {
       search: '',
     },
   });
+
+  const renderCreatorCardFooter = (creator: Creator) => {
+    switch (creator.status) {
+      case CreatorVerificationStatus.Pending:
+        return <CreatorCardAcceptRejectFooter creator={creator} />;
+      case CreatorVerificationStatus.Accepted:
+        return (
+          <ColoredBadge
+            badgeType="accepted"
+            className="self-center"
+          />
+        );
+      case CreatorVerificationStatus.Rejected:
+        return (
+          <ColoredBadge
+            badgeType="rejected"
+            className="self-center"
+          />
+        );
+    }
+  };
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
@@ -34,16 +56,7 @@ export const IssuerRequestedCreators = () => {
           <CreatorDetailsCard
             key={creator.id}
             creator={creator}
-            renderFooter={() =>
-              creator.status === CreatorVerificationStatus.Pending ? (
-                <CreatorCardAcceptRejectFooter creator={creator} />
-              ) : (
-                <ColoredBadge
-                  badgeType="accepted"
-                  className="self-center"
-                />
-              )
-            }
+            renderFooter={renderCreatorCardFooter}
           />
         ))}
       </div>

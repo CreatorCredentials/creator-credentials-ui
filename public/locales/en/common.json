@@ -24,6 +24,7 @@
   "active": "Active",
   "accept": "Accept",
   "reject": "Reject",
+  "rejected": "Rejected",
   "accepted": "Accepted",
   "close": "Close",
   "selected": "Selected",
@@ -36,7 +37,8 @@
     "profile": "Profile",
     "signout": "Sign-out",
     "requested": "Requested",
-    "accepted": "Accepted"
+    "accepted": "Accepted",
+    "rejected": "Rejected"
   },
   "badges": {
     "verification": "Verification",
