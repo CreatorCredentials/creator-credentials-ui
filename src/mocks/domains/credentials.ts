@@ -89,6 +89,13 @@ export const credentialsHandlers = [
                 domain: 'https://example.com',
               },
             },
+            didWeb: {
+              id: 'issuer-did-web-credential-id-1',
+              type: CredentialType.DidWeb,
+              data: {
+                domain: 'https://example.com',
+              },
+            },
           },
         }),
       );

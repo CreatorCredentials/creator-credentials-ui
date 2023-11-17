@@ -12,7 +12,13 @@ import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredenti
 import { CreatorCredentials } from '@/shared/typings/Credentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import {
+  CreateDidWebJsonFilePayload,
+  CreateDidWebJsonFileResponse,
+} from '@/api/requests/createDidWebJsonFile';
+import { ConfirmDidWebJsonFileUploadPayload } from '@/api/requests/confirmDidWebJsonFileUpload';
 import { DEFAULT_MOCK_DELAY, MOCK_API_URL } from '../config';
+import { DID_WEB_JSON_FILE } from '../constants';
 
 export const MOCK_CREDENTIALS: CreatorCredentials = {
   email: {
@@ -105,6 +111,28 @@ export const verificationHandlers = [
   ),
   rest.post<ConfirmDomainTxtRecordCreationPayload>(
     `${MOCK_API_URL}/verification/domain/confirm`,
+    (_req, res, ctx) => {
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
+
+      return res(delay, ctx.status(201));
+    },
+  ),
+  rest.post<CreateDidWebJsonFilePayload>(
+    `${MOCK_API_URL}/verification/did-web/create-file`,
+    (_req, res, ctx) => {
+      const delay = ctx.delay(DEFAULT_MOCK_DELAY);
+
+      return res(
+        delay,
+        ctx.status(201),
+        ctx.json<CreateDidWebJsonFileResponse>({
+          jsonFileContent: DID_WEB_JSON_FILE,
+        }),
+      );
+    },
+  ),
+  rest.post<ConfirmDidWebJsonFileUploadPayload>(
+    `${MOCK_API_URL}/verification/did-web/confirm-upload`,
     (_req, res, ctx) => {
       const delay = ctx.delay(DEFAULT_MOCK_DELAY);
 

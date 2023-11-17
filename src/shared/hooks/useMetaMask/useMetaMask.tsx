@@ -24,7 +24,7 @@ export const useMetaMask = ({
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const [isWaitingForSignature, setIsWaitingForSignature] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [sdk, setSDK] = useState<MetaMaskSDK>();
 
@@ -80,6 +80,7 @@ export const useMetaMask = ({
 
   const connect = async () => {
     try {
+      setIsConnecting(true);
       if (!sdk) {
         throw new Error('SDK not ready');
       }
@@ -100,7 +101,6 @@ export const useMetaMask = ({
       }
 
       const { nonce } = await mutateMetaMaskNonce({ address: from });
-      setIsWaitingForSignature(true);
 
       const signature = await provider?.request<string>({
         method: 'personal_sign',
@@ -125,19 +125,18 @@ export const useMetaMask = ({
         },
       });
     } catch (err) {
-      console.error(err);
       if ((err as ProviderRpcError).code) {
         // Code 4001 - User closed the MetaMask Browser extension while connecting
         // Code -32603 - User rejected the signature request
         if (![4001, -32603].includes((err as ProviderRpcError).code)) {
-          toast.error('errors.connection-failed');
+          toast.error(t('errors.connection-failed'));
           return;
         }
         return;
       }
-      toast.error('errors.connection-failed');
+      toast.error(t('errors.connection-failed'));
     } finally {
-      setIsWaitingForSignature(false);
+      setIsConnecting(false);
     }
   };
 
@@ -152,7 +151,6 @@ export const useMetaMask = ({
         extensionOnly: true,
         preferDesktop: true,
       });
-      console.info('Will init');
       await clientSDK.init();
       setSDK(clientSDK);
     };
@@ -164,13 +162,12 @@ export const useMetaMask = ({
       await sdk?.terminate();
       await mutateDisconnectWallet(walletAddress);
     } catch (err) {
-      toast.error('errors.disconnection-failed');
-      console.error(err);
+      toast.error(t('errors.disconnection-failed'));
     }
   };
 
   const isProcessing =
-    isWaitingForSignature ||
+    isConnecting ||
     !sdk ||
     isLoadingNonce ||
     isDisconnecting ||

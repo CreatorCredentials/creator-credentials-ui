@@ -6,7 +6,7 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       primary:
         'text-white bg-primary border border-primary hover:bg-primary-hover focus:ring-4 focus:ring-primary-hover disabled:bg-grey-3 disabled:border-grey-3 fill-white',
       outline:
-        'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-primary',
+        'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white disabled:fill-grey-3 fill-primary',
       'outline-black':
         'text-black bg-white border border-transparent focus:ring-4 focus:ring-black disabled:text-grey-3 disabled:bg-white fill-black',
       black:

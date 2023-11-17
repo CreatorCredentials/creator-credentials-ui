@@ -71,4 +71,5 @@ export const icons = {
     () => import('@/public/images/icons/verified-filled.svg'),
   ),
   Warning: lazy(() => import('@/public/images/icons/warning.svg')),
+  Web: lazy(() => import('@/public/images/icons/web.svg')),
 };

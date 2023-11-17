@@ -25,6 +25,7 @@
   "accept": "Accept",
   "reject": "Reject",
   "accepted": "Accepted",
+  "close": "Close",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

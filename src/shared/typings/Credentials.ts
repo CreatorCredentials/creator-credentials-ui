@@ -42,11 +42,19 @@ export type MembershipCredential = BaseCredential<
   }
 >;
 
+export type DidWebCredential = BaseCredential<
+  CredentialType.DidWeb,
+  {
+    domain: string;
+  }
+>;
+
 export type VerifiedCredentialsUnion =
   | EmailCredential
   | WalletCredential
   | DomainCredential
-  | MembershipCredential;
+  | MembershipCredential
+  | DidWebCredential;
 
 export type CreatorCredentials = {
   email: EmailCredential;
@@ -57,5 +65,6 @@ export type CreatorCredentials = {
 
 export type IssuerCredentials = {
   domain: DomainCredential;
+  didWeb: DidWebCredential;
   membership: MembershipCredential[];
 };

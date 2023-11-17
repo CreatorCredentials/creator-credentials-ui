@@ -3,4 +3,5 @@ export enum CredentialType {
   Wallet = 'WALLET',
   Member = 'MEMBER',
   Domain = 'DOMAIN',
+  DidWeb = 'DID_WEB',
 }
