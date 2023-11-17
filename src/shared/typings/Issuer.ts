@@ -1,4 +1,4 @@
-import { VerifiedCredential } from './VerifiedCredential';
+import { VerifiedCredentialsUnion } from './Credentials';
 import { IssuerConnectionStatus } from './IssuerConnectionStatus';
 
 export type Issuer = {
@@ -13,5 +13,5 @@ export type Issuer = {
 };
 
 export type IssuerWithVerifiedCredentials = Issuer & {
-  vcs: VerifiedCredential[];
+  vcs: VerifiedCredentialsUnion[];
 };

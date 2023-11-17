@@ -9,6 +9,7 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
         'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-primary',
       black:
         'text-black bg-transparent border border-black hover:border-black hover:text-black focus:ring-4 focus:ring-black disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-black',
+      text: 'text-primary bg-transparent hover:text-primary-hover focus:text-primary-hover disabled:bg-transparent disabled:text-grey-3 fill-primary disabled:fill-grey-3',
     },
     size: {
       md: 'text-sm px-4 py-1.5 font-normal text-base',
@@ -64,7 +65,7 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   tab: {
     base: 'text-base',
     tablist: {
-      base: 'inline-flex gap-8',
+      base: 'inline-flex gap-8 mb-3',
       styles: {
         underline: 'border-b-2 border-grey-3 gap-8',
       },

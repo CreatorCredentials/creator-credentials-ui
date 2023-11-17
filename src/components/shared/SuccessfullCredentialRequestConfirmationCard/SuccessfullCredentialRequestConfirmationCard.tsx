@@ -4,7 +4,7 @@ import { Icon } from '@/components/shared/Icon';
 import { LinkButton } from '@/components/shared/LinkButton';
 
 export const SuccessfullCredentialRequestConfirmationCard = () => {
-  const { t } = useTranslation('creator-issuers-request');
+  const { t } = useTranslation('credentials-request-success-card');
 
   return (
     <Card>

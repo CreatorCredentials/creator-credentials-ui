@@ -22,17 +22,6 @@ export const DomainVerificationCard = ({
 
   const renderFooter = useCallback(() => {
     switch (status) {
-      case CredentialVerificationStatus.NotStarted:
-        return (
-          <Button
-            color="primary"
-            fullSized
-            href="/creator/verification/domain"
-            as={Link as ElementType}
-          >
-            {t('domain.buttons.start-verification')}
-          </Button>
-        );
       case CredentialVerificationStatus.Success:
         return (
           <>
@@ -56,6 +45,17 @@ export const DomainVerificationCard = ({
             className="self-center"
           />
         );
+      default:
+        return (
+          <Button
+            color="primary"
+            fullSized
+            href="/creator/verification/domain"
+            as={Link as ElementType}
+          >
+            {t('domain.buttons.start-verification')}
+          </Button>
+        );
     }
   }, [status, t]);
 
@@ -68,7 +68,7 @@ export const DomainVerificationCard = ({
       }}
       className="flex-1"
       content={
-        value && status !== CredentialVerificationStatus.NotStarted ? (
+        value && status ? (
           <CardWithBadge.ContentWithIcon
             iconName="Public"
             className="whitespace-pre-wrap"

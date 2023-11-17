@@ -9,7 +9,9 @@ import { useGenerateMetaMaskNonce } from '@/api/mutations/useGenerateMetaMaskNon
 import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
 import { config } from '@/shared/constants/config';
-import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
+import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { CredentialType } from '@/shared/typings/CredentialType';
 
 type UseMetaMaskProps = {
   optimisticUpdate?: boolean;
@@ -33,14 +35,21 @@ export const useMetaMask = ({
     onSuccess: () => {
       if (!optimisticUpdate || !account) return;
 
-      queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+      queryClient.setQueryData<GetCreatorCredentialsResponse>(
         [QueryKeys.creatorVerifiedCredentials],
         (oldData) => {
           if (!oldData) return;
 
           return {
             ...oldData,
-            metaMask: account,
+            metaMask: {
+              id: account, // TODO: Replace after API implementation
+              type: CredentialType.Wallet,
+              data: {
+                address: account,
+              },
+              status: CredentialVerificationStatus.Success,
+            },
           };
         },
       );
@@ -52,7 +61,7 @@ export const useMetaMask = ({
       onSuccess: () => {
         if (!optimisticUpdate) return;
 
-        queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+        queryClient.setQueryData<GetCreatorCredentialsResponse>(
           [QueryKeys.creatorVerifiedCredentials],
           (oldData) => {
             if (!oldData) return;

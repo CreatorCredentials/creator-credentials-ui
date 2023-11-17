@@ -10,7 +10,8 @@ import { useConfirmDomainTxtRecordCreation } from '@/api/mutations/useConfirmDom
 import { useToast } from '@/shared/hooks/useToast';
 import { QueryKeys } from '@/api/queryKeys';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { GetCreatorVerifiedCredentialsResponse } from '@/api/requests/getCreatorVerifiedCredentials';
+import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
+import { CredentialType } from '@/shared/typings/CredentialType';
 import { useDomainVerificationContext } from '../DomainVerificationContext';
 
 export const DomainVerificationUpdateTxtRecordCard = () => {
@@ -19,12 +20,12 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
   const fieldId = useId();
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { txtRecord, currentStep, setCurrentStep } =
+  const { txtRecord, currentStep, domainAddress, setCurrentStep } =
     useDomainVerificationContext();
 
   const { mutateAsync, isLoading } = useConfirmDomainTxtRecordCreation({
     onSuccess: () => {
-      queryClient.setQueryData<GetCreatorVerifiedCredentialsResponse>(
+      queryClient.setQueryData<GetCreatorCredentialsResponse>(
         [QueryKeys.creatorVerifiedCredentials],
         (oldData) => {
           if (!oldData) return;
@@ -32,7 +33,12 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
           return {
             ...oldData,
             domain: {
-              value: null,
+              id: 'temp-id', // TODO: remove this when we have real id
+              type: CredentialType.Domain,
+              data: {
+                domain: domainAddress,
+              },
+              ...oldData.domain,
               status: CredentialVerificationStatus.Pending,
             },
           };

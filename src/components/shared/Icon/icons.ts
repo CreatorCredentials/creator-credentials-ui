@@ -17,6 +17,7 @@ export const icons = {
   AccountCircleFilled: lazy(
     () => import('@/public/images/icons/account-circle-filled.svg'),
   ),
+  Add: lazy(() => import('@/public/images/icons/add.svg')),
   ArrowLeft: lazy(() => import('@/public/images/icons/arrow-left.svg')),
   ArrowLeftToBracket: lazy(
     () => import('@/public/images/icons/arrow-left-to-bracket.svg'),
@@ -43,6 +44,8 @@ export const icons = {
   DesignServicesFilled: lazy(
     () => import('@/public/images/icons/design-services-filled.svg'),
   ),
+  Download: lazy(() => import('@/public/images/icons/download.svg')),
+  Groups: lazy(() => import('@/public/images/icons/groups.svg')),
   Home: lazy(() => import('@/public/images/icons/home.svg')),
   HomeFilled: lazy(() => import('@/public/images/icons/home-filled.svg')),
   Info: lazy(() => import('@/public/images/icons/info.svg')),
