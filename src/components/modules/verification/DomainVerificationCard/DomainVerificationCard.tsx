@@ -5,17 +5,20 @@ import { ElementType, useCallback } from 'react';
 import { CardWithBadge } from '@/components/shared/CardWithBadge';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
+import { UserRole } from '@/shared/typings/UserRole';
 
 type DomainVerificationCardProps = {
   value?: string | null;
   status?: CredentialVerificationStatus;
+  userRole: UserRole;
 };
 
 export const DomainVerificationCard = ({
   value,
   status,
+  userRole,
 }: DomainVerificationCardProps) => {
-  const { t } = useTranslation('verification-creator');
+  const { t } = useTranslation('verification-cards');
 
   // TODO: Implement disconnect button handler after API is ready
   const disconnectButtonHandler = () => {};
@@ -50,14 +53,14 @@ export const DomainVerificationCard = ({
           <Button
             color="primary"
             fullSized
-            href="/creator/verification/domain"
+            href={`/${userRole.toLowerCase()}/verification/domain`}
             as={Link as ElementType}
           >
             {t('domain.buttons.start-verification')}
           </Button>
         );
     }
-  }, [status, t]);
+  }, [status, t, userRole]);
 
   return (
     <CardWithBadge

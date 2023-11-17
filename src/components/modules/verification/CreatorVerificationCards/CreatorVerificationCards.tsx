@@ -3,19 +3,22 @@ import { useTranslation } from 'next-i18next';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
+import { UserRole } from '@/shared/typings/UserRole';
 import { DomainVerificationCard } from '../DomainVerificationCard';
 import { EmailVerificationCard } from '../EmailVerificationCard';
 import { MetamaskVerificationCard } from '../MetamaskVerificationCard';
 
 export const CreatorVerificationCards = () => {
-  const { t } = useTranslation('verification-creator');
+  const { t } = useTranslation('creator-verification');
 
   const {
     data: verifiedCredentials,
     isFetching,
     isLoading,
     status,
-  } = useCreatorCredentials();
+  } = useCreatorCredentials({
+    staleTime: 1000 * 60 * 1, // 1 minute
+  });
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
@@ -34,6 +37,7 @@ export const CreatorVerificationCards = () => {
       <DomainVerificationCard
         value={verifiedCredentials.domain?.data.domain}
         status={verifiedCredentials.domain?.status}
+        userRole={UserRole.Creator}
       />
     </section>
   );

@@ -1,8 +1,8 @@
-import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
+import { IssuerCredentials } from '@/shared/typings/Credentials';
 import axios from '../axios';
 
 export type GetIssuerCredentialsResponse = {
-  credentials: VerifiedCredentialsUnion[];
+  credentials: IssuerCredentials;
 };
 
 export const getIssuerCredentials = () =>

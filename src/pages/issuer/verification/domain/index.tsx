@@ -8,7 +8,7 @@ import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';
 import { getI18nProps } from '@/shared/utils/i18n';
 
-const CreatorDomainVerificationPage: NextPageWithLayout = () => {
+const IssuerDomainVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('domain-verification');
 
   return (
@@ -16,9 +16,9 @@ const CreatorDomainVerificationPage: NextPageWithLayout = () => {
       <PageHeader
         title={t('header.title')}
         subtitle={t('header.description')}
-        closeButtonHref="/creator/verification"
+        closeButtonHref="/issuer/verification"
       />
-      <DomainVerificationContextProvider userRole={UserRole.Creator}>
+      <DomainVerificationContextProvider userRole={UserRole.Issuer}>
         <DomainVerificationFormWrapper />
       </DomainVerificationContextProvider>
     </>
@@ -34,8 +34,8 @@ export const getServerSideProps = withAuth(
     };
   },
   {
-    roles: [UserRole.Creator],
+    roles: [UserRole.Issuer],
   },
 ) satisfies GetServerSideProps;
 
-export default CreatorDomainVerificationPage;
+export default IssuerDomainVerificationPage;
