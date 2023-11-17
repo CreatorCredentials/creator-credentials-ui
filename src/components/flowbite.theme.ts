@@ -7,6 +7,8 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
         'text-white bg-primary border border-primary hover:bg-primary-hover focus:ring-4 focus:ring-primary-hover disabled:bg-grey-3 disabled:border-grey-3 fill-white',
       outline:
         'text-primary bg-white border border-primary hover:border-primary-hover hover:text-primary-hover focus:ring-4 focus:ring-primary-hover disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-primary',
+      'outline-black':
+        'text-black bg-white border border-transparent focus:ring-4 focus:ring-black disabled:text-grey-3 disabled:bg-white fill-black',
       black:
         'text-black bg-transparent border border-black hover:border-black hover:text-black focus:ring-4 focus:ring-black disabled:text-grey-3 disabled:border-grey-3 disabled:bg-white fill-black',
       text: 'text-primary bg-transparent hover:text-primary-hover focus:text-primary-hover disabled:bg-transparent disabled:text-grey-3 fill-primary disabled:fill-grey-3',
@@ -18,10 +20,12 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   },
   textInput: {
     field: {
+      base: 'relative w-full fill-grey-4',
       input: {
-        base: 'block w-full border border-grey-2 disabled:cursor-not-allowed disabled:opacity-50',
+        base: 'block w-full border border-grey-2 disabled:cursor-not-allowed disabled:opacity-50 placeholder-grey-4',
         sizes: {
           md: 'py-2 text-sm px-4',
+          lg: 'py-3 text-sm px-4',
         },
       },
     },
@@ -80,6 +84,13 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
             },
           },
         },
+      },
+    },
+  },
+  dropdown: {
+    floating: {
+      style: {
+        light: 'border border-grey-2 bg-white text-grey-4',
       },
     },
   },

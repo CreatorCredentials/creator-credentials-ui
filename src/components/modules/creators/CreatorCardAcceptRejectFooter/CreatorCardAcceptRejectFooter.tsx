@@ -1,0 +1,122 @@
+import React from 'react';
+import { useTranslation } from 'next-i18next';
+import { Button } from 'flowbite-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Creator } from '@/shared/typings/Creator';
+import { useAcceptCreatorConnectionRequest } from '@/api/mutations/useAcceptCreatorConnectionRequest';
+import { useRejectCreatorConnectionRequest } from '@/api/mutations/useRejectCreatorConnectionRequest';
+import { useToast } from '@/shared/hooks/useToast';
+import { GetIssuerCreatorsResponse } from '@/api/requests/getIssuerCreators';
+import { QueryKeys } from '@/api/queryKeys';
+import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
+
+type CreatorCardAcceptRejectFooterProps = {
+  creator: Creator;
+};
+
+export const CreatorCardAcceptRejectFooter = ({
+  creator,
+}: CreatorCardAcceptRejectFooterProps) => {
+  const { t } = useTranslation('issuer-creators');
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: acceptAsync, isLoading: isAccepting } =
+    useAcceptCreatorConnectionRequest({
+      onSuccess: (_, { creatorId }) => {
+        queryClient.setQueriesData<GetIssuerCreatorsResponse>(
+          [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Pending },
+          ],
+          (oldData) => {
+            if (!oldData) return;
+
+            const newData = oldData.creators.filter(
+              (creator) => creator.id !== creatorId,
+            );
+
+            return {
+              creators: newData,
+            };
+          },
+        );
+
+        queryClient.setQueriesData<GetIssuerCreatorsResponse>(
+          [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Accepted },
+          ],
+          (oldData) => {
+            if (!oldData) return;
+
+            return {
+              creators: [creator, ...oldData.creators],
+            };
+          },
+        );
+      },
+    });
+
+  const { mutateAsync: rejectAsync, isLoading: isRejecting } =
+    useRejectCreatorConnectionRequest({
+      onSuccess: (_, { creatorId }) => {
+        queryClient.setQueriesData<GetIssuerCreatorsResponse>(
+          [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Pending },
+          ],
+          (oldData) => {
+            if (!oldData) return;
+
+            const newData = oldData.creators.filter(
+              (creator) => creator.id !== creatorId,
+            );
+
+            return {
+              creators: newData,
+            };
+          },
+        );
+      },
+    });
+
+  const acceptButtonHandler = async () => {
+    try {
+      await acceptAsync({ creatorId: creator.id });
+    } catch (error) {
+      toast.error(t('requests.errors.accept-failed'));
+    }
+  };
+
+  const rejectButtonHandler = async () => {
+    try {
+      await rejectAsync({ creatorId: creator.id });
+    } catch (error) {
+      toast.error(t('requests.errors.reject-failed'));
+    }
+  };
+
+  const disableButtons = isAccepting || isRejecting;
+
+  return (
+    <div className="flex w-full flex-col gap-2">
+      <Button
+        color="primary"
+        disabled={disableButtons}
+        isProcessing={isAccepting}
+        onClick={acceptButtonHandler}
+      >
+        {t('accept', { ns: 'common' })}
+      </Button>
+      <Button
+        color="outline"
+        disabled={disableButtons}
+        isProcessing={isRejecting}
+        onClick={rejectButtonHandler}
+      >
+        {t('reject', { ns: 'common' })}
+      </Button>
+    </div>
+  );
+};

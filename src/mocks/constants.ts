@@ -1,3 +1,5 @@
+import { Creator } from '@/shared/typings/Creator';
+import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
@@ -109,4 +111,62 @@ export const MOCK_ISSUERS: IssuerWithVerifiedCredentials[] = [
     vcs: MOCK_CREDENTIALS,
     additionalVerificationSteps: true,
   },
+];
+
+export const MOCK_CREATORS: Creator[] = [
+  {
+    id: 'mock-creator-1',
+    title: 'Alan Doe',
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: 'alan.doe@creator.info',
+      domain: 'alan.doe.creator.info',
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Accepted,
+  },
+  {
+    id: 'mock-creator-2',
+    title: 'John Doe',
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: 'john.doe@creator.info',
+      domain: 'john.doe.creator.info',
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Accepted,
+  },
+  {
+    id: 'mock-creator-3',
+    title: 'Jane Doe',
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: 'jane.doe@creator.info',
+      domain: 'jane.doe.creator.info',
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Accepted,
+  },
+  {
+    id: 'mock-creator-4',
+    title: 'James Bond',
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: 'james.bond@creator.info',
+      domain: 'james.bond.creator.info',
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Accepted,
+  },
+  ...Array.from(Array(10).keys()).map((i) => ({
+    id: `mock-creator-${i + 5}`,
+    title: `Creator ${i + 5}`,
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: `creator${i + 5}.creator.info`,
+      domain: `creator${i + 5}.creator.info`,
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Pending,
+  })),
 ];
