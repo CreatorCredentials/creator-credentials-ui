@@ -27,6 +27,15 @@ export const MOCK_CREDENTIALS: VerifiedCredentialsUnion[] = [
     },
     status: CredentialVerificationStatus.Success,
   },
+  {
+    id: '3',
+    type: CredentialType.Member,
+    data: {
+      companyName: 'Creator Credentials B.V.',
+      requirements: 'Info about requirements',
+    },
+    status: CredentialVerificationStatus.Success,
+  },
 ];
 
 export const MOCK_ISSUERS: IssuerWithVerifiedCredentials[] = [
