@@ -12,7 +12,13 @@
   "accepted": {
     "header": {
       "title": "Accepted creators",
-      "description": "This is a list of creators, you approved in the past."
+      "description": "This is a list of creators you approved in the past."
+    }
+  },
+  "rejected": {
+    "header": {
+      "title": "Rejected creators",
+      "description": "This is a list of creators you rejected in the past."
     }
   },
   "filters": {

@@ -167,6 +167,17 @@ export const MOCK_CREATORS: Creator[] = [
     },
     status: CreatorVerificationStatus.Accepted,
   },
+  {
+    id: 'mock-creator-4',
+    title: 'Johnny Rejected',
+    imageUrl: '/images/mock-creator-image.png',
+    credentials: {
+      email: 'johnny@creator.info',
+      domain: 'johnny.creator.info',
+      walletAddress: '0x171147d85c5t54badb920fc7gfs6822e0132470c',
+    },
+    status: CreatorVerificationStatus.Rejected,
+  },
   ...Array.from(Array(10).keys()).map((i) => ({
     id: `mock-creator-${i + 10}`,
     title: `Creator ${i + 5}`,

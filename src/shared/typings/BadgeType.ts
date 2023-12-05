@@ -8,4 +8,5 @@ export type BadgeType =
   | 'pending'
   | 'active'
   | 'accepted'
-  | 'selected';
+  | 'selected'
+  | 'rejected';

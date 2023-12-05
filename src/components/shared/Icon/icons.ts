@@ -46,6 +46,10 @@ export const icons = {
   DesignServicesFilled: lazy(
     () => import('@/public/images/icons/design-services-filled.svg'),
   ),
+  DoNotDisturb: lazy(() => import('@/public/images/icons/do-not-disturb.svg')),
+  DoNotDisturbFilled: lazy(
+    () => import('@/public/images/icons/do-not-disturb-filled.svg'),
+  ),
   Download: lazy(() => import('@/public/images/icons/download.svg')),
   EventFilled: lazy(() => import('@/public/images/icons/event-filled.svg')),
   EventTodayFilled: lazy(
