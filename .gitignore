@@ -5,7 +5,7 @@
 
 # Environment variables
 .env*
-!.env.dev
+.env.dev
 
 # IDE
 .vscode/settings.json
