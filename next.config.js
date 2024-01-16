@@ -11,6 +11,12 @@ const nextConfig = {
     API_MOCKING: process.env.API_MOCKING || 'enabled',
   },
   webpack(config) {
+    // Fixes npm packages that depend on `fs` module
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+
     config.module.rules.push({
       test: /\.svg$/,
       use: [

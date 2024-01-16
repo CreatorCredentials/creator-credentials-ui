@@ -1,16 +1,16 @@
 import { Sidebar } from 'flowbite-react';
-import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { UserRole } from '@/shared/typings/UserRole';
 import { BrandImage } from '@/components/shared/BrandImage';
 import { CreatorNavigationItems } from './CreatorNavigationItems';
 import { IssuerNavigationItems } from './IssuerNavigationItems';
 
 export const Navigation = () => {
-  const session = useSession();
+  const user = useUser();
 
   const NavigationItems = useMemo(() => {
-    switch (session.data?.user?.role) {
+    switch (user.user?.publicMetadata.role) {
       case UserRole.Creator:
         return CreatorNavigationItems;
       case UserRole.Issuer:
@@ -18,7 +18,7 @@ export const Navigation = () => {
       default:
         return null;
     }
-  }, [session.data?.user?.role]);
+  }, [user.user?.publicMetadata.role]);
 
   return (
     <Sidebar className="flex w-[11.5rem] flex-col border-e-2 border-gray-200">

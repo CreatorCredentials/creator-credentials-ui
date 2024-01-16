@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { getServerSession } from 'next-auth';
-import { SessionError } from '@/shared/typings/SessionError';
+import { getAuth } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/nextjs';
+import { clerkClient as clerkClientBackend } from '@clerk/nextjs/server';
 import { UserRole } from '@/shared/typings/UserRole';
-import { authOptions } from '../../../pages/api/auth/[...nextauth]';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -18,17 +18,10 @@ export function withAuth<
   return async function withAuthUserTokenSSR(
     context: GetServerSidePropsContext,
   ) {
-    const session = await getServerSession(
-      context.req,
-      context.res,
-      authOptions,
-    );
+    const auth = getAuth(context.req);
 
-    if (
-      !session ||
-      session.error === SessionError.RefreshAccessTokenError ||
-      (options?.roles && !isUserRoleEligible(session.user.role, options.roles))
-    ) {
+    const { userId } = auth;
+    if (!userId) {
       return {
         redirect: {
           destination: options?.redirect || '/welcome',
@@ -37,7 +30,50 @@ export function withAuth<
       } as GetServerSidePropsResult<P>;
     }
 
-    return handler(context);
+    try {
+      const user = await clerkClient.users.getUser(userId);
+
+      const userRoleFromMetadata = user.publicMetadata.role;
+      if (
+        userRoleFromMetadata !== UserRole.Creator &&
+        userRoleFromMetadata !== UserRole.Issuer
+      ) {
+        const route = context.req.url;
+        if (route === '/creator' || route === '/issuer') {
+          await clerkClientBackend.users.updateUserMetadata(userId, {
+            publicMetadata: {
+              role: route === '/creator' ? UserRole.Creator : UserRole.Issuer,
+            },
+          });
+        }
+      }
+
+      if (
+        user.publicMetadata.role &&
+        options?.roles &&
+        !isUserRoleEligible(user.publicMetadata.role as UserRole, options.roles)
+      ) {
+        return {
+          redirect: {
+            destination:
+              options?.redirect ||
+              (user.publicMetadata.role === UserRole.Creator
+                ? '/creator'
+                : '/issuer'),
+            statusCode: 302,
+          },
+        } as GetServerSidePropsResult<P>;
+      }
+
+      return handler(context);
+    } catch (error) {
+      return {
+        redirect: {
+          destination: options?.redirect || '/welcome',
+          statusCode: 302,
+        },
+      } as GetServerSidePropsResult<P>;
+    }
   };
 }
 
@@ -48,6 +84,5 @@ const isUserRoleEligible = (
   if (Array.isArray(eligibleRoles)) {
     return eligibleRoles.includes(userRole);
   }
-
   return userRole === eligibleRoles;
 };

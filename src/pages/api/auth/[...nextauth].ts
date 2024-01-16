@@ -7,7 +7,6 @@ import { SessionError } from '@/shared/typings/SessionError';
 import { signInWithEmailCode } from '@/api/requests/signInWithEmailCode';
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/welcome',
     signOut: '/',

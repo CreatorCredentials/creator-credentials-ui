@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserButton } from '@clerk/nextjs';
 import { NavigationItem } from '../NavigationItem';
 import { NavigationSignOutButton } from '../NavigationSignOutButton';
 import { NavigationRoute } from '../NavigationRoute';
@@ -66,6 +67,7 @@ export const IssuerNavigationItems = () => (
       ))}
     </div>
     <div>
+      <UserButton afterSignOutUrl="/welcome" />
       {ISSUER_SUB_ROUTES.map((props) => (
         <NavigationItem
           {...props}

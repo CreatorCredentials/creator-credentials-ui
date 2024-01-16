@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google';
 import { useState } from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { Toaster } from 'react-hot-toast';
-import { SessionProvider } from 'next-auth/react';
+import { ClerkProvider } from '@clerk/nextjs';
 import { createQueryClient } from '@/shared/utils/queryClient';
 import { clsxm } from '@/shared/utils/clsxm';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
@@ -32,8 +32,8 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <AppMetadata />
-      <SessionProvider>
+      <ClerkProvider {...pageProps}>
+        <AppMetadata />
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <MocksProvider>
@@ -50,7 +50,7 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
             />
           </Hydrate>
         </QueryClientProvider>
-      </SessionProvider>
+      </ClerkProvider>
     </>
   );
 }

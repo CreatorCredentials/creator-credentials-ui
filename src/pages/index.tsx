@@ -1,23 +1,32 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import { getServerSession } from 'next-auth';
+import { getAuth } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/nextjs';
 import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
-import { authOptions } from './api/auth/[...nextauth]';
 
 const HomePage: NextPage = () => null;
 
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
-    const session = await getServerSession(ctx.req, ctx.res, authOptions);
+    const { userId } = getAuth(ctx.req);
+
+    if (!userId) {
+      return {
+        redirect: {
+          destination: '/welcome',
+          permanent: false,
+        },
+      };
+    }
+    const user = await clerkClient.users.getUser(userId);
 
     return {
       redirect: {
-        destination:
-          session && session.user
-            ? session.user.role === UserRole.Creator
-              ? '/creator'
-              : '/issuer'
-            : '/welcome',
+        destination: user
+          ? user.publicMetadata.role === UserRole.Issuer
+            ? '/issuer'
+            : '/creator'
+          : '/welcome',
         permanent: false,
       },
     };

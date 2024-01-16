@@ -1,15 +1,30 @@
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import { UserCard } from '@/components/modules/welcome/UserCard/UserCard';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 import { LinkButton } from '@/components/shared/LinkButton';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
+import { UserRole } from '@/shared/typings/UserRole';
 
 const WelcomePage: NextPageWithLayout = () => {
   const { t } = useTranslation('welcome');
+  const router = useRouter();
+  const user = useUser();
+
+  useEffect(() => {
+    if (!user.isSignedIn) return;
+
+    if (user.user?.publicMetadata.role === UserRole.Issuer) {
+      router.push('/issuer');
+    } else if (user.user?.publicMetadata.role === UserRole.Creator) {
+      router.push('/creator');
+    }
+  }, [user, router]);
 
   return (
     <>

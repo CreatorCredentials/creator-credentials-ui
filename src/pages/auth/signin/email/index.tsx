@@ -1,52 +1,54 @@
 import { Spinner } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
-import { getCsrfToken, signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
-import { ReactElement, useCallback, useEffect, useRef } from 'react';
+import { getCsrfToken } from 'next-auth/react';
+// import { useSearchParams } from 'next/navigation';
+// import { useRouter } from 'next/router';
+import { ReactElement } from 'react';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 
 type EmailLoginPageProps = {
-  csrfToken: string;
+  // csrfToken: string;
 };
 
-const EmailLoginPage: NextPageWithLayout<EmailLoginPageProps> = ({
-  csrfToken,
-}) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const signInRan = useRef(false);
+const EmailLoginPage: NextPageWithLayout<EmailLoginPageProps> = (
+  {
+    // csrfToken,
+  },
+) => {
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+  // const signInRan = useRef(false);
 
-  const code = searchParams.get('code');
+  // const code = searchParams.get('code');
 
-  const signInCallback = useCallback(async () => {
-    try {
-      const response = await signIn('email', {
-        code,
-        csrfToken,
-        redirect: false,
-      });
+  // const signInCallback = useCallback(async () => {
+  //   try {
+  //     const response = await signIn('email', {
+  //       code,
+  //       csrfToken,
+  //       redirect: false,
+  //     });
 
-      if (!response?.ok) {
-        throw new Error('Coud not sign in');
-      }
+  //     if (!response?.ok) {
+  //       throw new Error('Coud not sign in');
+  //     }
 
-      router.replace('/');
-    } catch (err) {
-      router.replace('/auth/error');
-    }
-  }, [csrfToken, router, code]);
+  //     router.replace('/');
+  //   } catch (err) {
+  //     router.replace('/auth/error');
+  //   }
+  // }, [csrfToken, router, code]);
 
-  useEffect(() => {
-    if (signInRan.current === false) {
-      signInCallback();
-    }
+  // useEffect(() => {
+  //   if (signInRan.current === false) {
+  //     signInCallback();
+  //   }
 
-    return () => {
-      signInRan.current = true;
-    };
-  }, [signInCallback]);
+  //   return () => {
+  //     signInRan.current = true;
+  //   };
+  // }, [signInCallback]);
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center">
@@ -65,7 +67,7 @@ EmailLoginPage.getLayout = (page: ReactElement) => {
 export const getServerSideProps = (async (ctx) => {
   return {
     props: {
-      csrfToken: await getCsrfToken(ctx),
+      csrfToken: (await getCsrfToken(ctx)) || null,
     },
   };
 }) satisfies GetServerSideProps;

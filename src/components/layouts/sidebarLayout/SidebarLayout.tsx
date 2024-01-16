@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@clerk/nextjs';
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Loader } from '@/components/shared/Loader';
 import { Navigation } from './Navigation';
@@ -9,9 +9,9 @@ type SidebarLayoutProps = {
 };
 
 export const SidebarLayout = ({ children }: SidebarLayoutProps) => {
-  const session = useSession();
+  const session = useAuth();
 
-  if (session.status === 'loading') {
+  if (!session.isLoaded) {
     return <Loader />;
   }
 
