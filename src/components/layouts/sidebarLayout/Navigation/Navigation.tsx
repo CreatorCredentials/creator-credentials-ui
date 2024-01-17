@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { UserRole } from '@/shared/typings/UserRole';
 import { BrandImage } from '@/components/shared/BrandImage';
@@ -8,6 +8,12 @@ import { IssuerNavigationItems } from './IssuerNavigationItems';
 
 export const Navigation = () => {
   const user = useUser();
+
+  useEffect(() => {
+    if (!user.user?.publicMetadata.role) {
+      user.user?.reload();
+    }
+  }, [user]);
 
   const NavigationItems = useMemo(() => {
     switch (user.user?.publicMetadata.role) {

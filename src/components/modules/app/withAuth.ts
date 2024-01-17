@@ -1,7 +1,10 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getAuth } from '@clerk/nextjs/server';
 import { clerkClient } from '@clerk/nextjs';
-import { clerkClient as clerkClientBackend } from '@clerk/nextjs/server';
+import {
+  clerkClient as clerkClientBackend,
+  User as ClerkUser,
+} from '@clerk/nextjs/server';
 import { UserRole } from '@/shared/typings/UserRole';
 
 export function withAuth<
@@ -31,7 +34,7 @@ export function withAuth<
     }
 
     try {
-      const user = await clerkClient.users.getUser(userId);
+      const user: ClerkUser = await clerkClient.users.getUser(userId);
 
       const userRoleFromMetadata = user.publicMetadata.role;
       if (
