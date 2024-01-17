@@ -56,24 +56,24 @@ const ISSUER_SUB_ROUTES: NavigationRoute[] = [
   },
 ];
 
+const mappedIssuerRoutes = ISSUER_ROUTES.map((props) => (
+  <NavigationItem
+    {...props}
+    key={props.href}
+  />
+));
+const mappedIssuerSubRoutes = ISSUER_SUB_ROUTES.map((props) => (
+  <NavigationItem
+    {...props}
+    key={props.href}
+  />
+));
 export const IssuerNavigationItems = () => (
   <>
-    <div className="pt-[6rem]">
-      {ISSUER_ROUTES.map((props) => (
-        <NavigationItem
-          {...props}
-          key={props.href}
-        />
-      ))}
-    </div>
+    <div className="pt-[6rem]">{mappedIssuerRoutes}</div>
     <div>
       <UserButton afterSignOutUrl="/welcome" />
-      {ISSUER_SUB_ROUTES.map((props) => (
-        <NavigationItem
-          {...props}
-          key={props.href}
-        />
-      ))}
+      {mappedIssuerSubRoutes}
       <NavigationSignOutButton />
     </div>
   </>

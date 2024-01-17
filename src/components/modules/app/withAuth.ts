@@ -39,10 +39,14 @@ export function withAuth<
         userRoleFromMetadata !== UserRole.Issuer
       ) {
         const route = context.req.url;
-        if (route === '/creator' || route === '/issuer') {
+        let newRole = null;
+        if (route?.includes('issuer')) newRole = UserRole.Issuer;
+        if (route?.includes('creator')) newRole = UserRole.Creator;
+
+        if (newRole) {
           await clerkClientBackend.users.updateUserMetadata(userId, {
             publicMetadata: {
-              role: route === '/creator' ? UserRole.Creator : UserRole.Issuer,
+              role: newRole,
             },
           });
         }

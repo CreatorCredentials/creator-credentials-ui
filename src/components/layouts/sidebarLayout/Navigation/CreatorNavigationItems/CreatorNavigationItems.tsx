@@ -40,26 +40,25 @@ const CREATOR_SUB_ROUTES: NavigationRoute[] = [
     activeIconName: 'AccountCircleFilled',
   },
 ];
-
+const mappedCreatorRoutes = CREATOR_ROUTES.map((props) => (
+  <NavigationItem
+    {...props}
+    key={props.href}
+  />
+));
+const mappedCreatorSubRoutes = CREATOR_SUB_ROUTES.map((props) => (
+  <NavigationItem
+    {...props}
+    key={props.href}
+  />
+));
 export const CreatorNavigationItems = () => {
   return (
     <>
-      <div className="pt-[6rem]">
-        {CREATOR_ROUTES.map((props) => (
-          <NavigationItem
-            {...props}
-            key={props.href}
-          />
-        ))}
-      </div>
+      <div className="pt-[6rem]">{mappedCreatorRoutes}</div>
       <div>
         <UserButton afterSignOutUrl="/welcome" />
-        {CREATOR_SUB_ROUTES.map((props) => (
-          <NavigationItem
-            {...props}
-            key={props.href}
-          />
-        ))}
+        {mappedCreatorSubRoutes}
         <NavigationSignOutButton />
       </div>
     </>

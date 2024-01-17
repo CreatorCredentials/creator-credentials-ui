@@ -18,7 +18,7 @@ export const Navigation = () => {
       default:
         return null;
     }
-  }, [user.user?.publicMetadata.role]);
+  }, [user]);
 
   return (
     <Sidebar className="flex w-[11.5rem] flex-col border-e-2 border-gray-200">
