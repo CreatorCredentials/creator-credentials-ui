@@ -5,6 +5,9 @@ module.exports = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
+    // localePath MUST be passed, otherwise getServerSideProps pages (SSR)
+    // whould not translate labels correctly
+    localePath: path.resolve('./public/locales'),
   },
   fallbackLng: {
     default: ['en'],
