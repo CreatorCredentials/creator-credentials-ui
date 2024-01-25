@@ -21,7 +21,7 @@ export const Icon = ({ icon, className }: Props) => {
       )}
       aria-hidden="true"
       role="img"
-      title={icon}
+      //title={icon}
     >
       {!isSSR && <SvgIcon />}
     </i>

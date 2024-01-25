@@ -36,6 +36,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
     }
   };
 
+  const signUpEmail = formSteps.email.address;
   return (
     <>
       <WelcomeHeader
@@ -49,6 +50,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
         goBackHandler={goBackHandler}
         resendVerificationEmailHandler={resendVerificationEmailHandler}
         isLoading={isLoading}
+        signUpEmail={signUpEmail}
       />
     </>
   );
@@ -64,7 +66,7 @@ IssuerSignupVerificationPage.getLayout = (page: ReactElement) => {
 
 export const getServerSideProps = (async (ctx) => {
   // TODO: After removing MSW, replace the condition below with code below - it will prevent users from accessing this page directly or by refreshing the page.
-  // if (!ctx.req.headers.referer?.includes('/auth/signup/issuer/email'))
+  // if (!ctx.req.headers.referer?.includes('/auth/signup/issuer/email')) {
   if (!ctx.req.headers.referer) {
     return {
       redirect: {

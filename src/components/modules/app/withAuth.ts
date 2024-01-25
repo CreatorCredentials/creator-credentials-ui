@@ -6,6 +6,7 @@ import {
   User as ClerkUser,
 } from '@clerk/nextjs/server';
 import { UserRole } from '@/shared/typings/UserRole';
+import axiosNest from '@/api/axiosSSRNest';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -37,6 +38,7 @@ export function withAuth<
       const user: ClerkUser = await clerkClient.users.getUser(userId);
 
       const userRoleFromMetadata = user.publicMetadata.role;
+
       if (
         userRoleFromMetadata !== UserRole.Creator &&
         userRoleFromMetadata !== UserRole.Issuer
@@ -54,6 +56,29 @@ export function withAuth<
           });
         }
       }
+
+      const token = await auth.getToken();
+      let userFromBackend;
+      try {
+        const result = await axiosNest.get(`v1/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        userFromBackend = result.data;
+
+        if (!userFromBackend) {
+          userFromBackend = await axiosNest.post(
+            `v1/users/register`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        }
+      } catch (error) {}
 
       if (
         user.publicMetadata.role &&

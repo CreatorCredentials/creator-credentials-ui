@@ -104,7 +104,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                     isProcessing={isLoading}
                     color="primary"
                   >
-                    <p>{t('send', { ns: 'common' })}</p>
+                    <p>{t('sign-up', { ns: 'common' })}</p>
                     <Icon
                       icon="ArrowRight"
                       className="ms-2"
@@ -141,7 +141,7 @@ IssuerSignupEmailPage.getLayout = (page: ReactElement) => {
 
 export const getServerSideProps = (async (ctx) => {
   // TODO: After removing MSW, replace the condition below with code below - it will prevent users from accessing this page directly or by refreshing the page.
-  // if (!ctx.req.headers.referer?.includes('/auth/signup/issuer'))
+  // if (!ctx.req.headers.referer?.includes('/auth/signup/issuer')) {
   if (!ctx.req.headers.referer) {
     return {
       redirect: {

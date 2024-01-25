@@ -3,7 +3,8 @@ import { useTranslation } from 'next-i18next';
 import { Tabs, TabsComponent } from 'flowbite-react';
 import { Loader } from '@/components/shared/Loader';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
-import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
+import { useEmailCredential } from '@/api/queries/useEmailCredential';
+// import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CreatorIssuedCredentials } from '../CreatorIssuedCredentials';
 import { CreatorPendingCredentials } from '../CreatorPendingCredentials';
@@ -11,7 +12,14 @@ import { CreatorPendingCredentials } from '../CreatorPendingCredentials';
 export const CreatorCredentialsTabs = () => {
   const { t } = useTranslation('creator-credentials');
 
-  const { isLoading, isFetching, status, data } = useCreatorCredentials();
+  // const {
+  //   isLoading: isLoadingEmail,
+  //   isFetching: isFetchingEmail,
+  //   status: statusEmail,
+  //   data: dataEmail,
+  // } = useEmailCredential();
+  // const { isLoading, isFetching, status, data } = useCreatorCredentials();
+  const { isLoading, isFetching, status, data } = useEmailCredential();
 
   const credentialsArray = useMemo(
     () =>
@@ -38,7 +46,7 @@ export const CreatorCredentialsTabs = () => {
         <CreatorIssuedCredentials credentials={credentialsArray} />
       </Tabs.Item>
       <Tabs.Item title={t('tabs.pending')}>
-        <CreatorPendingCredentials credentials={credentialsArray} />
+        <CreatorPendingCredentials credentials={[]} />
       </Tabs.Item>
     </TabsComponent>
   );

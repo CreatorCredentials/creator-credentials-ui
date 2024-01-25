@@ -1,5 +1,6 @@
 export const QueryKeys = {
   creatorVerifiedCredentials: 'creatorVerifiedCredentials',
+  creatorEmailCredential: 'creatorEmailCredential',
   creatorIssuers: 'creatorIssuers',
   creatorIssuerDetails: 'creatorIssuerDetails',
   issuersByCredentials: 'issuersByCredentials',

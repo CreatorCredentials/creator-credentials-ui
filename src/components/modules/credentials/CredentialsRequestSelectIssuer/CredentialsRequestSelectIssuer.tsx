@@ -39,9 +39,11 @@ export const CredentialsRequestSelectIssuer = () => {
       return <Loader />;
     }
 
-    const issuersToRender = preSelectedIssuerId
-      ? data.issuers.filter((issuer) => issuer.id === preSelectedIssuerId)
-      : data.issuers;
+    const issuersToRender = (
+      preSelectedIssuerId
+        ? data.issuers.filter((issuer) => issuer.id === preSelectedIssuerId)
+        : data.issuers
+    ).filter((issuer) => issuer.id === '1');
 
     if (issuersToRender.length === 0) {
       return <CredentialsRequestNoIssuersCard />;

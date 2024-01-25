@@ -22,7 +22,7 @@ export const SuccessfullCredentialRequestConfirmationCard = () => {
         <footer className="w-fit">
           <LinkButton
             color="primary"
-            href="/creator"
+            href="/creator/credentials"
           >
             {t('success-card.back-button')}
           </LinkButton>

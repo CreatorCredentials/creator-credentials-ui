@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
-import { Icon } from '@/components/shared/Icon';
+// import { Button } from 'flowbite-react';
+// import { useTranslation } from 'next-i18next';
+// import { Icon } from '@/components/shared/Icon';
+import { SignUp } from '@clerk/nextjs';
 import { UserRole } from '@/shared/typings/UserRole';
-import { TemporaryLogInButton } from '@/components/shared/TemporaryLogInButton';
+// import { TemporaryLogInButton } from '@/components/shared/TemporaryLogInButton';
 import { BaseAuthFormCard } from '../BaseAuthFormCard';
 
 type AuthVerificationCardProps = {
@@ -11,19 +12,17 @@ type AuthVerificationCardProps = {
   title: string;
   subtitle: string;
   userRole: UserRole;
+  signUpEmail: string;
   goBackHandler: () => void;
   resendVerificationEmailHandler: () => void;
 };
 
 export const AuthVerificationCard = ({
-  isLoading,
   title,
   subtitle,
-  userRole,
-  resendVerificationEmailHandler,
-  goBackHandler,
+  signUpEmail,
 }: AuthVerificationCardProps) => {
-  const { t } = useTranslation('common');
+  // const { t } = useTranslation('common');
 
   return (
     <BaseAuthFormCard
@@ -31,7 +30,12 @@ export const AuthVerificationCard = ({
       subtitle={subtitle}
     >
       <div className="flex flex-col gap-4">
-        <Button
+        <SignUp
+          redirectUrl={'/issuer'}
+          signInUrl={'auth/login/issuer'}
+          initialValues={{ emailAddress: signUpEmail }}
+        />
+        {/* <Button
           isProcessing={isLoading}
           disabled={isLoading}
           onClick={resendVerificationEmailHandler}
@@ -54,7 +58,7 @@ export const AuthVerificationCard = ({
             className="me-2"
           />
           <p>{t('go-back')}</p>
-        </Button>
+        </Button> */}
       </div>
     </BaseAuthFormCard>
   );

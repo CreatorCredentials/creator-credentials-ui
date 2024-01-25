@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserButton } from '@clerk/nextjs';
 import { NavigationRoute } from '../NavigationRoute';
 import { NavigationItem } from '../NavigationItem';
 import { NavigationSignOutButton } from '../NavigationSignOutButton';
@@ -57,7 +56,6 @@ export const CreatorNavigationItems = () => {
     <>
       <div className="pt-[6rem]">{mappedCreatorRoutes}</div>
       <div>
-        <UserButton afterSignOutUrl="/welcome" />
         {mappedCreatorSubRoutes}
         <NavigationSignOutButton />
       </div>

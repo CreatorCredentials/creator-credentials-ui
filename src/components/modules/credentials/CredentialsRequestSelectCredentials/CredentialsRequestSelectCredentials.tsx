@@ -29,11 +29,12 @@ export const CredentialsRequestSelectCredentials = () => {
     if (isLoading || isFetching) {
       return <Loader />;
     }
+    const credentialsToRender = data.credentials.filter((c) => c.id === '1');
 
     return (
       <div className="mt-8">
         <div className="grid grid-cols-3 gap-4">
-          {data.credentials.map((credential) => (
+          {credentialsToRender.map((credential) => (
             <CredentialDetailsCard
               key={credential.id}
               credential={credential}

@@ -1,5 +1,6 @@
 import { useTranslation } from 'next-i18next';
-import React from 'react';
+import React, { ElementType } from 'react';
+import { DropdownItemProps } from 'flowbite-react';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
@@ -19,11 +20,13 @@ type CredentialDetailsCardProps = {
   renderFooter?:
     | ((credential: Omit<VerifiedCredentialsUnion, 'id'>) => React.ReactNode)
     | null;
+  dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
 export const CredentialDetailsCard = ({
   credential,
   renderFooter,
+  dropdownItems,
 }: CredentialDetailsCardProps) => {
   const { t } = useTranslation('cards');
   const { data, type } = credential;
@@ -35,6 +38,7 @@ export const CredentialDetailsCard = ({
         iconName: CREDENTIAL_TYPE_TO_ICON_NAME_MAP[type],
       }}
       title={t(`credential.types.${type.toLowerCase()}.title`)}
+      dropdownItems={dropdownItems}
       content={
         <>
           <p className="mb-2 text-base">

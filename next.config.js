@@ -9,6 +9,8 @@ const nextConfig = {
   publicRuntimeConfig: {
     API_URL: process.env.API_URL || 'http://localhost:3000/api',
     API_MOCKING: process.env.API_MOCKING || 'enabled',
+    NEST_API_URL: process.env.NEST_API_URL,
+    NEST_API_SSR_URL: process.env.NEST_API_SSR_URL,
   },
   webpack(config) {
     // Fixes npm packages that depend on `fs` module

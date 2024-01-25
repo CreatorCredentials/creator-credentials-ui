@@ -1,15 +1,14 @@
-// import { joiResolver } from '@hookform/resolvers/joi';
-// import { useRouter } from 'next/router';
-// import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-// import { IssuerSignupDetailsForm } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm';
-// import { IssuerSignupDetailsFormSchema } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.schema';
-// import { IssuerSignupDetailsFormContextType } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.types';
-// import { useIssuerSignupContext } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext';
-// import { IssuerSignupFormStep } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.types';
-import { SignUp } from '@clerk/nextjs';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { ReactElement } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useRouter } from 'next/router';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { IssuerSignupDetailsForm } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm';
+import { IssuerSignupDetailsFormSchema } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.schema';
+import { IssuerSignupDetailsFormContextType } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.types';
+import { useIssuerSignupContext } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext';
+import { IssuerSignupFormStep } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.types';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { IssuerSignupContextProvider } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
@@ -17,28 +16,28 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 
-// const FORM_STEP: IssuerSignupFormStep = 'details';
+const FORM_STEP: IssuerSignupFormStep = 'details';
 
 const IssuerSignupDetailsPage: NextPageWithLayout = () => {
   const { t } = useTranslation('issuer-signup');
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const { formSteps, updateStep } = useIssuerSignupContext();
+  const { formSteps, updateStep } = useIssuerSignupContext();
 
-  // const form = useForm<IssuerSignupDetailsFormContextType>({
-  //   resolver: joiResolver(IssuerSignupDetailsFormSchema),
-  //   defaultValues: formSteps[FORM_STEP],
-  //   mode: 'onBlur',
-  // });
+  const form = useForm<IssuerSignupDetailsFormContextType>({
+    resolver: joiResolver(IssuerSignupDetailsFormSchema),
+    defaultValues: formSteps[FORM_STEP],
+    mode: 'onBlur',
+  });
 
-  // const { handleSubmit } = form;
+  const { handleSubmit } = form;
 
-  // const signupDetailsFormSubmitHandler: SubmitHandler<
-  //   IssuerSignupDetailsFormContextType
-  // > = (data) => {
-  //   updateStep('details', data);
-  //   router.push('/auth/signup/issuer/email');
-  // };
+  const signupDetailsFormSubmitHandler: SubmitHandler<
+    IssuerSignupDetailsFormContextType
+  > = (data) => {
+    updateStep('details', data);
+    router.push('/auth/signup/issuer/email');
+  };
 
   return (
     <>
@@ -52,16 +51,12 @@ const IssuerSignupDetailsPage: NextPageWithLayout = () => {
           title={t('card.title')}
           subtitle={t('steps.details.subtitle')}
         >
-          <SignUp
-            redirectUrl={'/issuer'}
-            signInUrl={'auth/login/issuer'}
-          />
-          {/* <FormProvider {...form}>
+          <FormProvider {...form}>
             <IssuerSignupDetailsForm
               handleSubmit={handleSubmit(signupDetailsFormSubmitHandler)}
               className="px-[6.5rem]"
             />
-          </FormProvider> */}
+          </FormProvider>
         </BaseAuthFormCard>
       </section>
     </>

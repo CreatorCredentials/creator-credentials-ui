@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
+import { UserProfile } from '@clerk/nextjs';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';
@@ -18,6 +19,7 @@ const IssuerProfilePage: NextPageWithLayout = () => {
       />
       <section className="flex flex-col gap-10">
         <IssuerProfileFormWrapper />
+        <UserProfile />
       </section>
     </>
   );

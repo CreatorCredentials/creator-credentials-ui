@@ -14,6 +14,8 @@ export type EmailCredential = BaseCredential<
     address: string;
     requirements?: string;
     companyName?: string;
+    // eslint-disable-next-line
+    credentialsObject?: any;
   }
 >;
 
@@ -23,6 +25,8 @@ export type WalletCredential = BaseCredential<
     address: string;
     companyName?: string;
     requirements?: string;
+    // eslint-disable-next-line
+    credentialsObject?: any;
   }
 >;
 
@@ -30,6 +34,8 @@ export type DomainCredential = BaseCredential<
   CredentialType.Domain,
   {
     domain: string;
+    // eslint-disable-next-line
+    credentialsObject?: any;
   }
 >;
 
@@ -39,6 +45,8 @@ export type MembershipCredential = BaseCredential<
     companyName?: string;
     requirements?: string;
     validity?: string;
+    // eslint-disable-next-line
+    credentialsObject?: any;
   }
 >;
 
@@ -46,6 +54,8 @@ export type DidWebCredential = BaseCredential<
   CredentialType.DidWeb,
   {
     domain: string;
+    // eslint-disable-next-line
+    credentialsObject?: any;
   }
 >;
 
