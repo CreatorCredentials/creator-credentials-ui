@@ -29,7 +29,7 @@ export const CredentialsRequestSelectCredentials = () => {
     if (isLoading || isFetching) {
       return <Loader />;
     }
-    const credentialsToRender = data.credentials.filter((c) => c.id === '1');
+    const credentialsToRender = data.credentials.filter((c) => c.id === '3');
 
     return (
       <div className="mt-8">

@@ -19,6 +19,7 @@ export const EmailVerificationCard = ({
         iconName: 'Mail',
       }}
       className="flex-1"
+      dropdownItems={[]}
       content={
         <CardWithBadge.ContentWithIcon iconName="Mail">
           {email}

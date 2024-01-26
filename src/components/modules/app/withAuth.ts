@@ -6,7 +6,7 @@ import {
   User as ClerkUser,
 } from '@clerk/nextjs/server';
 import { UserRole } from '@/shared/typings/UserRole';
-import axiosNest from '@/api/axiosSSRNest';
+import axiosSSRNest from '@/api/axiosSSRNest';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -60,7 +60,7 @@ export function withAuth<
       const token = await auth.getToken();
       let userFromBackend;
       try {
-        const result = await axiosNest.get(`v1/users/${userId}`, {
+        const result = await axiosSSRNest.get(`v1/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +68,7 @@ export function withAuth<
         userFromBackend = result.data;
 
         if (!userFromBackend) {
-          userFromBackend = await axiosNest.post(
+          userFromBackend = await axiosSSRNest.post(
             `v1/users/register`,
             {},
             {

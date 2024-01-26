@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'next-i18next';
+import { useUser } from '@clerk/nextjs';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
@@ -20,6 +21,8 @@ export const CreatorVerificationCards = () => {
     staleTime: 1000 * 60 * 1, // 1 minute
   });
 
+  const user = useUser();
+  const emailAddress = user.user?.emailAddresses.toString() || '';
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
@@ -30,10 +33,8 @@ export const CreatorVerificationCards = () => {
 
   return (
     <section className="grid grid-cols-3 gap-4">
-      <EmailVerificationCard email={verifiedCredentials.email.data.address} />
-      <MetamaskVerificationCard
-        walletAddress={verifiedCredentials.metaMask?.data.address}
-      />
+      <EmailVerificationCard email={emailAddress} />
+      <MetamaskVerificationCard walletAddress={null} />
       <DomainVerificationCard
         value={verifiedCredentials.domain?.data.domain}
         status={verifiedCredentials.domain?.status}

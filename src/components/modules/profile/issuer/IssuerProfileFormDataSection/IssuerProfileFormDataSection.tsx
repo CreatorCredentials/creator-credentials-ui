@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next';
+import { UserProfile } from '@clerk/nextjs';
 import { useFormContext } from 'react-hook-form';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { IssuerProfileFormContextType } from '../IssuerProfileForm/IssuerProfileFormContextType';
@@ -19,6 +20,7 @@ export const IssuerProfileFormDataSection = ({
   return (
     <section className="flex flex-col gap-6">
       <h3 className="text-xl">{t('data.title')}</h3>
+      <UserProfile />
       <FormTextField
         label={t('data.fields.domain.label')}
         control={control}
@@ -37,7 +39,7 @@ export const IssuerProfileFormDataSection = ({
           readOnly: true,
         }}
       />
-      <FormTextField
+      {/* <FormTextField
         label={t('data.fields.email.label')}
         control={control}
         name="email"
@@ -45,7 +47,7 @@ export const IssuerProfileFormDataSection = ({
         inputProps={{
           readOnly: true,
         }}
-      />
+      /> */}
     </section>
   );
 };

@@ -77,7 +77,7 @@ export const CardWithBadge = ({
               <ColoredBadge badgeType={badgeType} />
             </div>
           )}
-          {dropdownItems.length && (
+          {dropdownItems.length > 0 ? (
             <div className="relative -me-4 h-6 w-6 self-end">
               <Dropdown
                 label=""
@@ -99,7 +99,7 @@ export const CardWithBadge = ({
                 ))}
               </Dropdown>
             </div>
-          )}
+          ) : null}
         </div>
         <div className="flex flex-col items-center gap-2">
           <div className="relative me-2 h-[5.5rem] w-[5.5rem]">

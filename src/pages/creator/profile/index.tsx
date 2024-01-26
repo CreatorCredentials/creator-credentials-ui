@@ -18,9 +18,9 @@ const CreatorProfilePage: NextPageWithLayout = () => {
       <PageHeader title={t('header.title')} />
       <section className="flex flex-col gap-10">
         <CreatorPersonalData email="kamil@liccium.com" />
+        <UserProfile />
         <CreatorLegalDocuments />
         <CreatorPrivacySettings />
-        <UserProfile />
       </section>
     </>
   );
