@@ -144,16 +144,16 @@ export const getServerSideProps = (async (ctx) => {
   // if (!ctx.req.headers.referer?.includes('/auth/signup/issuer')) {
 
   // eslint-disable-next-line
-  console.log('getServerSideProps IssuerSignupEmailPage: ', ctx.req.headers);
+  // console.log('getServerSideProps IssuerSignupEmailPage: ', ctx.req.headers);
 
-  if (!ctx.req.headers.referer) {
-    return {
-      redirect: {
-        destination: '/auth/signup/issuer',
-        permanent: false,
-      },
-    };
-  }
+  // if (!ctx.req.headers.referer) {
+  //   return {
+  //     redirect: {
+  //       destination: '/auth/signup/issuer',
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: {
