@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { Button } from 'flowbite-react';
 import { useTranslation } from 'next-i18next';
-import { useAuth } from '@clerk/nextjs';
-import { useRouter } from 'next/router';
+// import { useAuth } from '@clerk/nextjs';
+// import { useRouter } from 'next/router';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { Icon } from '@/components/shared/Icon';
-import axiosNest from '@/api/axiosNest';
+// import axiosNest from '@/api/axiosNest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function downloadJson(exportName: string, content: any) {
@@ -30,8 +30,8 @@ export const CreatorIssuedCredentials = ({
   credentials,
 }: CreatorIssuedCredentialsProps) => {
   const { t } = useTranslation('cards');
-  const router = useRouter();
-  const auth = useAuth();
+  // const router = useRouter();
+  // const auth = useAuth();
   const issuedCredentials = useMemo(
     () =>
       credentials.filter(
@@ -48,20 +48,22 @@ export const CreatorIssuedCredentials = ({
         <CredentialDetailsCard
           key={credential.id}
           credential={credential}
-          dropdownItems={[
-            {
-              onClick: async () => {
-                const token = await auth.getToken();
-                await axiosNest.delete(`v1/credentials`, {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                });
-                router.reload();
-              },
-              children: 'Delete credential',
-            },
-          ]}
+          dropdownItems={
+            [
+              //   {
+              //     onClick: async () => {
+              //       const token = await auth.getToken();
+              //       await axiosNest.delete(`v1/credentials`, {
+              //         headers: {
+              //           Authorization: `Bearer ${token}`,
+              //         },
+              //       });
+              //       router.reload();
+              //     },
+              //     children: 'Delete credential',
+              //   },
+            ]
+          }
           renderFooter={() => (
             <Button
               color="outline"

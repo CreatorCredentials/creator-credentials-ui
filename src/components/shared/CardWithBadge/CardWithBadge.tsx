@@ -52,6 +52,14 @@ type CardWithBadgeProps = {
   dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
+const defaultDropdownItems = [] || [
+  {
+    children: 'Dropdown-item-1',
+  },
+  {
+    children: 'Dropdown-item-2',
+  },
+];
 export const CardWithBadge = ({
   badgeType,
   title,
@@ -59,14 +67,7 @@ export const CardWithBadge = ({
   footer,
   className,
   image,
-  dropdownItems = [
-    {
-      children: 'Dropdown-item-1',
-    },
-    {
-      children: 'Dropdown-item-2',
-    },
-  ],
+  dropdownItems = defaultDropdownItems,
 }: CardWithBadgeProps) => (
   <Card className={clsxm('relative', className)}>
     <article className="flex flex-1 flex-col gap-2">

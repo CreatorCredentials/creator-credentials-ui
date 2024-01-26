@@ -75,6 +75,7 @@ export const CredentialsRequestDataConfirmation = () => {
         <div className="grid grid-cols-3 gap-4">
           {credentials.selectedItems.map((credential) => (
             <CredentialDetailsCard
+              dropdownItems={[]}
               key={credential.type}
               credential={credential}
             />

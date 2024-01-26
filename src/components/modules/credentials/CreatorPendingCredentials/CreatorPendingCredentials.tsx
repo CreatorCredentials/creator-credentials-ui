@@ -26,6 +26,7 @@ export const CreatorPendingCredentials = ({
       {pendingCredentials.map((credential) => (
         <CredentialDetailsCard
           key={credential.id}
+          dropdownItems={[]}
           credential={credential}
           renderFooter={() => (
             <ColoredBadge

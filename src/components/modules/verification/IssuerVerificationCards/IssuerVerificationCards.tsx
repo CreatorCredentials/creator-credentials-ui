@@ -27,11 +27,13 @@ export const IssuerVerificationCards = () => {
       <DomainVerificationCard
         value={data.credentials.domain?.data.domain}
         status={data.credentials.domain?.status}
+        dropdownItems={[]}
         userRole={UserRole.Issuer}
       />
       <DidWebVerificationCard
         value={data.credentials.didWeb?.data.domain}
         status={data.credentials.didWeb?.status}
+        dropdownItems={[]}
         userRole={UserRole.Issuer}
       />
     </section>

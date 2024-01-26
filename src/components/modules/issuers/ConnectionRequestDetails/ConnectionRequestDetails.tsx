@@ -74,6 +74,7 @@ export const ConnectionRequestDetails = ({
           <div className="grid grid-cols-3 gap-4">
             {data.issuer.vcs.map((vc) => (
               <CredentialDetailsCard
+                dropdownItems={[]}
                 key={vc.id}
                 credential={vc}
               />

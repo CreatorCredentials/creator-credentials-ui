@@ -42,5 +42,5 @@ function formatEmailCredential(credential: any): EmailCredential {
       requirements: 'Info about requirements',
       credentialsObject: credential,
     },
-  };
+  } as EmailCredential;
 }

@@ -37,6 +37,7 @@ export const CredentialsRequestSelectCredentials = () => {
           {credentialsToRender.map((credential) => (
             <CredentialDetailsCard
               key={credential.id}
+              dropdownItems={[]}
               credential={credential}
               renderFooter={(credential) => {
                 const selected = credentials.isSelected(credential);

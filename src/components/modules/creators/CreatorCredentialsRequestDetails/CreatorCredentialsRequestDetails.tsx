@@ -77,6 +77,7 @@ export const CreatorCredentialsRequestDetails = ({
       <div className="grid grid-cols-3 gap-4">
         {data.credentials.map((credential) => (
           <CredentialDetailsCard
+            dropdownItems={[]}
             key={credential.id}
             credential={credential}
           />

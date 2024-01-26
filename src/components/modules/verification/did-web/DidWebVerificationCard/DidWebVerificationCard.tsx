@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+import { Button, DropdownItemProps } from 'flowbite-react';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { ElementType, useCallback } from 'react';
@@ -11,12 +11,14 @@ type DomainVerificationCardProps = {
   value?: string | null;
   status?: CredentialVerificationStatus;
   userRole: UserRole;
+  dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
 export const DidWebVerificationCard = ({
   value,
   status,
   userRole,
+  dropdownItems,
 }: DomainVerificationCardProps) => {
   const { t } = useTranslation('verification-cards');
 
@@ -69,6 +71,7 @@ export const DidWebVerificationCard = ({
       image={{
         iconName: 'Web',
       }}
+      dropdownItems={dropdownItems}
       className="flex-1"
       content={
         value && status ? (
