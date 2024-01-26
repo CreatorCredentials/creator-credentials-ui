@@ -78,7 +78,10 @@ export function withAuth<
             },
           );
         }
-      } catch (error) {}
+      } catch (error) {
+        // eslint-disable-next-line
+        console.log(error);
+      }
 
       if (
         user.publicMetadata.role &&
