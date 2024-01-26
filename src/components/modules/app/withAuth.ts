@@ -8,6 +8,7 @@ import {
 import { UserRole } from '@/shared/typings/UserRole';
 import axiosSSRNest from '@/api/axiosSSRNest';
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
 >(
