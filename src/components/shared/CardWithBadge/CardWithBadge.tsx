@@ -82,7 +82,7 @@ export const CardWithBadge = ({
             <div className="relative -me-4 h-6 w-6 self-end">
               <Dropdown
                 label=""
-                dismissOnClick={false}
+                dismissOnClick={true}
                 color="outline-black"
                 renderTrigger={() => (
                   <IconButton

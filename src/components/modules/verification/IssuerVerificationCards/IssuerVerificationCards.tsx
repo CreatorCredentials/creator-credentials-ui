@@ -1,16 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'next-i18next';
-import { useIssuerCredentials } from '@/api/queries/useIssuerCredentials';
+import { useIssuerVerifications } from '@/api/queries/useIssuerVerifications';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { UserRole } from '@/shared/typings/UserRole';
+import { downloadJson } from '@/shared/utils/downloadJson';
 import { DomainVerificationCard } from '../DomainVerificationCard';
 import { DidWebVerificationCard } from '../did-web/DidWebVerificationCard';
+import { EmailVerificationCard } from '../EmailVerificationCard';
 
 export const IssuerVerificationCards = () => {
   const { t } = useTranslation('verification-cards');
 
-  const { data, isFetching, isLoading, status } = useIssuerCredentials({
+  const { data, isFetching, isLoading, status } = useIssuerVerifications({
     staleTime: 1000 * 60 * 1, // 1 minute
   });
 
@@ -21,9 +23,21 @@ export const IssuerVerificationCards = () => {
   if (isLoading || isFetching) {
     return <Loader />;
   }
-
   return (
     <section className="grid grid-cols-3 gap-4">
+      <EmailVerificationCard
+        email={data.emailCredential.data.address}
+        dropdownItems={[
+          {
+            onClick: () =>
+              downloadJson(
+                `${data.emailCredential.data.address} ${data.emailCredential.data.credentialObject.validFrom}`,
+                data.emailCredential.data.credentialObject,
+              ),
+            children: t('download', { ns: 'common' }),
+          },
+        ]}
+      />
       <DomainVerificationCard
         value={data.credentials.domain?.data.domain}
         status={data.credentials.domain?.status}

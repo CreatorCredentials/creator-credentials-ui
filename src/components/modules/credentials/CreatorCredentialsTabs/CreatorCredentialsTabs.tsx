@@ -12,12 +12,6 @@ import { CreatorPendingCredentials } from '../CreatorPendingCredentials';
 export const CreatorCredentialsTabs = () => {
   const { t } = useTranslation('creator-credentials');
 
-  // const {
-  //   isLoading: isLoadingEmail,
-  //   isFetching: isFetchingEmail,
-  //   status: statusEmail,
-  //   data: dataEmail,
-  // } = useEmailCredential();
   // const { isLoading, isFetching, status, data } = useCreatorCredentials();
   const { isLoading, isFetching, status, data } = useEmailCredential();
 

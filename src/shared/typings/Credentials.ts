@@ -15,7 +15,7 @@ export type EmailCredential = BaseCredential<
     requirements?: string;
     companyName?: string;
     // eslint-disable-next-line
-    credentialsObject?: any;
+    credentialObject?: any;
   }
 >;
 
@@ -26,7 +26,7 @@ export type WalletCredential = BaseCredential<
     companyName?: string;
     requirements?: string;
     // eslint-disable-next-line
-    credentialsObject?: any;
+    credentialObject?: any;
   }
 >;
 
@@ -35,7 +35,7 @@ export type DomainCredential = BaseCredential<
   {
     domain: string;
     // eslint-disable-next-line
-    credentialsObject?: any;
+    credentialObject?: any;
   }
 >;
 
@@ -46,7 +46,7 @@ export type MembershipCredential = BaseCredential<
     requirements?: string;
     validity?: string;
     // eslint-disable-next-line
-    credentialsObject?: any;
+    credentialObject?: any;
   }
 >;
 
@@ -55,7 +55,7 @@ export type DidWebCredential = BaseCredential<
   {
     domain: string;
     // eslint-disable-next-line
-    credentialsObject?: any;
+    credentialObject?: any;
   }
 >;
 

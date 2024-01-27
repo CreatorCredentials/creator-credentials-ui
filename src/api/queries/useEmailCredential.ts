@@ -1,10 +1,6 @@
-import { UseQueryOptions } from '@tanstack/react-query';
+import { UseQueryOptions, useQuery } from '@tanstack/react-query';
+import { useAuth } from '@clerk/nextjs';
 import { QueryKeys } from '@/api/queryKeys';
-import { AxiosError, AxiosRequestConfig } from '@/api/axios';
-import { useAuthQuery } from '@/api/helpers/useAuthQuery';
-import { EmailCredential } from '@/shared/typings/Credentials';
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { CredentialType } from '@/shared/typings/CredentialType';
 import {
   getEmailCredential,
   GetEmailCredentialResponse,
@@ -12,35 +8,23 @@ import {
 
 export const useEmailCredential = (
   options?: Omit<
-    UseQueryOptions<GetEmailCredentialResponse, AxiosError>,
-    'queryFn'
+    UseQueryOptions<GetEmailCredentialResponse>,
+    'queryFn' | 'queryKey'
   >,
-) =>
-  useAuthQuery({
-    queryKey: [QueryKeys.creatorEmailCredential],
-    queryFn: (config?: AxiosRequestConfig) =>
-      getEmailCredential({ ...config }).then((res) =>
-        emailCredentialsFormatter(res.data),
-      ),
-    ...options,
-  });
+) => {
+  const auth = useAuth();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function emailCredentialsFormatter(credentials: any[]): EmailCredential[] {
-  return credentials.map(formatEmailCredential);
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function formatEmailCredential(credential: any): EmailCredential {
-  return {
-    id: credential.id,
-    status: CredentialVerificationStatus.Success,
-    type: CredentialType.Email,
-    data: {
-      address: credential.credentialSubject.email || 'wrong',
-      companyName: 'Creator Credentials B.V.',
-      requirements: 'Info about requirements',
-      credentialsObject: credential,
+  return useQuery<GetEmailCredentialResponse>(
+    [QueryKeys.creatorEmailCredential],
+    async () => {
+      const token = await auth.getToken();
+      if (!token) {
+        throw new Error('Unauthorised useEmailCredential call');
+      }
+      return getEmailCredential(token).then((res) => res.data);
     },
-  } as EmailCredential;
-}
+    {
+      ...options,
+    },
+  );
+};

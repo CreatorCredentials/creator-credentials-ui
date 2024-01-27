@@ -7,20 +7,8 @@ import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { Icon } from '@/components/shared/Icon';
+import { downloadJson } from '@/shared/utils/downloadJson';
 // import axiosNest from '@/api/axiosNest';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function downloadJson(exportName: string, content: any) {
-  const dataStr =
-    'data:text/json;charset=utf-8,' +
-    encodeURIComponent(JSON.stringify(content, null, 2));
-  const downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', exportName + '.json');
-  document.body.appendChild(downloadAnchorNode); // required for firefox
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
-}
 
 type CreatorIssuedCredentialsProps = {
   credentials: VerifiedCredentialsUnion[];
@@ -70,8 +58,8 @@ export const CreatorIssuedCredentials = ({
               className="self-stretch"
               onClick={() =>
                 downloadJson(
-                  `${credential.data.credentialsObject.credentialSubject.email} ${credential.data.credentialsObject.validFrom}`,
-                  credential.data.credentialsObject,
+                  `${credential.data.credentialObject.credentialSubject.email} ${credential.data.credentialObject.validFrom}`,
+                  credential.data.credentialObject,
                 )
               }
             >

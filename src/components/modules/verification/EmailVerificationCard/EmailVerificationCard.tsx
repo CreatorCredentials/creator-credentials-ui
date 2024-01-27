@@ -1,13 +1,17 @@
+import { DropdownItemProps } from 'flowbite-react';
+import { ElementType } from 'react';
 import { useTranslation } from 'next-i18next';
 import { CardWithBadge } from '@/components/shared/CardWithBadge';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 
 type EmailVerificationCardProps = {
+  dropdownItems?: DropdownItemProps<ElementType>[];
   email: string;
 };
 
 export const EmailVerificationCard = ({
   email,
+  dropdownItems = [],
 }: EmailVerificationCardProps) => {
   const { t } = useTranslation('verification-cards');
 
@@ -19,7 +23,7 @@ export const EmailVerificationCard = ({
         iconName: 'Mail',
       }}
       className="flex-1"
-      dropdownItems={[]}
+      dropdownItems={dropdownItems}
       content={
         <CardWithBadge.ContentWithIcon iconName="Mail">
           {email}
