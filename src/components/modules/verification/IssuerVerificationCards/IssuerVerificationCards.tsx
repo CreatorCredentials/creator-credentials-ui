@@ -10,11 +10,18 @@ import { DidWebVerificationCard } from '../did-web/DidWebVerificationCard';
 import { EmailVerificationCard } from '../EmailVerificationCard';
 
 export const IssuerVerificationCards = () => {
-  const { t } = useTranslation('verification-cards');
+  // additional ready will state if translations are loaded or not
+  const { t, ready } = useTranslation('verification-cards', {
+    useSuspense: false,
+  });
 
   const { data, isFetching, isLoading, status } = useIssuerVerifications({
     staleTime: 1000 * 60 * 1, // 1 minute
   });
+
+  if (!ready) {
+    return <Loader />;
+  }
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
