@@ -1,7 +1,7 @@
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
 import React, { ElementType } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { useDidWebVerificationContext } from '../DidWebVerificationContext';
 

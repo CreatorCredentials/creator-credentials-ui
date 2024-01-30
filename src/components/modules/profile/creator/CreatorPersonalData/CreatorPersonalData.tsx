@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 // import { TextInput } from 'flowbite-react';
 // import { FormLabel } from '@/components/formFields/FormLabel';
 

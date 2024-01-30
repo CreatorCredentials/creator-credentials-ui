@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Button } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 // import { useAuth } from '@clerk/nextjs';
 // import { useRouter } from 'next/router';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';

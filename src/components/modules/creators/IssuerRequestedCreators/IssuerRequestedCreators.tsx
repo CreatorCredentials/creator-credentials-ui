@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';

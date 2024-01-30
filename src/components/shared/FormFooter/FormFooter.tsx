@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { Icon } from '../Icon';
 

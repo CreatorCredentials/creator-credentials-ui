@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'next-i18next';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '@/shared/hooks/useToast';
 import { CreatorCredentialVisibilityFormContextType } from '../CreatorCredentialVisibilityForm/CreatorCredentialVisibilityForm.types';
 import { CreatorCredentialVisibilityFormSchema } from '../CreatorCredentialVisibilityForm/CreatorCredentialVisibilityForm.schema';

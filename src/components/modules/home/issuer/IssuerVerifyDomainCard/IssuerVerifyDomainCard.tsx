@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { HomeCard } from '@/components/modules/home/HomeCard';
 import { LinkButton } from '@/components/shared/LinkButton';
 

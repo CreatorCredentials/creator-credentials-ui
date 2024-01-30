@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';

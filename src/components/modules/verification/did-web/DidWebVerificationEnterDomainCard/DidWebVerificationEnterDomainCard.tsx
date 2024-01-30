@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useTranslation } from 'next-i18next';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useCreateDidWebJsonFile } from '@/api/mutations/useCreateDidWebJsonFile';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { useToast } from '@/shared/hooks/useToast';

@@ -1,6 +1,6 @@
-import { useTranslation } from 'next-i18next';
 import React, { ElementType } from 'react';
 import { DropdownItemProps } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';

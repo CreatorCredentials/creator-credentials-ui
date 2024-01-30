@@ -1,7 +1,7 @@
 import { CustomFlowbiteTheme } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { FormEventHandler, ReactNode } from 'react';
 import { FormState, useFormContext } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { TermsAndConditionsTrans } from '@/components/shared/TermsAndConditionsTrans';

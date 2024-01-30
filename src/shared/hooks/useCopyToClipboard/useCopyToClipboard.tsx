@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '../useToast';
 
 type UseClipboardProps = {

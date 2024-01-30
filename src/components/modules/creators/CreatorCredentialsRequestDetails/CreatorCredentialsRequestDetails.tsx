@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useCredentialsRequestDetails } from '@/api/queries/useCredentialsRequestDetails';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';

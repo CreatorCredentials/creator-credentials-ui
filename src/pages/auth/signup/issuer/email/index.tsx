@@ -1,10 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import {
   IssuerSignupContextProvider,

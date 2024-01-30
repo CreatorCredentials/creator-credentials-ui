@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Issuer } from '@/shared/typings/Issuer';
 import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 

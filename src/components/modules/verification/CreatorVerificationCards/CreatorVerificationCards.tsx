@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { useUser } from '@clerk/nextjs';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';

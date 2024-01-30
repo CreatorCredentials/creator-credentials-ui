@@ -1,6 +1,6 @@
 import { Dropdown } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import React from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Icon, IconName } from '../Icon';
 
 const SORT_ITEMS: {

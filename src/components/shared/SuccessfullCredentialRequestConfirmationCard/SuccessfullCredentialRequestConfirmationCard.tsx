@@ -1,5 +1,5 @@
 import { Card } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Icon } from '@/components/shared/Icon';
 import { LinkButton } from '@/components/shared/LinkButton';
 

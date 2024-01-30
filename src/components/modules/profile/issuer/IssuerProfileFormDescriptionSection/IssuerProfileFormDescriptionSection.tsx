@@ -1,5 +1,5 @@
-import { useTranslation } from 'next-i18next';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormTextarea } from '@/components/formFields/FormTextarea';
 import { IssuerProfileFormContextType } from '../IssuerProfileForm/IssuerProfileFormContextType';
 

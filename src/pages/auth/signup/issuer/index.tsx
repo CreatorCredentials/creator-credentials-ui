@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { ReactElement } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useRouter } from 'next/router';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { IssuerSignupDetailsForm } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm';
 import { IssuerSignupDetailsFormSchema } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.schema';
 import { IssuerSignupDetailsFormContextType } from '@/components/modules/authorization/issuer/IssuerSignUpDetailsForm/IssuerSignupDetailsForm.types';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { Button } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { HomeCard } from '../../HomeCard';
 
 export const IssuerQCertVerificationCard = () => {

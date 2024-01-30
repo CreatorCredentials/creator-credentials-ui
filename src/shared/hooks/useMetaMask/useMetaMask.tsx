@@ -1,7 +1,7 @@
 import MetaMaskSDK from '@metamask/sdk';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '@/shared/hooks/useToast';
 import { useConnectMetaMaskWallet } from '@/api/mutations/useConnectMetaMaskWallet';
 import { useDisconnectMetaMaskWallet } from '@/api/mutations/useDisconnectMetaMaskWallet';

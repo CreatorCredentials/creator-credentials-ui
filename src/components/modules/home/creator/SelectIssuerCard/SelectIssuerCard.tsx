@@ -1,7 +1,7 @@
-import { useTranslation } from 'next-i18next';
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
 import { ElementType } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { HomeCard } from '@/components/modules/home/HomeCard';
 
 export const SelectIssuerCard = () => {

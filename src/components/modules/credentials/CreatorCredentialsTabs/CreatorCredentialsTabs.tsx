@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'next-i18next';
 import { Tabs, TabsComponent } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Loader } from '@/components/shared/Loader';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { useEmailCredential } from '@/api/queries/useEmailCredential';

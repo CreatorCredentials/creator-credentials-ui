@@ -1,7 +1,7 @@
 import { Button, DropdownItemProps } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { ElementType, useCallback } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { CardWithBadge } from '@/components/shared/CardWithBadge';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';

@@ -1,7 +1,7 @@
 import { Spinner, Tabs, TabsComponent } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useCreatorIssuers } from '@/api/queries/useCreatorIssuers';
 import { withAuth } from '@/components/modules/app';
 import { IssuersList } from '@/components/modules/issuers/IssuersList';

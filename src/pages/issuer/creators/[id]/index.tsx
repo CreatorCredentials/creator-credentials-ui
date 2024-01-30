@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { withAuth } from '@/components/modules/app';
 import { CreatorCredentialsRequestDetails } from '@/components/modules/creators/CreatorCredentialsRequestDetails';
 import { PageHeader } from '@/components/shared/PageHeader';

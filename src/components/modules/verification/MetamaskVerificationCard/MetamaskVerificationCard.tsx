@@ -1,5 +1,5 @@
-import { useTranslation } from 'next-i18next';
 import { Tooltip } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { MetamaskConnectionButton } from '@/components/shared/MetamaskConnectionButton';
 import { CardWithBadge } from '@/components/shared/CardWithBadge';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';

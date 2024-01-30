@@ -1,6 +1,6 @@
-import { useTranslation } from 'next-i18next';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormSwitch } from '@/components/formFields/FormSwitch';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
 import { CreatorCredentialVisibilityFormContextType } from './CreatorCredentialVisibilityForm.types';

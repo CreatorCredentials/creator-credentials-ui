@@ -11,8 +11,8 @@
 // import { UserRole } from '@/shared/typings/UserRole';
 import { SignUp } from '@clerk/nextjs';
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { ReactElement } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';

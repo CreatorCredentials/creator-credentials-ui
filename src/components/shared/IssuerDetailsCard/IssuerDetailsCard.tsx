@@ -1,7 +1,7 @@
 import { Button } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { ElementType, useCallback } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { IssuerConnectionStatus } from '@/shared/typings/IssuerConnectionStatus';
 import { Issuer } from '@/shared/typings/Issuer';
 import { CardWithBadge } from '../CardWithBadge';

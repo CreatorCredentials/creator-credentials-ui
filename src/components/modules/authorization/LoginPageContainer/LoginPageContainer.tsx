@@ -10,7 +10,7 @@
 // import { useToast } from '@/shared/hooks/useToast';
 // import { AuthVerificationCard } from '../AuthVerificationCard/AuthVerificationCard';
 import { SignIn } from '@clerk/nextjs';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { UserRole } from '@/shared/typings/UserRole';
 import { WelcomeHeader } from '../../welcome/WelcomeHeader/WelcomeHeader';

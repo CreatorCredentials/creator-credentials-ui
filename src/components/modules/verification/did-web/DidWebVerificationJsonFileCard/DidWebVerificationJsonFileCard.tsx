@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Textarea } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useConfirmDidWebJsonFileUpload } from '@/api/mutations/useConfirmDidWebJsonFileUpload';
 import { QueryKeys } from '@/api/queryKeys';
 import { GetIssuerCredentialsResponse } from '@/api/requests/getIssuerCredentials';

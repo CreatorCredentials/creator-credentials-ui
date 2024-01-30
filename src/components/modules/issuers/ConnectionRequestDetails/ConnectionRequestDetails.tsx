@@ -1,5 +1,5 @@
 import { Button, Card } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useConfirmCreatorToIssuerConnectionRequest } from '@/api/mutations/useConfirmCreatorToIssuerConnectionRequest';
 import { useIssuerDetailsWithCredentials } from '@/api/queries/useIssuerDetails';
 import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';

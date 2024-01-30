@@ -1,6 +1,6 @@
 import { TextInput } from 'flowbite-react';
 import React from 'react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Icon } from '@/components/shared/Icon';
 import { SortingDropdown } from '@/components/shared/SortingDropdown';
 

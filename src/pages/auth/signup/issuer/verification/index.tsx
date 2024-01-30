@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';

@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
 import { ReactElement, useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import { UserCard } from '@/components/modules/welcome/UserCard/UserCard';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';

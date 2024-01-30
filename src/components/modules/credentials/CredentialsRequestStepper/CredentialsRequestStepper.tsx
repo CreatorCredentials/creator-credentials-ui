@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Stepper } from '@/components/shared/Stepper';
 
 export const CREDENTIALS_REQUEST_STEPS_TKEYS = [

@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { Icon, IconName } from '../Icon';

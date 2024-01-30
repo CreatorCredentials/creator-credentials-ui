@@ -3,7 +3,7 @@ import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { withAuth } from '@/components/modules/app';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';

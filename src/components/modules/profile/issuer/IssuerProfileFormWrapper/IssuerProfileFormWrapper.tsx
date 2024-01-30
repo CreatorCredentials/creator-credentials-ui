@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useIssuerProfile } from '@/api/queries/useIssuerProfile';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';

@@ -1,5 +1,5 @@
-import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useIssuerCredentials } from '@/api/queries/useIssuerCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';

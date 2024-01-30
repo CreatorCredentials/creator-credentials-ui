@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Button } from 'flowbite-react';
-// import { useTranslation } from 'next-i18next';
+// import { useTranslation } from '@/shared/utils/useTranslation'
 // import { Icon } from '@/components/shared/Icon';
 import { SignUp } from '@clerk/nextjs';
 import { UserRole } from '@/shared/typings/UserRole';

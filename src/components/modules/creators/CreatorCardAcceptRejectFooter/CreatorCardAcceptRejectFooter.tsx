@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { Button } from 'flowbite-react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Creator } from '@/shared/typings/Creator';
 import { useAcceptCreatorConnectionRequest } from '@/api/mutations/useAcceptCreatorConnectionRequest';
 import { useRejectCreatorConnectionRequest } from '@/api/mutations/useRejectCreatorConnectionRequest';

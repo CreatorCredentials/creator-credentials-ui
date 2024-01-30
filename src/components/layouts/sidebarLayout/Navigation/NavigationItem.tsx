@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { NavLink } from '@/components/shared/NavLink';
 import { Icon } from '@/components/shared/Icon';
 import { clsxm } from '@/shared/utils/clsxm';

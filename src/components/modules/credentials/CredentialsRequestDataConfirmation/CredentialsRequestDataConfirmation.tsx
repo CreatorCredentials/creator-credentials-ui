@@ -1,6 +1,6 @@
 import { Card } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { useAuth, useUser } from '@clerk/nextjs';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useSendCredentialsRequest } from '@/api/mutations/useSendCredentialsRequest';
 import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { FormFooter } from '@/components/shared/FormFooter';

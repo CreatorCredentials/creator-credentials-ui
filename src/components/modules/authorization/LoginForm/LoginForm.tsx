@@ -1,7 +1,7 @@
 import { Button } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { Icon } from '@/components/shared/Icon';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { LoginFormContextType } from './LoginForm.types';

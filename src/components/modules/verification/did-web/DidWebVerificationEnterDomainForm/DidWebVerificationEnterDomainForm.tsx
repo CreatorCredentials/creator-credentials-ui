@@ -1,7 +1,7 @@
-import { useTranslation } from 'next-i18next';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Button } from 'flowbite-react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { DidWebVerificationEnterDomainFormContextType } from './DidWebVerificationEnterDomainFormContextType';
 

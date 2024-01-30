@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { TermsAndConditionsField } from '../../TermsAndConditionsField';
 
 export const CreatorLegalDocuments = () => {

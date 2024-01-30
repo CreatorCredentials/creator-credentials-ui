@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import { useCallback } from 'react';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { useIssuersByCredentials } from '@/api/queries/useIssuersByCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { FormFooter } from '@/components/shared/FormFooter';

@@ -1,6 +1,6 @@
-import { useTranslation } from 'next-i18next';
 import { UserProfile } from '@clerk/nextjs';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { IssuerProfileFormContextType } from '../IssuerProfileForm/IssuerProfileFormContextType';
 

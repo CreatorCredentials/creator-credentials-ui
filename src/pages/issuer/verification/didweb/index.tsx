@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { withAuth } from '@/components/modules/app';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';

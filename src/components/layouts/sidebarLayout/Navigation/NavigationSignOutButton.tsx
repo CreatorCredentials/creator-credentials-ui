@@ -1,7 +1,7 @@
 import { Sidebar } from 'flowbite-react';
-import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { SignOutButton } from '@clerk/nextjs';
+import { useTranslation } from '@/shared/utils/useTranslation';
 // import { signOut } from 'next-auth/react';
 import { Icon } from '@/components/shared/Icon';
 // import { useRouter } from 'next/navigation';
