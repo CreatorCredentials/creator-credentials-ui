@@ -6,6 +6,9 @@ import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 import { useState } from 'react';
+import i18n from 'i18next';
+// eslint-disable-next-line no-restricted-imports
+import { initReactI18next } from 'react-i18next';
 // eslint-disable-next-line no-restricted-imports
 import { Toaster } from 'react-hot-toast';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -15,6 +18,13 @@ import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { flowbiteTheme } from '@/components/flowbite.theme';
 import { SidebarLayout } from '@/components/layouts/sidebarLayout/SidebarLayout';
 import { AppMetadata } from '@/components/modules/app';
+
+i18n.use(initReactI18next).init({
+  load: 'all',
+  preload: ['en'],
+  lng: 'en',
+  fallbackLng: 'en',
+});
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
