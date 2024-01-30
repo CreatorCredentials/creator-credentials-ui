@@ -11,6 +11,7 @@ const nextConfig = {
     API_MOCKING: process.env.API_MOCKING || 'enabled',
     NEST_API_URL: process.env.NEST_API_URL,
     NEST_API_SSR_URL: process.env.NEST_API_SSR_URL,
+    DISABLE_I18N_TRANSLATIONS: process.env.DISABLE_I18N_TRANSLATIONS,
   },
   webpack(config) {
     // Fixes npm packages that depend on `fs` module

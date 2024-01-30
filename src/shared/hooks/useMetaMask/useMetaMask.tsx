@@ -8,7 +8,7 @@ import { useDisconnectMetaMaskWallet } from '@/api/mutations/useDisconnectMetaMa
 import { useGenerateMetaMaskNonce } from '@/api/mutations/useGenerateMetaMaskNonce';
 import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
-import { config } from '@/shared/constants/config';
+// import { config } from '@/shared/constants/config';
 import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { CredentialType } from '@/shared/typings/CredentialType';
@@ -101,14 +101,15 @@ export const useMetaMask = ({
       }
 
       const { nonce } = await mutateMetaMaskNonce({ address: from });
-
+      if (nonce) {
+      }
       const signature = await provider?.request<string>({
         method: 'personal_sign',
         params: [
           t('sign-message', {
-            nonce,
-            walletAddress: from,
-            termsAndConditionsUrl: config.TERMS_AND_CONDITIONS_URL,
+            // nonce,
+            // walletAddress: from,
+            // termsAndConditionsUrl: config.TERMS_AND_CONDITIONS_URL,
           }),
           from,
         ],

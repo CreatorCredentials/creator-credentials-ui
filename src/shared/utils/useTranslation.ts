@@ -1,4 +1,4 @@
-// import { useTranslation as i18nUseTranslation } from 'next-i18next';
+import { useTranslation as i18nUseTranslation } from 'next-i18next';
 import * as cards from '@/public/locales/en/cards.json';
 import * as common from '@/public/locales/en/common.json';
 import * as creatorCredentialsRequest from '@/public/locales/en/creator-credentials-request.json';
@@ -56,16 +56,28 @@ const translateObject = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getDescendantProp(obj: any, desc: string) {
+  if (!obj) return desc;
+
   const arr = desc.split('.');
   while (arr.length && (obj = obj[arr.shift() as string]));
   return obj || desc;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-function disabledUseTranslation(namespace: string = 'common') {
+function disabledUseTranslation(
+  namespace: string = 'common',
+  option?: { useSuspense?: boolean },
+) {
+  if (option) {
+  }
   return {
-    t: (key: string) => {
+    t: (key: string, options?: { ns?: string }) => {
+      let ns_to_apply = namespace;
+      if (options && options.ns) {
+        ns_to_apply = options.ns;
+      }
       return getDescendantProp(
-        translateObject[namespace as keyof typeof translateObject],
+        translateObject[ns_to_apply as keyof typeof translateObject],
         key,
       );
     },
@@ -76,8 +88,7 @@ console.log(
   'config.DISABLE_I18N_TRANSLATIONS: ',
   config.DISABLE_I18N_TRANSLATIONS,
 );
-export const useTranslation = disabledUseTranslation;
 
-// export const useTranslation = config.DISABLE_I18N_TRANSLATIONS
-//   ? disabledUseTranslation
-//   : i18nUseTranslation;
+export const useTranslation = config.DISABLE_I18N_TRANSLATIONS
+  ? disabledUseTranslation
+  : i18nUseTranslation;
