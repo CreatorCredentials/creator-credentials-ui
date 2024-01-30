@@ -1,4 +1,4 @@
-import { useTranslation as i18nUseTranslation } from 'next-i18next';
+// import { useTranslation as i18nUseTranslation } from 'next-i18next';
 import * as cards from '@/public/locales/en/cards.json';
 import * as common from '@/public/locales/en/common.json';
 import * as creatorCredentialsRequest from '@/public/locales/en/creator-credentials-request.json';
@@ -71,7 +71,13 @@ function disabledUseTranslation(namespace: string = 'common') {
     },
   };
 }
+// eslint-disable-next-line
+console.log(
+  'config.DISABLE_I18N_TRANSLATIONS: ',
+  config.DISABLE_I18N_TRANSLATIONS,
+);
+export const useTranslation = disabledUseTranslation;
 
-export const useTranslation = config.DISABLE_I18N_TRANSLATIONS
-  ? disabledUseTranslation
-  : i18nUseTranslation;
+// export const useTranslation = config.DISABLE_I18N_TRANSLATIONS
+//   ? disabledUseTranslation
+//   : i18nUseTranslation;
