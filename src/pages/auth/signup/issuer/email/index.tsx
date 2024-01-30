@@ -17,8 +17,6 @@ import { IssuerSignupEmailFormContextType } from '@/components/modules/authoriza
 import { IssuerSignupEmailFormSchema } from '@/components/modules/authorization/issuer/IssuerSignupEmailForm/IssuerSignupEmailForm.schema';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { Icon } from '@/components/shared/Icon';
-import { useSignupIssuer } from '@/api/mutations/useSignupIssuer';
-import { mapIssuerSignupContextFormStepsToPayload } from '@/components/modules/authorization/issuer/mapIssuerSignupContextFormStepsToPayload';
 import { useToast } from '@/shared/hooks/useToast';
 import { DefaultIssuerSignupContextFormStepsValues } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.constants';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
@@ -31,7 +29,6 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
   const toast = useToast();
 
   const { formSteps, updateStep } = useIssuerSignupContext();
-  const { mutateAsync, isLoading } = useSignupIssuer();
 
   const form = useForm<IssuerSignupEmailFormContextType>({
     resolver: (values, context, options) => {
@@ -62,13 +59,9 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
 
   const emailFormSubmitHandler: SubmitHandler<
     IssuerSignupEmailFormContextType
-  > = async (data) => {
+  > = (data) => {
     try {
       updateStep('email', data);
-      const details = formSteps['details'];
-      await mutateAsync(
-        mapIssuerSignupContextFormStepsToPayload({ details, email: data }),
-      );
       router.push('/auth/signup/issuer/verification');
     } catch (err) {
       toast.error(t('errors.send-email'));
@@ -100,8 +93,8 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                 <div className="flex flex-col gap-2.5">
                   <Button
                     type="submit"
-                    disabled={!isValid || !termsAndConditions || isLoading}
-                    isProcessing={isLoading}
+                    disabled={!isValid || !termsAndConditions}
+                    isProcessing={false}
                     color="primary"
                   >
                     <p>{t('sign-up', { ns: 'common' })}</p>
@@ -113,7 +106,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                   <Button
                     color="outline"
                     onClick={goBackHandler}
-                    disabled={isLoading}
+                    disabled={false}
                   >
                     <Icon
                       icon="ArrowLeft"

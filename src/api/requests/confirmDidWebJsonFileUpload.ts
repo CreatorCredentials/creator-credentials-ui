@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '@/api/axios';
+import axios, { AxiosResponse } from '@/api/axiosNest';
 
 export type ConfirmDidWebJsonFileUploadPayload = never;
 
@@ -11,4 +11,4 @@ export const confirmDidWebJsonFileUpload = () =>
       ConfirmDidWebJsonFileUploadResponse,
       ConfirmDidWebJsonFileUploadPayload
     >
-  >('/verification/did-web/confirm-upload');
+  >('/v1/mocks/verification/did-web/confirm-upload');

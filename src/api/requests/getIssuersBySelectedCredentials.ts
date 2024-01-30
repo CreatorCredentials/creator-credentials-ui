@@ -1,6 +1,6 @@
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { IssuerWithVerifiedCredentials } from '@/shared/typings/Issuer';
-import axios, { AxiosRequestConfig } from '../axios';
+import axios, { AxiosRequestConfig } from '../axiosNest';
 
 export type GetIssuersBySelectedCredentialsPayload = {
   credentials: CredentialType[];
@@ -15,7 +15,7 @@ export const getIssuersBySelectedCredentials = (
   config?: Omit<AxiosRequestConfig, 'data'>,
 ) =>
   axios.get<GetIssuersBySelectedCredentialsResponse>(
-    '/creator/credentials/issuers',
+    '/v1/mocks/creator/credentials/issuers',
     {
       data: payload,
       ...config,

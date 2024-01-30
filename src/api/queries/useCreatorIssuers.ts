@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError } from '@/api/axios';
+import { AxiosError } from '@/api/axiosNest';
 import { QueryKeys } from '@/api/queryKeys';
 import { Issuer } from '@/shared/typings/Issuer';
 import { getCreatorIssuers } from '../requests/getCreatorIssuers';

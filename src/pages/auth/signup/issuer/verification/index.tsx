@@ -10,8 +10,6 @@ import {
   useIssuerSignupContext,
 } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext';
 import { AuthVerificationCard } from '@/components/modules/authorization/AuthVerificationCard/AuthVerificationCard';
-import { useSignupIssuer } from '@/api/mutations/useSignupIssuer';
-import { mapIssuerSignupContextFormStepsToPayload } from '@/components/modules/authorization/issuer/mapIssuerSignupContextFormStepsToPayload';
 import { useToast } from '@/shared/hooks/useToast';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 import { UserRole } from '@/shared/typings/UserRole';
@@ -22,15 +20,13 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
   const toast = useToast();
 
   const { formSteps } = useIssuerSignupContext();
-  const { mutateAsync, isLoading } = useSignupIssuer();
 
   const goBackHandler = () => {
     router.push('/auth/signup/issuer/email');
   };
 
-  const resendVerificationEmailHandler = async () => {
+  const resendVerificationEmailHandler = () => {
     try {
-      await mutateAsync(mapIssuerSignupContextFormStepsToPayload(formSteps));
     } catch (err) {
       toast.error(t('errors.send-email'));
     }
@@ -49,7 +45,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
         userRole={UserRole.Issuer}
         goBackHandler={goBackHandler}
         resendVerificationEmailHandler={resendVerificationEmailHandler}
-        isLoading={isLoading}
+        isLoading={false}
         signUpEmail={signUpEmail}
       />
     </>

@@ -1,5 +1,5 @@
 import { IssuerWithVerifiedCredentials } from '@/shared/typings/Issuer';
-import axios from '../axios';
+import axios from '../axiosNest';
 
 export type GetIssuerDetailsWithCredentialsPayload = {
   issuerId: string;
@@ -13,5 +13,5 @@ export const getIssuerDetailsWithCredentials = ({
   issuerId,
 }: GetIssuerDetailsWithCredentialsPayload) =>
   axios.get<GetIssuerDetailsWithCredentialsResponse>(
-    `/creator/issuers/${issuerId}`,
+    `/v1/mocks/creator/issuers/${issuerId}`,
   );

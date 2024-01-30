@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '../axios';
+import axios, { AxiosResponse } from '../axiosNest';
 
 export type GenerateMetaMaskNoncePayload = {
   address: string;
@@ -12,4 +12,4 @@ export const generateMetaMaskNonce = (payload: GenerateMetaMaskNoncePayload) =>
   axios.post<
     GenerateMetaMaskNoncePayload,
     AxiosResponse<GenerateMetaMaskNonceResponse, GenerateMetaMaskNoncePayload>
-  >('/users/nonce', payload);
+  >('/v1/mocks/users/nonce', payload);

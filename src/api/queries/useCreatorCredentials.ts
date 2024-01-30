@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { QueryKeys } from '@/api/queryKeys';
-import { AxiosError } from '@/api/axios';
+import { AxiosError } from '@/api/axiosNest';
 import {
   getCreatorCredentials,
   GetCreatorCredentialsResponse,

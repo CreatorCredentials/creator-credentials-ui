@@ -14,7 +14,7 @@ import { clsxm } from '@/shared/utils/clsxm';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { flowbiteTheme } from '@/components/flowbite.theme';
 import { SidebarLayout } from '@/components/layouts/sidebarLayout/SidebarLayout';
-import { AppMetadata, MocksProvider } from '@/components/modules/app';
+import { AppMetadata } from '@/components/modules/app';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -34,14 +34,12 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
         <AppMetadata />
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <MocksProvider>
-              <Flowbite theme={{ theme: flowbiteTheme }}>
-                <div className={clsxm(inter.className, 'contents')}>
-                  {getLayout(<Component {...pageProps} />)}
-                </div>
-                <Toaster position="top-right" />
-              </Flowbite>
-            </MocksProvider>
+            <Flowbite theme={{ theme: flowbiteTheme }}>
+              <div className={clsxm(inter.className, 'contents')}>
+                {getLayout(<Component {...pageProps} />)}
+              </div>
+              <Toaster position="top-right" />
+            </Flowbite>
             <ReactQueryDevtools
               initialIsOpen={false}
               position="bottom-right"

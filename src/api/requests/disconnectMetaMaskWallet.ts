@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '../axios';
+import axios, { AxiosResponse } from '../axiosNest';
 
 export type DisconnectMetaMaskWalletPayload = never;
 
@@ -11,4 +11,4 @@ export const disconnectMetaMaskWallet = (walletAddress: string) =>
       DisconnectMetaMaskWalletResponse,
       DisconnectMetaMaskWalletPayload
     >
-  >(`/users/${walletAddress}`);
+  >(`/v1/mocks/users/${walletAddress}`);

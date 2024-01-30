@@ -70,8 +70,12 @@ module.exports = {
             message: 'Import from "next-i18next".',
           },
           {
-            name: 'axios',
-            message: 'Import from "@/api/axios".',
+            name: 'axiosNest',
+            message: 'Import from "@/api/axiosNest".',
+          },
+          {
+            name: 'axiosSSRNest',
+            message: 'Import from "@/api/axiosSSRNest".',
           },
           {
             name: 'react-hot-toast',

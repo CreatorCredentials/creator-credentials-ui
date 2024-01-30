@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '@/api/axios';
+import axios, { AxiosResponse } from '@/api/axiosNest';
 
 export type AcceptCreatorConnectionRequestPayload = {
   creatorId: string;
@@ -15,4 +15,4 @@ export const acceptCreatorConnectionRequest = ({
       AcceptCreatorConnectionRequestResponse,
       AcceptCreatorConnectionRequestPayload
     >
-  >(`/issuer/creators/accept`, { creatorId });
+  >(`/v1/mocks/issuer/creators/accept`, { creatorId });

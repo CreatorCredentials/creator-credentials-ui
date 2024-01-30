@@ -1,5 +1,5 @@
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
-import axios, { AxiosRequestConfig } from '../axios';
+import axios, { AxiosRequestConfig } from '../axiosNest';
 
 export type GetRequestableCredentialsPayload = never;
 
@@ -11,9 +11,12 @@ export const getRequestableCredentials = (
   issuerId?: string,
   config?: Omit<AxiosRequestConfig, 'params'>,
 ) =>
-  axios.get<GetRequestableCredentialsResponse>('/creator/credentials', {
-    params: {
-      issuerId,
+  axios.get<GetRequestableCredentialsResponse>(
+    '/v1/mocks/creator/credentials',
+    {
+      params: {
+        issuerId,
+      },
+      ...config,
     },
-    ...config,
-  });
+  );

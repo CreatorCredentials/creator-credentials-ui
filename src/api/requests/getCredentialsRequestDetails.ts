@@ -1,6 +1,6 @@
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { Creator } from '@/shared/typings/Creator';
-import axios from '../axios';
+import axios from '../axiosNest';
 
 export type GetCredentialsRequestDetailsResponse = {
   creator: Creator;
@@ -9,5 +9,5 @@ export type GetCredentialsRequestDetailsResponse = {
 
 export const getCredentialsRequestDetails = (creatorId: string) =>
   axios.get<GetCredentialsRequestDetailsResponse>(
-    `/issuer/creators/${creatorId}`,
+    `/v1/mocks/issuer/creators/${creatorId}`,
   );

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '../axios';
+import axios, { AxiosResponse } from '../axiosNest';
 
 export type CreateTxtRecordForDomainPayload = {
   domain: string;
@@ -15,4 +15,4 @@ export const createTxtRecordForDomain = (domain: string) =>
       CreateTxtRecordForDomainResponse,
       CreateTxtRecordForDomainPayload
     >
-  >('/verification/domain/txt-record', { domain });
+  >('/v1/mocks/verification/domain/txt-record', { domain });

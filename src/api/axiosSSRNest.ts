@@ -1,16 +1,16 @@
 /* eslint-disable no-restricted-imports */
 import * as https from 'https';
 import axiosStatic, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getSession } from 'next-auth/react';
+// import { getSession } from 'next-auth/react';
 import { config } from '@/shared/constants/config';
 
-const onRequest = async (
+const onRequest = (
   config: InternalAxiosRequestConfig,
-): Promise<InternalAxiosRequestConfig> => {
-  if (!config.headers.Authorization) {
-    const session = await getSession();
-    config.headers.Authorization = `Bearer ${session?.backendTokens?.accessToken}`;
-  }
+): InternalAxiosRequestConfig => {
+  // if (!config.headers.Authorization) {
+  //   const session = await getSession();
+  //   config.headers.Authorization = `Bearer ${session?.backendTokens?.accessToken}`;
+  // }
   return config;
 };
 

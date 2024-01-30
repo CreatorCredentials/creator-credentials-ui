@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '../axios';
+import axios, { AxiosResponse } from '../axiosNest';
 
 export type CreateDidWebJsonFilePayload = {
   domain: string;
@@ -12,4 +12,4 @@ export const createDidWebJsonFile = (payload: CreateDidWebJsonFilePayload) =>
   axios.post<
     CreateDidWebJsonFilePayload,
     AxiosResponse<CreateDidWebJsonFileResponse, CreateDidWebJsonFilePayload>
-  >('/verification/did-web/create-file', payload);
+  >('/v1/mocks/verification/did-web/create-file', payload);

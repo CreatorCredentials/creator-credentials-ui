@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '@/api/axios';
+import axios, { AxiosResponse } from '@/api/axiosNest';
 
 export type ConfirmDomainTxtRecordCreationPayload = never;
 
@@ -11,4 +11,4 @@ export const confirmDomainTxtRecordCreation = () =>
       ConfirmDomainTxtRecordCreationResponse,
       ConfirmDomainTxtRecordCreationPayload
     >
-  >('/verification/domain/confirm');
+  >('/v1/mocks/verification/domain/confirm');

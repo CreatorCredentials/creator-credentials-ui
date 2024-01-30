@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '@/api/axios';
+import axios, { AxiosResponse } from '@/api/axiosNest';
 
 export type ConfirmCreatorToIssuerConnectionRequestPayload = {
   issuerId: string;
@@ -15,4 +15,4 @@ export const confirmCreatorToIssuerConnectionRequest = ({
       ConfirmCreatorToIssuerConnectionRequestResponse,
       ConfirmCreatorToIssuerConnectionRequestPayload
     >
-  >(`/creator/issuers/${issuerId}/confirm-request`);
+  >(`/v1/mocks/creator/issuers/${issuerId}/confirm-request`);

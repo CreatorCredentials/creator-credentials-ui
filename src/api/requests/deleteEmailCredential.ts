@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from '../axios';
+import { AxiosRequestConfig } from '../axiosNest';
 import nestInstance from '../axiosNest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

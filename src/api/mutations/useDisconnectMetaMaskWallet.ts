@@ -1,5 +1,5 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { AxiosError } from '@/api/axios';
+import { AxiosError } from '@/api/axiosNest';
 import {
   disconnectMetaMaskWallet,
   DisconnectMetaMaskWalletResponse,

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '@/api/axios';
+import axios, { AxiosResponse } from '@/api/axiosNest';
 import { CredentialType } from '@/shared/typings/CredentialType';
 
 export type SendCredentialsRequestPayload = {
@@ -14,4 +14,4 @@ export const sendCredentialsRequest = (
   axios.post<
     SendCredentialsRequestPayload,
     AxiosResponse<SendCredentialsRequestResponse, SendCredentialsRequestPayload>
-  >(`/creator/credentials/request`, payload);
+  >(`/v1/mocks/creator/credentials/request`, payload);

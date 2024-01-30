@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from '../axios';
+import axios, { AxiosResponse } from '../axiosNest';
 
 export type ConnectMetaMaskWalletPayload = {
   signedMessage: string;
@@ -18,4 +18,4 @@ export const connectMetaMaskWallet = ({
   axios.post<
     ConnectMetaMaskWalletPayload,
     AxiosResponse<ConnectMetaMaskWalletResponse, ConnectMetaMaskWalletPayload>
-  >(`/users/${walletAddress}`, payload);
+  >(`/v1/mocks/users/${walletAddress}`, payload);
