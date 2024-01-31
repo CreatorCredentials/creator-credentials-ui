@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
-import { server } from './src/mocks/server';
+// import { server } from './src/mocks/server';
 
 vi.mock('next-i18next', () => ({
   useTranslation: () => {
@@ -19,6 +19,6 @@ vi.mock('next/config', () => ({
   }),
 }));
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterAll(() => server.close());
-afterEach(() => server.resetHandlers());
+// beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+// afterAll(() => server.close());
+// afterEach(() => server.resetHandlers());

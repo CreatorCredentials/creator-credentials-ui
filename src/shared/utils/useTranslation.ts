@@ -71,14 +71,23 @@ function disabledUseTranslation(
   if (option) {
   }
   return {
-    t: (key: string, options?: { ns?: string }) => {
+    t: (key: string, options?: { [x: string]: string }) => {
+      const { ns, ...variables } = options || {};
       let ns_to_apply = namespace;
-      if (options && options.ns) {
-        ns_to_apply = options.ns;
+
+      if (ns) {
+        ns_to_apply = ns;
       }
-      return getDescendantProp(
+
+      const result = getDescendantProp(
         translateObject[ns_to_apply as keyof typeof translateObject],
         key,
+      );
+      const variablesKeys = Object.keys(variables);
+
+      return variablesKeys.reduce(
+        (acc, key) => acc.replace(`{{${key}}}`, variables[key]),
+        result,
       );
     },
   };
