@@ -61,7 +61,7 @@ export function withAuth<
       const token = await auth.getToken();
       let userFromBackend;
       try {
-        const result = await axiosSSRNest.get(`v1/users/${userId}`, {
+        const result = await axiosSSRNest.get(`v1/users/check/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -69,19 +69,21 @@ export function withAuth<
         userFromBackend = result.data;
 
         if (!userFromBackend) {
-          userFromBackend = await axiosSSRNest.post(
-            `v1/users/register`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
+          userFromBackend = (
+            await axiosSSRNest.post(
+              `v1/users/register`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
               },
-            },
-          );
+            )
+          ).data;
         }
       } catch (error) {
         // eslint-disable-next-line
-        console.log(error);
+        console.log('userFromBackend check error: ', error);
       }
 
       if (

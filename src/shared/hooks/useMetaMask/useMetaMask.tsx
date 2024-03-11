@@ -5,20 +5,23 @@ import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '@/shared/hooks/useToast';
 import { useConnectMetaMaskWallet } from '@/api/mutations/useConnectMetaMaskWallet';
 import { useDisconnectMetaMaskWallet } from '@/api/mutations/useDisconnectMetaMaskWallet';
-import { useGenerateMetaMaskNonce } from '@/api/mutations/useGenerateMetaMaskNonce';
+import { useGenerateMetaMaskNonce } from '@/api/queries/useGenerateMetaMaskNonce';
 import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
 import { config } from '@/shared/constants/config';
 import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { AddressData } from 'contexts/AddressDataContext';
 
 type UseMetaMaskProps = {
   optimisticUpdate?: boolean;
+  mutationCallBack?: (newData: AddressData) => void;
 };
 
 export const useMetaMask = ({
   optimisticUpdate = true,
+  mutationCallBack = () => {},
 }: UseMetaMaskProps = {}) => {
   const { t } = useTranslation('metamask');
   const queryClient = useQueryClient();
@@ -75,8 +78,8 @@ export const useMetaMask = ({
       },
     });
 
-  const { mutateAsync: mutateMetaMaskNonce, isLoading: isLoadingNonce } =
-    useGenerateMetaMaskNonce();
+  const { data, isLoading: isLoadingNonce } = useGenerateMetaMaskNonce();
+  const nonce = data?.nonce;
 
   const connect = async () => {
     try {
@@ -100,19 +103,19 @@ export const useMetaMask = ({
         throw new Error('No provider');
       }
 
-      const { nonce } = await mutateMetaMaskNonce({ address: from });
-      if (nonce) {
+      // const { nonce } = await mutateMetaMaskNonce({ address: from });
+      if (!nonce) {
+        throw new Error('No nonce');
       }
+
+      const message = t('sign-message', {
+        nonce,
+        walletAddress: from,
+        termsAndConditionsUrl: config.TERMS_AND_CONDITIONS_URL,
+      });
       const signature = await provider?.request<string>({
         method: 'personal_sign',
-        params: [
-          t('sign-message', {
-            nonce,
-            walletAddress: from,
-            termsAndConditionsUrl: config.TERMS_AND_CONDITIONS_URL,
-          }),
-          from,
-        ],
+        params: [message, from],
       });
 
       if (!signature) {
@@ -120,11 +123,13 @@ export const useMetaMask = ({
       }
 
       await mutateConnectWallet({
-        walletAddress: from,
         payload: {
+          publicAddress: from,
           signedMessage: signature,
         },
       });
+
+      mutationCallBack({ address: from });
     } catch (err) {
       if ((err as ProviderRpcError).code) {
         // Code 4001 - User closed the MetaMask Browser extension while connecting
@@ -162,6 +167,7 @@ export const useMetaMask = ({
     try {
       await sdk?.terminate();
       await mutateDisconnectWallet(walletAddress);
+      mutationCallBack({ address: null });
     } catch (err) {
       toast.error(t('errors.disconnection-failed'));
     }

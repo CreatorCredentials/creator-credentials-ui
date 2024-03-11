@@ -26,16 +26,18 @@ export const IssuerVerificationCards = () => {
   if (isLoading || isFetching) {
     return <Loader />;
   }
+  const email = data.emailCredential.data.address;
+  const credentialObject = data.emailCredential.data.credentialObject;
   return (
     <section className="grid grid-cols-3 gap-4">
       <EmailVerificationCard
-        email={data.emailCredential.data.address}
+        email={email}
         dropdownItems={[
           {
             onClick: () =>
               downloadJson(
-                `${data.emailCredential.data.address} ${data.emailCredential.data.credentialObject.validFrom}`,
-                data.emailCredential.data.credentialObject,
+                `${email} ${credentialObject.validFrom}`,
+                credentialObject,
               ),
             children: t('download', { ns: 'common' }),
           },

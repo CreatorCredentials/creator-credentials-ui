@@ -6,6 +6,7 @@ import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';
 import { getI18nProps } from '@/shared/utils/i18n';
 import { CreatorVerificationCards } from '@/components/modules/verification/CreatorVerificationCards';
+import { AddressDataProvider } from 'contexts/AddressDataContext';
 
 const CreatorVerificationPage: NextPageWithLayout = () => {
   const { t } = useTranslation('creator-verification');
@@ -16,7 +17,9 @@ const CreatorVerificationPage: NextPageWithLayout = () => {
         title={t('header.title')}
         subtitle={t('header.subtitle')}
       />
-      <CreatorVerificationCards />
+      <AddressDataProvider>
+        <CreatorVerificationCards />
+      </AddressDataProvider>
     </>
   );
 };
