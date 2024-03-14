@@ -31,17 +31,14 @@ export const DidWebVerificationJsonFileCard = () => {
 
           const updatedData: GetIssuerCredentialsResponse = {
             ...oldData,
-            credentials: {
-              ...oldData.credentials,
-              didWeb: {
-                ...oldData.credentials.didWeb,
-                id: 'temp-id', // TODO: remove this when we have real id
-                type: CredentialType.DidWeb,
-                data: {
-                  domain: domainAddress,
-                },
-                status: CredentialVerificationStatus.Pending,
+            didWeb: {
+              ...oldData.didWeb,
+              id: 'temp-id', // TODO: remove this when we have real id
+              type: CredentialType.DidWeb,
+              data: {
+                domain: domainAddress,
               },
+              status: CredentialVerificationStatus.Pending,
             },
           };
 

@@ -32,7 +32,7 @@ export const useIssuerVerifications = (
 
       const responses = await Promise.all([
         getEmailCredential(token),
-        getIssuerCredentials(),
+        getIssuerCredentials(token),
       ]);
 
       return Object.assign({}, ...responses.map((res) => res.data));
