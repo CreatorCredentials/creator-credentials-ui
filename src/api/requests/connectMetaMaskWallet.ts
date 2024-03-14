@@ -1,3 +1,4 @@
+import { getHeaders } from '@/shared/utils/tokenHeader';
 import axios, { AxiosResponse } from '../axiosNest';
 
 export type ConnectMetaMaskWalletPayload = {
@@ -18,6 +19,4 @@ export const connectMetaMaskWallet = (
   axios.post<
     ConnectMetaMaskWalletPayload,
     AxiosResponse<ConnectMetaMaskWalletResponse, ConnectMetaMaskWalletPayload>
-  >(`/v1/users/address/connect`, payload, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  >(`/v1/users/address/connect`, payload, getHeaders(token));

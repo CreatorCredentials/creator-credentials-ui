@@ -7,6 +7,7 @@ import {
 } from '@clerk/nextjs/server';
 import { UserRole } from '@/shared/typings/UserRole';
 import axiosSSRNest from '@/api/axiosSSRNest';
+import { getHeaders } from '@/shared/utils/tokenHeader';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 export function withAuth<
@@ -58,13 +59,14 @@ export function withAuth<
         }
       }
 
-      const token = await auth.getToken();
       let userFromBackend;
       try {
+        const token = await auth.getToken();
+        if (!token) {
+          throw new Error('No clerk token provided');
+        }
         const result = await axiosSSRNest.get(`v1/users/check/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          ...getHeaders(token),
         });
         userFromBackend = result.data;
 
@@ -74,9 +76,7 @@ export function withAuth<
               `v1/users/register`,
               {},
               {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
+                ...getHeaders(token),
               },
             )
           ).data;

@@ -1,3 +1,4 @@
+import { getHeaders } from '@/shared/utils/tokenHeader';
 import nestInstance, { AxiosRequestConfig } from '../axiosNest';
 // eslint-disable-next-line
 export enum ClerkRole {
@@ -19,5 +20,5 @@ export type GetUserResponse = User;
 export const getUser = (token: string, config?: AxiosRequestConfig) =>
   nestInstance.get<GetUserResponse>('v1/users', {
     ...config,
-    headers: { Authorization: `Bearer ${token}` },
+    ...getHeaders(token),
   });

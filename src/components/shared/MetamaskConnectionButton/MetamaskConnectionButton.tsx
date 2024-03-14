@@ -1,13 +1,11 @@
 import { Button } from 'flowbite-react';
 import { useMetaMask } from '@/shared/hooks/useMetaMask';
-import { AddressData } from 'contexts/AddressDataContext';
 
 type Props = {
   connectLabel: string;
   disconnectLabel: string;
   isLoadingVerifiedCredentials?: boolean;
   walletAddress?: string | null;
-  mutationCallBack: (newData: AddressData) => void;
 };
 
 export const MetamaskConnectionButton = ({
@@ -15,11 +13,8 @@ export const MetamaskConnectionButton = ({
   disconnectLabel,
   isLoadingVerifiedCredentials,
   walletAddress,
-  mutationCallBack,
 }: Props) => {
-  const { connect, disconnect, isProcessing } = useMetaMask({
-    mutationCallBack,
-  });
+  const { connect, disconnect, isProcessing } = useMetaMask({});
 
   const connectButtonHandler = async () => {
     await connect();

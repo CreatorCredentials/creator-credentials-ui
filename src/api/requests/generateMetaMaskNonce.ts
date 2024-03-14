@@ -1,3 +1,4 @@
+import { getHeaders } from '@/shared/utils/tokenHeader';
 import axios from '../axiosNest';
 
 export type GenerateMetaMaskNonceResponse = {
@@ -5,8 +6,7 @@ export type GenerateMetaMaskNonceResponse = {
 };
 
 export const generateMetaMaskNonce = (token: string) =>
-  axios.get<GenerateMetaMaskNonceResponse>(`/v1/users/nonce`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  axios.get<GenerateMetaMaskNonceResponse>(
+    `/v1/users/nonce`,
+    getHeaders(token),
+  );

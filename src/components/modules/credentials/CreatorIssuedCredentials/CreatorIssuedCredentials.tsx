@@ -42,9 +42,7 @@ export const CreatorIssuedCredentials = ({
               //     onClick: async () => {
               //       const token = await auth.getToken();
               //       await axiosNest.delete(`v1/credentials`, {
-              //         headers: {
-              //           Authorization: `Bearer ${token}`,
-              //         },
+              //         ...getHeaders(token),
               //       });
               //       router.reload();
               //     },

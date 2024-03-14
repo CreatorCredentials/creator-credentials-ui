@@ -5,7 +5,6 @@ import { CardWithBadge } from '@/components/shared/CardWithBadge';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
-import { useAddressData } from '../../../../contexts/AddressDataContext';
 
 type MetamaskVerificationCardProps = {
   walletAddress?: string | null;
@@ -21,7 +20,6 @@ export const MetamaskVerificationCard = ({
     ? truncateWalletAddress(walletAddress)
     : null;
 
-  const { data, updateData } = useAddressData();
   const walletAddressClickHandler = () => {
     if (walletAddress) {
       copy(walletAddress);
@@ -38,7 +36,7 @@ export const MetamaskVerificationCard = ({
       className="flex-1"
       content={
         walletAddress ? (
-          <Tooltip content={data.address}>
+          <Tooltip content={walletAddress}>
             <CardWithBadge.ContentWithIcon
               iconName="AccountBalanceWallet"
               className="whitespace-pre-wrap"
@@ -57,7 +55,6 @@ export const MetamaskVerificationCard = ({
             connectLabel={t('metamask.buttons.connect')}
             disconnectLabel={t('metamask.buttons.disconnect')}
             walletAddress={walletAddress}
-            mutationCallBack={updateData}
           />
           {walletAddress && (
             <ColoredBadge

@@ -9,26 +9,19 @@ import { useGenerateMetaMaskNonce } from '@/api/queries/useGenerateMetaMaskNonce
 import { QueryKeys } from '@/api/queryKeys';
 import { ProviderRpcError } from '@/shared/typings/ProviderRpcError';
 import { config } from '@/shared/constants/config';
-import { GetCreatorCredentialsResponse } from '@/api/requests/getCreatorCredentials';
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { CredentialType } from '@/shared/typings/CredentialType';
-import { AddressData } from 'contexts/AddressDataContext';
 
 type UseMetaMaskProps = {
   optimisticUpdate?: boolean;
-  mutationCallBack?: (newData: AddressData) => void;
 };
 
-export const useMetaMask = ({
-  optimisticUpdate = true,
-  mutationCallBack = () => {},
-}: UseMetaMaskProps = {}) => {
+export const useMetaMask = ({} // optimisticUpdate = true,
+: UseMetaMaskProps = {}) => {
   const { t } = useTranslation('metamask');
   const queryClient = useQueryClient();
   const toast = useToast();
 
   const [isConnecting, setIsConnecting] = useState(false);
-  const [account, setAccount] = useState<string>('');
+  // const [account, setAccount] = useState<string>('');
   const [sdk, setSDK] = useState<MetaMaskSDK>();
 
   const {
@@ -36,45 +29,48 @@ export const useMetaMask = ({
     isLoading: isConnectingMutationRunning,
   } = useConnectMetaMaskWallet({
     onSuccess: () => {
-      if (!optimisticUpdate || !account) return;
+      // if (!optimisticUpdate || !account) return;
+      queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
 
-      queryClient.setQueryData<GetCreatorCredentialsResponse>(
-        [QueryKeys.creatorVerifiedCredentials],
-        (oldData) => {
-          if (!oldData) return;
+      // queryClient.setQueryData<GetCreatorCredentialsResponse>(
+      //   [QueryKeys.creatorVerifiedCredentials],
+      //   (oldData) => {
+      //     if (!oldData) return;
 
-          return {
-            ...oldData,
-            metaMask: {
-              id: account, // TODO: Replace after API implementation
-              type: CredentialType.Wallet,
-              data: {
-                address: account,
-              },
-              status: CredentialVerificationStatus.Success,
-            },
-          };
-        },
-      );
+      //     return {
+      //       ...oldData,
+      //       metaMask: {
+      //         id: account, // TODO: Replace after API implementation
+      //         type: CredentialType.Wallet,
+      //         data: {
+      //           address: account,
+      //         },
+      //         status: CredentialVerificationStatus.Success,
+      //       },
+      //     };
+      //   },
+      // );
     },
   });
 
   const { mutateAsync: mutateDisconnectWallet, isLoading: isDisconnecting } =
     useDisconnectMetaMaskWallet({
       onSuccess: () => {
-        if (!optimisticUpdate) return;
+        queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
 
-        queryClient.setQueryData<GetCreatorCredentialsResponse>(
-          [QueryKeys.creatorVerifiedCredentials],
-          (oldData) => {
-            if (!oldData) return;
+        // if (!optimisticUpdate) return;
 
-            return {
-              ...oldData,
-              metaMask: null,
-            };
-          },
-        );
+        // queryClient.setQueryData<GetCreatorCredentialsResponse>(
+        //   [QueryKeys.creatorVerifiedCredentials],
+        //   (oldData) => {
+        //     if (!oldData) return;
+
+        //     return {
+        //       ...oldData,
+        //       metaMask: null,
+        //     };
+        //   },
+        // );
       },
     });
 
@@ -95,7 +91,7 @@ export const useMetaMask = ({
       }
 
       const from = (accounts as string[])[0];
-      setAccount(from);
+      // setAccount(from);
 
       const provider = await sdk.getProvider();
 
@@ -103,7 +99,6 @@ export const useMetaMask = ({
         throw new Error('No provider');
       }
 
-      // const { nonce } = await mutateMetaMaskNonce({ address: from });
       if (!nonce) {
         throw new Error('No nonce');
       }
@@ -128,8 +123,6 @@ export const useMetaMask = ({
           signedMessage: signature,
         },
       });
-
-      mutationCallBack({ address: from });
     } catch (err) {
       if ((err as ProviderRpcError).code) {
         // Code 4001 - User closed the MetaMask Browser extension while connecting
@@ -167,7 +160,6 @@ export const useMetaMask = ({
     try {
       await sdk?.terminate();
       await mutateDisconnectWallet(walletAddress);
-      mutationCallBack({ address: null });
     } catch (err) {
       toast.error(t('errors.disconnection-failed'));
     }

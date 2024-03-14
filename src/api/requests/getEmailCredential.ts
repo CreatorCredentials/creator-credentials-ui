@@ -4,6 +4,7 @@ import {
 } from '@/shared/typings/Credentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { getHeaders } from '@/shared/utils/tokenHeader';
 import nestInstance, { AxiosRequestConfig } from '../axiosNest';
 // eslint-disable-next-line
 export type GetEmailCredentialResponse = {
@@ -18,7 +19,7 @@ export const getEmailCredential = (
   nestInstance
     .get<GetEmailCredentialResponse>('v1/credentials/email', {
       ...config,
-      headers: { Authorization: `Bearer ${token}` },
+      ...getHeaders(token),
     })
     .then((res) => ({
       data: {

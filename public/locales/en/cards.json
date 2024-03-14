@@ -10,6 +10,11 @@
         "description": "Verified e-mail address",
         "requirements": "Info about requirements"
       },
+      "domain": {
+        "title": "Domain",
+        "description": "Verified domain name",
+        "requirements": "Info about requirements"
+      },
       "wallet": {
         "title": "Wallet",
         "description": "Verified wallet",

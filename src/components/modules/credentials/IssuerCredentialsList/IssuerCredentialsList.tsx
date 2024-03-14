@@ -5,7 +5,6 @@ import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
-import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 
 export const IssuerCredentialsList = () => {
   const { t } = useTranslation('issuer-credentials');
@@ -15,12 +14,13 @@ export const IssuerCredentialsList = () => {
   // const credentials: EmailCredential[] = data;
   const confirmedCredentials = useMemo(
     () =>
-      Object.values(data?.credentials || [])
-        .flat()
-        .filter(
-          (credential) =>
-            credential.status === CredentialVerificationStatus.Success,
-        ),
+      // Object.values(data?.credentials || [])
+      //   .flat()
+      //   .filter(
+      //     (credential) =>
+      //       credential.status === CredentialVerificationStatus.Success,
+      //   ),
+      data?.email ? [data?.email] : [],
     [data],
   );
 

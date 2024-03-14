@@ -1,3 +1,4 @@
+import { getHeaders } from '@/shared/utils/tokenHeader';
 import axios, { AxiosResponse } from '../axiosNest';
 
 export type DisconnectMetaMaskWalletPayload = never;
@@ -11,10 +12,4 @@ export const disconnectMetaMaskWallet = (token: string) =>
       DisconnectMetaMaskWalletResponse,
       DisconnectMetaMaskWalletPayload
     >
-  >(
-    `/v1/users/address/disconnect`,
-    {},
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    },
-  );
+  >(`/v1/users/address/disconnect`, {}, getHeaders(token));

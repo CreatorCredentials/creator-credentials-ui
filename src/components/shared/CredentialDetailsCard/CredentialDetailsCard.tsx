@@ -60,6 +60,14 @@ export const CredentialDetailsCard = ({
               {truncateWalletAddress(data.address)}
             </CardWithBadge.ContentWithIcon>
           )}
+          {type === CredentialType.Domain && 'domain' in data && (
+            <CardWithBadge.ContentWithIcon
+              iconName="AccountBalanceWallet"
+              className="whitespace-pre-wrap"
+            >
+              {data.domain}
+            </CardWithBadge.ContentWithIcon>
+          )}
           {'companyName' in data && data.companyName && (
             <CardWithBadge.ContentWithIcon
               iconName="AssuredWorkload"

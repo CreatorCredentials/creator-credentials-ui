@@ -1,9 +1,61 @@
 import { IssuerCredentials } from '@/shared/typings/Credentials';
-import axios from '../axiosNest';
+import {
+  DomainCredential,
+  EmailCredential,
+} from '@/shared/typings/Credentials';
+import { getHeaders } from '@/shared/utils/tokenHeader';
+import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { CredentialType } from '@/shared/typings/CredentialType';
+import axios, { AxiosRequestConfig } from '../axiosNest';
 
-export type GetIssuerCredentialsResponse = {
-  credentials: IssuerCredentials;
-};
+export type GetIssuerCredentialsResponse = IssuerCredentials;
 
-export const getIssuerCredentials = () =>
-  axios.get<GetIssuerCredentialsResponse>('/v1/mocks/issuer/credentials');
+export const getIssuerCredentials = (
+  token: string,
+  config?: AxiosRequestConfig,
+) =>
+  axios
+    .get<GetIssuerCredentialsResponse>('/v1/users/credentials', {
+      ...config,
+      ...getHeaders(token),
+    })
+    .then((res) => ({
+      data: {
+        email: formatEmailCredential(res.data.email),
+        domain: res.data.domain
+          ? formatDomainCredential(res.data.domain)
+          : null,
+        didWeb: null,
+        membership: [],
+      },
+    }));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatEmailCredential(credential: any): EmailCredential {
+  return {
+    id: credential.id,
+    status: CredentialVerificationStatus.Success,
+    type: CredentialType.Email,
+    data: {
+      address: credential.credentialSubject.email || 'wrong',
+      companyName: 'Creator Credentials B.V.',
+      requirements: 'Info about requirements',
+      credentialObject: credential,
+    },
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatDomainCredential(credential: any): DomainCredential {
+  return {
+    id: credential.id,
+    status: credential.status,
+    type: CredentialType.Domain,
+    data: {
+      domain: credential.domain || 'wrong',
+      companyName: 'Creator Credentials B.V.',
+      requirements: 'Info about requirements',
+      credentialObject: credential,
+    },
+  };
+}
