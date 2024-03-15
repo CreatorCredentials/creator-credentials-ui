@@ -56,6 +56,8 @@ export type DidWebCredential = BaseCredential<
   CredentialType.DidWeb,
   {
     domain: string;
+    companyName?: string;
+    requirements?: string;
     // eslint-disable-next-line
     credentialObject?: any;
   }

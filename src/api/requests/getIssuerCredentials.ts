@@ -1,4 +1,7 @@
-import { IssuerCredentials } from '@/shared/typings/Credentials';
+import {
+  DidWebCredential,
+  IssuerCredentials,
+} from '@/shared/typings/Credentials';
 import {
   DomainCredential,
   EmailCredential,
@@ -25,7 +28,9 @@ export const getIssuerCredentials = (
         domain: res.data.domain
           ? formatDomainCredential(res.data.domain)
           : null,
-        didWeb: null,
+        didWeb: res.data.didWeb
+          ? formatDidWebCredential(res.data.didWeb)
+          : null,
         membership: [],
       },
     }));
@@ -51,6 +56,21 @@ export function formatDomainCredential(credential: any): DomainCredential {
     id: credential.id,
     status: credential.status,
     type: CredentialType.Domain,
+    data: {
+      domain: credential.domain || 'wrong',
+      companyName: 'Creator Credentials B.V.',
+      requirements: 'Info about requirements',
+      credentialObject: credential,
+    },
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatDidWebCredential(credential: any): DidWebCredential {
+  return {
+    id: credential.id,
+    status: credential.status,
+    type: CredentialType.DidWeb,
     data: {
       domain: credential.domain || 'wrong',
       companyName: 'Creator Credentials B.V.',
