@@ -32,6 +32,7 @@ export const CredentialsCardAcceptRejectFooter = ({
           QueryKeys.issuersCredentials,
           { status: CreatorVerificationStatus.Pending },
         ]);
+        queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
       },
     });
 
@@ -42,6 +43,7 @@ export const CredentialsCardAcceptRejectFooter = ({
           QueryKeys.issuersCredentials,
           { status: CredentialVerificationStatus.Pending },
         ]);
+        queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
       },
     });
 
