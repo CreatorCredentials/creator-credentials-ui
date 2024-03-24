@@ -21,7 +21,7 @@ export const useIssuerCredentials = (
       if (!token) {
         throw new Error('Unauthorised useCreatorCredentials call');
       }
-      return getIssuerCredentials(token).then((res) => res.data);
+      return getIssuerCredentials(token);
     },
     {
       refetchInterval: 60000,

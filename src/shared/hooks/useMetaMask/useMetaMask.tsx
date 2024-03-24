@@ -29,27 +29,7 @@ export const useMetaMask = ({} // optimisticUpdate = true,
     isLoading: isConnectingMutationRunning,
   } = useConnectMetaMaskWallet({
     onSuccess: () => {
-      // if (!optimisticUpdate || !account) return;
       queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
-
-      // queryClient.setQueryData<GetCreatorCredentialsResponse>(
-      //   [QueryKeys.creatorVerifiedCredentials],
-      //   (oldData) => {
-      //     if (!oldData) return;
-
-      //     return {
-      //       ...oldData,
-      //       metaMask: {
-      //         id: account, // TODO: Replace after API implementation
-      //         type: CredentialType.Wallet,
-      //         data: {
-      //           address: account,
-      //         },
-      //         status: CredentialVerificationStatus.Success,
-      //       },
-      //     };
-      //   },
-      // );
     },
   });
 
@@ -57,20 +37,6 @@ export const useMetaMask = ({} // optimisticUpdate = true,
     useDisconnectMetaMaskWallet({
       onSuccess: () => {
         queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
-
-        // if (!optimisticUpdate) return;
-
-        // queryClient.setQueryData<GetCreatorCredentialsResponse>(
-        //   [QueryKeys.creatorVerifiedCredentials],
-        //   (oldData) => {
-        //     if (!oldData) return;
-
-        //     return {
-        //       ...oldData,
-        //       metaMask: null,
-        //     };
-        //   },
-        // );
       },
     });
 

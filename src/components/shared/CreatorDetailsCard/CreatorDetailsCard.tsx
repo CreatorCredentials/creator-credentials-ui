@@ -1,35 +1,47 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import Link from 'next/link';
+import { DropdownItemProps } from 'flowbite-react';
 import { Creator } from '@/shared/typings/Creator';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
+import { BadgeType } from '@/shared/typings/BadgeType';
 import { CardWithBadge } from '../CardWithBadge';
 
 type CreatorDetailsCardProps = {
   creator: Creator;
+  subtitle?: string;
+  additionalBadgeType?: BadgeType;
   renderFooter?: ((creator: Creator) => React.ReactNode) | null;
+  dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
 export const CreatorDetailsCard = ({
   creator,
+  subtitle,
   renderFooter,
+  dropdownItems,
+  additionalBadgeType = undefined,
 }: CreatorDetailsCardProps) => {
   const { imageUrl, title, credentials } = creator;
 
   return (
     <CardWithBadge
       badgeType="creator"
+      additionalBadgeType={additionalBadgeType}
       image={{
         imageUrl,
         alt: 'Creator image',
       }}
       title={title}
-      dropdownItems={[
-        {
-          children: 'Show details',
-          as: Link,
-          href: `/issuer/creators/${creator.id}`,
-        },
-      ]}
+      subtitle={subtitle}
+      dropdownItems={
+        dropdownItems || [
+          {
+            children: 'Show details',
+            as: Link,
+            href: `/issuer/creators/${creator.id}`,
+          },
+        ]
+      }
       content={
         <>
           <CardWithBadge.ContentWithIcon

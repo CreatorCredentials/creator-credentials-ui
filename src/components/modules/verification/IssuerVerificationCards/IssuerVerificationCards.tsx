@@ -32,7 +32,14 @@ export const IssuerVerificationCards = () => {
     return <Loader />;
   }
   const email = credentials.email.data.address;
-  const credentialObject = credentials.email.data.credentialObject;
+  const domain = credentials.domain?.data.domain;
+  const didWeb = credentials.didWeb?.data.domain;
+  const emailCredentialObject =
+    credentials.email.data.credentialObject.credentialObject;
+  const domainCredentialObject =
+    credentials.domain?.data.credentialObject.credentialObject;
+  const didWebCredentialObject =
+    credentials.didWeb?.data.credentialObject.credentialObject;
   return (
     <section className="grid grid-cols-3 gap-4">
       <EmailVerificationCard
@@ -41,8 +48,8 @@ export const IssuerVerificationCards = () => {
           {
             onClick: () =>
               downloadJson(
-                `${email} ${credentialObject.validFrom}`,
-                credentialObject,
+                `${email} ${emailCredentialObject.validFrom}`,
+                emailCredentialObject,
               ),
             children: t('download', { ns: 'common' }),
           },
@@ -51,13 +58,31 @@ export const IssuerVerificationCards = () => {
       <DomainVerificationCard
         value={credentials.domain?.data.domain}
         status={credentials.domain?.status}
-        dropdownItems={[]}
+        dropdownItems={[
+          {
+            onClick: () =>
+              downloadJson(
+                `${domain} ${domainCredentialObject.validFrom}`,
+                domainCredentialObject,
+              ),
+            children: t('download', { ns: 'common' }),
+          },
+        ]}
         userRole={UserRole.Issuer}
       />
       <DidWebVerificationCard
         value={credentials.didWeb?.data.domain}
         status={credentials.didWeb?.status}
-        dropdownItems={[]}
+        dropdownItems={[
+          {
+            onClick: () =>
+              downloadJson(
+                `${didWeb} ${didWebCredentialObject.validFrom}`,
+                didWebCredentialObject,
+              ),
+            children: t('download', { ns: 'common' }),
+          },
+        ]}
         userRole={UserRole.Issuer}
       />
     </section>

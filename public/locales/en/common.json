@@ -36,7 +36,8 @@
     "profile": "Profile",
     "signout": "Sign-out",
     "requested": "Requested",
-    "accepted": "Accepted"
+    "accepted": "Accepted",
+    "issued": "Issued"
   },
   "badges": {
     "verification": "Verification",

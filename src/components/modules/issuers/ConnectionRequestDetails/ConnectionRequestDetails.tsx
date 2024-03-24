@@ -1,4 +1,5 @@
 import { Button, Card } from 'flowbite-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useConfirmCreatorToIssuerConnectionRequest } from '@/api/mutations/useConfirmCreatorToIssuerConnectionRequest';
 import { useIssuerDetailsWithCredentials } from '@/api/queries/useIssuerDetails';
@@ -8,6 +9,7 @@ import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 import { Loader } from '@/components/shared/Loader';
 import { useToast } from '@/shared/hooks/useToast';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
+import { QueryKeys } from '@/api/queryKeys';
 import { SuccessfullCredentialRequestConfirmationCard } from '../../../shared/SuccessfullCredentialRequestConfirmationCard';
 
 type ConnectionRequestDetailsProps = {
@@ -19,6 +21,7 @@ export const ConnectionRequestDetails = ({
 }: ConnectionRequestDetailsProps) => {
   const { t } = useTranslation('creator-issuers-request');
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const {
     data,
@@ -33,7 +36,11 @@ export const ConnectionRequestDetails = ({
     mutateAsync,
     isLoading: isConfirmingRequest,
     isSuccess: successfullyConfirmedRequest,
-  } = useConfirmCreatorToIssuerConnectionRequest();
+  } = useConfirmCreatorToIssuerConnectionRequest({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QueryKeys.creatorIssuers]);
+    },
+  });
 
   const confirmButtonHandler = async () => {
     try {

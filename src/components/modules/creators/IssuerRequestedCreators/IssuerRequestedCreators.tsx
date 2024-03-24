@@ -14,7 +14,6 @@ export const IssuerRequestedCreators = () => {
   const { data, status, isFetching, isLoading } = useIssuerCreators({
     params: {
       status: CreatorVerificationStatus.Pending,
-      search: '',
     },
   });
 
@@ -33,6 +32,7 @@ export const IssuerRequestedCreators = () => {
         {data.creators.map((creator) => (
           <CreatorDetailsCard
             key={creator.id}
+            subtitle={'Connection request'}
             creator={creator}
             renderFooter={() =>
               creator.status === CreatorVerificationStatus.Pending ? (

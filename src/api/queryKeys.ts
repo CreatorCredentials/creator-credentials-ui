@@ -10,5 +10,7 @@ export const QueryKeys = {
   credentialsRequestDetails: 'credentialsRequestDetails',
   issuerProfile: 'issuerProfile',
   generateNonce: 'generateNonce',
+  issuersCredentials: 'issuersCredentials',
   getUser: 'getUser',
+  getIssuers: 'getIssuers',
 };

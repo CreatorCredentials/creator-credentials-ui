@@ -22,7 +22,7 @@ export const useCreatorCredentials = (
       if (!token) {
         throw new Error('Unauthorised useCreatorCredentials call');
       }
-      return getCreatorCredentials(token).then((res) => res.data);
+      return getCreatorCredentials(token);
     },
     refetchInterval: 60000,
     ...options,

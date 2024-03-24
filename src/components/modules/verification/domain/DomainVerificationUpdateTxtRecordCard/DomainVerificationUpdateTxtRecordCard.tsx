@@ -23,50 +23,6 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
   const { mutateAsync, isLoading } = useConfirmDomainTxtRecordCreation({
     onSuccess: () => {
       queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
-
-      // queryClient.setQueryData<GetCreatorCredentialsResponse>(
-      //   [QueryKeys.creatorVerifiedCredentials],
-      //   (oldData) => {
-      //     if (!oldData) return;
-
-      //     return {
-      //       ...oldData,
-      //       domain: {
-      //         id: 'temp-id', // TODO: remove this when we have real id
-      //         type: CredentialType.Domain,
-      //         data: {
-      //           domain: domainAddress,
-      //         },
-      //         ...oldData.domain,
-      //         status: CredentialVerificationStatus.Pending,
-      //       },
-      //     };
-      //   },
-      // );
-
-      // queryClient.setQueryData<GetIssuerCredentialsResponse>(
-      //   [QueryKeys.issuerCredentials],
-      //   (oldData) => {
-      //     if (!oldData) return;
-
-      //     return {
-      //       ...oldData,
-      //       credentials: {
-      //         ...oldData.credentials,
-      //         domain: {
-      //           ...oldData.credentials.domain,
-      //           id: 'temp-id', // TODO: remove this when we have real id
-      //           type: CredentialType.Domain,
-      //           data: {
-      //             ...oldData.credentials.domain.data,
-      //             domain: domainAddress,
-      //           },
-      //           status: CredentialVerificationStatus.Pending,
-      //         },
-      //       },
-      //     };
-      //   },
-      // );
     },
   });
 
