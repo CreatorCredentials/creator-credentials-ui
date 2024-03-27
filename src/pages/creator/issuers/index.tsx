@@ -71,18 +71,24 @@ const CreatorIssuersPage: NextPageWithLayout = () => {
         />
       ) : (
         <TabsComponent style="underline">
-          <Tabs.Item
-            active
-            title={t('tabs.connected')}
-          >
-            <IssuersList issuers={connected} />
-          </Tabs.Item>
-          <Tabs.Item title={t('tabs.pending')}>
-            <IssuersList issuers={pending} />
-          </Tabs.Item>
-          <Tabs.Item title={t('tabs.available')}>
-            <AvailableIssuers issuers={available} />
-          </Tabs.Item>
+          {connected.length && (
+            <Tabs.Item
+              active
+              title={t('tabs.connected')}
+            >
+              <IssuersList issuers={connected} />
+            </Tabs.Item>
+          )}
+          {pending.length && (
+            <Tabs.Item title={t('tabs.pending')}>
+              <IssuersList issuers={pending} />
+            </Tabs.Item>
+          )}
+          {available.length && (
+            <Tabs.Item title={t('tabs.available')}>
+              <AvailableIssuers issuers={available} />
+            </Tabs.Item>
+          )}
         </TabsComponent>
       )}
     </>

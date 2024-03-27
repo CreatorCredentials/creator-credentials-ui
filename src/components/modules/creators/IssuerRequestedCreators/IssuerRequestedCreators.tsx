@@ -32,6 +32,7 @@ export const IssuerRequestedCreators = () => {
         {data.creators.map((creator) => (
           <CreatorDetailsCard
             key={creator.id}
+            backRoute="/issuer/creators/requested"
             subtitle={'Connection request'}
             creator={creator}
             renderFooter={() =>

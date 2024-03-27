@@ -34,12 +34,9 @@ export const IssuerVerificationCards = () => {
   const email = credentials.email.data.address;
   const domain = credentials.domain?.data.domain;
   const didWeb = credentials.didWeb?.data.domain;
-  const emailCredentialObject =
-    credentials.email.data.credentialObject.credentialObject;
-  const domainCredentialObject =
-    credentials.domain?.data.credentialObject.credentialObject;
-  const didWebCredentialObject =
-    credentials.didWeb?.data.credentialObject.credentialObject;
+  const emailCredentialObject = credentials.email.data.credentialObject;
+  const domainCredentialObject = credentials.domain?.data.credentialObject;
+  const didWebCredentialObject = credentials.didWeb?.data.credentialObject;
   return (
     <section className="grid grid-cols-3 gap-4">
       <EmailVerificationCard

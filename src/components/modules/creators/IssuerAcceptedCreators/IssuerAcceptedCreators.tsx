@@ -39,6 +39,7 @@ export const IssuerAcceptedCreators = () => {
             subtitle={'Accepted connection'}
             key={creator.id}
             creator={creator}
+            backRoute="/issuer/creators/accepted"
           />
         ))}
       </div>

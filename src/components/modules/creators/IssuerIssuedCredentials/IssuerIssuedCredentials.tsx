@@ -70,6 +70,7 @@ export const IssuerIssuedCredentials = () => {
               key={creator.id}
               creator={creator}
               subtitle={'Issued credential'}
+              backRoute="/issuer/credentials/issued"
               dropdownItems={[
                 {
                   onClick: () => {

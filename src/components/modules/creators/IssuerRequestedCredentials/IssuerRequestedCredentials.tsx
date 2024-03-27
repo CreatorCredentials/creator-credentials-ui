@@ -51,6 +51,7 @@ export const IssuerRequestedCredentials = () => {
               key={creator.id}
               creator={creator}
               subtitle={'Credentials request'}
+              backRoute="/issuer/credentials/requested"
               renderFooter={() =>
                 credential.status === CredentialVerificationStatus.Pending ? (
                   <CredentialsCardAcceptRejectFooter credential={credential} />

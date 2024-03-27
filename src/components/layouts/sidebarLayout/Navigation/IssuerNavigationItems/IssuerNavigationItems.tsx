@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { useIssuerCredentials } from '@/api/queries/useIssuerCredentials';
+import { useIssuersCredentials } from '@/api/queries/useIssuersCredentials';
 import { NavigationRoute } from '../NavigationRoute';
 import { NavigationSignOutButton } from '../NavigationSignOutButton';
 import { NavigationItem } from '../NavigationItem';
@@ -52,7 +52,7 @@ function getIssuerRoutes(
     },
     {
       labelKey: 'navigation.credentials',
-      href: '/creator/credentials',
+      href: '/issuer/credentials',
       iconName: 'Caption',
       activeIconName: 'CaptionFilled',
     },
@@ -106,12 +106,13 @@ export const IssuerNavigationItems = () => {
     },
   });
 
-  const { data: credentials } = useIssuerCredentials({});
+  const { data: credentials } = useIssuersCredentials({
+    params: { status: CredentialVerificationStatus.Pending },
+  });
 
   const amountOfPendingConnections = connections?.creators.length;
-  const amountOfPendingCredentials = credentials?.membership.filter(
-    (c) => c.status === CredentialVerificationStatus.Pending,
-  ).length;
+  const amountOfPendingCredentials = credentials?.credentials.length;
+
   const mappedIssuerRoutes = useMemo(
     () =>
       getIssuerRoutes(
