@@ -1,12 +1,13 @@
 import { Card } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useSendCredentialsRequest } from '@/api/mutations/useSendCredentialsRequest';
-import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
+// import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Icon } from '@/components/shared/Icon';
 import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 import { SuccessfullCredentialRequestConfirmationCard } from '@/components/shared/SuccessfullCredentialRequestConfirmationCard';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -18,16 +19,13 @@ export const CredentialsRequestDataConfirmation = () => {
     isLoading: isRequestingCredentials,
   } = useSendCredentialsRequest();
 
-  const { stepper, credentials, selectedIssuer } =
-    useCredentialsRequestContext();
+  const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
 
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
 
     sendCredentialsRequest({
-      credentials: credentials.selectedItems.map(
-        (credential) => credential.type,
-      ),
+      templates: templates.selectedItems,
       issuerId: selectedIssuer.id,
     });
   };
@@ -51,11 +49,11 @@ export const CredentialsRequestDataConfirmation = () => {
           {t('steps.confirm-data.card.credential')}
         </h3>
         <div className="grid grid-cols-3 gap-4">
-          {credentials.selectedItems.map((credential) => (
-            <CredentialDetailsCard
+          {templates.selectedItems.map((template) => (
+            <CredentialTemplateDetailsCard
               dropdownItems={[]}
-              key={credential.type}
-              credential={credential}
+              key={template.templateType}
+              template={template}
             />
           ))}
         </div>

@@ -9,7 +9,7 @@ import { useDeleteMemberCredential } from '@/api/mutations/useDeleteMemberCreden
 import { QueryKeys } from '@/api/queryKeys';
 import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
-import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
+import { CreatorCredentialDetailsCard } from '@/components/shared/CreatorCredentialDetailsCard';
 import { CreatorsFilters } from '../CreatorsFilters';
 import { CredentialsCardAcceptRejectFooter } from '../CredentialsCardAcceptRejectFooter';
 
@@ -65,9 +65,10 @@ export const IssuerIssuedCredentials = () => {
           );
 
           return creator ? (
-            <CreatorDetailsCard
+            <CreatorCredentialDetailsCard
               additionalBadgeType={'credential'}
               key={creator.id}
+              credential={credential}
               creator={creator}
               subtitle={'Issued credential'}
               backRoute="/issuer/credentials/issued"

@@ -11,5 +11,8 @@ function truncateString(
   keepAtHead: number,
   keepAtTail: number,
 ) {
+  if (keepAtHead + keepAtTail >= string.length) {
+    return string;
+  }
   return string.slice(0, keepAtHead) + '...' + string.slice(-keepAtTail);
 }

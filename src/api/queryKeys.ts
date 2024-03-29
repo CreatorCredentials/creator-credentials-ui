@@ -13,4 +13,5 @@ export const QueryKeys = {
   issuersCredentials: 'issuersCredentials',
   getUser: 'getUser',
   getIssuers: 'getIssuers',
+  creatorsRequestableTemplates: 'creatorsRequestableTemplates',
 };

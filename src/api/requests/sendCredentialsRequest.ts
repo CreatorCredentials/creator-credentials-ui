@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from '@/api/axiosNest';
-import { CredentialType } from '@/shared/typings/CredentialType';
+import { VerifiedCredentialsTemplate } from '@/shared/typings/Templates';
 import { getHeaders } from '@/shared/utils/tokenHeader';
 
 export type SendCredentialsRequestPayload = {
-  credentials: CredentialType[];
+  templates: Omit<VerifiedCredentialsTemplate, 'id'>[];
   issuerId: string;
 };
 

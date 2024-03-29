@@ -5,7 +5,7 @@ import { getI18nProps } from '@/shared/utils/i18n';
 import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { IssuerCredentialsList } from '@/components/modules/credentials/IssuerCredentialsList';
+import { IssuerCredentialsTemplatesList } from '@/components/modules/credentials/IssuerCredentialsTemplatesList';
 
 const IssuerCredentialsPage: NextPageWithLayout = () => {
   const { t } = useTranslation('issuer-credentials');
@@ -17,7 +17,7 @@ const IssuerCredentialsPage: NextPageWithLayout = () => {
         subtitle={t('header.description')}
       />
       <section>
-        <IssuerCredentialsList />
+        <IssuerCredentialsTemplatesList />
       </section>
     </>
   );

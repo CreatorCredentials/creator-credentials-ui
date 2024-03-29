@@ -43,6 +43,7 @@
     "verification": "Verification",
     "credential": "Credential",
     "creator": "Creator",
+    "template": "Template",
     "issuer": "Issuer"
   },
   "copy-to-clipboard": {

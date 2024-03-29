@@ -1,28 +1,28 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { useIssuerCredentials } from '@/api/queries/useIssuerCredentials';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
-import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
+import { useIssuersTemplates } from '@/api/queries/useIssuersTemplates';
+import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 
-export const IssuerCredentialsList = () => {
+export const IssuerCredentialsTemplatesList = () => {
   const { t } = useTranslation('issuer-credentials');
 
-  const { data, status, isFetching, isLoading } = useIssuerCredentials();
+  const { data, status, isFetching, isLoading } = useIssuersTemplates();
 
   // const credentials: EmailCredential[] = data;
-  const confirmedCredentials = useMemo(
-    () =>
-      // Object.values(data?.credentials || [])
-      //   .flat()
-      //   .filter(
-      //     (credential) =>
-      //       credential.status === CredentialVerificationStatus.Success,
-      //   ),
-      data?.email ? [data?.email] : [],
-    [data],
-  );
+  // const confirmedCredentials = useMemo(
+  //   () =>
+  //     // Object.values(data?.credentials || [])
+  //     //   .flat()
+  //     //   .filter(
+  //     //     (credential) =>
+  //     //       credential.status === CredentialVerificationStatus.Success,
+  //     //   ),
+  //     data?.email ? [data?.email] : [],
+  //   [data],
+  // );
 
   if (status === 'error') {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
@@ -34,10 +34,10 @@ export const IssuerCredentialsList = () => {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {confirmedCredentials.map((credential) => (
-        <CredentialDetailsCard
-          key={credential.id}
-          credential={credential}
+      {data.templates.map((template) => (
+        <CredentialTemplateDetailsCard
+          key={template.id}
+          template={template}
           dropdownItems={[]}
           renderFooter={() => (
             <ColoredBadge

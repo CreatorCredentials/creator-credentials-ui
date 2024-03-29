@@ -6,7 +6,7 @@ import { withAuth } from '@/components/modules/app';
 import { UserRole } from '@/shared/typings/UserRole';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { IssuerProfileFormWrapper } from '@/components/modules/profile/issuer/IssuerProfileFormWrapper';
-import { IssuerCredentialsList } from '@/components/modules/credentials/IssuerCredentialsList';
+import { IssuerCredentialsTemplatesList } from '@/components/modules/credentials/IssuerCredentialsTemplatesList';
 import { IssuerVerificationCards } from '@/components/modules/verification/IssuerVerificationCards';
 
 const IssuerProfilePage: NextPageWithLayout = () => {
@@ -21,7 +21,7 @@ const IssuerProfilePage: NextPageWithLayout = () => {
       <section className="flex flex-col gap-10">
         <section className="flex flex-col gap-4">
           <h3 className="text-xl">{t('data.templates')}</h3>
-          <IssuerCredentialsList />
+          <IssuerCredentialsTemplatesList />
         </section>
         <section className="flex flex-col gap-4">
           <h3 className="text-xl">{t('data.organisation-wallet')}</h3>
