@@ -4,6 +4,9 @@
     "request-button": "Request credentials"
   },
   "credential": {
+    "subtitles": {
+      "issued-to": "Credential issued to:"
+    },
     "types": {
       "email": {
         "title": "E-Mail",

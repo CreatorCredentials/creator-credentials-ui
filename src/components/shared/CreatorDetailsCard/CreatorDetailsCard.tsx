@@ -60,7 +60,7 @@ export const CreatorDetailsCard = ({
         imageUrl,
         alt: 'Creator image',
       }}
-      title={title}
+      title={truncateEmailAddress(title)}
       subtitle={subtitle}
       dropdownItems={
         dropdownItems || [

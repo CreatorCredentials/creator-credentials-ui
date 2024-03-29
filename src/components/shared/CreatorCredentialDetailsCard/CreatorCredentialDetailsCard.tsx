@@ -25,8 +25,7 @@ type CreatorCredentialDetailsCardProps = {
 
 export const CreatorCredentialDetailsCard = ({
   creator,
-  // credential,
-  subtitle,
+  credential,
   renderFooter,
   dropdownItems,
   backRoute,
@@ -58,70 +57,61 @@ export const CreatorCredentialDetailsCard = ({
     }
   };
   return (
-    <>
-      {/* <CredentialDetailsCard
-        key={credential.id}
-        dropdownItems={[]}
-        credential={credential}
-      /> */}
-      <CardWithBadgeForCred
-        badgeType="creator"
-        additionalBadgeType={additionalBadgeType}
-        image={{
-          imageUrl,
-          alt: 'Creator image',
-        }}
-        title={truncateEmailAddress(title)}
-        subtitle={subtitle}
-        dropdownItems={
-          dropdownItems || [
-            {
-              children: 'Show details',
-              as: Link,
-              href:
-                `/issuer/creators/${creator.id}` +
-                (backRoute
-                  ? `?backRoute=${encodeURIComponent(backRoute)}`
-                  : ''),
-            },
-          ]
-        }
-        content={
-          <>
-            {emailAddress ? (
-              <Tooltip content={emailAddress}>
-                <CardWithBadgeForCred.ContentWithIcon
-                  iconName="Mail"
-                  className="whitespace-pre-wrap"
-                  onClick={emailAddressClickHandler}
-                >
-                  {truncatedEmailAddress}
-                </CardWithBadgeForCred.ContentWithIcon>
-              </Tooltip>
-            ) : null}
-            {walletAddress ? (
-              <Tooltip content={walletAddress}>
-                <CardWithBadgeForCred.ContentWithIcon
-                  iconName="AccountBalanceWallet"
-                  className="whitespace-pre-wrap"
-                  onClick={walletAddressClickHandler}
-                >
-                  {truncatedWalletAddress}
-                </CardWithBadgeForCred.ContentWithIcon>
-              </Tooltip>
-            ) : null}
-            {credentials.domain && (
+    <CardWithBadgeForCred
+      badgeType="creator"
+      additionalBadgeType={additionalBadgeType}
+      credential={credential}
+      image={{
+        imageUrl,
+        alt: 'Creator image',
+      }}
+      title={truncateEmailAddress(title)}
+      dropdownItems={
+        dropdownItems || [
+          {
+            children: 'Show details',
+            as: Link,
+            href:
+              `/issuer/creators/${creator.id}` +
+              (backRoute ? `?backRoute=${encodeURIComponent(backRoute)}` : ''),
+          },
+        ]
+      }
+      content={
+        <>
+          {emailAddress ? (
+            <Tooltip content={emailAddress}>
               <CardWithBadgeForCred.ContentWithIcon
-                iconName="Public"
+                iconName="Mail"
                 className="whitespace-pre-wrap"
+                onClick={emailAddressClickHandler}
               >
-                {credentials.domain}
+                {truncatedEmailAddress}
               </CardWithBadgeForCred.ContentWithIcon>
-            )}
-          </>
-        }
-        footer={renderFooter && renderFooter(creator)}
-      />
-    </>
+            </Tooltip>
+          ) : null}
+          {walletAddress ? (
+            <Tooltip content={walletAddress}>
+              <CardWithBadgeForCred.ContentWithIcon
+                iconName="AccountBalanceWallet"
+                className="whitespace-pre-wrap"
+                onClick={walletAddressClickHandler}
+              >
+                {truncatedWalletAddress}
+              </CardWithBadgeForCred.ContentWithIcon>
+            </Tooltip>
+          ) : null}
+          {credentials.domain && (
+            <CardWithBadgeForCred.ContentWithIcon
+              iconName="Public"
+              className="whitespace-pre-wrap"
+            >
+              {credentials.domain}
+            </CardWithBadgeForCred.ContentWithIcon>
+          )}
+        </>
+      }
+      footer={renderFooter && renderFooter(creator)}
+    />
   );
 };
