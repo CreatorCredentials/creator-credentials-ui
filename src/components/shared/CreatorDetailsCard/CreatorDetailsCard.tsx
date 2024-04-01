@@ -1,6 +1,7 @@
 import React, { ElementType } from 'react';
 import Link from 'next/link';
 import { DropdownItemProps, Tooltip } from 'flowbite-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Creator } from '@/shared/typings/Creator';
 import {
   truncateEmailAddress,
@@ -8,6 +9,9 @@ import {
 } from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
+import { useRevokeCreatorConnectionRequest } from '@/api/mutations/useRevokeCreatorConnectionRequest';
+import { QueryKeys } from '@/api/queryKeys';
+import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CardWithBadge } from '../CardWithBadge';
 
 type CreatorDetailsCardProps = {
@@ -29,6 +33,7 @@ export const CreatorDetailsCard = ({
 }: CreatorDetailsCardProps) => {
   const { imageUrl, title, credentials } = creator;
   const { copy } = useCopyToClipboard();
+  const queryClient = useQueryClient();
 
   const walletAddress = credentials.walletAddress;
   const truncatedWalletAddress = walletAddress
@@ -52,6 +57,15 @@ export const CreatorDetailsCard = ({
       copy(emailAddress);
     }
   };
+
+  const { mutateAsync: revokeAsync } = useRevokeCreatorConnectionRequest({
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        QueryKeys.issuerCreators,
+        { status: CreatorVerificationStatus.Accepted },
+      ]);
+    },
+  });
   return (
     <CardWithBadge
       badgeType="creator"
@@ -70,6 +84,12 @@ export const CreatorDetailsCard = ({
             href:
               `/issuer/creators/${creator.id}` +
               (backRoute ? `?backRoute=${encodeURIComponent(backRoute)}` : ''),
+          },
+          {
+            children: 'Disconnect',
+            onClick: () => {
+              revokeAsync({ creatorId: creator.id });
+            },
           },
         ]
       }
