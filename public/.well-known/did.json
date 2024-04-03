@@ -1,0 +1,21 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:liccium.com",
+  "verificationMethod": [
+    {
+      "id": "did:web:liccium.com#key-0",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:liccium.com",
+      "publicKeyJwk": {
+        "kty": "RSA",
+        "kid": "gal0zoSgwbkFMkDK-c2cII6IqT-7hibmQzbw0hNt8IQ",
+        "n": "yFVknDjhTsdrzj1CpifQyvd4AA-QvpNmVIALDX0boJ7D5wvxHk06rCQ1XLLDMF0kogWHw0pklvNaVs8Jchyo3MUs2YjrRvqOngVt0HxOfQ4uOwXFOx6LBjbu_0JXpFFkVZZ7n9iF0gby1t9Nieg432vZ0D1W9whZ7q2-kdrzlejDan-053MVoV020H_WfvNkXYrGVGXeY7nrzAdO2s9BcrSjo178TO3DdNh27Ectnmq_iRMKbmc5U9ASp1YKx5d5Z8dBy8JVw3u6JZyVH_IefNosbL10tpOsoBwEUi_Wyv5H4ZnXrfuZmRRf034Dx_29Cp6ctbNhMZYpYzXcYz-34Q",
+        "e": "AQAB"
+      }
+    }
+  ],
+  "authentication": ["did:web:liccium.com#key-0"]
+}
