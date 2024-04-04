@@ -6,7 +6,7 @@
   "id": "did:web:liccium.com",
   "verificationMethod": [
     {
-      "id": "did:web:liccium.com#key-0",
+      "id": "did:web:liccium.com#gal0zoSgwbkFMkDK-c2cII6IqT-7hibmQzbw0hNt8IQ",
       "type": "JsonWebKey2020",
       "controller": "did:web:liccium.com",
       "publicKeyJwk": {
@@ -17,5 +17,10 @@
       }
     }
   ],
-  "authentication": ["did:web:liccium.com#key-0"]
+  "authentication": [
+    "did:web:liccium.com#gal0zoSgwbkFMkDK-c2cII6IqT-7hibmQzbw0hNt8IQ"
+  ],
+  "assertionMethod": [
+    "did:web:liccium.com#gal0zoSgwbkFMkDK-c2cII6IqT-7hibmQzbw0hNt8IQ"
+  ]
 }
