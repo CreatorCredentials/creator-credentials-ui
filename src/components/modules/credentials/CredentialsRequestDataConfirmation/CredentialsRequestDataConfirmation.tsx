@@ -45,7 +45,7 @@ export const CredentialsRequestDataConfirmation = () => {
         <CredentialsRequestStepper activeStep={stepper.activeStep} />
       </div>
       <Card className="mt-12 w-full">
-        <div className="grid grid-cols-[20rem_4rem_20rem_1fr] gap-4">
+        <div className="grid grid-cols-[22rem_4rem_22rem_1fr] gap-4">
           <div>
             <h3 className="mb-4 text-xl">
               {t('steps.confirm-data.card.credential')}
@@ -74,9 +74,9 @@ export const CredentialsRequestDataConfirmation = () => {
             {/* </div> */}
           </div>
         </div>
-        <h4 className="mb-4 mt-14 text-base">
+        {/* <h4 className="mb-4 mt-14 text-base">
           {t('steps.confirm-data.card.confirm')}
-        </h4>
+        </h4> */}
       </Card>
       <FormFooter>
         <FormFooter.BackButton onClick={stepper.prevStep} />

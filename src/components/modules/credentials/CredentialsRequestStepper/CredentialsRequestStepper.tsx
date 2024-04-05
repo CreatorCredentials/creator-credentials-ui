@@ -20,7 +20,7 @@ export const CredentialsRequestStepper = ({
     <Stepper
       steps={CREDENTIALS_REQUEST_STEPS_TKEYS.map((tKey) => t(tKey))}
       activeStep={activeStep}
-      className="mt-7"
+      className="mt-2"
     />
   );
 };
