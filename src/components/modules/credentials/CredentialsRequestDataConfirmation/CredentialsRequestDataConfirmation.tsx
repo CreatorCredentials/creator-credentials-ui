@@ -45,26 +45,34 @@ export const CredentialsRequestDataConfirmation = () => {
         <CredentialsRequestStepper activeStep={stepper.activeStep} />
       </div>
       <Card className="mt-12 w-full">
-        <h3 className="mb-4 text-xl">
-          {t('steps.confirm-data.card.credential')}
-        </h3>
-        <div className="grid grid-cols-3 gap-4">
-          {templates.selectedItems.map((template) => (
-            <CredentialTemplateDetailsCard
-              dropdownItems={[]}
-              key={template.templateType}
-              template={template}
+        <div className="grid grid-cols-[20rem_1fr_20rem] gap-4">
+          <div>
+            <h3 className="mb-4 text-xl">
+              {t('steps.confirm-data.card.credential')}
+            </h3>
+            {/* <div className="grid grid-cols-2 gap-4"> */}
+            {templates.selectedItems.map((template) => (
+              <CredentialTemplateDetailsCard
+                dropdownItems={[]}
+                key={template.templateType}
+                template={template}
+              />
+            ))}
+            {/* </div> */}
+          </div>
+          <div></div>
+          <div>
+            <h3 className="mb-4 text-xl">
+              {/* mt-14*/}
+              {t('steps.confirm-data.card.issuer')}
+            </h3>
+            {/* <div className="grid grid-cols-2 gap-4"> */}
+            <IssuerDetailsCard
+              issuer={selectedIssuer!}
+              renderFooter={null}
             />
-          ))}
-        </div>
-        <h3 className="mb-4 mt-14 text-xl">
-          {t('steps.confirm-data.card.issuer')}
-        </h3>
-        <div className="grid grid-cols-3 gap-4">
-          <IssuerDetailsCard
-            issuer={selectedIssuer!}
-            renderFooter={null}
-          />
+            {/* </div> */}
+          </div>
         </div>
         <h4 className="mb-4 mt-14 text-base">
           {t('steps.confirm-data.card.confirm')}
