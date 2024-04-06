@@ -17,8 +17,8 @@ const CREDENTIAL_TEMPLATE_TYPE_TO_ICON_NAME_MAP: Record<
   CredentialTemplateType,
   IconName
 > = {
-  [CredentialTemplateType.Member]: 'Groups',
-  [CredentialTemplateType.Student]: 'Groups',
+  [CredentialTemplateType.Member]: 'Group',
+  [CredentialTemplateType.Student]: 'Group',
 };
 
 type CredentialTemplateDetailsCardProps = {

@@ -14,7 +14,7 @@ import { IconName } from '../Icon';
 const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Email]: 'Mail',
   [CredentialType.Wallet]: 'AccountBalanceWallet',
-  [CredentialType.Member]: 'Groups',
+  [CredentialType.Member]: 'Group',
   [CredentialType.Domain]: 'Public',
   [CredentialType.DidWeb]: 'Web',
 };

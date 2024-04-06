@@ -52,6 +52,7 @@ export const icons = {
     () => import('@/public/images/icons/event-today-filled.svg'),
   ),
   Groups: lazy(() => import('@/public/images/icons/groups.svg')),
+  Group: lazy(() => import('@/public/images/icons/group.svg')),
   Home: lazy(() => import('@/public/images/icons/home.svg')),
   HomeFilled: lazy(() => import('@/public/images/icons/home-filled.svg')),
   Info: lazy(() => import('@/public/images/icons/info.svg')),
