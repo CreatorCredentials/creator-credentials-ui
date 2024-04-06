@@ -17,7 +17,7 @@ export const IssuerIssuedCredentials = () => {
   const { t } = useTranslation('issuer-creators');
 
   const queryClient = useQueryClient();
-  const { data, status, isFetching, isLoading } = useIssuersCredentials(
+  const { data, status, isLoading } = useIssuersCredentials(
     {
       params: {
         status: CredentialVerificationStatus.Success,
@@ -33,7 +33,6 @@ export const IssuerIssuedCredentials = () => {
   const {
     data: creatorsData,
     status: cStatus,
-    isFetching: cIsFetching,
     isLoading: cIsLoading,
   } = useIssuerCreators({
     params: {
@@ -51,7 +50,7 @@ export const IssuerIssuedCredentials = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading || isFetching || cIsFetching || cIsLoading) {
+  if (isLoading || cIsLoading) {
     return <Loader />;
   }
 

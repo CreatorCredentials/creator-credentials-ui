@@ -9,7 +9,7 @@ import { CreatorsFilters } from '../CreatorsFilters';
 export const IssuerAcceptedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isFetching, isLoading } = useIssuerCreators(
+  const { data, status, isLoading } = useIssuerCreators(
     {
       params: {
         status: CreatorVerificationStatus.Accepted,
@@ -26,7 +26,7 @@ export const IssuerAcceptedCreators = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 

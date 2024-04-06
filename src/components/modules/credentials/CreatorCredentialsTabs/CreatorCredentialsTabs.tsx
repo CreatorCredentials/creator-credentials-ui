@@ -11,7 +11,7 @@ import { CreatorPendingCredentials } from '../CreatorPendingCredentials';
 export const CreatorCredentialsTabs = () => {
   const { t } = useTranslation('creator-credentials');
 
-  const { isLoading, isFetching, status, data } = useCreatorCredentials();
+  const { isLoading, status, data } = useCreatorCredentials();
 
   const credentialsArray = useMemo(
     () =>
@@ -25,7 +25,7 @@ export const CreatorCredentialsTabs = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 

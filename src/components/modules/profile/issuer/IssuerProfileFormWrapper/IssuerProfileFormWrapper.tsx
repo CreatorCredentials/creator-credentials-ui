@@ -13,7 +13,7 @@ import { issuerProfileFormDefaultValues } from '../IssuerProfileForm/IssuerProfi
 export const IssuerProfileFormWrapper = () => {
   const { t } = useTranslation('issuer-profile');
 
-  const { data, status, isLoading, isFetching } = useIssuerProfile();
+  const { data, status, isLoading } = useIssuerProfile();
 
   const form = useForm<IssuerProfileFormContextType>({
     resolver: joiResolver(IssuerProfileFormSchema),
@@ -26,7 +26,7 @@ export const IssuerProfileFormWrapper = () => {
     return <ApiErrorMessage message={t('errors.fetching-profile')} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 

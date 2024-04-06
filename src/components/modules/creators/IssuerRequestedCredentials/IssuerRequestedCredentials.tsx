@@ -13,7 +13,7 @@ import { CreatorsFilters } from '../CreatorsFilters';
 export const IssuerRequestedCredentials = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isFetching, isLoading } = useIssuersCredentials({
+  const { data, status, isLoading } = useIssuersCredentials({
     params: {
       status: CredentialVerificationStatus.Pending,
     },
@@ -21,7 +21,6 @@ export const IssuerRequestedCredentials = () => {
   const {
     data: creatorsData,
     status: cStatus,
-    isFetching: cIsFetching,
     isLoading: cIsLoading,
   } = useIssuerCreators({
     params: {
@@ -33,7 +32,7 @@ export const IssuerRequestedCredentials = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading || isFetching || cIsFetching || cIsLoading) {
+  if (isLoading || cIsLoading) {
     return <Loader />;
   }
 

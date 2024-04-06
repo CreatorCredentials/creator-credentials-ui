@@ -30,7 +30,6 @@ export const ConnectionRequestDetails = ({
     data,
     status,
     isLoading: isLoadingIssuerDetails,
-    isFetching: isFetchingIssuerDetails,
   } = useIssuerDetailsWithCredentials({
     issuerId,
   });
@@ -47,7 +46,6 @@ export const ConnectionRequestDetails = ({
 
   const {
     isLoading,
-    isFetching,
     status: credStatus,
     data: credentials,
   } = useCreatorCredentials();
@@ -77,12 +75,7 @@ export const ConnectionRequestDetails = ({
     }
   };
 
-  if (
-    isLoadingIssuerDetails ||
-    isFetchingIssuerDetails ||
-    isLoading ||
-    isFetching
-  ) {
+  if (isLoadingIssuerDetails || isLoading) {
     return <Loader />;
   }
 

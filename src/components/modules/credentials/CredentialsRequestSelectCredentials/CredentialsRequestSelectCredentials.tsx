@@ -25,7 +25,7 @@ export const CredentialsRequestSelectCredentials = () => {
       return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
     }
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
       return <Loader />;
     }
     const templatesToRender = data.templates;
@@ -65,7 +65,7 @@ export const CredentialsRequestSelectCredentials = () => {
         </div>
       </div>
     );
-  }, [templates, data, isFetching, isLoading, status, t]);
+  }, [templates, data, isLoading, status, t]);
 
   return (
     <>

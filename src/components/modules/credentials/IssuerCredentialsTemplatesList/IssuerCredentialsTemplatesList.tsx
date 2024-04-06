@@ -9,7 +9,7 @@ import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTem
 export const IssuerCredentialsTemplatesList = () => {
   const { t } = useTranslation('issuer-credentials');
 
-  const { data, status, isFetching, isLoading } = useIssuersTemplates();
+  const { data, status, isLoading } = useIssuersTemplates();
 
   // const credentials: EmailCredential[] = data;
   // const confirmedCredentials = useMemo(
@@ -28,7 +28,7 @@ export const IssuerCredentialsTemplatesList = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 

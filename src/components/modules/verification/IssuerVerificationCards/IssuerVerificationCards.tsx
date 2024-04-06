@@ -17,7 +17,6 @@ export const IssuerVerificationCards = () => {
 
   const {
     data: credentials,
-    isFetching,
     isLoading,
     status,
   } = useIssuerCredentials({
@@ -28,7 +27,7 @@ export const IssuerVerificationCards = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
   const email = credentials.email.data.address;

@@ -40,7 +40,7 @@ export const CredentialsRequestSelectIssuer = () => {
       return <ApiErrorMessage message={t('errors.fetching-issuers')} />;
     }
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
       return <Loader />;
     }
 
@@ -84,15 +84,7 @@ export const CredentialsRequestSelectIssuer = () => {
         </div>
       </div>
     );
-  }, [
-    connected,
-    isFetching,
-    isLoading,
-    selectedIssuer,
-    status,
-    t,
-    toggleIssuerSelection,
-  ]);
+  }, [connected, isLoading, selectedIssuer, status, t, toggleIssuerSelection]);
 
   return (
     <>
