@@ -34,24 +34,6 @@ const WelcomePage: NextPageWithLayout = () => {
       />
       <section className="flex flex-wrap justify-center gap-6">
         <UserCard
-          title={t('issuer.title')}
-          subtitle={t('issuer.description')}
-          iconName="AssuredWorkload"
-        >
-          <LinkButton
-            href="/auth/login/issuer"
-            color="primary"
-          >
-            {t('log-in', { ns: 'common' })}
-          </LinkButton>
-          <LinkButton
-            href="/auth/signup/issuer"
-            color="outline"
-          >
-            {t('sign-up', { ns: 'common' })}
-          </LinkButton>
-        </UserCard>
-        <UserCard
           title={t('creator.title')}
           subtitle={t('creator.description')}
           iconName="DesignServices"
@@ -64,6 +46,24 @@ const WelcomePage: NextPageWithLayout = () => {
           </LinkButton>
           <LinkButton
             href="/auth/signup/creator"
+            color="outline"
+          >
+            {t('sign-up', { ns: 'common' })}
+          </LinkButton>
+        </UserCard>
+        <UserCard
+          title={t('issuer.title')}
+          subtitle={t('issuer.description')}
+          iconName="AssuredWorkload"
+        >
+          <LinkButton
+            href="/auth/login/issuer"
+            color="primary"
+          >
+            {t('log-in', { ns: 'common' })}
+          </LinkButton>
+          <LinkButton
+            href="/auth/signup/issuer"
             color="outline"
           >
             {t('sign-up', { ns: 'common' })}
