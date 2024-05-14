@@ -8,12 +8,4 @@ describe('BlankLayout', () => {
 
     expect(screen.getByText('TEST')).toBeInTheDocument();
   });
-
-  it('should render BrandImage', () => {
-    render(<NoLogoBlankLayout>TEST</NoLogoBlankLayout>);
-
-    expect(
-      screen.getByAltText('Creator Credentials brand logo'),
-    ).toHaveAttribute('src', '/images/brand.svg');
-  });
 });
