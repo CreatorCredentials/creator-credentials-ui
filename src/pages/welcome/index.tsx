@@ -17,6 +17,9 @@ const WelcomePage: NextPageWithLayout = () => {
   const user = useUser();
 
   useEffect(() => {
+    if (window.self !== window.top) {
+      router.push('auth/iframe/creator');
+    }
     if (!user.isSignedIn) return;
 
     if (user.user?.publicMetadata.role === UserRole.Issuer) {

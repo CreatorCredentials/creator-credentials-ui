@@ -3,6 +3,8 @@ import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { withAuth } from '@/components/modules/app';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
@@ -18,7 +20,12 @@ const CreatorHomePage: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
   const { t } = useTranslation('home-creator');
-
+  const router = useRouter();
+  useEffect(() => {
+    if (window.self !== window.top) {
+      router.push('credentials');
+    }
+  }, [router]);
   return (
     <>
       <PageHeader title={t('header.title')} />

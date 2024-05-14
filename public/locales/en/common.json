@@ -27,6 +27,8 @@
   "accepted": "Accepted",
   "close": "Close",
   "selected": "Selected",
+  "credentials-import": "Import Credentials Page",
+  "credentials-import-button": "Import credentials",
   "navigation": {
     "home": "Home Page",
     "verification": "Verification",

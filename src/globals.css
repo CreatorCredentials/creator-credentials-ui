@@ -11,9 +11,9 @@ body {
 }
 
 @layer base {
-  body {
+  /* body {
     @apply min-w-[1280px];
-  }
+  } */
 
   html {
     @media (min-width: 128px) {

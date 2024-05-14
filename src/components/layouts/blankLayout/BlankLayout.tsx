@@ -6,7 +6,7 @@ type BlankLayoutProps = {
 };
 
 export const BlankLayout = ({ children }: BlankLayoutProps) => (
-  <div className="relative flex h-full flex-col overflow-auto pb-16">
+  <div className="relative flex h-full min-w-[1280px] flex-col overflow-auto pb-16">
     <BrandImage containerClassName="start-[3.5rem] top-8" />
     <main className="flex flex-1 flex-col items-center">{children}</main>
   </div>

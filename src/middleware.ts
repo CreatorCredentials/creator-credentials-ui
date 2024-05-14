@@ -2,9 +2,11 @@ import { authMiddleware } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 export default authMiddleware({
+  debug: true,
   publicRoutes: ['/welcome', '/api/auth/_log'],
   ignoredRoutes: [
     '/welcome',
+    '/auth/iframe/creator',
     '/auth/login/issuer',
     '/auth/login/creator',
     '/auth/signup/issuer',

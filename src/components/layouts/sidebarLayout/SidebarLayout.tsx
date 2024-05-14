@@ -16,7 +16,7 @@ export const SidebarLayout = ({ children }: SidebarLayoutProps) => {
   }
 
   return (
-    <div className="relative flex h-full flex-col">
+    <div className="relative flex h-full min-w-[1280px] flex-col">
       <div className="flex flex-1 overflow-hidden">
         <Navigation />
         <div className="relative flex flex-1 flex-col">

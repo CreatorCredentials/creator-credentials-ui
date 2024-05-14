@@ -17,9 +17,13 @@ import { WelcomeHeader } from '../../welcome/WelcomeHeader/WelcomeHeader';
 
 type LoginPageContainerProps = {
   userRole: UserRole;
+  hideHeader?: boolean;
 };
 
-export const LoginPageContainer = ({ userRole }: LoginPageContainerProps) => {
+export const LoginPageContainer = ({
+  userRole,
+  hideHeader,
+}: LoginPageContainerProps) => {
   const { t } = useTranslation('login');
   // const toast = useToast();
   // const [emailSent, setEmailSent] = useState(false);
@@ -60,13 +64,16 @@ export const LoginPageContainer = ({ userRole }: LoginPageContainerProps) => {
 
   return (
     <>
-      <WelcomeHeader
-        title={t('header.title')}
-        subtitle={t('header.subtitle')}
-      />
+      {!hideHeader && (
+        <WelcomeHeader
+          title={t('header.title')}
+          subtitle={t('header.subtitle')}
+        />
+      )}
       <BaseAuthFormCard
         title={t(`card.titles.${userRole.toLowerCase()}`)}
         subtitle={t('card.description')}
+        className={hideHeader ? 'mt-[2rem]' : ''}
       >
         <SignIn
           redirectUrl={userRole === UserRole.Creator ? 'creator' : 'issuer'}
@@ -75,7 +82,6 @@ export const LoginPageContainer = ({ userRole }: LoginPageContainerProps) => {
           }`}
         />
       </BaseAuthFormCard>
-
       {/* {emailSent ? (
         <AuthVerificationCard
           title={t('verification.title')}
