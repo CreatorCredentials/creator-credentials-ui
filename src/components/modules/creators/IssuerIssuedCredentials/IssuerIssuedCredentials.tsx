@@ -60,7 +60,7 @@ export const IssuerIssuedCredentials = () => {
       <div className="grid grid-cols-3 gap-4">
         {data.credentials.map((credential) => {
           const creator = creatorsData?.creators.find(
-            (c) => parseInt(c.id) === credential.data.credentialObject.userId,
+            (c) => parseInt(c.id) === credential.data.userId,
           );
 
           return creator ? (
