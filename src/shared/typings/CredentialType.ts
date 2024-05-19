@@ -4,4 +4,5 @@ export enum CredentialType {
   Member = 'MEMBER',
   Domain = 'DOMAIN',
   DidWeb = 'DID_WEB',
+  Connect = 'CONNECT',
 }

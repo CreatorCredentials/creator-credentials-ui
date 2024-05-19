@@ -27,6 +27,11 @@
         "title": "Member",
         "description": "This credential attests that you are a member of the issuer organisation",
         "requirements": "Info about requirements"
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "This credential attests that you are owner of liccium account with corresponding did:key",
+        "requirements": "Info about requirements"
       }
     }
   }

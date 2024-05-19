@@ -39,6 +39,7 @@ export const icons = {
     () => import('@/public/images/icons/check-circle-filled.svg'),
   ),
   Close: lazy(() => import('@/public/images/icons/close.svg')),
+  Connect: lazy(() => import('@/public/images/icons/connect-credential.svg')),
   ContentCopy: lazy(() => import('@/public/images/icons/content-copy.svg')),
   DesignServices: lazy(
     () => import('@/public/images/icons/design-services.svg'),

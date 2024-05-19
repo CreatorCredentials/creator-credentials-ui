@@ -17,6 +17,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Member]: 'Group',
   [CredentialType.Domain]: 'Public',
   [CredentialType.DidWeb]: 'Web',
+  [CredentialType.Connect]: 'Connect',
 };
 
 type CredentialDetailsCardProps = {
@@ -91,15 +92,17 @@ export const CredentialDetailsCard = ({
               {data.domain}
             </CardWithBadge.ContentWithIcon>
           )}
-          {'companyName' in data && data.companyName && (
-            <CardWithBadge.ContentWithIcon
-              iconName="AssuredWorkload"
-              className="whitespace-pre-wrap"
-            >
-              {data.companyName}
-            </CardWithBadge.ContentWithIcon>
-          )}
-          {'validity' in data && (
+          {'companyName' in data &&
+            data.companyName &&
+            type !== CredentialType.Connect && (
+              <CardWithBadge.ContentWithIcon
+                iconName="AssuredWorkload"
+                className="whitespace-pre-wrap"
+              >
+                {data.companyName}
+              </CardWithBadge.ContentWithIcon>
+            )}
+          {'validity' in data && type !== CredentialType.Connect && (
             <CardWithBadge.ContentWithIcon
               iconName="CalendarMonth"
               className="whitespace-pre-wrap"
