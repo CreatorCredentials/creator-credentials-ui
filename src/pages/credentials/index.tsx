@@ -23,7 +23,9 @@ const CredentialsImportPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     const lister = (e: MessageEvent) => {
-      if (e.data.type == 'liccium-did-provide') {
+      //eslint-disable-next-line
+      console.log(e);
+      if (e.data.type === 'liccium-did-provide') {
         //eslint-disable-next-line
         console.log('liccium-did provided: ', e.data.payload.didKey);
         setLicciumDidKey(e.data.payload.didKey || null);
