@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Button } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
@@ -9,13 +9,49 @@ import { UserRole } from '@/shared/typings/UserRole';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NoLogoBlankLayout } from '@/components/layouts/NoLogoblankLayout/NoLogoBlankLayout';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
+import { useConnectLicciumDidKey } from '@/api/mutations/useConnectLicciumDidKey';
 
 const CredentialsImportPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
 
-  const { data } = useCreatorCredentials();
-  function importCredentials() {
-    window.top?.postMessage({ type: 'credentials-import', payload: data }, '*');
+  const [licciumDidKey, setLicciumDidKey] = useState<string | null>(null);
+
+  const {
+    mutateAsync: mutateConnectLicciumDidKey,
+    // isLoading: isConnectingMutationRunning,
+  } = useConnectLicciumDidKey();
+
+  useEffect(() => {
+    const lister = (e: MessageEvent) => {
+      if (e.data.type == 'liccium-did-provide') {
+        //eslint-disable-next-line
+        console.log('liccium-did provided: ', e.data.payload.didKey);
+        setLicciumDidKey(e.data.payload.didKey || null);
+        //issue connect credentials if emails are the same
+      }
+    };
+
+    window.addEventListener('message', lister);
+    return () => {
+      window.removeEventListener('message', lister);
+    };
+  }, []); // no dependencies
+
+  const { refetch: refetchCreatorCredentials } = useCreatorCredentials();
+  async function importCredentials() {
+    //export credentials only if connection credential is issued
+    if (licciumDidKey) {
+      await mutateConnectLicciumDidKey({
+        payload: {
+          licciumDidKey,
+        },
+      });
+      const { data: creatorCredentials } = await refetchCreatorCredentials();
+      window.top?.postMessage(
+        { type: 'credentials-import', payload: creatorCredentials },
+        '*',
+      );
+    }
   }
   return (
     <>
