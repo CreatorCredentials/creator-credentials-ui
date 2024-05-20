@@ -63,6 +63,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Wallet]: 'AccountBalanceWallet',
   [CredentialType.Member]: 'Group',
   [CredentialType.Domain]: 'Public',
+  [CredentialType.Connect]: 'Connect',
   [CredentialType.DidWeb]: 'Web',
 };
 
