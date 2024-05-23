@@ -16,7 +16,7 @@ import { NavigationSignOutButton } from '@/components/layouts/sidebarLayout/Navi
 const CredentialsImportPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
 
-  const [isErrorVisible, setIsErrorVisible] = useState<boolean>(true);
+  const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false);
 
   const [licciumDidKey, setLicciumDidKey] = useState<string | null>(null);
   const [licciumEmail, setLicciumEmail] = useState<string | null>(null);
@@ -76,7 +76,7 @@ const CredentialsImportPage: NextPageWithLayout = () => {
       <div className="flex w-full flex-col items-center justify-center gap-4">
         <PageHeader title={t('credentials-import')} />
 
-        <div className="flex w-60 flex-col items-center">
+        <div className="flex h-[12rem] w-60 flex-col items-center">
           <Button
             color="primary"
             className="self-stretch"
