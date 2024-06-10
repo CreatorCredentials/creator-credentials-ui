@@ -17,12 +17,14 @@ const CredentialsImportPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
 
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false);
+  const [isDidErrorVisible, setIsDidErrorVisible] = useState<boolean>(false);
 
   const [licciumDidKey, setLicciumDidKey] = useState<string | null>(null);
   const [licciumEmail, setLicciumEmail] = useState<string | null>(null);
   const user = useUser();
   const currentEmail = user.user?.emailAddresses[0].emailAddress;
   const errorMessage = `You've logged in with email ${currentEmail} to CreatorCredential App. Please login using the same email as at Liccium.app`;
+  const didErrorMessage = `Check of did:key went wrong. Please try again.`;
   const {
     mutateAsync: mutateConnectLicciumDidKey,
     // isLoading: isConnectingMutationRunning,
@@ -54,10 +56,12 @@ const CredentialsImportPage: NextPageWithLayout = () => {
     //export credentials only if connection credential is issued
     if (licciumEmail !== currentEmail) {
       setIsErrorVisible(true);
+      setIsDidErrorVisible(false);
       return;
     }
     if (licciumDidKey) {
       setIsErrorVisible(false);
+      setIsDidErrorVisible(false);
 
       await mutateConnectLicciumDidKey({
         payload: {
@@ -69,6 +73,8 @@ const CredentialsImportPage: NextPageWithLayout = () => {
         { type: 'credentials-import', payload: creatorCredentials },
         '*',
       );
+    } else {
+      setIsDidErrorVisible(true);
     }
   }
   return (
@@ -86,6 +92,11 @@ const CredentialsImportPage: NextPageWithLayout = () => {
           </Button>
           {isErrorVisible && (
             <h4 className="mt-4 w-80 text-sm text-red-500">{errorMessage}</h4>
+          )}
+          {isDidErrorVisible && (
+            <h4 className="mt-4 w-80 text-sm text-red-500">
+              {didErrorMessage}
+            </h4>
           )}
         </div>
 
