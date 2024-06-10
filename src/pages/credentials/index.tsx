@@ -21,8 +21,8 @@ const CredentialsImportPage: NextPageWithLayout = () => {
 
   const [licciumDidKey, setLicciumDidKey] = useState<string | null>(null);
   const [licciumEmail, setLicciumEmail] = useState<string | null>(null);
-  const user = useUser();
-  const currentEmail = user.user?.emailAddresses[0].emailAddress;
+  const { user } = useUser();
+  const currentEmail = user?.emailAddresses[0].emailAddress;
   const errorMessage = `You've logged in with email ${currentEmail} to CreatorCredential App. Please login using the same email as at Liccium.app`;
   const didErrorMessage = `Check of did:key went wrong. Please try again.`;
   const {
@@ -31,25 +31,27 @@ const CredentialsImportPage: NextPageWithLayout = () => {
   } = useConnectLicciumDidKey();
 
   useEffect(() => {
-    const lister = (e: MessageEvent) => {
-      //eslint-disable-next-line
-      console.log(e);
-      if (e.data.type === 'liccium-did-provide') {
+    if (user) {
+      const lister = (e: MessageEvent) => {
         //eslint-disable-next-line
-        console.log('liccium-did provided: ', e.data.payload.didKey);
-        //eslint-disable-next-line
-        console.log('liccium-did provided: ', e.data.payload.eMail);
-        setLicciumDidKey(e.data.payload.didKey || null);
-        setLicciumEmail(e.data.payload.eMail || null);
-        //issue connect credentials if emails are the same
-      }
-    };
+        console.log(e);
+        if (e.data.type === 'liccium-did-provide') {
+          //eslint-disable-next-line
+          console.log('liccium-did provided: ', e.data.payload.didKey);
+          //eslint-disable-next-line
+          console.log('liccium-did provided: ', e.data.payload.eMail);
+          setLicciumDidKey(e.data.payload.didKey || null);
+          setLicciumEmail(e.data.payload.eMail || null);
+          //issue connect credentials if emails are the same
+        }
+      };
 
-    window.addEventListener('message', lister);
-    return () => {
-      window.removeEventListener('message', lister);
-    };
-  }, []); // no dependencies
+      window.addEventListener('message', lister);
+      return () => {
+        window.removeEventListener('message', lister);
+      };
+    }
+  }, [user]); // no dependencies
 
   const { refetch: refetchCreatorCredentials } = useCreatorCredentials();
   async function importCredentials() {
