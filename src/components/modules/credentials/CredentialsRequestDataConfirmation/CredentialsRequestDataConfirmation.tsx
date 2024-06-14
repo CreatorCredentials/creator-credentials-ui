@@ -8,16 +8,22 @@ import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
 import { SuccessfullCredentialRequestConfirmationCard } from '@/components/shared/SuccessfullCredentialRequestConfirmationCard';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
+import { useToast } from '@/shared/hooks/useToast';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
 export const CredentialsRequestDataConfirmation = () => {
   const { t } = useTranslation('creator-credentials-request');
+  const toast = useToast();
   const {
     mutateAsync: sendCredentialsRequest,
     isSuccess: successfullyRequestedCredentials,
     isLoading: isRequestingCredentials,
-  } = useSendCredentialsRequest();
+  } = useSendCredentialsRequest({
+    onError: () => {
+      toast.error(t('steps.confirm-data.card.request-failed'));
+    },
+  });
 
   const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
 
