@@ -30,7 +30,7 @@
       },
       "connect": {
         "title": "Connect",
-        "description": "This credential attests that you are owner of liccium account with corresponding did:key",
+        "description": "This credential attests that you are owner of Liccium app account with corresponding did:key",
         "requirements": "Info about requirements"
       }
     }
