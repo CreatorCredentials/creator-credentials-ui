@@ -6,6 +6,10 @@ export const truncateEmailAddress = (emailAddress: string) => {
   return truncateString(emailAddress, 10, 10);
 };
 
+export const truncateDomain = (domain: string) => {
+  return truncateString(domain, 10, 10);
+};
+
 function truncateString(
   string: string,
   keepAtHead: number,
