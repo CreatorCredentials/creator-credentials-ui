@@ -76,7 +76,7 @@ export const LoginPageContainer = ({
         className={hideHeader ? 'mt-[2rem]' : ''}
       >
         <SignIn
-          redirectUrl={userRole === UserRole.Creator ? 'creator' : 'issuer'}
+          redirectUrl={userRole === UserRole.Creator ? '/creator' : '/issuer'}
           signUpUrl={`auth/signup/${
             userRole === UserRole.Creator ? 'creator' : 'issuer'
           }`}

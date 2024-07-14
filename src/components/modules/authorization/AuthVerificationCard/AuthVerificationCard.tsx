@@ -33,6 +33,7 @@ export const AuthVerificationCard = ({
         <SignUp
           redirectUrl={'/issuer'}
           signInUrl={'auth/login/issuer'}
+          afterSignUpUrl={'/issuer'}
           initialValues={{ emailAddress: signUpEmail }}
         />
         {/* <Button
