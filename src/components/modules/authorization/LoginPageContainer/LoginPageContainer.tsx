@@ -80,6 +80,9 @@ export const LoginPageContainer = ({
           signUpUrl={`auth/signup/${
             userRole === UserRole.Creator ? 'creator' : 'issuer'
           }`}
+          afterSignUpUrl={
+            userRole === UserRole.Creator ? '/creator' : '/issuer'
+          }
         />
       </BaseAuthFormCard>
       {/* {emailSent ? (
