@@ -32,7 +32,7 @@ export const AuthVerificationCard = ({
       <div className="flex flex-col gap-4">
         <SignUp
           redirectUrl={'/issuer'}
-          signInUrl={'auth/login/issuer'}
+          signInUrl={'/auth/login/issuer'}
           afterSignUpUrl={'/issuer'}
           initialValues={{ emailAddress: signUpEmail }}
         />
