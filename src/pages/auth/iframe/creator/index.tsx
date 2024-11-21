@@ -9,7 +9,7 @@ const CreatorLoginPage: NextPageWithLayout = () => (
   <div className="mt-1 flex flex-row items-center">
     <SignIn
       redirectUrl={'/creator'}
-      signUpUrl={`auth/signup/creator`}
+      signUpUrl={`/auth/signup/creator`}
       afterSignUpUrl={'/creator'}
     />
   </div>

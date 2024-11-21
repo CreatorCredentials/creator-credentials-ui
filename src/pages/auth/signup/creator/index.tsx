@@ -74,7 +74,7 @@ const CreatorSignupPage: NextPageWithLayout = () => {
       >
         <SignUp
           redirectUrl={'/creator'}
-          signInUrl={'auth/login/creator'}
+          signInUrl={'/auth/login/creator'}
           afterSignUpUrl={'/creator'}
         />
       </BaseAuthFormCard>
