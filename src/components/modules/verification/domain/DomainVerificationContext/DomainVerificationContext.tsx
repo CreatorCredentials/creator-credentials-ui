@@ -2,10 +2,12 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { UserRole } from '@/shared/typings/UserRole';
+import { useGetUser } from '@/api/queries/useGetUser';
 import {
   DomainVerificationContextType,
   DomainVerificationStep,
@@ -23,10 +25,24 @@ export const DomainVerificationContextProvider = ({
   children,
   userRole,
 }: IssuerSignupContextProviderProps) => {
-  const [currentStep, setCurrentStep] =
-    useState<DomainVerificationStep>('domain');
-  const [currentTxtRecord, setCurrentTxtRecord] = useState<string>('');
-  const [domainAddress, setDomainAddress] = useState<string>('');
+  const { data: user } = useGetUser();
+  const [currentStep, setCurrentStep] = useState<DomainVerificationStep>(
+    user?.domainPendingVerifcation ? 'verification' : 'domain',
+  );
+
+  const [currentTxtRecord, setCurrentTxtRecord] = useState<string>(
+    user?.domainPendingVerifcation ? user.domainRecord : '',
+  );
+  const [domainAddress, setDomainAddress] = useState<string>(
+    user?.domainPendingVerifcation ? user.domain : '',
+  );
+  useEffect(() => {
+    setCurrentStep(user?.domainPendingVerifcation ? 'verification' : 'domain');
+    setCurrentTxtRecord(
+      user?.domainPendingVerifcation ? user.domainRecord : '',
+    );
+    setDomainAddress(user?.domainPendingVerifcation ? user.domain : '');
+  }, [user]);
 
   const setTxtRecord = useCallback((txtRecord: string) => {
     setCurrentTxtRecord(txtRecord);
