@@ -4,7 +4,6 @@ import { useTranslation } from '@/shared/utils/useTranslation';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { useToast } from '@/shared/hooks/useToast';
 import { useCreateTxtRecordForDomain } from '@/api/mutations/useCreateTxtRecordForDomain';
-import { useGetUser } from '@/api/queries/useGetUser';
 import { DomainVerificationEnterDomainForm } from '../DomainVerificationEnterDomainForm';
 import { DomainVerificationEnterDomainFormContextType } from '../DomainVerificationEnterDomainForm/DomainVerificationEnterDomainFormContextType';
 import { domainVerificationEnterDomainDefaultValues } from '../DomainVerificationEnterDomainForm/DomainVerificationEnterDomainFormDefaultValues';
@@ -13,16 +12,20 @@ import { useDomainVerificationContext } from '../DomainVerificationContext';
 
 export const DomainVerificationEnterDomainCard = () => {
   const { t } = useTranslation('domain-verification');
-  const { currentStep, setTxtRecord, setCurrentStep, setDomainAddress } =
-    useDomainVerificationContext();
+  const {
+    currentStep,
+    setTxtRecord,
+    setCurrentStep,
+    setDomainAddress,
+    domainAddress,
+  } = useDomainVerificationContext();
   const toast = useToast();
-  const { data: user } = useGetUser();
 
   const form = useForm<DomainVerificationEnterDomainFormContextType>({
     resolver: joiResolver(DomainVerificationEnterDomainFormSchema),
-    defaultValues: user?.domainPendingVerifcation
+    defaultValues: domainAddress
       ? {
-          domain: user.domain,
+          domain: domainAddress,
         }
       : domainVerificationEnterDomainDefaultValues,
     mode: 'onBlur',
