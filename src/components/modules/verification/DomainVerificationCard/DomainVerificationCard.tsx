@@ -48,10 +48,20 @@ export const DomainVerificationCard = ({
         );
       case CredentialVerificationStatus.Pending:
         return (
-          <ColoredBadge
-            badgeType="pending"
-            className="self-center"
-          />
+          <>
+            <ColoredBadge
+              badgeType="pending"
+              className="self-center"
+            />
+            <Button
+              color="primary"
+              fullSized
+              href={`/${userRole.toLowerCase()}/verification/domain`}
+              as={Link as ElementType}
+            >
+              {t('domain.buttons.show-details')}
+            </Button>
+          </>
         );
       default:
         return (

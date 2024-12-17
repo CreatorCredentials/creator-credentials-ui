@@ -13,6 +13,10 @@ export type User = {
   publicAddress: string;
   createdAt: Date;
   updatedAt: Date;
+  domainPendingVerifcation: boolean;
+  domainRecord: string;
+  domain: string;
+  domainRecordChangedAt: Date;
 };
 
 export type GetUserResponse = User;
