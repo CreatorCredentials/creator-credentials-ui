@@ -9,6 +9,8 @@ import { SuccessfullCredentialRequestConfirmationCard } from '@/components/share
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
+import { useGetUser } from '@/api/queries/useGetUser';
+import { useUpdateActiveDidKeySource } from '@/api/mutations/useUpdateActiveDidKeySource';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -26,6 +28,8 @@ export const CredentialsRequestDataConfirmation = () => {
   });
 
   const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
+  const { data: user } = useGetUser();
+  const { mutateAsync: updateActiveSource } = useUpdateActiveDidKeySource();
 
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
@@ -34,6 +38,10 @@ export const CredentialsRequestDataConfirmation = () => {
       templates: templates.selectedItems,
       issuerId: selectedIssuer.id,
     });
+  };
+
+  const handleDidSourceChange = async (source: 'platform' | 'external') => {
+    await updateActiveSource(source);
   };
 
   if (successfullyRequestedCredentials) {
@@ -80,6 +88,47 @@ export const CredentialsRequestDataConfirmation = () => {
             {/* </div> */}
           </div>
         </div>
+        {user?.externalDidKey && (
+          <div className="mt-6 border-t pt-4">
+            <h3 className="mb-3 text-base font-medium">
+              DID:key to use for this credential
+            </h3>
+            <div className="flex flex-col gap-2">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="radio"
+                  name="didKeySource"
+                  value="platform"
+                  checked={user.activeDidKeySource === 'platform'}
+                  onChange={() => handleDidSourceChange('platform')}
+                  className="mt-1"
+                />
+                <div>
+                  <p className="text-sm font-medium">Platform DID:key</p>
+                  <p className="break-all font-mono text-xs text-gray-500">
+                    {user.activeDidKeySource === 'platform' ? '(active)' : ''}
+                  </p>
+                </div>
+              </label>
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="radio"
+                  name="didKeySource"
+                  value="external"
+                  checked={user.activeDidKeySource === 'external'}
+                  onChange={() => handleDidSourceChange('external')}
+                  className="mt-1"
+                />
+                <div>
+                  <p className="text-sm font-medium">Your External DID:key</p>
+                  <p className="break-all font-mono text-xs text-gray-500">
+                    {user.externalDidKey}
+                  </p>
+                </div>
+              </label>
+            </div>
+          </div>
+        )}
         {/* <h4 className="mb-4 mt-14 text-base">
           {t('steps.confirm-data.card.confirm')}
         </h4> */}

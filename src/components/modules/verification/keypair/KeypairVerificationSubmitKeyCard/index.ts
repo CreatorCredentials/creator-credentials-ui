@@ -1,0 +1,1 @@
+export { KeypairVerificationSubmitKeyCard } from './KeypairVerificationSubmitKeyCard';

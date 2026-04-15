@@ -17,6 +17,9 @@ export type User = {
   domainRecord: string;
   domain: string;
   domainRecordChangedAt: Date;
+  externalDidKey: string | null;
+  externalPublicKeyPem: string | null;
+  activeDidKeySource: 'platform' | 'external';
 };
 
 export type GetUserResponse = User;
