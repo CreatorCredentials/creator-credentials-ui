@@ -1,11 +1,19 @@
-const readEnv = (key: string, fallback: string) => process.env[key] || fallback;
+const readRequiredEnv = (key: string) => {
+  const value = process.env[key];
+
+  if (!value) {
+    throw new Error(`[config] Missing required environment variable: ${key}`);
+  }
+
+  return value;
+};
 
 export const config = {
-  API_URL: readEnv('API_URL', 'http://localhost:3001/api'),
-  API_MOCKING: readEnv('API_MOCKING', 'disabled'),
+  API_URL: readRequiredEnv('API_URL'),
+  API_MOCKING: process.env.API_MOCKING || 'disabled',
   TERMS_AND_CONDITIONS_URL: 'https://creatorcredentials.com',
-  NEST_API_URL: readEnv('NEST_API_URL', 'https://localhost:3200'),
-  NEST_API_SSR_URL: readEnv('NEST_API_SSR_URL', 'https://localhost:3200'),
-  NEXTAUTH_URL: readEnv('NEXTAUTH_URL', 'http://localhost:3000'),
+  NEST_API_URL: readRequiredEnv('NEST_API_URL'),
+  NEST_API_SSR_URL: readRequiredEnv('NEST_API_SSR_URL'),
+  NEXTAUTH_URL: readRequiredEnv('NEXTAUTH_URL'),
   DISABLE_I18N_TRANSLATIONS: process.env.DISABLE_I18N_TRANSLATIONS === 'true',
 };
