@@ -2,7 +2,7 @@ import 'globals.css';
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Flowbite } from 'flowbite-react';
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation } from 'next-i18next/pages';
 import { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 import { useState } from 'react';

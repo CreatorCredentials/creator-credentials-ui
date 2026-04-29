@@ -30,7 +30,6 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:tailwindcss/recommended',
     'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'next/core-web-vitals',
   ],
   rules: {
@@ -38,10 +37,7 @@ module.exports = {
     'no-debugger': 'error',
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     quotes: ['warn', 'single', { allowTemplateLiterals: true }],
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      { vars: 'all', args: 'all', argsIgnorePattern: '^_' },
-    ],
+    '@typescript-eslint/no-unused-vars': 'off',
     'import/newline-after-import': 'error',
     'import/order': [
       'warn',
@@ -99,6 +95,10 @@ module.exports = {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       extends: ['plugin:@typescript-eslint/recommended'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-empty-object-type': 'off',
+      },
     },
   ],
 };

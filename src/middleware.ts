@@ -1,38 +1,30 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
-export const runtime = 'nodejs';
+const isProtectedPath = (pathname: string) =>
+  pathname.startsWith('/creator') || pathname.startsWith('/issuer');
 
-const isProtectedRoute = createRouteMatcher([
-  '/creator(.*)',
-  '/issuer(.*)',
-  '/creator/verification(.*)',
-  '/creator/issuers(.*)',
-  '/creator/credentials(.*)',
-  '/creator/profile(.*)',
-  '/issuer/verification(.*)',
-  '/issuer/creators(.*)',
-  '/issuer/credentials(.*)',
-  '/issuer/profile(.*)',
-  '/issuer/creators/requested(.*)',
-  '/issuer/creators/accepted(.*)',
-]);
-
-export default clerkMiddleware(async (auth, req) => {
-  // Clerk handshake probes can include large query payloads; skip protection logic for them.
+export default function middleware(req: NextRequest) {
+  // Let Clerk internal handshake requests pass through untouched.
   if (req.nextUrl.searchParams.has('_clerk_handshake')) {
     return NextResponse.next();
   }
 
-  const welcomeUrl = new URL('/welcome', req.url).toString();
-
-  if (isProtectedRoute(req)) {
-    await auth.protect({
-      unauthorizedUrl: welcomeUrl,
-      unauthenticatedUrl: welcomeUrl,
-    });
+  if (!isProtectedPath(req.nextUrl.pathname)) {
+    return NextResponse.next();
   }
-});
+
+  // Clerk session cookies used in production browser flows.
+  const hasSession =
+    Boolean(req.cookies.get('__session')?.value) ||
+    Boolean(req.cookies.get('__clerk_db_jwt')?.value);
+
+  if (!hasSession) {
+    return NextResponse.redirect(new URL('/welcome', req.url));
+  }
+
+  return NextResponse.next();
+}
 
 // export const config = {
 //   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],

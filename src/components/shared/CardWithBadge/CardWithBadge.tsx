@@ -54,14 +54,15 @@ type CardWithBadgeProps = {
   dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
-const defaultDropdownItems = [] || [
-  {
-    children: 'Dropdown-item-1',
-  },
-  {
-    children: 'Dropdown-item-2',
-  },
-];
+const defaultDropdownItems: DropdownItemProps<ElementType>[] = [];
+// || [
+//   {
+//     children: 'Dropdown-item-1',
+//   },
+//   {
+//     children: 'Dropdown-item-2',
+//   },
+// ];
 export const CardWithBadge = ({
   badgeType,
   additionalBadgeType,

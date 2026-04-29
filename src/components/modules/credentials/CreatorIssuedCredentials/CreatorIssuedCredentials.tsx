@@ -60,14 +60,14 @@ export const CreatorIssuedCredentials = ({
                   credential.type === CredentialType.Domain
                     ? credential.data.domain
                     : credential.type === CredentialType.Email
-                    ? credential.data.address
-                    : credential.type === CredentialType.Wallet
-                    ? credential.data.address
-                    : credential.type === CredentialType.DidWeb
-                    ? credential.data.domain
-                    : credential.type === CredentialType.Member
-                    ? credential.data.companyName
-                    : undefined;
+                      ? credential.data.address
+                      : credential.type === CredentialType.Wallet
+                        ? credential.data.address
+                        : credential.type === CredentialType.DidWeb
+                          ? credential.data.domain
+                          : credential.type === CredentialType.Member
+                            ? credential.data.companyName
+                            : undefined;
                 downloadJson(
                   `${name} ${credential.data.credentialObject.validFrom}`,
                   credential.data.credentialObject,

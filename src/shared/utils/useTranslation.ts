@@ -1,4 +1,4 @@
-import { useTranslation as i18nUseTranslation } from 'next-i18next';
+import { useTranslation as i18nUseTranslation } from 'next-i18next/pages';
 import * as cards from '@/public/locales/en/cards.json';
 import * as common from '@/public/locales/en/common.json';
 import * as creatorCredentialsRequest from '@/public/locales/en/creator-credentials-request.json';

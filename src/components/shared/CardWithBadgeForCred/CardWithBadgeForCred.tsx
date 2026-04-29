@@ -1,11 +1,11 @@
 import { Card, Dropdown, DropdownItemProps } from 'flowbite-react';
 import { ElementType, ReactNode } from 'react';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { ColoredBadge } from '../ColoredBadge';
 import { Icon, IconName } from '../Icon';
 import { IconButton } from '../IconButton';
@@ -67,7 +67,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.DidWeb]: 'Web',
 };
 
-const defaultDropdownItems = [] || [
+const defaultDropdownItems: DropdownItemProps<ElementType>[] = [
   {
     children: 'Dropdown-item-1',
   },
