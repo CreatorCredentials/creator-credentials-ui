@@ -22,8 +22,9 @@ export const CertVerificationSubmitCertCard = () => {
   const { mutateAsync: initiate, isLoading: isInitiating } =
     useInitiateCertChallenge({ onSuccess: invalidate });
 
-  const { mutateAsync: submitCert, isLoading: isSubmitting } =
-    useSubmitCertPem({ onSuccess: invalidate });
+  const { mutateAsync: submitCert, isLoading: isSubmitting } = useSubmitCertPem(
+    { onSuccess: invalidate },
+  );
 
   const handleSubmit = async () => {
     if (!certPem.trim()) return;

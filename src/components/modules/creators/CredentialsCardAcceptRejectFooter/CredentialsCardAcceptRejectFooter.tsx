@@ -34,12 +34,13 @@ export const CredentialsCardAcceptRejectFooter = ({
   const [isAcceptModalOpen, setIsAcceptModalOpen] = React.useState(false);
   const [commands, setCommands] = React.useState<string[]>([]);
   const [signingInput, setSigningInput] = React.useState('');
-  const [privateKeyFilename, setPrivateKeyFilename] =
-    React.useState('your_private_key.pem');
-  const [signature, setSignature] = React.useState('');
-  const [verificationError, setVerificationError] = React.useState<string | null>(
-    null,
+  const [privateKeyFilename, setPrivateKeyFilename] = React.useState(
+    'your_private_key.pem',
   );
+  const [signature, setSignature] = React.useState('');
+  const [verificationError, setVerificationError] = React.useState<
+    string | null
+  >(null);
 
   const { mutateAsync: acceptAsync, isLoading: isAccepting } =
     useAcceptCredentialsIssuanceRequest({
@@ -60,15 +61,17 @@ export const CredentialsCardAcceptRejectFooter = ({
         ]);
       },
     });
-  const { mutateAsync: verifyAcceptSignatureAsync, isLoading: isVerifyingAccept } =
-    useVerifyAcceptedCredentialSignature({
-      onSuccess: () => {
-        queryClient.invalidateQueries([
-          QueryKeys.issuersCredentials,
-          { status: CredentialVerificationStatus.Pending },
-        ]);
-      },
-    });
+  const {
+    mutateAsync: verifyAcceptSignatureAsync,
+    isLoading: isVerifyingAccept,
+  } = useVerifyAcceptedCredentialSignature({
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        QueryKeys.issuersCredentials,
+        { status: CredentialVerificationStatus.Pending },
+      ]);
+    },
+  });
 
   const acceptButtonHandler = async () => {
     try {
@@ -179,8 +182,8 @@ export const CredentialsCardAcceptRejectFooter = ({
                     </div>
                     <CopyCommandBlock command={commandWithFile} />
                     <p className="text-xs text-gray-500">
-                      Tip: RSA signatures are usually long (300+ chars in base64),
-                      while ECDSA signatures are shorter.
+                      Tip: RSA signatures are usually long (300+ chars in
+                      base64), while ECDSA signatures are shorter.
                     </p>
                   </div>
                 )}

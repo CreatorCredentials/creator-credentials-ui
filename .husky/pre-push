@@ -1,4 +1,26 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm pre-push
+# GitHub Desktop runs hooks with a very limited PATH.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/Library/pnpm:$PATH"
+
+# Add common Node manager bin folders without sourcing shells (safe under `sh -e`).
+[ -d "$HOME/.volta/bin" ] && export PATH="$HOME/.volta/bin:$PATH"
+[ -d "$HOME/.asdf/shims" ] && export PATH="$HOME/.asdf/shims:$PATH"
+
+# Add installed nvm Node bin folders.
+if [ -d "$HOME/.nvm/versions/node" ]; then
+  for dir in "$HOME"/.nvm/versions/node/*/bin; do
+    [ -d "$dir" ] && export PATH="$dir:$PATH"
+  done
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm pre-push
+elif command -v npm >/dev/null 2>&1; then
+  npm run pre-push
+else
+  echo "pre-push: neither pnpm nor npm found in PATH=$PATH"
+  exit 127
+fi

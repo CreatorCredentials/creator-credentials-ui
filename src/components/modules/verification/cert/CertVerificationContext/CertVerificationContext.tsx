@@ -67,7 +67,8 @@ export const CertVerificationContextProvider = ({
       currentStep,
       commands,
       externalCertPem: statusData?.externalCertPem ?? null,
-      activeSigningCertSource: statusData?.activeSigningCertSource ?? 'platform',
+      activeSigningCertSource:
+        statusData?.activeSigningCertSource ?? 'platform',
       isLoading,
       setCurrentStep,
       setCommands: handleSetCommands,

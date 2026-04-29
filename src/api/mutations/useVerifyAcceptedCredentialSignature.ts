@@ -8,7 +8,11 @@ import {
 
 export const useVerifyAcceptedCredentialSignature = (
   options?: Omit<
-    UseMutationOptions<never, AxiosError, VerifyAcceptedCredentialSignaturePayload>,
+    UseMutationOptions<
+      never,
+      AxiosError,
+      VerifyAcceptedCredentialSignaturePayload
+    >,
     'mutationFn'
   >,
 ) => {
@@ -18,7 +22,9 @@ export const useVerifyAcceptedCredentialSignature = (
     mutationFn: async (payload: VerifyAcceptedCredentialSignaturePayload) => {
       const token = await auth.getToken();
       if (!token) {
-        throw new Error('Unauthorised useVerifyAcceptedCredentialSignature call');
+        throw new Error(
+          'Unauthorised useVerifyAcceptedCredentialSignature call',
+        );
       }
       return verifyAcceptedCredentialSignature(payload, token).then(
         (res) => res.data,

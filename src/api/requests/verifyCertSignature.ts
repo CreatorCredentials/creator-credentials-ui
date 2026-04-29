@@ -8,8 +8,7 @@ export type VerifyCertSignatureResponse = {
 };
 
 export const verifyCertSignature = (token: string, signature: string) =>
-  axios.post<VerifyCertSignaturePayload, AxiosResponse<VerifyCertSignatureResponse>>(
-    '/v1/cert-challenge/verify-signature',
-    { signature },
-    getHeaders(token),
-  );
+  axios.post<
+    VerifyCertSignaturePayload,
+    AxiosResponse<VerifyCertSignatureResponse>
+  >('/v1/cert-challenge/verify-signature', { signature }, getHeaders(token));
