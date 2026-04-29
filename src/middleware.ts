@@ -1,7 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-import { config as configConstants } from '@/shared/constants/config';
-
 const isProtectedRoute = createRouteMatcher([
   '/creator(.*)',
   '/issuer(.*)',
@@ -18,10 +16,12 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, req) => {
+  const welcomeUrl = new URL('/welcome', req.url).toString();
+
   if (isProtectedRoute(req))
     auth.protect({
       unauthorizedUrl: '/welcome',
-      unauthenticatedUrl: configConstants.NEXTAUTH_URL + '/welcome',
+      unauthenticatedUrl: welcomeUrl,
     });
 });
 
