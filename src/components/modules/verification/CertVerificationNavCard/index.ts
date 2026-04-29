@@ -1,0 +1,1 @@
+export { CertVerificationNavCard } from './CertVerificationNavCard';

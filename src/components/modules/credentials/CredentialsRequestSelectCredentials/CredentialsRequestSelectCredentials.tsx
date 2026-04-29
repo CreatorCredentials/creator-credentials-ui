@@ -9,8 +9,15 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useCreatorsRequestableTemplates } from '@/api/queries/useCreatorsRequestableTemplates';
+import { CredentialTemplateType } from '@/shared/typings/CredentialTemplateType';
+import { VerifiedCredentialsTemplate } from '@/shared/typings/Templates';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
+
+const EXTERNAL_KEYPAIR_TEMPLATE: Omit<VerifiedCredentialsTemplate, 'id'> = {
+  templateType: CredentialTemplateType.ExternalKeypair,
+  name: 'External DID:key Credential',
+};
 
 export const CredentialsRequestSelectCredentials = () => {
   const { t } = useTranslation('creator-credentials-request');
@@ -28,14 +35,14 @@ export const CredentialsRequestSelectCredentials = () => {
     if (isLoading) {
       return <Loader />;
     }
-    const templatesToRender = data.templates;
+    const templatesToRender = [...data.templates, EXTERNAL_KEYPAIR_TEMPLATE];
 
     return (
       <div className="mt-8">
         <div className="grid grid-cols-3 gap-4">
           {templatesToRender.map((template) => (
             <CredentialTemplateDetailsCard
-              key={template.id}
+              key={template.templateType}
               dropdownItems={[]}
               template={template}
               renderFooter={() => {

@@ -10,7 +10,9 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
 import { useGetUser } from '@/api/queries/useGetUser';
-import { useUpdateActiveDidKeySource } from '@/api/mutations/useUpdateActiveDidKeySource';
+import { KEYPAIR_REQUIRED_TEMPLATE_TYPES } from '@/shared/typings/CredentialTemplateType';
+import { KeypairVerificationContextProvider } from '@/components/modules/verification/keypair/KeypairVerificationContext';
+import { KeypairVerificationFormWrapper } from '@/components/modules/verification/keypair/KeypairVerificationFormWrapper';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -29,7 +31,11 @@ export const CredentialsRequestDataConfirmation = () => {
 
   const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
   const { data: user } = useGetUser();
-  const { mutateAsync: updateActiveSource } = useUpdateActiveDidKeySource();
+
+  const needsKeypairChallenge =
+    templates.selectedItems.some((tmpl) =>
+      KEYPAIR_REQUIRED_TEMPLATE_TYPES.includes(tmpl.templateType),
+    ) && !user?.externalDidKey;
 
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
@@ -40,12 +46,35 @@ export const CredentialsRequestDataConfirmation = () => {
     });
   };
 
-  const handleDidSourceChange = async (source: 'platform' | 'external') => {
-    await updateActiveSource(source);
-  };
-
   if (successfullyRequestedCredentials) {
     return <SuccessfullCredentialRequestConfirmationCard />;
+  }
+
+  if (needsKeypairChallenge) {
+    return (
+      <>
+        <PageHeader
+          title={t('header.title')}
+          subtitle="Complete keypair verification to continue with your credential request."
+          closeButtonHref="/creator/credentials"
+        />
+        <div className="flex justify-center">
+          <CredentialsRequestStepper activeStep={stepper.activeStep} />
+        </div>
+        <div className="mt-8 rounded-lg border border-blue-200 bg-blue-50 p-4">
+          <p className="mb-4 text-sm font-medium text-blue-800">
+            The credential type you selected requires you to verify your own
+            cryptographic keypair. Complete the steps below to continue.
+          </p>
+          <KeypairVerificationContextProvider>
+            <KeypairVerificationFormWrapper />
+          </KeypairVerificationContextProvider>
+        </div>
+        <FormFooter>
+          <FormFooter.BackButton onClick={stepper.prevStep} />
+        </FormFooter>
+      </>
+    );
   }
 
   return (
@@ -64,7 +93,6 @@ export const CredentialsRequestDataConfirmation = () => {
             <h3 className="mb-4 text-xl">
               {t('steps.confirm-data.card.credential')}
             </h3>
-            {/* <div className="grid grid-cols-2 gap-4"> */}
             {templates.selectedItems.map((template) => (
               <CredentialTemplateDetailsCard
                 dropdownItems={[]}
@@ -72,66 +100,18 @@ export const CredentialsRequestDataConfirmation = () => {
                 template={template}
               />
             ))}
-            {/* </div> */}
           </div>
           <div></div>
           <div>
             <h3 className="mb-4 text-xl">
-              {/* mt-14*/}
               {t('steps.confirm-data.card.issuer')}
             </h3>
-            {/* <div className="grid grid-cols-2 gap-4"> */}
             <IssuerDetailsCard
               issuer={selectedIssuer!}
               renderFooter={null}
             />
-            {/* </div> */}
           </div>
         </div>
-        {user?.externalDidKey && (
-          <div className="mt-6 border-t pt-4">
-            <h3 className="mb-3 text-base font-medium">
-              DID:key to use for this credential
-            </h3>
-            <div className="flex flex-col gap-2">
-              <label className="flex cursor-pointer items-start gap-3">
-                <input
-                  type="radio"
-                  name="didKeySource"
-                  value="platform"
-                  checked={user.activeDidKeySource === 'platform'}
-                  onChange={() => handleDidSourceChange('platform')}
-                  className="mt-1"
-                />
-                <div>
-                  <p className="text-sm font-medium">Platform DID:key</p>
-                  <p className="break-all font-mono text-xs text-gray-500">
-                    {user.activeDidKeySource === 'platform' ? '(active)' : ''}
-                  </p>
-                </div>
-              </label>
-              <label className="flex cursor-pointer items-start gap-3">
-                <input
-                  type="radio"
-                  name="didKeySource"
-                  value="external"
-                  checked={user.activeDidKeySource === 'external'}
-                  onChange={() => handleDidSourceChange('external')}
-                  className="mt-1"
-                />
-                <div>
-                  <p className="text-sm font-medium">Your External DID:key</p>
-                  <p className="break-all font-mono text-xs text-gray-500">
-                    {user.externalDidKey}
-                  </p>
-                </div>
-              </label>
-            </div>
-          </div>
-        )}
-        {/* <h4 className="mb-4 mt-14 text-base">
-          {t('steps.confirm-data.card.confirm')}
-        </h4> */}
       </Card>
       <FormFooter>
         <FormFooter.BackButton onClick={stepper.prevStep} />

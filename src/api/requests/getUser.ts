@@ -20,6 +20,8 @@ export type User = {
   externalDidKey: string | null;
   externalPublicKeyPem: string | null;
   activeDidKeySource: 'platform' | 'external';
+  externalCertPem: string | null;
+  activeSigningCertSource: 'platform' | 'external';
 };
 
 export type GetUserResponse = User;

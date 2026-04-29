@@ -19,7 +19,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> =>
 
 const nestInstance = axiosStatic.create({
   baseURL: config.NEST_API_SSR_URL,
-  httpAgent: new https.Agent({
+  httpsAgent: new https.Agent({
     rejectUnauthorized: false,
   }),
 });

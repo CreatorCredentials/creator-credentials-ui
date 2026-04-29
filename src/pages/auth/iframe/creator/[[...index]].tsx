@@ -8,9 +8,8 @@ import { NoLogoBlankLayout } from '@/components/layouts/NoLogoblankLayout/NoLogo
 const CreatorLoginPage: NextPageWithLayout = () => (
   <div className="mt-1 flex flex-row items-center">
     <SignIn
-      redirectUrl={'/creator'}
+      forceRedirectUrl={'/creator'}
       signUpUrl={`/auth/signup/creator`}
-      afterSignUpUrl={'/creator'}
     />
   </div>
 );

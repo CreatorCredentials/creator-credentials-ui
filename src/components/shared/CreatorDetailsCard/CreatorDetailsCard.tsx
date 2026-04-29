@@ -3,10 +3,7 @@ import Link from 'next/link';
 import { DropdownItemProps, Tooltip } from 'flowbite-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Creator } from '@/shared/typings/Creator';
-import {
-  truncateEmailAddress,
-  truncateWalletAddress,
-} from '@/shared/utils/truncateWalletAddress';
+import { truncateEmailAddress } from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { useRevokeCreatorConnectionRequest } from '@/api/mutations/useRevokeCreatorConnectionRequest';
@@ -34,17 +31,6 @@ export const CreatorDetailsCard = ({
   const { imageUrl, title, credentials } = creator;
   const { copy } = useCopyToClipboard();
   const queryClient = useQueryClient();
-
-  const walletAddress = credentials.walletAddress;
-  const truncatedWalletAddress = walletAddress
-    ? truncateWalletAddress(walletAddress)
-    : null;
-
-  const walletAddressClickHandler = () => {
-    if (walletAddress) {
-      copy(walletAddress);
-    }
-  };
 
   const emailAddress = credentials.email;
 
@@ -103,17 +89,6 @@ export const CreatorDetailsCard = ({
                 onClick={emailAddressClickHandler}
               >
                 {truncatedEmailAddress}
-              </CardWithBadge.ContentWithIcon>
-            </Tooltip>
-          ) : null}
-          {walletAddress ? (
-            <Tooltip content={walletAddress}>
-              <CardWithBadge.ContentWithIcon
-                iconName="AccountBalanceWallet"
-                className="whitespace-pre-wrap"
-                onClick={walletAddressClickHandler}
-              >
-                {truncatedWalletAddress}
               </CardWithBadge.ContentWithIcon>
             </Tooltip>
           ) : null}

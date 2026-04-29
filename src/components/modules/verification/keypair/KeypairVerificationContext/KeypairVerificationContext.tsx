@@ -45,8 +45,11 @@ export const KeypairVerificationContextProvider = ({
       return;
     }
 
-    if (challenge.status === 'verified') {
+    if (challenge.status === 'verified' && externalDidKey) {
       setCurrentStep('completed');
+    } else if (challenge.status === 'verified' && !externalDidKey) {
+      // key was removed after verification — treat as fresh start
+      setCurrentStep('generate');
     } else if (challenge.status === 'challenge_issued') {
       setCurrentStep('verify-signature');
       if (challenge.challengeMessage) {

@@ -1,35 +1,39 @@
-import { authMiddleware } from '@clerk/nextjs';
-import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export default authMiddleware({
-  publicRoutes: ['/welcome', '/api/auth/_log'],
-  ignoredRoutes: [
-    '/welcome',
-    '/auth/iframe/creator',
-    '/auth/login/issuer',
-    '/auth/login/creator',
-    '/auth/signup/issuer',
-    '/auth/signup/creator',
-    'api/signup/creator',
-    'api/signup/issuer',
-  ],
-  afterAuth(auth) {
-    // Handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
-      // return redirectToSignIn({ returnBackUrl: 'localhost:3105/welcome' }); //TODO add env var of server here
-      return NextResponse.next();
-    }
+import { config as configConstants } from '@/shared/constants/config';
 
-    // If the user is logged in and trying to access a protected route, allow them to access route
-    if (auth.userId && !auth.isPublicRoute) {
-      return NextResponse.next();
-    }
+const isProtectedRoute = createRouteMatcher([
+  '/creator(.*)',
+  '/issuer(.*)',
+  '/creator/verification(.*)',
+  '/creator/issuers(.*)',
+  '/creator/credentials(.*)',
+  '/creator/profile(.*)',
+  '/issuer/verification(.*)',
+  '/issuer/creators(.*)',
+  '/issuer/credentials(.*)',
+  '/issuer/profile(.*)',
+  '/issuer/creators/requested(.*)',
+  '/issuer/creators/accepted(.*)',
+]);
 
-    // Allow users visiting public routes to access them
-    return NextResponse.next();
-  },
+export default clerkMiddleware((auth, req) => {
+  if (isProtectedRoute(req))
+    auth.protect({
+      unauthorizedUrl: '/welcome',
+      unauthenticatedUrl: configConstants.NEXTAUTH_URL + '/welcome',
+    });
 });
 
+// export const config = {
+//   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+// };
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: [
+    // Run middleware for all app routes (except Next internals / static files)
+    '/((?!_next|.*\\..*).*)',
+    '/',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 };

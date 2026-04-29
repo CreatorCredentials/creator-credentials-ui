@@ -6,8 +6,6 @@ import { UserRole } from '@/shared/typings/UserRole';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { DomainVerificationCard } from '../DomainVerificationCard';
 import { EmailVerificationCard } from '../EmailVerificationCard';
-import { MetamaskVerificationCard } from '../MetamaskVerificationCard';
-import { KeypairVerificationNavCard } from '../KeypairVerificationNavCard';
 
 export const CreatorVerificationCards = () => {
   const { t } = useTranslation('creator-verification');
@@ -33,15 +31,11 @@ export const CreatorVerificationCards = () => {
       <EmailVerificationCard
         email={verifiableCredentials?.email.data.address}
       />
-      <MetamaskVerificationCard
-        walletAddress={verifiableCredentials?.wallet?.data.address}
-      />
       <DomainVerificationCard
         value={verifiableCredentials?.domain?.data.domain}
         status={verifiableCredentials?.domain?.status}
         userRole={UserRole.Creator}
       />
-      <KeypairVerificationNavCard userRole={UserRole.Creator} />
     </section>
   );
 };

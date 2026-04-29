@@ -40,7 +40,11 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <ClerkProvider {...pageProps}>
+      <ClerkProvider
+        {...pageProps}
+        signInUrl="/welcome"
+        signUpUrl="/welcome"
+      >
         <AppMetadata />
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>

@@ -36,12 +36,6 @@ export const CreatorCredentialVisibilityForm = ({
         disabled={isLoading}
       />
       <FormCheckbox
-        label={t('privacy.credential-visibility.fields.wallet')}
-        name="wallet"
-        control={control}
-        disabled={isLoading}
-      />
-      <FormCheckbox
         label={t('privacy.credential-visibility.fields.domain')}
         name="domain"
         control={control}

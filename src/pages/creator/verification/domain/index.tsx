@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { DomainVerificationContextProvider } from '@/components/modules/verification/domain/DomainVerificationContext';
 import { DomainVerificationFormWrapper } from '@/components/modules/verification/domain/DomainVerificationFormWrapper';
 import { PageHeader } from '@/components/shared/PageHeader';

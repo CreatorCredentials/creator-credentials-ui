@@ -32,6 +32,21 @@
         "title": "Connect",
         "description": "This credential attests that you are owner of Liccium app account with corresponding did:key",
         "requirements": "Info about requirements"
+      },
+      "student": {
+        "title": "Student",
+        "description": "This credential attests that you are a student of the issuer organisation",
+        "requirements": "Info about requirements"
+      },
+      "external_keypair": {
+        "title": "External DID:key Credential",
+        "description": "This credential is tied to your own cryptographic keypair. You must complete a keypair challenge before it can be issued.",
+        "requirements": "Requires external EC P-256 keypair verification"
+      },
+      "cert_signed": {
+        "title": "X.509 Cert-Signed Credential",
+        "description": "This credential is signed with the issuer's own X.509 certificate instead of the platform certificate.",
+        "requirements": "Requires issuer to have a verified external X.509 certificate"
       }
     }
   }

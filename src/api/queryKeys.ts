@@ -15,4 +15,5 @@ export const QueryKeys = {
   getIssuers: 'getIssuers',
   creatorsRequestableTemplates: 'creatorsRequestableTemplates',
   keypairChallengeStatus: 'keypairChallengeStatus',
+  certChallengeStatus: 'certChallengeStatus',
 };
