@@ -16,7 +16,7 @@ import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
 const EXTERNAL_KEYPAIR_TEMPLATE: Omit<VerifiedCredentialsTemplate, 'id'> = {
   templateType: CredentialTemplateType.ExternalKeypair,
-  name: 'External DID:key Credential',
+  name: 'Data Supplier',
 };
 
 export const CredentialsRequestSelectCredentials = () => {
