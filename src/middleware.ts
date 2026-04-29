@@ -31,10 +31,8 @@ export default clerkMiddleware(async (auth, req) => {
 // };
 export const config = {
   matcher: [
-    // Run middleware for all app routes (except Next internals / static files)
-    '/((?!_next|.*\\..*).*)',
-    '/',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
+    // Run middleware only where auth protection can apply.
+    '/creator/:path*',
+    '/issuer/:path*',
   ],
 };
