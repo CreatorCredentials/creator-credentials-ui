@@ -10,7 +10,7 @@
     "dev": "docker compose --env-file .env.local -f docker/docker-compose.local.yaml up -d --build",
     "docker:base:dev": "docker compose --env-file .env.local -f docker/docker-compose.local.yaml up -d --build",
     "docker:base:prod": "docker compose --env-file .env.local.prod -f docker/docker-compose.prod.yaml up -d --build",
-    "lint": "eslint --max-warnings=0 .",
+    "lint": "eslint --max-warnings=0 src",
     "prepare": "husky install",
     "prettier:check": "prettier -c .",
     "prettier:fix": "prettier . --write",
