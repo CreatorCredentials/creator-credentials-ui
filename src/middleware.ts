@@ -15,14 +15,15 @@ const isProtectedRoute = createRouteMatcher([
   '/issuer/creators/accepted(.*)',
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   const welcomeUrl = new URL('/welcome', req.url).toString();
 
-  if (isProtectedRoute(req))
-    auth.protect({
-      unauthorizedUrl: '/welcome',
+  if (isProtectedRoute(req)) {
+    await auth.protect({
+      unauthorizedUrl: welcomeUrl,
       unauthenticatedUrl: welcomeUrl,
     });
+  }
 });
 
 // export const config = {
