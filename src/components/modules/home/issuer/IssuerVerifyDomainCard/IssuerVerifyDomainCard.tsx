@@ -15,7 +15,7 @@ export const IssuerVerifyDomainCard = () => {
         <LinkButton
           color="primary"
           href="/issuer/verification"
-          className="inline"
+          className="inline-flex items-center"
         >
           {t('verify', { ns: 'common' })}
           {icon}

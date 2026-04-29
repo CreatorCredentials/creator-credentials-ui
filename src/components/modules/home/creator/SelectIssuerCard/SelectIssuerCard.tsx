@@ -16,7 +16,7 @@ export const SelectIssuerCard = () => {
           color="primary"
           href="/issuers"
           as={Link as ElementType}
-          className="inline"
+          className="inline-flex items-center"
         >
           {t('select', { ns: 'common' })}
           {icon}

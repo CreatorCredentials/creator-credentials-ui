@@ -21,7 +21,7 @@ export const VerifyWalletCard = ({ className }: VerifyWalletCardProps) => {
           color="primary"
           href="/verification"
           as={Link as ElementType}
-          className="inline"
+          className="inline-flex items-center"
         >
           {t('start', { ns: 'common' })}
           {icon}

@@ -23,7 +23,7 @@ export const AddNewCredentialCard = ({
         <LinkButton
           color="primary"
           href="/credentials"
-          className="inline"
+          className="inline-flex items-center"
           disabled={!hasCredentials}
         >
           {t('add', { ns: 'common' })}

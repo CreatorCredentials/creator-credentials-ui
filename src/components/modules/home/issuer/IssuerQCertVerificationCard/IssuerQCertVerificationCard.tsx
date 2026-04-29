@@ -14,7 +14,7 @@ export const IssuerQCertVerificationCard = () => {
       renderFooter={() => (
         <Button
           color="primary"
-          className="inline"
+          className="inline-flex items-center"
           disabled
         >
           {t('coming-soon', { ns: 'common' })}
