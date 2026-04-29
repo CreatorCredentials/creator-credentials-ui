@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
@@ -18,6 +19,11 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // Clerk handshake probes can include large query payloads; skip protection logic for them.
+  if (req.nextUrl.searchParams.has('_clerk_handshake')) {
+    return NextResponse.next();
+  }
+
   const welcomeUrl = new URL('/welcome', req.url).toString();
 
   if (isProtectedRoute(req)) {
