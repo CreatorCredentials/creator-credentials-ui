@@ -16,9 +16,6 @@ if [ -d "$HOME/.nvm/versions/node" ]; then
   done
 fi
 
-# Keep ESLint v9 on legacy .eslintrc config for lint-staged.
-export ESLINT_USE_FLAT_CONFIG=false
-
 if [ -x "./node_modules/.bin/lint-staged" ]; then
   ./node_modules/.bin/lint-staged
 elif command -v pnpm >/dev/null 2>&1; then
