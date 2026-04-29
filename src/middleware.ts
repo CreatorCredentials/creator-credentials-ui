@@ -1,5 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
+export const runtime = 'nodejs';
+
 const isProtectedRoute = createRouteMatcher([
   '/creator(.*)',
   '/issuer(.*)',
@@ -15,11 +17,11 @@ const isProtectedRoute = createRouteMatcher([
   '/issuer/creators/accepted(.*)',
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   const welcomeUrl = new URL('/welcome', req.url).toString();
 
   if (isProtectedRoute(req)) {
-    auth().protect({
+    await auth.protect({
       unauthorizedUrl: welcomeUrl,
       unauthenticatedUrl: welcomeUrl,
     });
