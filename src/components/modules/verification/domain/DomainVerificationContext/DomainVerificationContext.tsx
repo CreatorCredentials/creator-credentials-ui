@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -36,13 +35,20 @@ export const DomainVerificationContextProvider = ({
   const [domainAddress, setDomainAddress] = useState<string>(
     user?.domainPendingVerifcation ? user.domain : '',
   );
-  useEffect(() => {
+
+  // Resync local state when the user query resolves / changes. Adjusting
+  // state during render (instead of in an effect) follows the React docs'
+  // "syncing state with an external value" pattern and avoids the extra
+  // commit + the `react-hooks/set-state-in-effect` violation.
+  const [prevUser, setPrevUser] = useState(user);
+  if (user !== prevUser) {
+    setPrevUser(user);
     setCurrentStep(user?.domainPendingVerifcation ? 'verification' : 'domain');
     setCurrentTxtRecord(
       user?.domainPendingVerifcation ? user.domainRecord : '',
     );
     setDomainAddress(user?.domainPendingVerifcation ? user.domain : '');
-  }, [user]);
+  }
 
   const setTxtRecord = useCallback((txtRecord: string) => {
     setCurrentTxtRecord(txtRecord);
