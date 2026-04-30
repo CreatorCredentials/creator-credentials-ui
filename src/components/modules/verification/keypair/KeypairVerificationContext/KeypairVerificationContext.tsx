@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -30,44 +29,47 @@ export const KeypairVerificationContextProvider = ({
   const [challengeMessage, setChallengeMessage] = useState<string | null>(null);
   const [derivedDidKey, setDerivedDidKey] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!statusData) return;
+  // Hydrate UI state from the persisted challenge whenever the status query
+  // resolves. The keypair challenge is single-use per credential request, so
+  // any "consumed" / no-challenge state should send the user back to the
+  // beginning of the flow (i.e. they need to generate a new proof). We adjust
+  // state during render (rather than in an effect) so React folds the update
+  // into the current render pass — this is the pattern recommended by the
+  // React docs for "syncing state with an external value".
+  const [prevStatusData, setPrevStatusData] = useState(statusData);
+  if (statusData !== prevStatusData) {
+    setPrevStatusData(statusData);
 
-    const { challenge, commands: serverCommands, externalDidKey } = statusData;
+    if (statusData) {
+      const { challenge, commands: serverCommands } = statusData;
 
-    if (externalDidKey) {
-      setCurrentStep('completed');
-      return;
-    }
-
-    if (!challenge) {
-      setCurrentStep('generate');
-      return;
-    }
-
-    if (challenge.status === 'verified' && externalDidKey) {
-      setCurrentStep('completed');
-    } else if (challenge.status === 'verified' && !externalDidKey) {
-      // key was removed after verification — treat as fresh start
-      setCurrentStep('generate');
-    } else if (challenge.status === 'challenge_issued') {
-      setCurrentStep('verify-signature');
-      if (challenge.challengeMessage) {
-        setChallengeMessage(challenge.challengeMessage);
+      if (!challenge) {
+        setCurrentStep('generate');
+      } else if (challenge.status === 'verified') {
+        setCurrentStep('completed');
+        if (challenge.derivedDidKey) {
+          setDerivedDidKey(challenge.derivedDidKey);
+        }
+      } else if (challenge.status === 'challenge_issued') {
+        setCurrentStep('verify-signature');
+        if (challenge.challengeMessage) {
+          setChallengeMessage(challenge.challengeMessage);
+        }
+        if (challenge.derivedDidKey) {
+          setDerivedDidKey(challenge.derivedDidKey);
+        }
+      } else if (challenge.status === 'initiated') {
+        setCurrentStep('submit-key');
+      } else {
+        // 'consumed' | 'failed' | unknown - treat as needing a fresh proof.
+        setCurrentStep('generate');
       }
-      if (challenge.derivedDidKey) {
-        setDerivedDidKey(challenge.derivedDidKey);
-      }
-    } else if (challenge.status === 'initiated') {
-      setCurrentStep('submit-key');
-    } else {
-      setCurrentStep('generate');
-    }
 
-    if (serverCommands) {
-      setCommands(serverCommands);
+      if (serverCommands) {
+        setCommands(serverCommands);
+      }
     }
-  }, [statusData]);
+  }
 
   const handleSetCommands = useCallback((cmds: string[]) => {
     setCommands(cmds);

@@ -50,21 +50,42 @@ export const KeypairVerificationVerifyCard = () => {
 
   if (currentStep === 'completed') {
     return (
-      <CardWithTitle title="Step 3: Signature Verified">
+      <CardWithTitle title="Step 3: Signature verified">
         <div className="flex flex-col gap-3">
           <Alert color="success">
-            <p className="font-medium">Your keypair has been verified!</p>
+            <p className="font-medium">
+              Your keypair has been verified for this credential request.
+            </p>
+            <p className="text-sm">
+              Your signature matched the public key and the one-time challenge.
+              The corresponding did:key will be bound to your request - click
+              Continue at the bottom of the page when you&apos;re ready to
+              submit.
+            </p>
           </Alert>
           {derivedDidKey && (
             <div>
               <p className="mb-1 text-sm font-medium text-gray-700">
-                Your external DID:key
+                did:key derived from your public key
               </p>
               <code className="block break-all rounded bg-gray-100 p-2 text-xs">
                 {derivedDidKey}
               </code>
+              <p className="mt-1 text-xs text-gray-500">
+                Anyone inspecting the credential later can re-derive this
+                identifier from your public key and confirm only you hold the
+                matching private key.
+              </p>
             </div>
           )}
+          <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+            <p className="font-semibold">This proof is single-use</p>
+            <p>
+              The verified keypair is bound to this request and retired after
+              submission. Next time, you can reuse the same key file via the
+              &quot;Use an existing private key&quot; path in Step 1.
+            </p>
+          </div>
         </div>
       </CardWithTitle>
     );
@@ -72,10 +93,27 @@ export const KeypairVerificationVerifyCard = () => {
 
   return (
     <CardWithTitle
-      title="Step 3: Verify Signature"
-      description="Paste the base64-encoded signature output from the signing command."
+      title="Step 3: Send us the signature"
+      description="Paste the base64 signature printed by the signing command from Step 2. We verify it server-side, which proves you control the private key without sharing it."
     >
       <div className="flex flex-col gap-4">
+        <div className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">
+          <p className="font-semibold">What to paste</p>
+          <ul className="mt-2 list-disc ps-5">
+            <li>
+              A single base64 string. No quotation marks, no
+              &quot;Signature:&quot; prefix, no JSON wrapper.
+            </li>
+            <li>
+              Multi-line output is fine (whitespace is stripped). Skip unrelated
+              lines like &quot;Signature length: 88&quot;.
+            </li>
+            <li>
+              On a verification error, rerun the signing command and paste again
+              - ECDSA produces a fresh valid signature each time.
+            </li>
+          </ul>
+        </div>
         {errorMsg && (
           <Alert color="failure">
             <p>{errorMsg}</p>

@@ -6,9 +6,10 @@ export type KeypairChallengeData = {
   publicKeyPem: string | null;
   derivedDidKey: string | null;
   challengeMessage: string | null;
-  status: 'initiated' | 'challenge_issued' | 'verified' | 'failed';
+  status: 'initiated' | 'challenge_issued' | 'verified' | 'consumed' | 'failed';
   currentStep: number;
   verifiedAt: string | null;
+  consumedAt?: string | null;
 };
 
 export type GetKeypairChallengeStatusResponse = {

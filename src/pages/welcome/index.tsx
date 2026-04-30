@@ -29,7 +29,7 @@ const WelcomePage: NextPageWithLayout = () => {
     if (role === UserRole.Issuer) {
       router.push('/issuer');
     } else {
-      // Creator role or no role yet — send to creator dashboard.
+      // Creator role or no role yet - send to creator dashboard.
       // withAuth there will assign the role via Clerk metadata if missing.
       router.push('/creator');
     }

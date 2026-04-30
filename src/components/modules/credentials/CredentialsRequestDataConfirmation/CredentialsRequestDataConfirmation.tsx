@@ -1,7 +1,6 @@
 import { Card } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useSendCredentialsRequest } from '@/api/mutations/useSendCredentialsRequest';
-// import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Icon } from '@/components/shared/Icon';
 import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
@@ -9,10 +8,6 @@ import { SuccessfullCredentialRequestConfirmationCard } from '@/components/share
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
-import { useGetUser } from '@/api/queries/useGetUser';
-import { KEYPAIR_REQUIRED_TEMPLATE_TYPES } from '@/shared/typings/CredentialTemplateType';
-import { KeypairVerificationContextProvider } from '@/components/modules/verification/keypair/KeypairVerificationContext';
-import { KeypairVerificationFormWrapper } from '@/components/modules/verification/keypair/KeypairVerificationFormWrapper';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -29,13 +24,8 @@ export const CredentialsRequestDataConfirmation = () => {
     },
   });
 
-  const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
-  const { data: user } = useGetUser();
-
-  const needsKeypairChallenge =
-    templates.selectedItems.some((tmpl) =>
-      KEYPAIR_REQUIRED_TEMPLATE_TYPES.includes(tmpl.templateType),
-    ) && !user?.externalDidKey;
+  const { stepper, templates, selectedIssuer, stepKeys } =
+    useCredentialsRequestContext();
 
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
@@ -50,33 +40,6 @@ export const CredentialsRequestDataConfirmation = () => {
     return <SuccessfullCredentialRequestConfirmationCard />;
   }
 
-  if (needsKeypairChallenge) {
-    return (
-      <>
-        <PageHeader
-          title={t('header.title')}
-          subtitle="Complete keypair verification to continue with your credential request."
-          closeButtonHref="/creator/credentials"
-        />
-        <div className="flex justify-center">
-          <CredentialsRequestStepper activeStep={stepper.activeStep} />
-        </div>
-        <div className="mt-8 rounded-lg border border-blue-200 bg-blue-50 p-4">
-          <p className="mb-4 text-sm font-medium text-blue-800">
-            The credential type you selected requires you to verify your own
-            cryptographic keypair. Complete the steps below to continue.
-          </p>
-          <KeypairVerificationContextProvider>
-            <KeypairVerificationFormWrapper />
-          </KeypairVerificationContextProvider>
-        </div>
-        <FormFooter>
-          <FormFooter.BackButton onClick={stepper.prevStep} />
-        </FormFooter>
-      </>
-    );
-  }
-
   return (
     <>
       <PageHeader
@@ -85,7 +48,10 @@ export const CredentialsRequestDataConfirmation = () => {
         closeButtonHref="/creator/credentials"
       />
       <div className="flex justify-center">
-        <CredentialsRequestStepper activeStep={stepper.activeStep} />
+        <CredentialsRequestStepper
+          activeStep={stepper.activeStep}
+          stepKeys={stepKeys}
+        />
       </div>
       <Card className="mt-12 w-full">
         <div className="grid grid-cols-[22rem_4rem_22rem_1fr] gap-4">

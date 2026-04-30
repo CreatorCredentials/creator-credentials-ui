@@ -44,21 +44,36 @@ export const KeypairVerificationSubmitKeyCard = () => {
 
   return (
     <CardWithTitle
-      title="Step 2: Submit Your Public Key"
-      description="Paste your public key PEM content below."
+      title="Step 2: Send us your public key"
+      description="Paste cc_public_key.pem below. Once submitted you'll get a one-time challenge to sign in Step 3."
     >
       <div className="flex flex-col gap-4">
-        <p className="text-sm text-gray-600">
-          Run{' '}
-          <code className="rounded bg-gray-100 px-1">
-            cat cc_public_key.pem
-          </code>{' '}
-          and paste the output below, or use{' '}
-          <code className="rounded bg-gray-100 px-1">
-            cat cc_public_key.pem | pbcopy
-          </code>{' '}
-          to copy it to your clipboard.
-        </p>
+        <div className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">
+          <p className="font-semibold">
+            How to get the file contents into the box
+          </p>
+          <ul className="mt-2 list-disc ps-5">
+            <li>
+              macOS: run{' '}
+              <code className="rounded bg-white px-1">
+                cat cc_public_key.pem | pbcopy
+              </code>{' '}
+              and paste below.
+            </li>
+            <li>
+              Or run{' '}
+              <code className="rounded bg-white px-1">
+                cat cc_public_key.pem
+              </code>{' '}
+              and copy the printed block manually.
+            </li>
+            <li>Or open the file in any text editor and copy its contents.</li>
+          </ul>
+          <p className="mt-2">
+            Include the BEGIN PUBLIC KEY and END PUBLIC KEY delimiter lines -
+            leaving them out is the most common cause of a rejected submission.
+          </p>
+        </div>
         <Textarea
           rows={6}
           placeholder="-----BEGIN PUBLIC KEY-----&#10;...&#10;-----END PUBLIC KEY-----"
@@ -81,11 +96,16 @@ export const KeypairVerificationSubmitKeyCard = () => {
         {isDisabled && commands.length > 0 && (
           <div className="flex flex-col gap-2">
             <p className="text-sm font-medium text-gray-700">
-              Sign the challenge with your private key:
+              Sign the challenge with your private key
             </p>
             <p className="text-sm text-gray-500">
-              This command signs once, prints the signature to your terminal,
-              and copies it to your clipboard automatically.
+              The command signs the one-time challenge with{' '}
+              <code className="rounded bg-gray-100 px-1">
+                cc_private_key.pem
+              </code>{' '}
+              and prints the resulting base64 signature (on macOS it also copies
+              it to your clipboard). If your private key file has a different
+              name or path, swap it into the command before running.
             </p>
             {commands.map((cmd) => (
               <CopyCommandBlock
@@ -93,9 +113,20 @@ export const KeypairVerificationSubmitKeyCard = () => {
                 command={cmd}
               />
             ))}
-            <p className="text-sm text-gray-500">
-              After running it, paste the printed signature into Step 3 below.
-            </p>
+            <ul className="list-disc ps-5 text-sm text-gray-500">
+              <li>
+                Paste the printed signature into the box in Step 3 - a single
+                base64 string.
+              </li>
+              <li>
+                Re-running the command produces a different valid signature
+                (normal for ECDSA).
+              </li>
+              <li>
+                On Windows or Linux, copy the printed signature manually if
+                pbcopy isn&apos;t available.
+              </li>
+            </ul>
           </div>
         )}
       </div>

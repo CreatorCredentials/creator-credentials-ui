@@ -22,7 +22,7 @@ const EXTERNAL_KEYPAIR_TEMPLATE: Omit<VerifiedCredentialsTemplate, 'id'> = {
 export const CredentialsRequestSelectCredentials = () => {
   const { t } = useTranslation('creator-credentials-request');
 
-  const { stepper, templates } = useCredentialsRequestContext();
+  const { stepper, templates, stepKeys } = useCredentialsRequestContext();
 
   const { data, isFetching, isLoading, status } =
     useCreatorsRequestableTemplates();
@@ -82,7 +82,10 @@ export const CredentialsRequestSelectCredentials = () => {
         closeButtonHref="/creator/credentials"
       />
       <div className="flex justify-center">
-        <CredentialsRequestStepper activeStep={stepper.activeStep} />
+        <CredentialsRequestStepper
+          activeStep={stepper.activeStep}
+          stepKeys={stepKeys}
+        />
       </div>
       {renderContent()}
       <FormFooter className="justify-end">

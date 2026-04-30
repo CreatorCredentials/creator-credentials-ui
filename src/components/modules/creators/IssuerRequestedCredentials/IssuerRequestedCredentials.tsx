@@ -53,7 +53,10 @@ export const IssuerRequestedCredentials = () => {
               backRoute="/issuer/credentials/requested"
               renderFooter={() =>
                 credential.status === CredentialVerificationStatus.Pending ? (
-                  <CredentialsCardAcceptRejectFooter credential={credential} />
+                  <CredentialsCardAcceptRejectFooter
+                    credential={credential}
+                    creator={creator}
+                  />
                 ) : (
                   <ColoredBadge
                     badgeType="accepted"

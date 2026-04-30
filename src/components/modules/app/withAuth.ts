@@ -29,7 +29,7 @@ export function withAuth<
         } as GetServerSidePropsResult<P>;
       }
 
-      // v6: `clerkClient` is now an async factory — must be invoked to get
+      // v6: `clerkClient` is now an async factory - must be invoked to get
       // the backend client instance.
       const client = await clerkClient();
       const user = await client.users.getUser(userId);

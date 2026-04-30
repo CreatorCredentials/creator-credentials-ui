@@ -55,7 +55,7 @@ export const KeypairVerificationNavCard = ({
             iconName="Verified"
             className="whitespace-pre-wrap"
           >
-            {user.externalDidKey.slice(0, 32)}…
+            {user.externalDidKey.slice(0, 32)}...
           </CardWithBadge.ContentWithIcon>
         ) : (
           <p>

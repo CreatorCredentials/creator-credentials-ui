@@ -21,6 +21,7 @@ export const CredentialsRequestSelectIssuer = () => {
     toggleIssuerSelection,
     preSelectedIssuerId,
     stepper,
+    stepKeys,
   } = useCredentialsRequestContext();
 
   const { data, isFetching, isLoading, status } = useGetIssuers({});
@@ -94,7 +95,10 @@ export const CredentialsRequestSelectIssuer = () => {
         closeButtonHref="/creator/credentials"
       />
       <div className="flex justify-center">
-        <CredentialsRequestStepper activeStep={stepper.activeStep} />
+        <CredentialsRequestStepper
+          activeStep={stepper.activeStep}
+          stepKeys={stepKeys}
+        />
       </div>
       {renderContent()}
       <FormFooter>

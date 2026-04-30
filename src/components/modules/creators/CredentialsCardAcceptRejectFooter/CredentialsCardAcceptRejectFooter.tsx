@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, Textarea } from 'flowbite-react';
+import { Alert, Badge, Button, Textarea } from 'flowbite-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '@/shared/hooks/useToast';
@@ -7,20 +7,37 @@ import { QueryKeys } from '@/api/queryKeys';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
+import { Creator } from '@/shared/typings/Creator';
 import { useAcceptCredentialsIssuanceRequest } from '@/api/mutations/useAcceptCredentialsIssuanceRequest';
 import { useRejectCredentialsIssuanceRequest } from '@/api/mutations/useRejectCredentialsIssuanceRequest';
 import { useVerifyAcceptedCredentialSignature } from '@/api/mutations/useVerifyAcceptedCredentialSignature';
 import { CopyCommandBlock } from '@/components/modules/verification/keypair/CopyCommandBlock';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 
+type CredentialObjectPreview = {
+  id?: string;
+  type?: string[] | string;
+  issuer?: string;
+  validFrom?: string;
+  validUntil?: string;
+  credentialSubject?: {
+    id?: string;
+    memberOf?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+};
+
 type CredentialsCardAcceptRejectFooterProps = {
   credential: VerifiedCredentialsUnion;
+  creator?: Creator;
   onSuccessfullAcceptation?: () => void | Promise<void>;
   onSuccessfulRejection?: () => void | Promise<void>;
 };
 
 export const CredentialsCardAcceptRejectFooter = ({
   credential,
+  creator,
   onSuccessfullAcceptation,
   onSuccessfulRejection,
 }: CredentialsCardAcceptRejectFooterProps) => {
@@ -34,9 +51,12 @@ export const CredentialsCardAcceptRejectFooter = ({
   const [isAcceptModalOpen, setIsAcceptModalOpen] = React.useState(false);
   const [commands, setCommands] = React.useState<string[]>([]);
   const [signingInput, setSigningInput] = React.useState('');
+  const [credentialObject, setCredentialObject] =
+    React.useState<CredentialObjectPreview | null>(null);
   const [privateKeyFilename, setPrivateKeyFilename] = React.useState(
     'your_private_key.pem',
   );
+  const [showRawPayload, setShowRawPayload] = React.useState(false);
   const [signature, setSignature] = React.useState('');
   const [verificationError, setVerificationError] = React.useState<
     string | null
@@ -78,6 +98,10 @@ export const CredentialsCardAcceptRejectFooter = ({
       const acceptance = await acceptAsync({ credentialId: credential.id });
       setCommands(acceptance?.commands ?? []);
       setSigningInput(acceptance?.challenge?.signingInput ?? '');
+      setCredentialObject(
+        (acceptance?.challenge?.credentialObject as CredentialObjectPreview) ??
+          null,
+      );
       setAcceptStep('signature');
       setIsAcceptModalOpen(true);
       setVerificationError(null);
@@ -98,7 +122,7 @@ export const CredentialsCardAcceptRejectFooter = ({
       await onSuccessfullAcceptation?.();
     } catch (error) {
       setVerificationError(
-        'Signature verification failed. Ensure you signed with the private key matching your imported issuer certificate.',
+        'Signature verification failed. Make sure you signed the exact payload from section 2 with the private key paired to your imported X.509 certificate, and try again.',
       );
     }
   };
@@ -110,6 +134,17 @@ export const CredentialsCardAcceptRejectFooter = ({
     } catch (error) {
       toast.error(t('requests.errors.reject-failed'));
     }
+  };
+
+  const closeModal = () => {
+    setIsAcceptModalOpen(false);
+    setAcceptStep('idle');
+    setCommands([]);
+    setSigningInput('');
+    setCredentialObject(null);
+    setSignature('');
+    setVerificationError(null);
+    setShowRawPayload(false);
   };
 
   const disableButtons = isAccepting || isRejecting || isVerifyingAccept;
@@ -144,63 +179,34 @@ export const CredentialsCardAcceptRejectFooter = ({
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
           <div className="max-h-[90vh] w-full max-w-4xl overflow-auto rounded-lg bg-white p-6 shadow-xl">
             <CardWithTitle
-              title="Credential Acceptance Verification"
-              description="Sign the payload with the private key matching your imported issuer certificate, then submit signature for verification."
+              title="Review and sign this credential request"
+              description="Below you'll see who requested the credential, the exact verifiable credential that will be minted, and the openssl command that signs it with the private key paired to your imported X.509 certificate."
               className="border-0 shadow-none"
             >
-              <div className="flex flex-col gap-4">
-                {!!signingInput && (
-                  <div className="flex flex-col gap-2">
-                    <p className="text-sm font-medium text-gray-700">
-                      Signing input (JWS header.payload)
-                    </p>
-                    <CopyCommandBlock command={signingInput} />
-                  </div>
-                )}
+              <div className="flex flex-col gap-6">
+                <CreatorReviewSection creator={creator} />
 
-                {commands.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p className="text-sm font-medium text-gray-700">
-                      Step 1: Run command to generate base64 signature
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      <label
-                        htmlFor={`issuer-private-key-file-${credential.id}`}
-                        className="text-sm text-gray-600"
-                      >
-                        Private key filename/path
-                      </label>
-                      <input
-                        id={`issuer-private-key-file-${credential.id}`}
-                        type="text"
-                        value={privateKeyFilename}
-                        onChange={(e) => setPrivateKeyFilename(e.target.value)}
-                        className="rounded-md border border-gray-300 px-3 py-2 font-mono text-sm"
-                        placeholder="your_private_key.pem"
-                        disabled={acceptStep === 'completed'}
-                      />
-                    </div>
-                    <CopyCommandBlock command={commandWithFile} />
-                    <p className="text-xs text-gray-500">
-                      Tip: RSA signatures are usually long (300+ chars in
-                      base64), while ECDSA signatures are shorter.
-                    </p>
-                  </div>
-                )}
+                <CredentialPreviewSection
+                  credentialObject={credentialObject}
+                  showRawPayload={showRawPayload}
+                  toggleRawPayload={() => setShowRawPayload((v) => !v)}
+                  signingInput={signingInput}
+                />
 
-                <div className="flex flex-col gap-2">
-                  <p className="text-sm font-medium text-gray-700">
-                    Step 2: Paste base64 signature
-                  </p>
-                  <Textarea
-                    rows={5}
-                    placeholder="Paste signature here..."
-                    value={signature}
-                    onChange={(e) => setSignature(e.target.value)}
-                    disabled={acceptStep === 'completed'}
-                    className="font-mono text-sm"
-                  />
-                </div>
+                <SigningSection
+                  hasCommand={commands.length > 0}
+                  commandWithFile={commandWithFile}
+                  privateKeyFilename={privateKeyFilename}
+                  setPrivateKeyFilename={setPrivateKeyFilename}
+                  isCompleted={acceptStep === 'completed'}
+                  inputId={`issuer-private-key-file-${credential.id}`}
+                />
+
+                <PasteSignatureSection
+                  signature={signature}
+                  setSignature={setSignature}
+                  isCompleted={acceptStep === 'completed'}
+                />
 
                 {verificationError && (
                   <Alert color="failure">
@@ -208,13 +214,18 @@ export const CredentialsCardAcceptRejectFooter = ({
                   </Alert>
                 )}
 
-                {acceptStep === 'completed' ? (
+                {acceptStep === 'completed' && (
                   <Alert color="success">
                     <p className="font-medium">
                       Credential request accepted and signature verified.
                     </p>
+                    <p className="text-sm">
+                      The verifiable credential has been signed with your X.509
+                      certificate and stored. The creator can use it from now
+                      on.
+                    </p>
                   </Alert>
-                ) : null}
+                )}
 
                 <div className="flex gap-3">
                   {acceptStep !== 'completed' && (
@@ -224,19 +235,12 @@ export const CredentialsCardAcceptRejectFooter = ({
                       isProcessing={isVerifyingAccept}
                       disabled={isVerifyingAccept || !signature.trim()}
                     >
-                      Verify Signature & Accept
+                      Verify Signature & Issue Credential
                     </Button>
                   )}
                   <Button
                     color={acceptStep === 'completed' ? 'primary' : 'light'}
-                    onClick={() => {
-                      setIsAcceptModalOpen(false);
-                      setAcceptStep('idle');
-                      setCommands([]);
-                      setSigningInput('');
-                      setSignature('');
-                      setVerificationError(null);
-                    }}
+                    onClick={closeModal}
                     disabled={isVerifyingAccept}
                   >
                     {acceptStep === 'completed' ? 'Done' : 'Cancel'}
@@ -249,4 +253,422 @@ export const CredentialsCardAcceptRejectFooter = ({
       )}
     </>
   );
+};
+
+type CreatorReviewSectionProps = {
+  creator?: Creator;
+};
+
+const CreatorReviewSection = ({ creator }: CreatorReviewSectionProps) => {
+  if (!creator) {
+    return (
+      <section className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+        <p className="font-semibold">1. Who is requesting this credential?</p>
+        <p>
+          The matching creator profile isn&apos;t available in this view. Open
+          the creator&apos;s details page from the parent card before
+          continuing.
+        </p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="rounded-md border border-blue-200 bg-blue-50 p-4">
+      <p className="text-sm font-semibold text-blue-900">
+        1. Who is requesting this credential?
+      </p>
+      <p className="mt-1 text-sm text-blue-800">
+        Confirm these details match the person you intend to issue a credential
+        to.
+      </p>
+      <div className="mt-3 flex items-start gap-4">
+        <dl className="flex flex-1 flex-col gap-2 text-sm">
+          <DetailRow
+            tone="blue"
+            label="Display name"
+            value={creator.title}
+          />
+          <DetailRow
+            tone="blue"
+            label="Email"
+            value={creator.credentials.email}
+            mono
+          />
+          {creator.credentials.domain && (
+            <DetailRow
+              tone="blue"
+              label="Domain"
+              value={creator.credentials.domain}
+              mono
+            />
+          )}
+          {creator.credentials.walletAddress && (
+            <DetailRow
+              tone="blue"
+              label="Wallet"
+              value={creator.credentials.walletAddress}
+              mono
+            />
+          )}
+          <DetailRow
+            tone="blue"
+            label="Internal creator id"
+            value={creator.id}
+            mono
+          />
+        </dl>
+      </div>
+    </section>
+  );
+};
+
+type CredentialPreviewSectionProps = {
+  credentialObject: CredentialObjectPreview | null;
+  showRawPayload: boolean;
+  toggleRawPayload: () => void;
+  signingInput: string;
+};
+
+const CredentialPreviewSection = ({
+  credentialObject,
+  showRawPayload,
+  toggleRawPayload,
+  signingInput,
+}: CredentialPreviewSectionProps) => {
+  const types = Array.isArray(credentialObject?.type)
+    ? (credentialObject?.type as string[])
+    : credentialObject?.type
+      ? [credentialObject.type as string]
+      : [];
+
+  const subjectId = credentialObject?.credentialSubject?.id;
+  const memberOf = credentialObject?.credentialSubject?.memberOf;
+
+  return (
+    <section className="rounded-md border border-indigo-200 bg-indigo-50 p-4">
+      <p className="text-sm font-semibold text-indigo-900">
+        2. What credential will you actually be signing?
+      </p>
+      <p className="mt-1 text-sm text-indigo-800">
+        This is the W3C Verifiable Credential we&apos;ll store and hand to the
+        creator after your signature is verified. Once signed, the contents
+        below are locked in.
+      </p>
+
+      {credentialObject ? (
+        <dl className="mt-3 flex flex-col gap-2 text-sm">
+          {types.length > 0 && (
+            <DetailRow
+              tone="indigo"
+              label="Types"
+              value={
+                <div className="flex flex-wrap gap-1">
+                  {types.map((type) => (
+                    <Badge
+                      key={type}
+                      color="indigo"
+                    >
+                      {type}
+                    </Badge>
+                  ))}
+                </div>
+              }
+            />
+          )}
+          {credentialObject.id && (
+            <DetailRow
+              tone="indigo"
+              label="Credential id"
+              value={credentialObject.id}
+              mono
+            />
+          )}
+          {credentialObject.issuer && (
+            <DetailRow
+              tone="indigo"
+              label="Issued by"
+              value={credentialObject.issuer}
+              mono
+            />
+          )}
+          {subjectId && (
+            <DetailRow
+              tone="indigo"
+              label="Issued to (subject did:key)"
+              value={subjectId}
+              mono
+            />
+          )}
+          {memberOf && (
+            <DetailRow
+              tone="indigo"
+              label="Member of"
+              value={memberOf}
+              mono
+            />
+          )}
+          {credentialObject.validFrom && (
+            <DetailRow
+              tone="indigo"
+              label="Valid from"
+              value={formatTimestamp(credentialObject.validFrom)}
+            />
+          )}
+          {credentialObject.validUntil && (
+            <DetailRow
+              tone="indigo"
+              label="Valid until"
+              value={formatTimestamp(credentialObject.validUntil)}
+            />
+          )}
+        </dl>
+      ) : (
+        <p className="mt-3 text-sm text-indigo-800">
+          The server didn&apos;t return a credential payload. Cancel and retry;
+          if it keeps happening, contact support.
+        </p>
+      )}
+
+      <button
+        type="button"
+        className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-indigo-700 underline-offset-2 hover:text-indigo-900 hover:underline"
+        onClick={toggleRawPayload}
+      >
+        <span aria-hidden="true">{showRawPayload ? '▾' : '▸'}</span>
+        {showRawPayload
+          ? 'Hide technical signing payload'
+          : 'Show technical signing payload (advanced)'}
+      </button>
+
+      {showRawPayload && (
+        <div className="mt-3 flex flex-col gap-2">
+          {credentialObject && (
+            <div>
+              <p className="text-xs font-medium text-indigo-900">
+                Full credentialObject (the JSON the issuer&apos;s certificate
+                signs over):
+              </p>
+              <pre className="mt-1 max-h-64 overflow-auto whitespace-pre-wrap break-all rounded bg-white p-3 text-xs leading-relaxed text-indigo-900">
+                {JSON.stringify(credentialObject, null, 2)}
+              </pre>
+            </div>
+          )}
+          {signingInput && (
+            <div>
+              <p className="text-xs font-medium text-indigo-900">
+                Raw JWS signing input (header.payload, base64url) - what the
+                openssl command digests:
+              </p>
+              <pre className="mt-1 max-h-32 overflow-auto whitespace-pre-wrap break-all rounded bg-white p-3 text-xs leading-relaxed text-indigo-900">
+                {signingInput}
+              </pre>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
+};
+
+type SigningSectionProps = {
+  hasCommand: boolean;
+  commandWithFile: string;
+  privateKeyFilename: string;
+  setPrivateKeyFilename: (value: string) => void;
+  isCompleted: boolean;
+  inputId: string;
+};
+
+const SigningSection = ({
+  hasCommand,
+  commandWithFile,
+  privateKeyFilename,
+  setPrivateKeyFilename,
+  isCompleted,
+  inputId,
+}: SigningSectionProps) => {
+  if (!hasCommand) return null;
+
+  return (
+    <section className="rounded-md border border-gray-200 bg-white p-4">
+      <p className="text-sm font-semibold text-gray-900">
+        3. Sign the credential with your private key
+      </p>
+      <p className="mt-1 text-sm text-gray-600">
+        Your private key never leaves your machine. You run a single openssl
+        command locally, it produces a base64 signature, and you paste that
+        signature back into this dialog.
+      </p>
+
+      <div className="mt-3 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+        <p className="font-semibold">About the private key file</p>
+        <p className="mt-2">
+          The filename you enter below is substituted into the openssl command
+          live, so you can keep the command exactly as shown.
+        </p>
+        <ul className="mt-2 list-disc ps-5">
+          <li>
+            If the key file is in the folder you run the command from, a bare
+            filename works. Otherwise use a full absolute path.
+          </li>
+          <li>
+            The key must pair with the X.509 certificate you imported on the
+            &quot;X.509 Certificate Import&quot; page - a different key
+            won&apos;t verify.
+          </li>
+          <li>
+            The file must be PEM-encoded (contents start with the usual BEGIN
+            PRIVATE KEY line). DER, PFX or PKCS#12 keys can be converted with
+            openssl first.
+          </li>
+        </ul>
+      </div>
+
+      <article className="mt-3 flex flex-col gap-3 rounded-md border border-gray-200 p-3">
+        <h4 className="text-sm font-semibold text-gray-900">
+          Run the openssl signing command
+        </h4>
+
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor={inputId}
+            className="text-sm font-medium text-gray-700"
+          >
+            Private key filename or path
+          </label>
+          <input
+            id={inputId}
+            type="text"
+            value={privateKeyFilename}
+            onChange={(e) => setPrivateKeyFilename(e.target.value)}
+            className="rounded-md border border-gray-300 bg-white px-3 py-2 font-mono text-sm"
+            placeholder="your_private_key.pem"
+            disabled={isCompleted}
+          />
+          <p className="text-sm text-gray-600">
+            What you type here is inserted into the openssl command below.
+          </p>
+        </div>
+
+        <CopyCommandBlock command={commandWithFile} />
+
+        <p className="text-sm text-gray-600">
+          The command hashes the credential payload, signs it with your private
+          key, and prints the resulting base64 signature. On macOS it also
+          copies the signature to your clipboard.
+        </p>
+        <p className="text-sm text-gray-600">
+          On Windows or Linux, copy the printed signature manually. If openssl
+          can&apos;t find your key file, run the command from the folder that
+          contains it, or use a full path in the field above.
+        </p>
+        <p className="text-sm text-gray-600">
+          As a sanity check: an RSA signature is around 300+ base64 characters,
+          an ECDSA signature around 96. Anything much shorter usually means the
+          command failed.
+        </p>
+      </article>
+    </section>
+  );
+};
+
+type PasteSignatureSectionProps = {
+  signature: string;
+  setSignature: (value: string) => void;
+  isCompleted: boolean;
+};
+
+const PasteSignatureSection = ({
+  signature,
+  setSignature,
+  isCompleted,
+}: PasteSignatureSectionProps) => (
+  <section className="rounded-md border border-sky-200 bg-sky-50 p-4">
+    <p className="text-sm font-semibold text-sky-900">
+      4. Paste the signature back here
+    </p>
+    <p className="mt-1 text-sm text-sky-800">
+      Paste the raw base64 signature only - no surrounding &quot;Signature
+      length: ...&quot; line, no quotation marks, no JSON wrapper.
+    </p>
+    <Textarea
+      rows={5}
+      placeholder="Paste signature here..."
+      value={signature}
+      onChange={(e) => setSignature(e.target.value)}
+      disabled={isCompleted}
+      className="mt-3 bg-white font-mono text-sm"
+    />
+    <p className="mt-2 text-sm text-sky-800">
+      Line breaks are fine - whitespace is stripped before verifying. If
+      verification fails, paste a fresh signature and try again.
+    </p>
+  </section>
+);
+
+type DetailRowTone = 'neutral' | 'blue' | 'indigo' | 'sky';
+
+const DETAIL_TONE_CLASSES: Record<
+  DetailRowTone,
+  { label: string; value: string; mono: string }
+> = {
+  neutral: {
+    label: 'text-gray-500',
+    value: 'text-gray-800',
+    mono: 'bg-gray-100 text-gray-800',
+  },
+  blue: {
+    label: 'text-blue-700',
+    value: 'text-blue-900',
+    mono: 'bg-white text-blue-900',
+  },
+  indigo: {
+    label: 'text-indigo-700',
+    value: 'text-indigo-900',
+    mono: 'bg-white text-indigo-900',
+  },
+  sky: {
+    label: 'text-sky-700',
+    value: 'text-sky-900',
+    mono: 'bg-white text-sky-900',
+  },
+};
+
+const DetailRow = ({
+  label,
+  value,
+  mono,
+  tone = 'neutral',
+}: {
+  label: string;
+  value: React.ReactNode;
+  mono?: boolean;
+  tone?: DetailRowTone;
+}) => {
+  const toneClasses = DETAIL_TONE_CLASSES[tone];
+  return (
+    <div className="grid grid-cols-[10rem_1fr] items-start gap-2">
+      <dt
+        className={`text-xs font-medium uppercase tracking-wide ${toneClasses.label}`}
+      >
+        {label}
+      </dt>
+      <dd
+        className={
+          mono
+            ? `break-all rounded ${toneClasses.mono} px-2 py-1 font-mono text-xs`
+            : `text-sm ${toneClasses.value}`
+        }
+      >
+        {value}
+      </dd>
+    </div>
+  );
+};
+
+const formatTimestamp = (iso: string): string => {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return `${date.toLocaleString()} (${iso})`;
 };

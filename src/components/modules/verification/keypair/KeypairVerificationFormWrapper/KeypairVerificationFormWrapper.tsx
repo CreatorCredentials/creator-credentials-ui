@@ -4,29 +4,28 @@ import { KeypairVerificationStep } from '../KeypairVerificationContext/KeypairVe
 import { KeypairVerificationGenerateCard } from '../KeypairVerificationGenerateCard';
 import { KeypairVerificationSubmitKeyCard } from '../KeypairVerificationSubmitKeyCard';
 import { KeypairVerificationVerifyCard } from '../KeypairVerificationVerifyCard';
-import { KeypairVerificationStatusCard } from '../KeypairVerificationStatusCard';
+
+const STEPS_AFTER_GENERATE: KeypairVerificationStep[] = [
+  'submit-key',
+  'verify-signature',
+  'completed',
+];
+const STEPS_AFTER_SUBMIT: KeypairVerificationStep[] = [
+  'verify-signature',
+  'completed',
+];
 
 export const KeypairVerificationFormWrapper = () => {
-  const { currentStep, externalDidKey } = useKeypairVerificationContext();
+  const { currentStep } = useKeypairVerificationContext();
 
   return (
     <section className="flex flex-col gap-4">
-      {externalDidKey ? (
-        <KeypairVerificationStatusCard />
-      ) : (
-        <>
-          <KeypairVerificationGenerateCard />
-          {(
-            [
-              'submit-key',
-              'verify-signature',
-              'completed',
-            ] as KeypairVerificationStep[]
-          ).includes(currentStep) && <KeypairVerificationSubmitKeyCard />}
-          {(
-            ['verify-signature', 'completed'] as KeypairVerificationStep[]
-          ).includes(currentStep) && <KeypairVerificationVerifyCard />}
-        </>
+      <KeypairVerificationGenerateCard />
+      {STEPS_AFTER_GENERATE.includes(currentStep) && (
+        <KeypairVerificationSubmitKeyCard />
+      )}
+      {STEPS_AFTER_SUBMIT.includes(currentStep) && (
+        <KeypairVerificationVerifyCard />
       )}
     </section>
   );
