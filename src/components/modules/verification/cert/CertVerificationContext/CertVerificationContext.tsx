@@ -26,8 +26,6 @@ export const CertVerificationContextProvider = ({
   const [currentStep, setCurrentStep] =
     useState<CertVerificationStep>('submit-cert');
   const [commands, setCommands] = useState<string[]>([]);
-  const [hasAcknowledgedCompletion, setHasAcknowledgedCompletion] =
-    useState(false);
 
   // Hydrate UI state from the persisted challenge whenever the status query
   // resolves. We adjust state during render (rather than in an effect) so
@@ -69,10 +67,6 @@ export const CertVerificationContextProvider = ({
     setCommands(cmds);
   }, []);
 
-  const acknowledgeCompletion = useCallback(() => {
-    setHasAcknowledgedCompletion(true);
-  }, []);
-
   const value = useMemo<CertVerificationContextType>(
     () => ({
       currentStep,
@@ -81,20 +75,10 @@ export const CertVerificationContextProvider = ({
       activeSigningCertSource:
         statusData?.activeSigningCertSource ?? 'platform',
       isLoading,
-      hasAcknowledgedCompletion,
       setCurrentStep,
       setCommands: handleSetCommands,
-      acknowledgeCompletion,
     }),
-    [
-      currentStep,
-      commands,
-      statusData,
-      isLoading,
-      hasAcknowledgedCompletion,
-      handleSetCommands,
-      acknowledgeCompletion,
-    ],
+    [currentStep, commands, statusData, isLoading, handleSetCommands],
   );
 
   return (

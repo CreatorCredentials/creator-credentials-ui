@@ -22,7 +22,7 @@ export const CertVerificationStatusCard = () => {
   const handleRemove = async () => {
     if (
       !window.confirm(
-        'Remove your external X.509 certificate? X.509 Cert-Signed Credentials will revert to the platform certificate.',
+        'Remove your external X.509 certificate? Credentials will revert to the platform certificate.',
       )
     )
       return;
@@ -30,12 +30,25 @@ export const CertVerificationStatusCard = () => {
   };
 
   return (
-    <CardWithTitle title="Your External X.509 Certificate">
+    <CardWithTitle
+      title="Your External X.509 Certificate"
+      headerAction={
+        <Button
+          size="xs"
+          color="failure"
+          onClick={handleRemove}
+          disabled={isRemoving}
+          isProcessing={isRemoving}
+        >
+          Remove
+        </Button>
+      }
+    >
       <div className="flex flex-col gap-4">
         <Alert color="success">
           <p className="font-medium">
             External certificate registered and verified. It will be used
-            automatically when issuing X.509 Cert-Signed Credentials.
+            automatically when issuing Data Supplier credentials.
           </p>
         </Alert>
 
@@ -58,17 +71,6 @@ export const CertVerificationStatusCard = () => {
             </pre>
           </div>
         )}
-
-        <div>
-          <Button
-            color="failure"
-            onClick={handleRemove}
-            isProcessing={isRemoving}
-            disabled={isRemoving}
-          >
-            Remove External Certificate
-          </Button>
-        </div>
       </div>
     </CardWithTitle>
   );

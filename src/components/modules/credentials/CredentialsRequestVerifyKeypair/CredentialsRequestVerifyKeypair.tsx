@@ -1,4 +1,6 @@
-import { Alert, Button } from 'flowbite-react';
+import { Alert, Button, Spinner } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Icon } from '@/components/shared/Icon';
@@ -8,6 +10,8 @@ import {
   useKeypairVerificationContext,
 } from '@/components/modules/verification/keypair/KeypairVerificationContext';
 import { KeypairVerificationFormWrapper } from '@/components/modules/verification/keypair/KeypairVerificationFormWrapper';
+import { useResetKeypairChallenge } from '@/api/mutations/useResetKeypairChallenge';
+import { QueryKeys } from '@/api/queryKeys';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -68,8 +72,44 @@ const VerifyKeypairContent = () => {
   );
 };
 
-export const CredentialsRequestVerifyKeypair = () => (
-  <KeypairVerificationContextProvider>
-    <VerifyKeypairContent />
-  </KeypairVerificationContextProvider>
-);
+/**
+ * Each credential request must start with a fresh keypair challenge so that
+ * stale "verified" (or in-progress) challenges from previous incomplete flows
+ * cannot be silently reused. We reset any non-consumed challenge before
+ * mounting the form, then clear the React Query cache so the context fetches
+ * up-to-date status (null / consumed) and always begins at the "generate" step.
+ */
+export const CredentialsRequestVerifyKeypair = () => {
+  const queryClient = useQueryClient();
+  const [resetDone, setResetDone] = useState(false);
+  const { mutateAsync: reset } = useResetKeypairChallenge({});
+
+  useEffect(() => {
+    let cancelled = false;
+    reset()
+      .catch(() => {})
+      .finally(() => {
+        if (cancelled) return;
+        // Remove any cached status so the Provider mounts with a clean fetch.
+        queryClient.removeQueries([QueryKeys.keypairChallengeStatus]);
+        setResetDone(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!resetDone) {
+    return (
+      <div className="flex justify-center py-12">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  return (
+    <KeypairVerificationContextProvider>
+      <VerifyKeypairContent />
+    </KeypairVerificationContextProvider>
+  );
+};

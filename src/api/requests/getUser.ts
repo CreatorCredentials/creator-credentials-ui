@@ -22,6 +22,7 @@ export type User = {
   activeDidKeySource: 'platform' | 'external';
   externalCertPem: string | null;
   activeSigningCertSource: 'platform' | 'external';
+  credentialsToIssue: string[];
 };
 
 export type GetUserResponse = User;

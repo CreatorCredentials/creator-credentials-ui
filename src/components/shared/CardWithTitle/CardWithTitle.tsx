@@ -7,6 +7,7 @@ type CardWithTitleProps = {
   title: string;
   description?: string;
   className?: string | ClassValue;
+  headerAction?: React.ReactNode;
 };
 
 export const CardWithTitle = ({
@@ -14,14 +15,20 @@ export const CardWithTitle = ({
   title,
   description,
   className,
+  headerAction,
 }: CardWithTitleProps) => (
   <Card className={clsxm('overflow-hidden', className)}>
     <article className="flex flex-col gap-3">
-      <header className="flex flex-col gap-4">
-        <h3 className="text-xl">
-          <p>{title}</p>
-        </h3>
-        {description && <h4 className="text-lg text-grey-4">{description}</h4>}
+      <header className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-4">
+          <h3 className="text-xl">
+            <p>{title}</p>
+          </h3>
+          {description && (
+            <h4 className="text-lg text-grey-4">{description}</h4>
+          )}
+        </div>
+        {headerAction && <div className="shrink-0">{headerAction}</div>}
       </header>
       <div className="flex flex-col">{children}</div>
     </article>

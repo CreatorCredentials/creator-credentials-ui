@@ -9,6 +9,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { useGetIssuers } from '@/api/queries/useGetIssuers';
 import { IssuerConnectionStatus } from '@/shared/typings/IssuerConnectionStatus';
+import { TEMPLATE_TYPE_TO_CREDENTIAL_TYPE } from '@/shared/typings/CredentialTemplateType';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 import { CredentialsRequestNoIssuersCard } from '../CredentialsRequestNoIssuersCard';
@@ -22,19 +23,31 @@ export const CredentialsRequestSelectIssuer = () => {
     preSelectedIssuerId,
     stepper,
     stepKeys,
+    templates,
   } = useCredentialsRequestContext();
 
   const { data, isFetching, isLoading, status } = useGetIssuers({});
   const { connected } = useMemo(() => {
-    const connected =
+    const all =
       data?.filter(
         (issuer) => issuer.status === IssuerConnectionStatus.Connected,
       ) || [];
 
-    return {
-      connected,
-    };
-  }, [data]);
+    // Narrow to issuers that support every selected template type.
+    const connected =
+      templates.selectedItems.length === 0
+        ? all
+        : all.filter((issuer) =>
+            templates.selectedItems.every((tmpl) => {
+              const credType =
+                TEMPLATE_TYPE_TO_CREDENTIAL_TYPE[tmpl.templateType];
+              if (!credType) return true;
+              return issuer.vcs.some((vc) => vc.type === credType);
+            }),
+          );
+
+    return { connected };
+  }, [data, templates.selectedItems]);
 
   const renderContent = useCallback(() => {
     if (status === 'error') {

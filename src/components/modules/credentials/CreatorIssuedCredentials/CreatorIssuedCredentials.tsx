@@ -65,7 +65,8 @@ export const CreatorIssuedCredentials = ({
                         ? credential.data.address
                         : credential.type === CredentialType.DidWeb
                           ? credential.data.domain
-                          : credential.type === CredentialType.Member
+                          : credential.type === CredentialType.Member ||
+                              credential.type === CredentialType.DataSupplier
                             ? credential.data.companyName
                             : undefined;
                 downloadJson(

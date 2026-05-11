@@ -8,6 +8,7 @@ import { SuccessfullCredentialRequestConfirmationCard } from '@/components/share
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
+import { AxiosError } from '@/api/axiosNest';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -19,8 +20,12 @@ export const CredentialsRequestDataConfirmation = () => {
     isSuccess: successfullyRequestedCredentials,
     isLoading: isRequestingCredentials,
   } = useSendCredentialsRequest({
-    onError: () => {
-      toast.error(t('steps.confirm-data.card.request-failed'));
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 409) {
+        toast.warning(t('steps.confirm-data.card.request-conflict'));
+      } else {
+        toast.error(t('steps.confirm-data.card.request-failed'));
+      }
     },
   });
 

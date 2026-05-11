@@ -28,6 +28,11 @@
         "description": "This credential attests that you are a member of the issuer organisation",
         "requirements": "Info about requirements"
       },
+      "datasupplier": {
+        "title": "Data Supplier",
+        "description": "This credential attests that you are a verified data supplier, bound to your own cryptographic keypair or certificate.",
+        "requirements": "Requires external keypair or X.509 certificate verification"
+      },
       "connect": {
         "title": "Connect",
         "description": "This credential attests that you are owner of Liccium app account with corresponding did:key",
@@ -42,11 +47,6 @@
         "title": "Data Supplier",
         "description": "This credential is tied to your own cryptographic keypair. You must complete a keypair challenge before it can be issued.",
         "requirements": "Requires external EC P-256 keypair verification"
-      },
-      "cert_signed": {
-        "title": "X.509 Cert-Signed Credential",
-        "description": "This credential is signed with the issuer's own X.509 certificate instead of the platform certificate.",
-        "requirements": "Requires issuer to have a verified external X.509 certificate"
       }
     }
   }

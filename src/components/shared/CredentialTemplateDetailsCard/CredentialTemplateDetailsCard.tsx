@@ -20,7 +20,6 @@ const CREDENTIAL_TEMPLATE_TYPE_TO_ICON_NAME_MAP: Record<
   [CredentialTemplateType.Member]: 'Group',
   [CredentialTemplateType.Student]: 'Group',
   [CredentialTemplateType.ExternalKeypair]: 'Verified',
-  [CredentialTemplateType.CertSigned]: 'AssuredWorkload',
 };
 
 type CredentialTemplateDetailsCardProps = {

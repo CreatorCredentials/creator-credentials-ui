@@ -1,30 +1,45 @@
-import React, { ElementType } from 'react';
+import React, { ElementType, useMemo } from 'react';
 import Link from 'next/link';
 import { Button } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
-import { useIssuersTemplates } from '@/api/queries/useIssuersTemplates';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { CredentialTemplateType } from '@/shared/typings/CredentialTemplateType';
+import { CredentialType } from '@/shared/typings/CredentialType';
 import { useGetUser } from '@/api/queries/useGetUser';
 
-const CERT_SIGNED_TEMPLATE = {
-  templateType: CredentialTemplateType.CertSigned,
-  name: 'X.509 Cert-Signed Credential',
+/** Maps a CredentialType value to the template card to display for it. */
+const CREDENTIAL_TYPE_TO_TEMPLATE: Partial<
+  Record<string, { templateType: CredentialTemplateType; name: string }>
+> = {
+  [CredentialType.Member]: {
+    templateType: CredentialTemplateType.Member,
+    name: 'Member Credential',
+  },
+  [CredentialType.DataSupplier]: {
+    templateType: CredentialTemplateType.ExternalKeypair,
+    name: 'Data Supplier',
+  },
 };
 
 export const IssuerCredentialsTemplatesList = () => {
   const { t } = useTranslation('issuer-credentials');
 
-  const { data, status, isLoading } = useIssuersTemplates();
-  const { data: user } = useGetUser();
+  const { data: user, isLoading } = useGetUser();
+
   const hasExternalCert = Boolean(user?.externalCertPem);
 
-  if (status === 'error') {
-    return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
-  }
+  const templateCards = useMemo(
+    () =>
+      (user?.credentialsToIssue ?? [])
+        .map((ct) => CREDENTIAL_TYPE_TO_TEMPLATE[ct])
+        .filter(Boolean) as {
+        templateType: CredentialTemplateType;
+        name: string;
+      }[],
+    [user?.credentialsToIssue],
+  );
 
   if (isLoading) {
     return <Loader />;
@@ -32,40 +47,40 @@ export const IssuerCredentialsTemplatesList = () => {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {data.templates.map((template) => (
+      {templateCards.map((template) => (
         <CredentialTemplateDetailsCard
-          key={template.id}
+          key={template.templateType}
           template={template}
           dropdownItems={[]}
-          renderFooter={() => (
-            <ColoredBadge
-              badgeType="active"
-              className="self-center"
-            />
-          )}
+          renderFooter={() => {
+            // DataSupplier credentials require an X.509 certificate to be
+            // imported. Show a prompt instead of "Active" when it is missing.
+            if (
+              template.templateType ===
+                CredentialTemplateType.ExternalKeypair &&
+              !hasExternalCert
+            ) {
+              return (
+                <Button
+                  color="light"
+                  fullSized
+                  href="/issuer/verification/cert"
+                  as={Link as ElementType}
+                >
+                  {t('cert-signed.import-to-unlock')}
+                </Button>
+              );
+            }
+
+            return (
+              <ColoredBadge
+                badgeType="active"
+                className="self-center"
+              />
+            );
+          }}
         />
       ))}
-      <CredentialTemplateDetailsCard
-        template={CERT_SIGNED_TEMPLATE}
-        dropdownItems={[]}
-        renderFooter={() =>
-          hasExternalCert ? (
-            <ColoredBadge
-              badgeType="active"
-              className="self-center"
-            />
-          ) : (
-            <Button
-              color="light"
-              fullSized
-              href="/issuer/verification/cert"
-              as={Link as ElementType}
-            >
-              Import Certificate to Unlock
-            </Button>
-          )
-        }
-      />
     </div>
   );
 };

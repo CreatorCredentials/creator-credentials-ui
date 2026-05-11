@@ -32,6 +32,9 @@ export const FormFooter = ({ className, children }: FormFooterProps) => {
 
   if (!isHydrated) return null;
 
+  const portalRoot = document.getElementById(FOOTER_PORTAL_ID);
+  if (!portalRoot) return null;
+
   return createPortal(
     <footer
       className={clsxm(
@@ -41,7 +44,7 @@ export const FormFooter = ({ className, children }: FormFooterProps) => {
     >
       {children}
     </footer>,
-    document.getElementById(FOOTER_PORTAL_ID)!,
+    portalRoot,
   );
 };
 
