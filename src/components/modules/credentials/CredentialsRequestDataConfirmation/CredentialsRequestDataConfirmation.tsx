@@ -9,6 +9,8 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
 import { AxiosError } from '@/api/axiosNest';
+import { TEMPLATE_TYPE_TO_CREDENTIAL_TYPE } from '@/shared/typings/CredentialTemplateType';
+import { CredentialType } from '@/shared/typings/CredentialType';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -35,9 +37,17 @@ export const CredentialsRequestDataConfirmation = () => {
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
 
+    const selectedTemplate = templates.selectedItems[0];
+    const credentialType = selectedTemplate
+      ? (TEMPLATE_TYPE_TO_CREDENTIAL_TYPE[selectedTemplate.templateType] as
+          | CredentialType.Member
+          | CredentialType.DataSupplier)
+      : CredentialType.Member;
+
     sendCredentialsRequest({
       templates: templates.selectedItems,
       issuerId: selectedIssuer.id,
+      credentialType,
     });
   };
 

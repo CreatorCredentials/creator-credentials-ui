@@ -33,6 +33,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
   };
 
   const signUpEmail = formSteps.email.address;
+  const companyName = formSteps.details.companyName;
   return (
     <>
       <WelcomeHeader
@@ -47,6 +48,7 @@ const IssuerSignupVerificationPage: NextPageWithLayout = () => {
         resendVerificationEmailHandler={resendVerificationEmailHandler}
         isLoading={false}
         signUpEmail={signUpEmail}
+        companyName={companyName}
       />
     </>
   );

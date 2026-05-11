@@ -15,10 +15,11 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Email]: 'Mail',
   [CredentialType.Wallet]: 'AccountBalanceWallet',
   [CredentialType.Member]: 'Group',
-  [CredentialType.DataSupplier]: 'Group',
+  [CredentialType.DataSupplier]: 'Verified',
   [CredentialType.Domain]: 'Public',
   [CredentialType.DidWeb]: 'Web',
   [CredentialType.Connect]: 'Connect',
+  [CredentialType.ExternalKeypairVerification]: 'AssuredWorkload',
 };
 
 type CredentialDetailsCardProps = {
@@ -37,6 +38,22 @@ export const CredentialDetailsCard = ({
   const { t } = useTranslation('cards');
   const { data, type } = credential;
   const { copy } = useCopyToClipboard();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const jwt = (data as any)?.credentialObject?.proof?.jwt as string | undefined;
+  const verifyItem = jwt
+    ? [
+        {
+          children: 'Verify',
+          onClick: () =>
+            window.open(
+              `https://jwt.io/#token=${encodeURIComponent(jwt)}`,
+              '_blank',
+            ),
+        },
+      ]
+    : [];
+  const allDropdownItems = [...(dropdownItems ?? []), ...verifyItem];
 
   const address =
     (type === CredentialType.Email || type === CredentialType.Wallet) &&
@@ -57,7 +74,7 @@ export const CredentialDetailsCard = ({
         iconName: CREDENTIAL_TYPE_TO_ICON_NAME_MAP[type],
       }}
       title={t(`credential.types.${type.toLowerCase()}.title`)}
-      dropdownItems={dropdownItems}
+      dropdownItems={allDropdownItems}
       content={
         <>
           <p className="mb-2 text-base">
@@ -93,6 +110,16 @@ export const CredentialDetailsCard = ({
               {data.domain}
             </CardWithBadge.ContentWithIcon>
           )}
+          {type === CredentialType.ExternalKeypairVerification &&
+            'sameAs' in data &&
+            data.sameAs && (
+              <CardWithBadge.ContentWithIcon
+                iconName="AssuredWorkload"
+                className="whitespace-pre-wrap"
+              >
+                {data.sameAs}
+              </CardWithBadge.ContentWithIcon>
+            )}
           {'companyName' in data &&
             data.companyName &&
             type !== CredentialType.Connect && (

@@ -6,4 +6,5 @@ export enum CredentialType {
   Domain = 'DOMAIN',
   DidWeb = 'DID_WEB',
   Connect = 'CONNECT',
+  ExternalKeypairVerification = 'EXTERNAL_KEYPAIR_VERIFICATION',
 }

@@ -37,7 +37,7 @@ const ContentWithIcon = ({
         icon={iconName}
         className="me-2 min-h-[1.25rem] min-w-[1.25rem]"
       />
-      <p className="break-all">{children}</p>
+      <p className="min-w-0 flex-1 truncate text-center">{children}</p>
     </Wrapper>
   );
 };
@@ -127,7 +127,9 @@ export const CardWithBadge = ({
               />
             )}
           </div>
-          <p className="break-all text-xl text-black">{title}</p>
+          <p className="w-full truncate text-center text-xl text-black">
+            {title}
+          </p>
           {subtitle && <p className="text-lg text-black">{subtitle}</p>}
         </div>
       </header>

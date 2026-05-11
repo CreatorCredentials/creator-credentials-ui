@@ -5,6 +5,14 @@ export type AcceptCredentialsIssuanceRequestPayload = {
   credentialId: string;
 };
 
+export type SupportingCredential = {
+  credentialObject: Record<string, unknown>;
+  proof: {
+    type: string;
+    jwt: string;
+  };
+};
+
 export type AcceptCredentialsIssuanceRequestResponse = {
   challenge: {
     signingInput: string;
@@ -12,6 +20,7 @@ export type AcceptCredentialsIssuanceRequestResponse = {
     initiatedAt: string;
   };
   commands: string[];
+  supportingCredential?: SupportingCredential;
 };
 
 export type VerifyAcceptedCredentialSignaturePayload = {

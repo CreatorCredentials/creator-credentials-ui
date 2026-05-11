@@ -55,7 +55,11 @@ module.exports = [
       'prettier/prettier': 'warn',
       'no-debugger': 'error',
       'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
-      quotes: ['warn', 'single', { allowTemplateLiterals: true }],
+      quotes: [
+        'warn',
+        'single',
+        { allowTemplateLiterals: true, avoidEscape: true },
+      ],
       'no-return-await': 'error',
       'require-await': 'error',
       'no-only-tests/no-only-tests': 'error',

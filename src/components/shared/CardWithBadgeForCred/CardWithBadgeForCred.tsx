@@ -66,6 +66,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Domain]: 'Public',
   [CredentialType.Connect]: 'Connect',
   [CredentialType.DidWeb]: 'Web',
+  [CredentialType.ExternalKeypairVerification]: 'AssuredWorkload',
 };
 
 const defaultDropdownItems: DropdownItemProps<ElementType>[] = [
@@ -89,6 +90,25 @@ export const CardWithBadgeForCred = ({
   dropdownItems = defaultDropdownItems,
 }: CardWithBadgeProps) => {
   const { t } = useTranslation('cards');
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const jwt = (credential.data as any)?.credentialObject?.proof?.jwt as
+    | string
+    | undefined;
+  const verifyItem: DropdownItemProps<ElementType>[] = jwt
+    ? [
+        {
+          children: 'Verify',
+          onClick: () =>
+            window.open(
+              `https://jwt.io/#token=${encodeURIComponent(jwt)}`,
+              '_blank',
+            ),
+        },
+      ]
+    : [];
+  const allDropdownItems = [...dropdownItems, ...verifyItem];
+
   return (
     <Card className={clsxm('relative', className)}>
       <article className="flex flex-1 flex-col gap-2">
@@ -103,7 +123,7 @@ export const CardWithBadgeForCred = ({
               </div>
             )}
 
-            {dropdownItems.length > 0 ? (
+            {allDropdownItems.length > 0 ? (
               <div className="relative -me-4 h-6 w-6 self-end">
                 <Dropdown
                   label=""
@@ -116,7 +136,7 @@ export const CardWithBadgeForCred = ({
                     />
                   )}
                 >
-                  {dropdownItems.map((item, index) => (
+                  {allDropdownItems.map((item, index) => (
                     <Dropdown.Item
                       {...item}
                       className={clsxm('min-w-[300px]', item.className)}

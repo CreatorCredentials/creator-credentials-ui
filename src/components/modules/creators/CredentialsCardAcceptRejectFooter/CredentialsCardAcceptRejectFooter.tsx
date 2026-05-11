@@ -13,6 +13,8 @@ import { useRejectCredentialsIssuanceRequest } from '@/api/mutations/useRejectCr
 import { useVerifyAcceptedCredentialSignature } from '@/api/mutations/useVerifyAcceptedCredentialSignature';
 import { CopyCommandBlock } from '@/components/modules/verification/keypair/CopyCommandBlock';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
+import { SupportingCredential } from '@/api/requests/acceptCredentialsIssuanceRequest';
+import { downloadJson } from '@/shared/utils/downloadJson';
 
 type CredentialObjectPreview = {
   id?: string;
@@ -23,6 +25,7 @@ type CredentialObjectPreview = {
   credentialSubject?: {
     id?: string;
     memberOf?: string;
+    dataSupplierFor?: string;
     [key: string]: unknown;
   };
   [key: string]: unknown;
@@ -53,6 +56,8 @@ export const CredentialsCardAcceptRejectFooter = ({
   const [signingInput, setSigningInput] = React.useState('');
   const [credentialObject, setCredentialObject] =
     React.useState<CredentialObjectPreview | null>(null);
+  const [supportingCredential, setSupportingCredential] =
+    React.useState<SupportingCredential | null>(null);
   const [privateKeyFilename, setPrivateKeyFilename] = React.useState(
     'your_private_key.pem',
   );
@@ -61,6 +66,7 @@ export const CredentialsCardAcceptRejectFooter = ({
   const [verificationError, setVerificationError] = React.useState<
     string | null
   >(null);
+  const [missingSupportingVC, setMissingSupportingVC] = React.useState(false);
 
   const { mutateAsync: acceptAsync, isLoading: isAccepting } =
     useAcceptCredentialsIssuanceRequest({
@@ -96,12 +102,20 @@ export const CredentialsCardAcceptRejectFooter = ({
   const acceptButtonHandler = async () => {
     try {
       const acceptance = await acceptAsync({ credentialId: credential.id });
+
+      if (!acceptance?.supportingCredential) {
+        setMissingSupportingVC(true);
+        return;
+      }
+
+      setMissingSupportingVC(false);
       setCommands(acceptance?.commands ?? []);
       setSigningInput(acceptance?.challenge?.signingInput ?? '');
       setCredentialObject(
         (acceptance?.challenge?.credentialObject as CredentialObjectPreview) ??
           null,
       );
+      setSupportingCredential(acceptance.supportingCredential);
       setAcceptStep('signature');
       setIsAcceptModalOpen(true);
       setVerificationError(null);
@@ -142,9 +156,11 @@ export const CredentialsCardAcceptRejectFooter = ({
     setCommands([]);
     setSigningInput('');
     setCredentialObject(null);
+    setSupportingCredential(null);
     setSignature('');
     setVerificationError(null);
     setShowRawPayload(false);
+    setMissingSupportingVC(false);
   };
 
   const disableButtons = isAccepting || isRejecting || isVerifyingAccept;
@@ -173,11 +189,28 @@ export const CredentialsCardAcceptRejectFooter = ({
         >
           {t('reject', { ns: 'common' })}
         </Button>
+        {missingSupportingVC && (
+          <Alert color="failure">
+            <p className="text-sm font-medium">Cannot accept this credential</p>
+            <p className="mt-1 text-xs">
+              The supporting identity proof (keypair verification or email VC)
+              for this creator could not be found. The credential cannot be
+              issued without it. Please ask the creator to re-submit their
+              request.
+            </p>
+          </Alert>
+        )}
       </div>
 
       {isAcceptModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
-          <div className="max-h-[90vh] w-full max-w-4xl overflow-auto rounded-lg bg-white p-6 shadow-xl">
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-4xl overflow-auto rounded-lg bg-white p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <CardWithTitle
               title="Review and sign this credential request"
               description="Below you'll see who requested the credential, the exact verifiable credential that will be minted, and the openssl command that signs it with the private key paired to your imported X.509 certificate."
@@ -186,11 +219,19 @@ export const CredentialsCardAcceptRejectFooter = ({
               <div className="flex flex-col gap-6">
                 <CreatorReviewSection creator={creator} />
 
+                {supportingCredential && (
+                  <SupportingEvidenceSection
+                    supportingCredential={supportingCredential}
+                    credentialId={credential.id}
+                  />
+                )}
+
                 <CredentialPreviewSection
                   credentialObject={credentialObject}
                   showRawPayload={showRawPayload}
                   toggleRawPayload={() => setShowRawPayload((v) => !v)}
                   signingInput={signingInput}
+                  sectionNumber={supportingCredential ? 3 : 2}
                 />
 
                 <SigningSection
@@ -200,12 +241,14 @@ export const CredentialsCardAcceptRejectFooter = ({
                   setPrivateKeyFilename={setPrivateKeyFilename}
                   isCompleted={acceptStep === 'completed'}
                   inputId={`issuer-private-key-file-${credential.id}`}
+                  sectionNumber={supportingCredential ? 4 : 3}
                 />
 
                 <PasteSignatureSection
                   signature={signature}
                   setSignature={setSignature}
                   isCompleted={acceptStep === 'completed'}
+                  sectionNumber={supportingCredential ? 5 : 4}
                 />
 
                 {verificationError && (
@@ -328,6 +371,7 @@ type CredentialPreviewSectionProps = {
   showRawPayload: boolean;
   toggleRawPayload: () => void;
   signingInput: string;
+  sectionNumber?: number;
 };
 
 const CredentialPreviewSection = ({
@@ -335,6 +379,7 @@ const CredentialPreviewSection = ({
   showRawPayload,
   toggleRawPayload,
   signingInput,
+  sectionNumber = 2,
 }: CredentialPreviewSectionProps) => {
   const types = Array.isArray(credentialObject?.type)
     ? (credentialObject?.type as string[])
@@ -344,24 +389,63 @@ const CredentialPreviewSection = ({
 
   const subjectId = credentialObject?.credentialSubject?.id;
   const memberOf = credentialObject?.credentialSubject?.memberOf;
+  const dataSupplierFor = credentialObject?.credentialSubject?.dataSupplierFor;
+
+  const handleDownload = () => {
+    if (credentialObject) {
+      downloadJson(
+        `credential-to-sign-${credentialObject.id ?? 'vc'}`,
+        credentialObject,
+      );
+    }
+  };
+
+  const jwtIoUrl = signingInput
+    ? `https://jwt.io/#token=${encodeURIComponent(signingInput)}`
+    : null;
 
   return (
     <section className="rounded-md border border-indigo-200 bg-indigo-50 p-4">
-      <p className="text-sm font-semibold text-indigo-900">
-        2. What credential will you actually be signing?
-      </p>
-      <p className="mt-1 text-sm text-indigo-800">
-        This is the W3C Verifiable Credential we&apos;ll store and hand to the
-        creator after your signature is verified. Once signed, the contents
-        below are locked in.
-      </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-indigo-900">
+            {sectionNumber}. What credential will you actually be signing?
+          </p>
+          <p className="mt-1 text-sm text-indigo-800">
+            This is the W3C Verifiable Credential we&apos;ll store and hand to
+            the creator after your signature is verified. Once signed, the
+            contents below are locked in.
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-col gap-2">
+          {credentialObject && (
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="rounded-md border border-indigo-400 bg-white px-3 py-1.5 text-xs font-medium text-indigo-800 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Download VC
+            </button>
+          )}
+          {jwtIoUrl && (
+            <a
+              href={jwtIoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-indigo-400 bg-white px-3 py-1.5 text-center text-xs font-medium text-indigo-800 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Verify on jwt.io
+            </a>
+          )}
+        </div>
+      </div>
 
       {credentialObject ? (
         <dl className="mt-3 flex flex-col gap-2 text-sm">
           {types.length > 0 && (
             <DetailRow
               tone="indigo"
-              label="Types"
+              label="VC Types"
               value={
                 <div className="flex flex-wrap gap-1">
                   {types.map((type) => (
@@ -408,6 +492,14 @@ const CredentialPreviewSection = ({
               mono
             />
           )}
+          {dataSupplierFor && (
+            <DetailRow
+              tone="indigo"
+              label="Data supplier for"
+              value={dataSupplierFor}
+              mono
+            />
+          )}
           {credentialObject.validFrom && (
             <DetailRow
               tone="indigo"
@@ -430,7 +522,7 @@ const CredentialPreviewSection = ({
         </p>
       )}
 
-      <button
+      {/* <button
         type="button"
         className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-indigo-700 underline-offset-2 hover:text-indigo-900 hover:underline"
         onClick={toggleRawPayload}
@@ -466,7 +558,7 @@ const CredentialPreviewSection = ({
             </div>
           )}
         </div>
-      )}
+      )} */}
     </section>
   );
 };
@@ -478,6 +570,7 @@ type SigningSectionProps = {
   setPrivateKeyFilename: (value: string) => void;
   isCompleted: boolean;
   inputId: string;
+  sectionNumber?: number;
 };
 
 const SigningSection = ({
@@ -487,13 +580,14 @@ const SigningSection = ({
   setPrivateKeyFilename,
   isCompleted,
   inputId,
+  sectionNumber = 3,
 }: SigningSectionProps) => {
   if (!hasCommand) return null;
 
   return (
     <section className="rounded-md border border-gray-200 bg-white p-4">
       <p className="text-sm font-semibold text-gray-900">
-        3. Sign the credential with your private key
+        {sectionNumber}. Sign the credential with your private key
       </p>
       <p className="mt-1 text-sm text-gray-600">
         Your private key never leaves your machine. You run a single openssl
@@ -577,16 +671,18 @@ type PasteSignatureSectionProps = {
   signature: string;
   setSignature: (value: string) => void;
   isCompleted: boolean;
+  sectionNumber?: number;
 };
 
 const PasteSignatureSection = ({
   signature,
   setSignature,
   isCompleted,
+  sectionNumber = 4,
 }: PasteSignatureSectionProps) => (
   <section className="rounded-md border border-sky-200 bg-sky-50 p-4">
     <p className="text-sm font-semibold text-sky-900">
-      4. Paste the signature back here
+      {sectionNumber}. Paste the signature back here
     </p>
     <p className="mt-1 text-sm text-sky-800">
       Paste the raw base64 signature only - no surrounding &quot;Signature
@@ -664,6 +760,155 @@ const DetailRow = ({
         {value}
       </dd>
     </div>
+  );
+};
+
+type SupportingEvidenceSectionProps = {
+  supportingCredential: SupportingCredential;
+  credentialId: string;
+};
+
+const SupportingEvidenceSection = ({
+  supportingCredential,
+  credentialId,
+}: SupportingEvidenceSectionProps) => {
+  const co = supportingCredential.credentialObject;
+  const types = Array.isArray(co?.type)
+    ? (co.type as string[])
+    : co?.type
+      ? [co.type as string]
+      : [];
+
+  const subjectId = (co?.credentialSubject as Record<string, unknown>)?.id as
+    | string
+    | undefined;
+  const verifiedKeypairDid = (co?.credentialSubject as Record<string, unknown>)
+    ?.sameAs as string | undefined;
+  const email = (co?.credentialSubject as Record<string, unknown>)?.email as
+    | string
+    | undefined;
+
+  const isExternalKeypair = types.includes('ExternalKeypairVerification');
+
+  const vcWithProof = { ...co, proof: supportingCredential.proof };
+
+  const handleDownload = () => {
+    const filename = isExternalKeypair
+      ? `external-keypair-verification-${credentialId}`
+      : `email-verification-${credentialId}`;
+    downloadJson(filename, vcWithProof);
+  };
+
+  const jwtIoUrl = supportingCredential.proof.jwt
+    ? `https://jwt.io/#token=${encodeURIComponent(supportingCredential.proof.jwt)}`
+    : null;
+
+  return (
+    <section className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-emerald-900">
+            2. Supporting evidence - creator identity proof
+          </p>
+          <p className="mt-1 text-sm text-emerald-800">
+            {isExternalKeypair
+              ? 'This platform-issued credential proves the creator completed a keypair challenge and controls the external DID key that will become their credential subject.'
+              : "This platform-issued credential proves the creator's email address has been verified by the platform."}
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-col gap-2">
+          <button
+            type="button"
+            onClick={handleDownload}
+            className="rounded-md border border-emerald-400 bg-white px-3 py-1.5 text-xs font-medium text-emerald-800 hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          >
+            Download VC
+          </button>
+          {jwtIoUrl && (
+            <a
+              href={jwtIoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-emerald-400 bg-white px-3 py-1.5 text-center text-xs font-medium text-emerald-800 hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            >
+              Verify on jwt.io
+            </a>
+          )}
+        </div>
+      </div>
+
+      <dl className="mt-3 flex flex-col gap-2 text-sm">
+        {types.length > 0 && (
+          <DetailRow
+            tone="neutral"
+            label="VC types"
+            value={
+              <div className="flex flex-wrap gap-1">
+                {types.map((type) => (
+                  <Badge
+                    key={type}
+                    color="success"
+                  >
+                    {type}
+                  </Badge>
+                ))}
+              </div>
+            }
+          />
+        )}
+        {Boolean(co?.issuer) && (
+          <DetailRow
+            tone="neutral"
+            label="Issued by"
+            value={co.issuer as string}
+            mono
+          />
+        )}
+        {Boolean(subjectId) && (
+          <DetailRow
+            tone="neutral"
+            label="Subject DID"
+            value={subjectId as string}
+            mono
+          />
+        )}
+        {Boolean(verifiedKeypairDid) && (
+          <DetailRow
+            tone="neutral"
+            label="Same as (keypair DID)"
+            value={verifiedKeypairDid as string}
+            mono
+          />
+        )}
+        {Boolean(email) && (
+          <DetailRow
+            tone="neutral"
+            label="Verified email"
+            value={email as string}
+            mono
+          />
+        )}
+        {Boolean(co?.validFrom) && (
+          <DetailRow
+            tone="neutral"
+            label="Valid from"
+            value={formatTimestamp(co.validFrom as string)}
+          />
+        )}
+        {Boolean(co?.validUntil) && (
+          <DetailRow
+            tone="neutral"
+            label="Valid until"
+            value={formatTimestamp(co.validUntil as string)}
+          />
+        )}
+        <DetailRow
+          tone="neutral"
+          label="Proof type"
+          value={supportingCredential.proof.type}
+        />
+      </dl>
+    </section>
   );
 };
 

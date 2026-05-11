@@ -53,13 +53,9 @@ export const IssuerCredentialsTemplatesList = () => {
           template={template}
           dropdownItems={[]}
           renderFooter={() => {
-            // DataSupplier credentials require an X.509 certificate to be
+            // All credential types require an X.509 certificate to be
             // imported. Show a prompt instead of "Active" when it is missing.
-            if (
-              template.templateType ===
-                CredentialTemplateType.ExternalKeypair &&
-              !hasExternalCert
-            ) {
+            if (!hasExternalCert) {
               return (
                 <Button
                   color="light"

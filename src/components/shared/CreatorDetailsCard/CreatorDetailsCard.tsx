@@ -1,9 +1,8 @@
 import React, { ElementType } from 'react';
 import Link from 'next/link';
-import { DropdownItemProps, Tooltip } from 'flowbite-react';
+import { DropdownItemProps } from 'flowbite-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Creator } from '@/shared/typings/Creator';
-import { truncateEmailAddress } from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { useRevokeCreatorConnectionRequest } from '@/api/mutations/useRevokeCreatorConnectionRequest';
@@ -33,15 +32,8 @@ export const CreatorDetailsCard = ({
   const queryClient = useQueryClient();
 
   const emailAddress = credentials.email;
-
-  const truncatedEmailAddress = emailAddress
-    ? truncateEmailAddress(emailAddress)
-    : null;
-
   const emailAddressClickHandler = () => {
-    if (emailAddress) {
-      copy(emailAddress);
-    }
+    if (emailAddress) copy(emailAddress);
   };
 
   const { mutateAsync: revokeAsync } = useRevokeCreatorConnectionRequest({
@@ -60,7 +52,7 @@ export const CreatorDetailsCard = ({
         imageUrl,
         alt: 'Creator image',
       }}
-      title={truncateEmailAddress(title)}
+      title={title}
       subtitle={subtitle}
       dropdownItems={
         dropdownItems || [
@@ -81,17 +73,15 @@ export const CreatorDetailsCard = ({
       }
       content={
         <>
-          {emailAddress ? (
-            <Tooltip content={emailAddress}>
-              <CardWithBadge.ContentWithIcon
-                iconName="Mail"
-                className="whitespace-pre-wrap"
-                onClick={emailAddressClickHandler}
-              >
-                {truncatedEmailAddress}
-              </CardWithBadge.ContentWithIcon>
-            </Tooltip>
-          ) : null}
+          {emailAddress && (
+            <CardWithBadge.ContentWithIcon
+              iconName="Mail"
+              className="justify-center"
+              onClick={emailAddressClickHandler}
+            >
+              {emailAddress}
+            </CardWithBadge.ContentWithIcon>
+          )}
           {credentials.domain && (
             <CardWithBadge.ContentWithIcon
               iconName="Public"

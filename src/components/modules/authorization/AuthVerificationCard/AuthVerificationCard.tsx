@@ -13,6 +13,7 @@ type AuthVerificationCardProps = {
   subtitle: string;
   userRole: UserRole;
   signUpEmail: string;
+  companyName?: string;
   goBackHandler: () => void;
   resendVerificationEmailHandler: () => void;
 };
@@ -21,6 +22,7 @@ export const AuthVerificationCard = ({
   title,
   subtitle,
   signUpEmail,
+  companyName,
 }: AuthVerificationCardProps) => {
   // const { t } = useTranslation('common');
 
@@ -33,7 +35,10 @@ export const AuthVerificationCard = ({
         <SignUp
           forceRedirectUrl={'/issuer'}
           signInUrl={'/auth/login/issuer'}
-          initialValues={{ emailAddress: signUpEmail }}
+          initialValues={{
+            emailAddress: signUpEmail,
+            ...(companyName ? { firstName: companyName } : {}),
+          }}
         />
         {/* <Button
           isProcessing={isLoading}

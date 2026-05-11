@@ -47,6 +47,11 @@
         "title": "Data Supplier",
         "description": "This credential is tied to your own cryptographic keypair. You must complete a keypair challenge before it can be issued.",
         "requirements": "Requires external EC P-256 keypair verification"
+      },
+      "external_keypair_verification": {
+        "title": "Keypair Verification",
+        "description": "Platform-issued proof that the creator completed an external keypair challenge and controls the associated DID key.",
+        "requirements": "Issued automatically during Data Supplier credential request"
       }
     }
   }

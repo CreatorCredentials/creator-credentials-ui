@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from '@/api/axiosNest';
 import { VerifiedCredentialsTemplate } from '@/shared/typings/Templates';
 import { getHeaders } from '@/shared/utils/tokenHeader';
+import { CredentialType } from '@/shared/typings/CredentialType';
 
 export type SendCredentialsRequestPayload = {
   templates: Omit<VerifiedCredentialsTemplate, 'id'>[];
   issuerId: string;
+  credentialType: CredentialType.Member | CredentialType.DataSupplier;
 };
 
 export type SendCredentialsRequestResponse = never;
