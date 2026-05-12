@@ -33,6 +33,7 @@
     "home": "Home Page",
     "verification": "Verification",
     "creators": "Creators",
+    "dataSuppliers": "Data Suppliers",
     "issuers": "Issuers",
     "credentials": "Credentials",
     "profile": "Profile",
@@ -45,6 +46,7 @@
     "verification": "Verification",
     "credential": "Credential",
     "creator": "Creator",
+    "dataSupplier": "Data Supplier",
     "template": "Template",
     "issuer": "Issuer"
   },

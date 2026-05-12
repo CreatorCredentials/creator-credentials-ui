@@ -8,6 +8,7 @@ import {
 } from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
+import { useIsDataSupplierIssuer } from '@/shared/hooks/useIsDataSupplierIssuer';
 // import { CardWithBadge } from '../CardWithBadge';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 // import { CredentialDetailsCard } from '../CredentialDetailsCard';
@@ -33,6 +34,7 @@ export const CreatorCredentialDetailsCard = ({
 }: CreatorCredentialDetailsCardProps) => {
   const { imageUrl, title, credentials } = creator;
   const { copy } = useCopyToClipboard();
+  const isDataSupplierIssuer = useIsDataSupplierIssuer();
 
   const walletAddress = credentials.walletAddress;
   const truncatedWalletAddress = walletAddress
@@ -58,7 +60,7 @@ export const CreatorCredentialDetailsCard = ({
   };
   return (
     <CardWithBadgeForCred
-      badgeType="creator"
+      badgeType={isDataSupplierIssuer ? 'dataSupplier' : 'creator'}
       additionalBadgeType={additionalBadgeType}
       credential={credential}
       image={{

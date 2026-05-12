@@ -6,6 +6,7 @@ import { Creator } from '@/shared/typings/Creator';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { useRevokeCreatorConnectionRequest } from '@/api/mutations/useRevokeCreatorConnectionRequest';
+import { useIsDataSupplierIssuer } from '@/shared/hooks/useIsDataSupplierIssuer';
 import { QueryKeys } from '@/api/queryKeys';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CardWithBadge } from '../CardWithBadge';
@@ -30,6 +31,7 @@ export const CreatorDetailsCard = ({
   const { imageUrl, title, credentials } = creator;
   const { copy } = useCopyToClipboard();
   const queryClient = useQueryClient();
+  const isDataSupplierIssuer = useIsDataSupplierIssuer();
 
   const emailAddress = credentials.email;
   const emailAddressClickHandler = () => {
@@ -46,7 +48,7 @@ export const CreatorDetailsCard = ({
   });
   return (
     <CardWithBadge
-      badgeType="creator"
+      badgeType={isDataSupplierIssuer ? 'dataSupplier' : 'creator'}
       additionalBadgeType={additionalBadgeType}
       image={{
         imageUrl,

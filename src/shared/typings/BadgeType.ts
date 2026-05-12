@@ -1,5 +1,6 @@
 export type BadgeType =
   | 'creator'
+  | 'dataSupplier'
   | 'issuer'
   | 'credential'
   | 'verification'
