@@ -99,7 +99,7 @@ export const CredentialsCardAcceptRejectFooter = ({
     },
   });
 
-  const acceptButtonHandler = async () => {
+  const openReviewModalHandler = async () => {
     try {
       const acceptance = await acceptAsync({ credentialId: credential.id });
 
@@ -141,9 +141,10 @@ export const CredentialsCardAcceptRejectFooter = ({
     }
   };
 
-  const rejectButtonHandler = async () => {
+  const rejectFromModalHandler = async () => {
     try {
       await rejectAsync({ credentialId: credential.id });
+      closeModal();
       await onSuccessfulRejection?.();
     } catch (error) {
       toast.error(t('requests.errors.reject-failed'));
@@ -163,7 +164,8 @@ export const CredentialsCardAcceptRejectFooter = ({
     setMissingSupportingVC(false);
   };
 
-  const disableButtons = isAccepting || isRejecting || isVerifyingAccept;
+  const disableCardButton = isAccepting;
+  const disableModalActions = isAccepting || isRejecting || isVerifyingAccept;
   const commandTemplate = commands[0] ?? '';
   const commandWithFile = commandTemplate.replace(
     /your_private_key\.pem/g,
@@ -175,19 +177,11 @@ export const CredentialsCardAcceptRejectFooter = ({
       <div className="flex w-full flex-col gap-2">
         <Button
           color="primary"
-          disabled={disableButtons}
-          isProcessing={isAccepting || isVerifyingAccept}
-          onClick={acceptButtonHandler}
+          disabled={disableCardButton}
+          isProcessing={isAccepting}
+          onClick={openReviewModalHandler}
         >
-          {t('accept', { ns: 'common' })}
-        </Button>
-        <Button
-          color="outline"
-          disabled={disableButtons}
-          isProcessing={isRejecting}
-          onClick={rejectButtonHandler}
-        >
-          {t('reject', { ns: 'common' })}
+          {t('review', { ns: 'common' })}
         </Button>
         {missingSupportingVC && (
           <Alert color="failure">
@@ -203,13 +197,11 @@ export const CredentialsCardAcceptRejectFooter = ({
       </div>
 
       {isAcceptModalOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
-          onClick={closeModal}
-        >
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
           <div
             className="max-h-[90vh] w-full max-w-4xl overflow-auto rounded-lg bg-white p-6 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
           >
             <CardWithTitle
               title="Review and sign this credential request"
@@ -270,24 +262,44 @@ export const CredentialsCardAcceptRejectFooter = ({
                   </Alert>
                 )}
 
-                <div className="flex gap-3">
+                <div className="flex flex-wrap items-center justify-end gap-3">
                   {acceptStep !== 'completed' && (
+                    <>
+                      <Button
+                        color="light"
+                        onClick={closeModal}
+                        disabled={disableModalActions}
+                      >
+                        {t('cancel', { ns: 'common' })}
+                      </Button>
+                      <Button
+                        color="failure"
+                        onClick={rejectFromModalHandler}
+                        disabled={disableModalActions}
+                        isProcessing={isRejecting}
+                      >
+                        {t('reject', { ns: 'common' })}
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={verifySignatureButtonHandler}
+                        isProcessing={isVerifyingAccept}
+                        disabled={
+                          isVerifyingAccept || !signature.trim() || isRejecting
+                        }
+                      >
+                        Verify Signature & Issue Credential
+                      </Button>
+                    </>
+                  )}
+                  {acceptStep === 'completed' && (
                     <Button
                       color="primary"
-                      onClick={verifySignatureButtonHandler}
-                      isProcessing={isVerifyingAccept}
-                      disabled={isVerifyingAccept || !signature.trim()}
+                      onClick={closeModal}
                     >
-                      Verify Signature & Issue Credential
+                      {t('close', { ns: 'common' })}
                     </Button>
                   )}
-                  <Button
-                    color={acceptStep === 'completed' ? 'primary' : 'light'}
-                    onClick={closeModal}
-                    disabled={isVerifyingAccept}
-                  >
-                    {acceptStep === 'completed' ? 'Done' : 'Cancel'}
-                  </Button>
                 </div>
               </div>
             </CardWithTitle>
