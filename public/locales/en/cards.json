@@ -30,8 +30,8 @@
       },
       "datasupplier": {
         "title": "Data Supplier",
-        "description": "This credential attests that you are a verified data supplier, bound to your own cryptographic keypair or certificate.",
-        "requirements": "Requires external keypair or X.509 certificate verification"
+        "description": "This credential attests that you are a verified data supplier.",
+        "requirements": ""
       },
       "connect": {
         "title": "Connect",
@@ -45,8 +45,8 @@
       },
       "external_keypair": {
         "title": "Data Supplier",
-        "description": "This credential is tied to your own cryptographic keypair. You must complete a keypair challenge before it can be issued.",
-        "requirements": "Requires external EC P-256 keypair verification"
+        "description": "This credential attests that you are a verified data supplier.",
+        "requirements": ""
       },
       "external_keypair_verification": {
         "title": "Keypair Verification",

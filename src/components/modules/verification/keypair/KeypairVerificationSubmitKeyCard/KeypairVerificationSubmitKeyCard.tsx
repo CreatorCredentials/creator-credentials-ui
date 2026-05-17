@@ -70,7 +70,7 @@ export const KeypairVerificationSubmitKeyCard = () => {
             <li>Or open the file in any text editor and copy its contents.</li>
           </ul>
           <p className="mt-2">
-            Include the BEGIN PUBLIC KEY and END PUBLIC KEY delimiter lines -
+            Include the BEGIN PUBLIC KEY and END PUBLIC KEY delimiter lines –
             leaving them out is the most common cause of a rejected submission.
           </p>
         </div>
@@ -115,7 +115,7 @@ export const KeypairVerificationSubmitKeyCard = () => {
             ))}
             <ul className="list-disc ps-5 text-sm text-gray-500">
               <li>
-                Paste the printed signature into the box in Step 3 - a single
+                Paste the printed signature into the box in Step 3 – a single
                 base64 string.
               </li>
               <li>

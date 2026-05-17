@@ -25,7 +25,7 @@ const ContentWithIcon = ({
   return (
     <Wrapper
       className={clsxm(
-        'flex items-center fill-grey-4 py-1',
+        'flex w-full items-center justify-center overflow-hidden fill-grey-4 py-1',
         {
           'cursor-pointer': Boolean(onClick),
         },
@@ -37,7 +37,7 @@ const ContentWithIcon = ({
         icon={iconName}
         className="me-2 min-h-[1.25rem] min-w-[1.25rem]"
       />
-      <p className="min-w-0 flex-1 truncate text-center">{children}</p>
+      <p className="min-w-0 truncate text-center">{children}</p>
     </Wrapper>
   );
 };
@@ -74,7 +74,7 @@ export const CardWithBadge = ({
   image,
   dropdownItems = defaultDropdownItems,
 }: CardWithBadgeProps) => (
-  <Card className={clsxm('relative', className)}>
+  <Card className={clsxm('relative overflow-hidden', className)}>
     <article className="flex flex-1 flex-col gap-2">
       <header className="flex flex-col gap-2">
         <div className="-mt-4 flex justify-between">
@@ -133,8 +133,10 @@ export const CardWithBadge = ({
           {subtitle && <p className="text-lg text-black">{subtitle}</p>}
         </div>
       </header>
-      <div className="flex-1 overflow-hidden text-base text-grey-4">
-        {content}
+      <div className="flex flex-1 flex-col items-center overflow-hidden">
+        <div className="w-full overflow-hidden text-center text-base text-grey-4">
+          {content}
+        </div>
       </div>
       {footer && (
         <footer className="flex flex-col items-center gap-2 text-center">

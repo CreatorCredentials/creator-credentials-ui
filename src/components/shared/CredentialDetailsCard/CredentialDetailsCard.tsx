@@ -3,13 +3,10 @@ import { DropdownItemProps, Tooltip } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { CredentialType } from '@/shared/typings/CredentialType';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
-import {
-  truncateWalletAddress,
-  truncateEmailAddress,
-} from '@/shared/utils/truncateWalletAddress';
+import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { CardWithBadge } from '../CardWithBadge';
-import { IconName } from '../Icon';
+import { Icon, IconName } from '../Icon';
 
 const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Email]: 'Mail',
@@ -82,13 +79,16 @@ export const CredentialDetailsCard = ({
           </p>
           {type === CredentialType.Email && 'address' in data && address ? (
             <Tooltip content={address}>
-              <CardWithBadge.ContentWithIcon
-                iconName="Public"
-                className="whitespace-pre-wrap"
+              <button
+                className="flex w-full cursor-pointer items-center justify-center overflow-hidden fill-grey-4 py-1"
                 onClick={addressClickHandler}
               >
-                {truncateEmailAddress(data.address)}
-              </CardWithBadge.ContentWithIcon>
+                <Icon
+                  icon="Public"
+                  className="me-2 min-h-[1.25rem] min-w-[1.25rem] shrink-0"
+                />
+                <span className="min-w-0 truncate">{data.address}</span>
+              </button>
             </Tooltip>
           ) : null}
           {type === CredentialType.Wallet && 'address' in data && address ? (
@@ -130,15 +130,17 @@ export const CredentialDetailsCard = ({
                 {data.companyName}
               </CardWithBadge.ContentWithIcon>
             )}
-          {'validity' in data && type !== CredentialType.Connect && (
-            <CardWithBadge.ContentWithIcon
-              iconName="CalendarMonth"
-              className="whitespace-pre-wrap"
-            >
-              {data.validity}
-            </CardWithBadge.ContentWithIcon>
-          )}
-          {'requirements' in data && (
+          {'validity' in data &&
+            type !== CredentialType.Connect &&
+            type !== CredentialType.DataSupplier && (
+              <CardWithBadge.ContentWithIcon
+                iconName="CalendarMonth"
+                className="whitespace-pre-wrap"
+              >
+                {data.validity}
+              </CardWithBadge.ContentWithIcon>
+            )}
+          {'requirements' in data && type !== CredentialType.DataSupplier && (
             <CardWithBadge.ContentWithIcon
               iconName="Caption"
               className="whitespace-pre-wrap"

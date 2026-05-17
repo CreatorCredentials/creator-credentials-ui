@@ -21,11 +21,11 @@ export const CardWithTitle = ({
     <article className="flex flex-col gap-3">
       <header className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-4">
-          <h3 className="text-xl">
+          <h3 className="text-left text-xl">
             <p>{title}</p>
           </h3>
           {description && (
-            <h4 className="text-lg text-grey-4">{description}</h4>
+            <h4 className="text-left text-lg text-grey-4">{description}</h4>
           )}
         </div>
         {headerAction && <div className="shrink-0">{headerAction}</div>}

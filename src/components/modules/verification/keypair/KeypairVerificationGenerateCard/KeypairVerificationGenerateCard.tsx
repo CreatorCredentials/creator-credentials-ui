@@ -23,7 +23,7 @@ const COPY_PUBLIC_KEY: Record<
     command: 'cat cc_public_key.pem | pbcopy',
     hint: (
       <>
-        Runs in Terminal. If something prints, you can ignore it — check your
+        Runs in Terminal. If something prints, you can ignore it – check your
         clipboard in Step 2.
       </>
     ),
@@ -230,12 +230,6 @@ const CopyPublicKeyStep = ({ stepNumber }: CopyPublicKeyStepProps) => {
       <h4 className="text-sm font-semibold text-gray-900">
         {stepNumber}. Copy the public key to your clipboard
       </h4>
-      <p
-        id={systemPickId}
-        className="text-xs font-medium uppercase tracking-wide text-gray-500"
-      >
-        Command for your system
-      </p>
       <OsSegmentedControl
         value={os}
         onChange={setOs}
@@ -331,7 +325,7 @@ export const KeypairVerificationGenerateCard = () => {
               <code className="rounded bg-white px-1">
                 ~/keys/creator-credentials
               </code>{' '}
-              — pick one place, stay consistent, and restrict permissions (on
+              – pick one place, stay consistent, and restrict permissions (on
               macOS/Linux:{' '}
               <code className="rounded bg-white px-1">
                 chmod 600 cc_private_key.pem
@@ -341,7 +335,7 @@ export const KeypairVerificationGenerateCard = () => {
             <li>
               The public <code className="rounded bg-white px-1">.pem</code> may
               sit next to the private file while you complete this flow; long
-              term you can archive or move the public key separately — it is not
+              term you can archive or move the public key separately – it is not
               secret.
             </li>
             <li>
@@ -402,7 +396,7 @@ const NewKeypairInstructions = () => (
         When you choose <strong>Generate a new keypair</strong>, OpenSSL writes{' '}
         <code className="rounded bg-white px-1">cc_private_key.pem</code> and{' '}
         <code className="rounded bg-white px-1">cc_public_key.pem</code> into
-        your terminal&apos;s <strong>current working directory</strong> — the
+        your terminal&apos;s <strong>current working directory</strong> – the
         folder your shell is &quot;in&quot; when you run each command. Check it
         with <code className="rounded bg-white px-1">pwd</code> on macOS/Linux
         or <code className="rounded bg-white px-1">Get-Location</code> in
@@ -413,7 +407,7 @@ const NewKeypairInstructions = () => (
         into the folder where you want the key files to live <em>before</em>{' '}
         running step 1 below. If you run the commands without changing directory
         first, the files appear wherever that terminal session started (often
-        your home folder or the desktop), which is easy to lose track of — pick
+        your home folder or the desktop), which is easy to lose track of – pick
         the folder on purpose.
       </p>
     </div>
@@ -436,7 +430,7 @@ const NewKeypairInstructions = () => (
           Creates{' '}
           <code className="rounded bg-gray-100 px-1">cc_private_key.pem</code>{' '}
           in that working directory (the terminal&apos;s current folder). No
-          output on success - this is the secret half, so don&apos;t open,
+          output on success – this is the secret half, so don&apos;t open,
           share, or paste it.
         </>
       }
@@ -476,7 +470,7 @@ const ExistingKeypairInstructions = () => (
         </li>
         <li>
           It must be an{' '}
-          <span className="font-medium">EC (elliptic curve) P-256</span> key -
+          <span className="font-medium">EC (elliptic curve) P-256</span> key –
           RSA and other curves won&apos;t work. If yours is something else, use
           &quot;Generate a new keypair&quot; above instead.
         </li>
@@ -511,11 +505,9 @@ const ExistingKeypairInstructions = () => (
           <code className="rounded bg-gray-100 px-1">your_private_key.pem</code>{' '}
           with your actual filename. Expected output contains &quot;ASN1 OID:
           prime256v1&quot;; anything else (secp384r1, RSA, etc.) means the key
-          isn&apos;t compatible - switch to &quot;Generate a new keypair&quot;
-          above.
-          <br />
-          If <code className="rounded bg-gray-100 px-1">openssl</code> is not
-          found, use the &quot;Install OpenSSL&quot; section above for your
+          isn&apos;t compatible – switch to &quot;Generate a new keypair&quot;
+          above. If <code className="rounded bg-gray-100 px-1">openssl</code> is
+          not found, use the &quot;Install OpenSSL&quot; section above for your
           system.
         </>
       }
@@ -527,16 +519,21 @@ const ExistingKeypairInstructions = () => (
       command="openssl ec -in your_private_key.pem -pubout -out cc_public_key.pem"
       explanation={
         <>
-          Reads your private key and writes{' '}
-          <code className="rounded bg-gray-100 px-1">cc_public_key.pem</code>{' '}
-          alongside it. Replace{' '}
-          <code className="rounded bg-gray-100 px-1">your_private_key.pem</code>{' '}
-          with your real filename.
-          <br />
-          Note for Step 3: the signing command references{' '}
-          <code className="rounded bg-gray-100 px-1">cc_private_key.pem</code> -
-          either rename your file, or swap the name in the command before
-          running it.
+          <p>
+            Reads your private key and writes{' '}
+            <code className="rounded bg-gray-100 px-1">cc_public_key.pem</code>{' '}
+            alongside it. Replace{' '}
+            <code className="rounded bg-gray-100 px-1">
+              your_private_key.pem
+            </code>{' '}
+            with your real filename.
+          </p>
+          <p>
+            Note for Step 3: the signing command references{' '}
+            <code className="rounded bg-gray-100 px-1">cc_private_key.pem</code>{' '}
+            - either rename your file, or swap the name in the command before
+            running it.
+          </p>
         </>
       }
     />

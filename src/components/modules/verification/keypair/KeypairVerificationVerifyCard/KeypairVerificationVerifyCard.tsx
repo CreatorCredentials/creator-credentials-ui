@@ -58,7 +58,7 @@ export const KeypairVerificationVerifyCard = () => {
             </p>
             <p className="text-sm">
               Your signature matched the public key and the one-time challenge.
-              The corresponding did:key will be bound to your request - click
+              The corresponding did:key will be bound to your request – click
               Continue at the bottom of the page when you&apos;re ready to
               submit.
             </p>
@@ -78,14 +78,6 @@ export const KeypairVerificationVerifyCard = () => {
               </p>
             </div>
           )}
-          <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-            <p className="font-semibold">This proof is single-use</p>
-            <p>
-              The verified keypair is bound to this request and retired after
-              submission. Next time, you can reuse the same key file via the
-              &quot;Use an existing private key&quot; path in Step 1.
-            </p>
-          </div>
         </div>
       </CardWithTitle>
     );
@@ -110,7 +102,7 @@ export const KeypairVerificationVerifyCard = () => {
             </li>
             <li>
               On a verification error, rerun the signing command and paste again
-              - ECDSA produces a fresh valid signature each time.
+              – ECDSA produces a fresh valid signature each time.
             </li>
           </ul>
         </div>

@@ -318,8 +318,10 @@ const CreatorReviewSection = ({ creator }: CreatorReviewSectionProps) => {
   if (!creator) {
     return (
       <section className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
-        <p className="font-semibold">1. Who is requesting this credential?</p>
-        <p>
+        <p className="text-left font-semibold">
+          1. Who is requesting this credential?
+        </p>
+        <p className="text-left">
           The matching creator profile isn&apos;t available in this view. Open
           the creator&apos;s details page from the parent card before
           continuing.
@@ -330,10 +332,10 @@ const CreatorReviewSection = ({ creator }: CreatorReviewSectionProps) => {
 
   return (
     <section className="rounded-md border border-blue-200 bg-blue-50 p-4">
-      <p className="text-sm font-semibold text-blue-900">
+      <p className="text-left text-sm font-semibold text-blue-900">
         1. Who is requesting this credential?
       </p>
-      <p className="mt-1 text-sm text-blue-800">
+      <p className="mt-1 text-left text-sm text-blue-800">
         Confirm these details match the person you intend to issue a credential
         to.
       </p>
@@ -420,10 +422,10 @@ const CredentialPreviewSection = ({
     <section className="rounded-md border border-indigo-200 bg-indigo-50 p-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-indigo-900">
+          <p className="text-left text-sm font-semibold text-indigo-900">
             {sectionNumber}. What credential will you actually be signing?
           </p>
-          <p className="mt-1 text-sm text-indigo-800">
+          <p className="mt-1 text-left text-sm text-indigo-800">
             This is the W3C Verifiable Credential we&apos;ll store and hand to
             the creator after your signature is verified. Once signed, the
             contents below are locked in.
@@ -491,7 +493,7 @@ const CredentialPreviewSection = ({
           {subjectId && (
             <DetailRow
               tone="indigo"
-              label="Issued to (subject did:key)"
+              label="Issued to"
               value={subjectId}
               mono
             />
@@ -517,6 +519,7 @@ const CredentialPreviewSection = ({
               tone="indigo"
               label="Valid from"
               value={formatTimestamp(credentialObject.validFrom)}
+              mono
             />
           )}
           {credentialObject.validUntil && (
@@ -524,6 +527,7 @@ const CredentialPreviewSection = ({
               tone="indigo"
               label="Valid until"
               value={formatTimestamp(credentialObject.validUntil)}
+              mono
             />
           )}
         </dl>
@@ -620,7 +624,7 @@ const SigningSection = ({
           </li>
           <li>
             The key must pair with the X.509 certificate you imported on the
-            &quot;X.509 Certificate Import&quot; page - a different key
+            &quot;X.509 Certificate Import&quot; page – a different key
             won&apos;t verify.
           </li>
           <li>
@@ -709,7 +713,7 @@ const PasteSignatureSection = ({
       className="mt-3 bg-white font-mono text-sm"
     />
     <p className="mt-2 text-sm text-sky-800">
-      Line breaks are fine - whitespace is stripped before verifying. If
+      Line breaks are fine – whitespace is stripped before verifying. If
       verification fails, paste a fresh signature and try again.
     </p>
   </section>
@@ -758,15 +762,15 @@ const DetailRow = ({
   return (
     <div className="grid grid-cols-[10rem_1fr] items-start gap-2">
       <dt
-        className={`text-xs font-medium uppercase tracking-wide ${toneClasses.label}`}
+        className={`text-left text-xs font-medium uppercase tracking-wide ${toneClasses.label}`}
       >
         {label}
       </dt>
       <dd
         className={
           mono
-            ? `break-all rounded ${toneClasses.mono} px-2 py-1 font-mono text-xs`
-            : `text-sm ${toneClasses.value}`
+            ? `break-all rounded text-left ${toneClasses.mono} px-2 py-1 font-mono text-xs`
+            : `text-left text-sm ${toneClasses.value}`
         }
       >
         {value}
@@ -819,10 +823,10 @@ const SupportingEvidenceSection = ({
     <section className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-emerald-900">
-            2. Supporting evidence - creator identity proof
+          <p className="text-left text-sm font-semibold text-emerald-900">
+            2. Supporting evidence – creator identity proof
           </p>
-          <p className="mt-1 text-sm text-emerald-800">
+          <p className="mt-1 text-left text-sm text-emerald-800">
             {isExternalKeypair
               ? 'This platform-issued credential proves the creator completed a keypair challenge and controls the external DID key that will become their credential subject.'
               : "This platform-issued credential proves the creator's email address has been verified by the platform."}
@@ -905,6 +909,7 @@ const SupportingEvidenceSection = ({
             tone="neutral"
             label="Valid from"
             value={formatTimestamp(co.validFrom as string)}
+            mono
           />
         )}
         {Boolean(co?.validUntil) && (
@@ -912,12 +917,14 @@ const SupportingEvidenceSection = ({
             tone="neutral"
             label="Valid until"
             value={formatTimestamp(co.validUntil as string)}
+            mono
           />
         )}
         <DetailRow
           tone="neutral"
           label="Proof type"
           value={supportingCredential.proof.type}
+          mono
         />
       </dl>
     </section>
