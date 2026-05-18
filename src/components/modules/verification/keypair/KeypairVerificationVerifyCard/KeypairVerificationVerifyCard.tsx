@@ -36,8 +36,11 @@ export const KeypairVerificationVerifyCard = () => {
       if (!token) throw new Error('Unauthorised');
       const res = await getDidKeyPem(token, derivedDidKey);
       setModalPem(res.data.publicKeyPem);
-    } catch {
-      setPemError('Failed to reconstruct public key PEM from did:key.');
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message ?? null;
+      setPemError(msg ?? 'Failed to reconstruct public key PEM from did:key.');
     } finally {
       setIsPemLoading(false);
     }
