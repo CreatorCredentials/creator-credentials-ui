@@ -1,58 +1,21 @@
 import { Alert, Button, Textarea } from 'flowbite-react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@clerk/nextjs';
 import { CardWithTitle } from '@/components/shared/CardWithTitle';
 import { QueryKeys } from '@/api/queryKeys';
 import { useVerifyKeypairSignature } from '@/api/mutations/useVerifyKeypairSignature';
 import { useResetKeypairChallenge } from '@/api/mutations/useResetKeypairChallenge';
-import { getDidKeyPem } from '@/api/requests/getDidKeyPem';
+import { DidKeyPemModal } from '@/components/shared/DidKeyPemModal/DidKeyPemModal';
 import { useKeypairVerificationContext } from '../KeypairVerificationContext';
 
 export const KeypairVerificationVerifyCard = () => {
   const queryClient = useQueryClient();
-  const auth = useAuth();
   const { currentStep, derivedDidKey, setCurrentStep } =
     useKeypairVerificationContext();
 
   const [signature, setSignature] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPem, setModalPem] = useState<string | null>(null);
-  const [isPemLoading, setIsPemLoading] = useState(false);
-  const [pemError, setPemError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
-
-  const handleVerifyDid = useCallback(async () => {
-    if (!derivedDidKey) return;
-    setIsModalOpen(true);
-    setModalPem(null);
-    setPemError(null);
-    setCopied(false);
-    setIsPemLoading(true);
-    try {
-      const token = await auth.getToken();
-      if (!token) throw new Error('Unauthorised');
-      const res = await getDidKeyPem(token, derivedDidKey);
-      setModalPem(res.data.publicKeyPem);
-    } catch (err: unknown) {
-      const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data
-          ?.message ?? null;
-      setPemError(msg ?? 'Failed to reconstruct public key PEM from did:key.');
-    } finally {
-      setIsPemLoading(false);
-    }
-  }, [derivedDidKey, auth]);
-
-  const handleCopyPem = useCallback(() => {
-    if (!modalPem) return;
-    navigator.clipboard.writeText(modalPem).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, [modalPem]);
+  const [isPemModalOpen, setIsPemModalOpen] = useState(false);
 
   const { mutateAsync: verifySignature, isLoading: isVerifying } =
     useVerifyKeypairSignature({
@@ -120,7 +83,7 @@ export const KeypairVerificationVerifyCard = () => {
                   color="light"
                   size="xs"
                   className="mt-2"
-                  onClick={handleVerifyDid}
+                  onClick={() => setIsPemModalOpen(true)}
                 >
                   Check public key PEM
                 </Button>
@@ -129,76 +92,11 @@ export const KeypairVerificationVerifyCard = () => {
           </div>
         </CardWithTitle>
 
-        {isModalOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="did-pem-modal-title"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setIsModalOpen(false);
-            }}
-          >
-            <div className="flex w-full max-w-lg flex-col gap-4 rounded-lg bg-white p-6 shadow-xl">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2
-                    id="did-pem-modal-title"
-                    className="text-base font-semibold text-gray-900"
-                  >
-                    Public key PEM reconstructed from did:key
-                  </h2>
-                  <p className="mt-1 text-xs text-gray-500">
-                    Compare this with the contents of your{' '}
-                    <code className="rounded bg-gray-100 px-1">
-                      cc_public_key.pem
-                    </code>{' '}
-                    file. They must match exactly.
-                  </p>
-                </div>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="ml-4 shrink-0 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
-                  aria-label="Close"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {isPemLoading && (
-                <p className="text-sm text-gray-500">Reconstructing PEM…</p>
-              )}
-
-              {pemError && (
-                <Alert color="failure">
-                  <p className="text-sm">{pemError}</p>
-                </Alert>
-              )}
-
-              {modalPem && (
-                <>
-                  <pre className="max-h-56 overflow-auto rounded bg-gray-50 p-3 font-mono text-xs text-gray-800">
-                    {modalPem}
-                  </pre>
-                  <Button
-                    color="light"
-                    size="sm"
-                    onClick={handleCopyPem}
-                  >
-                    {copied ? 'Copied!' : 'Copy PEM'}
-                  </Button>
-                </>
-              )}
-
-              <Button
-                color="primary"
-                size="sm"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Close
-              </Button>
-            </div>
-          </div>
+        {isPemModalOpen && derivedDidKey && (
+          <DidKeyPemModal
+            did={derivedDidKey}
+            onClose={() => setIsPemModalOpen(false)}
+          />
         )}
       </>
     );
