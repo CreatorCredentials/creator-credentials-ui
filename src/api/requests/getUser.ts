@@ -17,6 +17,13 @@ export type User = {
   domainRecord: string;
   domain: string;
   domainRecordChangedAt: Date;
+  externalDidKey: string | null;
+  externalPublicKeyPem: string | null;
+  activeDidKeySource: 'platform' | 'external';
+  externalCertPem: string | null;
+  activeSigningCertSource: 'platform' | 'external';
+  credentialsToIssue: string[];
+  organizationName: string | null;
 };
 
 export type GetUserResponse = User;

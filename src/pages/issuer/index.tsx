@@ -4,7 +4,7 @@ import {
   InferGetServerSidePropsType,
 } from 'next';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { UserRole } from '@/shared/typings/UserRole';
 import { getI18nProps } from '@/shared/utils/i18n';

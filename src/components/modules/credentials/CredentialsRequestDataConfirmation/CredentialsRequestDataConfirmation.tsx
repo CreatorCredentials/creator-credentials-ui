@@ -1,7 +1,6 @@
 import { Card } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useSendCredentialsRequest } from '@/api/mutations/useSendCredentialsRequest';
-// import { CredentialDetailsCard } from '@/components/shared/CredentialDetailsCard';
 import { FormFooter } from '@/components/shared/FormFooter';
 import { Icon } from '@/components/shared/Icon';
 import { IssuerDetailsCard } from '@/components/shared/IssuerDetailsCard';
@@ -9,6 +8,9 @@ import { SuccessfullCredentialRequestConfirmationCard } from '@/components/share
 import { PageHeader } from '@/components/shared/PageHeader';
 import { CredentialTemplateDetailsCard } from '@/components/shared/CredentialTemplateDetailsCard';
 import { useToast } from '@/shared/hooks/useToast';
+import { AxiosError } from '@/api/axiosNest';
+import { TEMPLATE_TYPE_TO_CREDENTIAL_TYPE } from '@/shared/typings/CredentialTemplateType';
+import { CredentialType } from '@/shared/typings/CredentialType';
 import { useCredentialsRequestContext } from '../CredentialsRequestContext';
 import { CredentialsRequestStepper } from '../CredentialsRequestStepper';
 
@@ -20,19 +22,33 @@ export const CredentialsRequestDataConfirmation = () => {
     isSuccess: successfullyRequestedCredentials,
     isLoading: isRequestingCredentials,
   } = useSendCredentialsRequest({
-    onError: () => {
-      toast.error(t('steps.confirm-data.card.request-failed'));
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 409) {
+        toast.warning(t('steps.confirm-data.card.request-conflict'));
+      } else {
+        toast.error(t('steps.confirm-data.card.request-failed'));
+      }
     },
   });
 
-  const { stepper, templates, selectedIssuer } = useCredentialsRequestContext();
+  const { stepper, templates, selectedIssuer, stepKeys } =
+    useCredentialsRequestContext();
 
   const confirmButtonHandler = () => {
     if (!selectedIssuer) return;
 
+    const selectedTemplate = templates.selectedItems[0];
+    const credentialType = selectedTemplate
+      ? (TEMPLATE_TYPE_TO_CREDENTIAL_TYPE[selectedTemplate.templateType] as
+          | CredentialType.Member
+          | CredentialType.DataSupplier
+          | CredentialType.LicciumDataSupplier)
+      : CredentialType.Member;
+
     sendCredentialsRequest({
       templates: templates.selectedItems,
       issuerId: selectedIssuer.id,
+      credentialType,
     });
   };
 
@@ -48,7 +64,10 @@ export const CredentialsRequestDataConfirmation = () => {
         closeButtonHref="/creator/credentials"
       />
       <div className="flex justify-center">
-        <CredentialsRequestStepper activeStep={stepper.activeStep} />
+        <CredentialsRequestStepper
+          activeStep={stepper.activeStep}
+          stepKeys={stepKeys}
+        />
       </div>
       <Card className="mt-12 w-full">
         <div className="grid grid-cols-[22rem_4rem_22rem_1fr] gap-4">
@@ -56,7 +75,6 @@ export const CredentialsRequestDataConfirmation = () => {
             <h3 className="mb-4 text-xl">
               {t('steps.confirm-data.card.credential')}
             </h3>
-            {/* <div className="grid grid-cols-2 gap-4"> */}
             {templates.selectedItems.map((template) => (
               <CredentialTemplateDetailsCard
                 dropdownItems={[]}
@@ -64,25 +82,18 @@ export const CredentialsRequestDataConfirmation = () => {
                 template={template}
               />
             ))}
-            {/* </div> */}
           </div>
           <div></div>
           <div>
             <h3 className="mb-4 text-xl">
-              {/* mt-14*/}
               {t('steps.confirm-data.card.issuer')}
             </h3>
-            {/* <div className="grid grid-cols-2 gap-4"> */}
             <IssuerDetailsCard
               issuer={selectedIssuer!}
               renderFooter={null}
             />
-            {/* </div> */}
           </div>
         </div>
-        {/* <h4 className="mb-4 mt-14 text-base">
-          {t('steps.confirm-data.card.confirm')}
-        </h4> */}
       </Card>
       <FormFooter>
         <FormFooter.BackButton onClick={stepper.prevStep} />

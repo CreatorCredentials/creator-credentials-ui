@@ -1,11 +1,11 @@
 import { Card, Dropdown, DropdownItemProps } from 'flowbite-react';
 import { ElementType, ReactNode } from 'react';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
+import { useTranslation } from '@/shared/utils/useTranslation';
 import { ColoredBadge } from '../ColoredBadge';
 import { Icon, IconName } from '../Icon';
 import { IconButton } from '../IconButton';
@@ -62,12 +62,15 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Email]: 'Mail',
   [CredentialType.Wallet]: 'AccountBalanceWallet',
   [CredentialType.Member]: 'Group',
+  [CredentialType.DataSupplier]: 'Verified',
+  [CredentialType.LicciumDataSupplier]: 'Verified',
   [CredentialType.Domain]: 'Public',
   [CredentialType.Connect]: 'Connect',
   [CredentialType.DidWeb]: 'Web',
+  [CredentialType.ExternalKeypairVerification]: 'AssuredWorkload',
 };
 
-const defaultDropdownItems = [] || [
+const defaultDropdownItems: DropdownItemProps<ElementType>[] = [
   {
     children: 'Dropdown-item-1',
   },
@@ -88,6 +91,25 @@ export const CardWithBadgeForCred = ({
   dropdownItems = defaultDropdownItems,
 }: CardWithBadgeProps) => {
   const { t } = useTranslation('cards');
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const jwt = (credential.data as any)?.credentialObject?.proof?.jwt as
+    | string
+    | undefined;
+  const verifyItem: DropdownItemProps<ElementType>[] = jwt
+    ? [
+        {
+          children: 'Verify',
+          onClick: () =>
+            window.open(
+              `https://jwt.io/#token=${encodeURIComponent(jwt)}`,
+              '_blank',
+            ),
+        },
+      ]
+    : [];
+  const allDropdownItems = [...dropdownItems, ...verifyItem];
+
   return (
     <Card className={clsxm('relative', className)}>
       <article className="flex flex-1 flex-col gap-2">
@@ -102,7 +124,7 @@ export const CardWithBadgeForCred = ({
               </div>
             )}
 
-            {dropdownItems.length > 0 ? (
+            {allDropdownItems.length > 0 ? (
               <div className="relative -me-4 h-6 w-6 self-end">
                 <Dropdown
                   label=""
@@ -115,7 +137,7 @@ export const CardWithBadgeForCred = ({
                     />
                   )}
                 >
-                  {dropdownItems.map((item, index) => (
+                  {allDropdownItems.map((item, index) => (
                     <Dropdown.Item
                       {...item}
                       className={clsxm('min-w-[300px]', item.className)}
@@ -128,7 +150,7 @@ export const CardWithBadgeForCred = ({
           </div>
           <div className="flex flex-col items-center gap-2">
             <div className="mb-4 flex flex-col items-center gap-2">
-              <div className="relative me-2 h-[5.5rem] w-[5.5rem]">
+              <div className="relative h-[5.5rem] w-[5.5rem]">
                 <Icon
                   icon={CREDENTIAL_TYPE_TO_ICON_NAME_MAP[credential.type]}
                   className="h-full w-full fill-grey-4 text-grey-4"
@@ -142,20 +164,27 @@ export const CardWithBadgeForCred = ({
               </p>
             </div>
 
-            <div className="relative me-2 h-[5.5rem] w-[5.5rem]">
+            <div className="relative h-[5.5rem] w-[5.5rem] overflow-hidden rounded-full">
               {'iconName' in image && (
                 <Icon
                   icon={image.iconName}
                   className="h-full w-full fill-grey-4 text-grey-4"
                 />
               )}
-              {'imageUrl' in image && (
-                <Image
-                  src={image.imageUrl}
-                  fill
-                  alt={image.alt}
-                />
-              )}
+              {'imageUrl' in image &&
+                (image.imageUrl ? (
+                  <Image
+                    src={image.imageUrl}
+                    fill
+                    alt={image.alt}
+                    className="object-cover"
+                  />
+                ) : (
+                  <Icon
+                    icon="AccountCircle"
+                    className="h-full w-full fill-grey-4 text-grey-4"
+                  />
+                ))}
             </div>
             <p className="break-all text-xl text-black">{title}</p>
             {subtitle && <p className="text-lg text-black">{subtitle}</p>}

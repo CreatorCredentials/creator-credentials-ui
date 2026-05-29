@@ -56,7 +56,6 @@ export const ConnectionRequestDetails = ({
         (credentials && {
           email: credentials.email,
           domain: credentials.domain,
-          wallet: credentials.wallet,
         }) ||
           [],
       )

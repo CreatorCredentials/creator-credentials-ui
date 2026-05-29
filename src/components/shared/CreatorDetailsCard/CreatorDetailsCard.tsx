@@ -1,15 +1,12 @@
 import React, { ElementType } from 'react';
 import Link from 'next/link';
-import { DropdownItemProps, Tooltip } from 'flowbite-react';
+import { DropdownItemProps } from 'flowbite-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Creator } from '@/shared/typings/Creator';
-import {
-  truncateEmailAddress,
-  truncateWalletAddress,
-} from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { useRevokeCreatorConnectionRequest } from '@/api/mutations/useRevokeCreatorConnectionRequest';
+import { useIsDataSupplierIssuer } from '@/shared/hooks/useIsDataSupplierIssuer';
 import { QueryKeys } from '@/api/queryKeys';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CardWithBadge } from '../CardWithBadge';
@@ -34,28 +31,11 @@ export const CreatorDetailsCard = ({
   const { imageUrl, title, credentials } = creator;
   const { copy } = useCopyToClipboard();
   const queryClient = useQueryClient();
-
-  const walletAddress = credentials.walletAddress;
-  const truncatedWalletAddress = walletAddress
-    ? truncateWalletAddress(walletAddress)
-    : null;
-
-  const walletAddressClickHandler = () => {
-    if (walletAddress) {
-      copy(walletAddress);
-    }
-  };
+  const isDataSupplierIssuer = useIsDataSupplierIssuer();
 
   const emailAddress = credentials.email;
-
-  const truncatedEmailAddress = emailAddress
-    ? truncateEmailAddress(emailAddress)
-    : null;
-
   const emailAddressClickHandler = () => {
-    if (emailAddress) {
-      copy(emailAddress);
-    }
+    if (emailAddress) copy(emailAddress);
   };
 
   const { mutateAsync: revokeAsync } = useRevokeCreatorConnectionRequest({
@@ -68,13 +48,13 @@ export const CreatorDetailsCard = ({
   });
   return (
     <CardWithBadge
-      badgeType="creator"
+      badgeType={isDataSupplierIssuer ? 'dataSupplier' : 'creator'}
       additionalBadgeType={additionalBadgeType}
       image={{
         imageUrl,
         alt: 'Creator image',
       }}
-      title={truncateEmailAddress(title)}
+      title={title}
       subtitle={subtitle}
       dropdownItems={
         dropdownItems || [
@@ -95,28 +75,15 @@ export const CreatorDetailsCard = ({
       }
       content={
         <>
-          {emailAddress ? (
-            <Tooltip content={emailAddress}>
-              <CardWithBadge.ContentWithIcon
-                iconName="Mail"
-                className="whitespace-pre-wrap"
-                onClick={emailAddressClickHandler}
-              >
-                {truncatedEmailAddress}
-              </CardWithBadge.ContentWithIcon>
-            </Tooltip>
-          ) : null}
-          {walletAddress ? (
-            <Tooltip content={walletAddress}>
-              <CardWithBadge.ContentWithIcon
-                iconName="AccountBalanceWallet"
-                className="whitespace-pre-wrap"
-                onClick={walletAddressClickHandler}
-              >
-                {truncatedWalletAddress}
-              </CardWithBadge.ContentWithIcon>
-            </Tooltip>
-          ) : null}
+          {emailAddress && (
+            <CardWithBadge.ContentWithIcon
+              iconName="Mail"
+              className="justify-center"
+              onClick={emailAddressClickHandler}
+            >
+              {emailAddress}
+            </CardWithBadge.ContentWithIcon>
+          )}
           {credentials.domain && (
             <CardWithBadge.ContentWithIcon
               iconName="Public"

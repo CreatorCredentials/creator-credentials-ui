@@ -1,7 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import { getAuth } from '@clerk/nextjs/server';
-import { clerkClient } from '@clerk/nextjs';
-import { withAuth } from '@/components/modules/app';
+import { getAuth, clerkClient } from '@clerk/nextjs/server';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { UserRole } from '@/shared/typings/UserRole';
 
 const HomePage: NextPage = () => null;
@@ -18,7 +17,8 @@ export const getServerSideProps = withAuth(
         },
       };
     }
-    const user = await clerkClient.users.getUser(userId);
+    const client = await clerkClient();
+    const user = await client.users.getUser(userId);
 
     return {
       redirect: {

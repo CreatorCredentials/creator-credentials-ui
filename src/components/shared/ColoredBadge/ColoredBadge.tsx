@@ -27,6 +27,11 @@ const BADGE_PROPS_MAP: Record<
     iconName: 'Caption',
     className: 'fill-creator text-creator bg-creator/10',
   },
+  dataSupplier: {
+    tKey: 'badges.dataSupplier',
+    iconName: 'Caption',
+    className: 'fill-creator text-creator bg-creator/10',
+  },
   issuer: {
     tKey: 'badges.issuer',
     iconName: 'AssuredWorkload',

@@ -43,7 +43,7 @@ export const NavigationItem = ({
         iconName && activeIconName ? (
           <Icon
             icon={isActive ? activeIconName : iconName}
-            className="fill-black"
+            className="h-5 w-5 shrink-0 fill-black"
           />
         ) : null
       }

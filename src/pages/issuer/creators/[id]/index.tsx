@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { CreatorCredentialsRequestDetails } from '@/components/modules/creators/CreatorCredentialsRequestDetails';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';

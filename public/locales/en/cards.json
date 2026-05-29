@@ -28,10 +28,40 @@
         "description": "This credential attests that you are a member of the issuer organisation",
         "requirements": "Info about requirements"
       },
+      "datasupplier": {
+        "title": "Open Future Data Supplier",
+        "description": "This credential attests that you are a verified Open Future data supplier.",
+        "requirements": ""
+      },
+      "liccium_datasupplier": {
+        "title": "Liccium Data Supplier",
+        "description": "This credential attests that you are a verified Liccium data supplier.",
+        "requirements": ""
+      },
       "connect": {
         "title": "Connect",
         "description": "This credential attests that you are owner of Liccium app account with corresponding did:key",
         "requirements": "Info about requirements"
+      },
+      "student": {
+        "title": "Student",
+        "description": "This credential attests that you are a student of the issuer organisation",
+        "requirements": "Info about requirements"
+      },
+      "external_keypair": {
+        "title": "Open Future Data Supplier",
+        "description": "This credential attests that you are a verified Open Future data supplier.",
+        "requirements": ""
+      },
+      "liccium_external_keypair": {
+        "title": "Liccium Data Supplier",
+        "description": "This credential attests that you are a verified Liccium data supplier.",
+        "requirements": ""
+      },
+      "external_keypair_verification": {
+        "title": "Keypair Verification",
+        "description": "Platform-issued proof that the creator completed an external keypair challenge and controls the associated DID key.",
+        "requirements": "Issued automatically during Data Supplier credential request"
       }
     }
   }

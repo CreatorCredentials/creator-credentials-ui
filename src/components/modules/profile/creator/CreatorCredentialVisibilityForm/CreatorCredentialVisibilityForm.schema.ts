@@ -5,6 +5,5 @@ export const CreatorCredentialVisibilityFormSchema =
   Joi.object<CreatorCredentialVisibilityFormContextType>().keys({
     showAll: Joi.boolean().required(),
     email: Joi.boolean().required(),
-    wallet: Joi.boolean().required(),
     domain: Joi.boolean().required(),
   });

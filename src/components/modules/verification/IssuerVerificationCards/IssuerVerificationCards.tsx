@@ -8,6 +8,7 @@ import { useIssuerCredentials } from '@/api/queries/useIssuerCredentials';
 import { DomainVerificationCard } from '../DomainVerificationCard';
 import { DidWebVerificationCard } from '../did-web/DidWebVerificationCard';
 import { EmailVerificationCard } from '../EmailVerificationCard';
+import { CertVerificationNavCard } from '../CertVerificationNavCard';
 
 export const IssuerVerificationCards = () => {
   // additional ready will state if translations are loaded or not
@@ -81,6 +82,7 @@ export const IssuerVerificationCards = () => {
         ]}
         userRole={UserRole.Issuer}
       />
+      <CertVerificationNavCard />
     </section>
   );
 };

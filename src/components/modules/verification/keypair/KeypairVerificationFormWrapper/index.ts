@@ -1,0 +1,1 @@
+export { KeypairVerificationFormWrapper } from './KeypairVerificationFormWrapper';

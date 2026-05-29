@@ -1,0 +1,1 @@
+export { KeypairVerificationNavCard } from './KeypairVerificationNavCard';

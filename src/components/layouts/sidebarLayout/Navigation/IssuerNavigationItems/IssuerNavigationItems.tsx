@@ -3,6 +3,7 @@ import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { useIssuersCredentials } from '@/api/queries/useIssuersCredentials';
+import { useIsDataSupplierIssuer } from '@/shared/hooks/useIsDataSupplierIssuer';
 import { NavigationRoute } from '../NavigationRoute';
 import { NavigationSignOutButton } from '../NavigationSignOutButton';
 import { NavigationItem } from '../NavigationItem';
@@ -10,6 +11,7 @@ import { NavigationItem } from '../NavigationItem';
 function getIssuerRoutes(
   amountOfPendingConnections: number | undefined,
   amountOfPendingCredentials: number | undefined,
+  isDataSupplierIssuer: boolean,
 ): NavigationRoute[] {
   return [
     {
@@ -26,7 +28,9 @@ function getIssuerRoutes(
       activeIconName: 'VerifiedFilled',
     },
     {
-      labelKey: 'navigation.creators',
+      labelKey: isDataSupplierIssuer
+        ? 'navigation.dataSuppliers'
+        : 'navigation.creators',
       href: '/issuer/creators',
       iconName: 'DesignServices',
       activeIconName: 'DesignServicesFilled',
@@ -110,6 +114,8 @@ export const IssuerNavigationItems = () => {
     params: { status: CredentialVerificationStatus.Pending },
   });
 
+  const isDataSupplierIssuer = useIsDataSupplierIssuer();
+
   const amountOfPendingConnections = connections?.creators.length;
   const amountOfPendingCredentials = credentials?.credentials.length;
 
@@ -118,13 +124,18 @@ export const IssuerNavigationItems = () => {
       getIssuerRoutes(
         amountOfPendingConnections,
         amountOfPendingCredentials,
+        isDataSupplierIssuer,
       ).map((props) => (
         <NavigationItem
           {...props}
           key={props.href}
         />
       )),
-    [amountOfPendingConnections, amountOfPendingCredentials],
+    [
+      amountOfPendingConnections,
+      amountOfPendingCredentials,
+      isDataSupplierIssuer,
+    ],
   );
 
   return (

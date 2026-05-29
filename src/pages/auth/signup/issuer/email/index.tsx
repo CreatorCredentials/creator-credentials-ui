@@ -2,7 +2,12 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 import { Button } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
@@ -53,9 +58,11 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
     mode: 'onBlur',
   });
 
-  const { handleSubmit, watch } = form;
+  const { handleSubmit, control } = form;
 
-  const termsAndConditions = watch('termsAndConditions');
+  // `useWatch` is the memoizable subscription API; `form.watch(...)` returns a
+  // function that can't be memoized, which trips `react-hooks/incompatible-library`.
+  const termsAndConditions = useWatch({ control, name: 'termsAndConditions' });
 
   const emailFormSubmitHandler: SubmitHandler<
     IssuerSignupEmailFormContextType

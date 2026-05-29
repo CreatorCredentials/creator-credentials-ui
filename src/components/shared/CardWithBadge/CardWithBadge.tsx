@@ -25,7 +25,7 @@ const ContentWithIcon = ({
   return (
     <Wrapper
       className={clsxm(
-        'flex items-center fill-grey-4 py-1',
+        'flex w-full items-center justify-center overflow-hidden fill-grey-4 py-1',
         {
           'cursor-pointer': Boolean(onClick),
         },
@@ -37,7 +37,7 @@ const ContentWithIcon = ({
         icon={iconName}
         className="me-2 min-h-[1.25rem] min-w-[1.25rem]"
       />
-      <p className="break-all">{children}</p>
+      <p className="min-w-0 truncate text-center">{children}</p>
     </Wrapper>
   );
 };
@@ -54,14 +54,15 @@ type CardWithBadgeProps = {
   dropdownItems?: DropdownItemProps<ElementType>[];
 };
 
-const defaultDropdownItems = [] || [
-  {
-    children: 'Dropdown-item-1',
-  },
-  {
-    children: 'Dropdown-item-2',
-  },
-];
+const defaultDropdownItems: DropdownItemProps<ElementType>[] = [];
+// || [
+//   {
+//     children: 'Dropdown-item-1',
+//   },
+//   {
+//     children: 'Dropdown-item-2',
+//   },
+// ];
 export const CardWithBadge = ({
   badgeType,
   additionalBadgeType,
@@ -73,7 +74,7 @@ export const CardWithBadge = ({
   image,
   dropdownItems = defaultDropdownItems,
 }: CardWithBadgeProps) => (
-  <Card className={clsxm('relative', className)}>
+  <Card className={clsxm('relative overflow-hidden', className)}>
     <article className="flex flex-1 flex-col gap-2">
       <header className="flex flex-col gap-2">
         <div className="-mt-4 flex justify-between">
@@ -111,27 +112,38 @@ export const CardWithBadge = ({
           ) : null}
         </div>
         <div className="flex flex-col items-center gap-2">
-          <div className="relative me-2 h-[5.5rem] w-[5.5rem]">
+          <div className="relative h-[5.5rem] w-[5.5rem] overflow-hidden rounded-full">
             {'iconName' in image && (
               <Icon
                 icon={image.iconName}
                 className="h-full w-full fill-grey-4 text-grey-4"
               />
             )}
-            {'imageUrl' in image && (
-              <Image
-                src={image.imageUrl}
-                fill
-                alt={image.alt}
-              />
-            )}
+            {'imageUrl' in image &&
+              (image.imageUrl ? (
+                <Image
+                  src={image.imageUrl}
+                  fill
+                  alt={image.alt}
+                  className="object-cover"
+                />
+              ) : (
+                <Icon
+                  icon="AccountCircle"
+                  className="h-full w-full fill-grey-4 text-grey-4"
+                />
+              ))}
           </div>
-          <p className="break-all text-xl text-black">{title}</p>
+          <p className="w-full truncate text-center text-xl text-black">
+            {title}
+          </p>
           {subtitle && <p className="text-lg text-black">{subtitle}</p>}
         </div>
       </header>
-      <div className="flex-1 overflow-hidden text-base text-grey-4">
-        {content}
+      <div className="flex flex-1 flex-col items-center overflow-hidden">
+        <div className="w-full overflow-hidden text-center text-base text-grey-4">
+          {content}
+        </div>
       </div>
       {footer && (
         <footer className="flex flex-col items-center gap-2 text-center">

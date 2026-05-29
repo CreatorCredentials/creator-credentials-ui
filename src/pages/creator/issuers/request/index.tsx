@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { getAuth } from '@clerk/nextjs/server';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { ConnectionRequestDetails } from '@/components/modules/issuers/ConnectionRequestDetails';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';

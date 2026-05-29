@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useWatch,
+} from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useToast } from '@/shared/hooks/useToast';
@@ -18,7 +23,7 @@ export const CreatorPrivacySettings = () => {
     mode: 'onBlur',
   });
 
-  const { handleSubmit } = form;
+  const { handleSubmit, control } = form;
 
   const credentialVisibilityFormSubmitHandler: SubmitHandler<
     CreatorCredentialVisibilityFormContextType
@@ -30,7 +35,9 @@ export const CreatorPrivacySettings = () => {
     }
   };
 
-  const values = form.watch();
+  // `useWatch` is the memoizable subscription API; `form.watch()` returns a
+  // function that can't be memoized, which trips `react-hooks/incompatible-library`.
+  const values = useWatch({ control });
 
   useEffect(() => {
     console.info('Form values changed: ', values);

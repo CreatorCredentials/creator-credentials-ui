@@ -5,7 +5,7 @@ import { useUser } from '@clerk/nextjs';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { UserRole } from '@/shared/typings/UserRole';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { NoLogoBlankLayout } from '@/components/layouts/NoLogoblankLayout/NoLogoBlankLayout';

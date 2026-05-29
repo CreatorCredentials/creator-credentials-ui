@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { useMemo } from 'react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useCreatorIssuers } from '@/api/queries/useCreatorIssuers';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { IssuersList } from '@/components/modules/issuers/IssuersList';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { IssuerConnectionStatus } from '@/shared/typings/IssuerConnectionStatus';

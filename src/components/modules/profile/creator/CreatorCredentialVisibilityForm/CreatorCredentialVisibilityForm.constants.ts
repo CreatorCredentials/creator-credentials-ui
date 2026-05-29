@@ -4,6 +4,5 @@ export const creatorCredentialVisibilityFormDefaultValues: CreatorCredentialVisi
   {
     showAll: true,
     email: true,
-    wallet: true,
     domain: true,
   };

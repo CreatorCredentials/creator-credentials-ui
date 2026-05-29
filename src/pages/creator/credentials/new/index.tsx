@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useSearchParams } from 'next/navigation';
-import { withAuth } from '@/components/modules/app';
+import { withAuth } from '@/components/modules/app/withAuth';
 import { CredentialsRequestContextProvider } from '@/components/modules/credentials/CredentialsRequestContext';
 import { CredentialsRequestMultiStep } from '@/components/modules/credentials/CredentialsRequestMultiStep';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';

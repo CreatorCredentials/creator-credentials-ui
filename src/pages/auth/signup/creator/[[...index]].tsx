@@ -73,9 +73,8 @@ const CreatorSignupPage: NextPageWithLayout = () => {
         subtitle={t('card.description')}
       >
         <SignUp
-          redirectUrl={'/creator'}
+          forceRedirectUrl={'/creator'}
           signInUrl={'/auth/login/creator'}
-          afterSignUpUrl={'/creator'}
         />
       </BaseAuthFormCard>
       {/* <section className="flex flex-1 flex-col items-center">

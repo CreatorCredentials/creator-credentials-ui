@@ -2,7 +2,7 @@ import 'globals.css';
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Flowbite } from 'flowbite-react';
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation } from 'next-i18next/pages';
 import { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 import { useState } from 'react';
@@ -18,6 +18,8 @@ import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { flowbiteTheme } from '@/components/flowbite.theme';
 import { SidebarLayout } from '@/components/layouts/sidebarLayout/SidebarLayout';
 import { AppMetadata } from '@/components/modules/app';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const nextI18NextConfig = require('../../next-i18next.config');
 
 i18n.use(initReactI18next).init({
   load: 'all',
@@ -40,7 +42,11 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <ClerkProvider {...pageProps}>
+      <ClerkProvider
+        {...pageProps}
+        signInUrl="/welcome"
+        signUpUrl="/welcome"
+      >
         <AppMetadata />
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
@@ -60,4 +66,4 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
     </>
   );
 }
-export default appWithTranslation(CreatorCredentialsApp);
+export default appWithTranslation(CreatorCredentialsApp, nextI18NextConfig);

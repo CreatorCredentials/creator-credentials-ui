@@ -1,0 +1,1 @@
+export { CertVerificationVerifyCard } from './CertVerificationVerifyCard';
