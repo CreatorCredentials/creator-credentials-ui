@@ -3,6 +3,7 @@ export enum CredentialType {
   Wallet = 'WALLET',
   Member = 'MEMBER',
   DataSupplier = 'DATASUPPLIER',
+  LicciumDataSupplier = 'LICCIUM_DATASUPPLIER',
   Domain = 'DOMAIN',
   DidWeb = 'DID_WEB',
   Connect = 'CONNECT',

@@ -23,6 +23,7 @@ export type User = {
   externalCertPem: string | null;
   activeSigningCertSource: 'platform' | 'external';
   credentialsToIssue: string[];
+  organizationName: string | null;
 };
 
 export type GetUserResponse = User;

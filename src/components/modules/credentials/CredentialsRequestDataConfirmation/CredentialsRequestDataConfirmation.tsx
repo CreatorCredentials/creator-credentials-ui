@@ -41,7 +41,8 @@ export const CredentialsRequestDataConfirmation = () => {
     const credentialType = selectedTemplate
       ? (TEMPLATE_TYPE_TO_CREDENTIAL_TYPE[selectedTemplate.templateType] as
           | CredentialType.Member
-          | CredentialType.DataSupplier)
+          | CredentialType.DataSupplier
+          | CredentialType.LicciumDataSupplier)
       : CredentialType.Member;
 
     sendCredentialsRequest({

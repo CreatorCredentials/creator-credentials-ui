@@ -99,7 +99,12 @@ const ConfirmButton = (props: ButtonProps) => {
   );
 };
 
-const PortalRoot = () => <div id={FOOTER_PORTAL_ID} />;
+const PortalRoot = ({ className }: { className?: string }) => (
+  <div
+    id={FOOTER_PORTAL_ID}
+    className={className}
+  />
+);
 
 FormFooter.PortalRoot = PortalRoot;
 FormFooter.BackButton = BackButton;

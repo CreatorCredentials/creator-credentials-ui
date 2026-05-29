@@ -20,10 +20,10 @@ export const SidebarLayout = ({ children }: SidebarLayoutProps) => {
       <div className="flex flex-1 overflow-hidden">
         <Navigation />
         <div className="relative flex flex-1 flex-col">
-          <div className="scrollbar z-50 flex flex-1 flex-col overflow-y-auto px-19 py-16">
+          <div className="scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto px-19 py-16">
             <main className="flex flex-1 flex-col">{children}</main>
           </div>
-          <FormFooter.PortalRoot />
+          <FormFooter.PortalRoot className="relative shrink-0" />
         </div>
       </div>
     </div>

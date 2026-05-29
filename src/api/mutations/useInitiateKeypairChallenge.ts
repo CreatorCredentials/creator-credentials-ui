@@ -8,19 +8,25 @@ import {
 
 export const useInitiateKeypairChallenge = (
   options?: Omit<
-    UseMutationOptions<InitiateKeypairChallengeResponse, AxiosError, void>,
+    UseMutationOptions<
+      InitiateKeypairChallengeResponse,
+      AxiosError,
+      string | undefined
+    >,
     'mutationFn'
   >,
 ) => {
   const auth = useAuth();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (keyFilePrefix?: string) => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useInitiateKeypairChallenge call');
       }
-      return initiateKeypairChallenge(token).then((res) => res.data);
+      return initiateKeypairChallenge(token, keyFilePrefix).then(
+        (res) => res.data,
+      );
     },
     ...options,
   });

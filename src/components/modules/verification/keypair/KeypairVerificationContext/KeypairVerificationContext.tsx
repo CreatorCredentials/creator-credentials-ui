@@ -2,14 +2,36 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { useKeypairChallengeStatus } from '@/api/queries/useKeypairChallengeStatus';
+import { GetKeypairChallengeStatusResponse } from '@/api/requests/getKeypairChallengeStatus';
 import {
   KeypairVerificationContextType,
   KeypairVerificationStep,
 } from './KeypairVerificationContext.types';
+
+const STEP_ORDER: Record<KeypairVerificationStep, number> = {
+  generate: 0,
+  'submit-key': 1,
+  'verify-signature': 2,
+  completed: 3,
+};
+
+const stepFromStatus = (
+  statusData: GetKeypairChallengeStatusResponse,
+): KeypairVerificationStep => {
+  const { challenge } = statusData;
+
+  if (!challenge) return 'generate';
+  if (challenge.status === 'verified') return 'completed';
+  if (challenge.status === 'challenge_issued') return 'verify-signature';
+  if (challenge.status === 'initiated') return 'submit-key';
+  return 'generate';
+};
 
 export const KeypairVerificationContext =
   createContext<KeypairVerificationContextType | null>(null);
@@ -28,48 +50,45 @@ export const KeypairVerificationContextProvider = ({
   const [commands, setCommands] = useState<string[]>([]);
   const [challengeMessage, setChallengeMessage] = useState<string | null>(null);
   const [derivedDidKey, setDerivedDidKey] = useState<string | null>(null);
+  const localStepRef = useRef<KeypairVerificationStep | null>(null);
+
+  const setCurrentStepTracked = useCallback((step: KeypairVerificationStep) => {
+    localStepRef.current = step;
+    setCurrentStep(step);
+  }, []);
 
   // Hydrate UI state from the persisted challenge whenever the status query
-  // resolves. The keypair challenge is single-use per credential request, so
-  // any "consumed" / no-challenge state should send the user back to the
-  // beginning of the flow (i.e. they need to generate a new proof). We adjust
-  // state during render (rather than in an effect) so React folds the update
-  // into the current render pass — this is the pattern recommended by the
-  // React docs for "syncing state with an external value".
-  const [prevStatusData, setPrevStatusData] = useState(statusData);
-  if (statusData !== prevStatusData) {
-    setPrevStatusData(statusData);
+  // resolves. Ignore stale responses that would roll the UI back to an earlier
+  // step while a local mutation (initiate / submit / verify) is in flight.
+  useEffect(() => {
+    if (!statusData) return;
 
-    if (statusData) {
-      const { challenge, commands: serverCommands } = statusData;
+    const serverStep = stepFromStatus(statusData);
+    const localStep = localStepRef.current;
 
-      if (!challenge) {
-        setCurrentStep('generate');
-      } else if (challenge.status === 'verified') {
-        setCurrentStep('completed');
-        if (challenge.derivedDidKey) {
-          setDerivedDidKey(challenge.derivedDidKey);
-        }
-      } else if (challenge.status === 'challenge_issued') {
-        setCurrentStep('verify-signature');
-        if (challenge.challengeMessage) {
-          setChallengeMessage(challenge.challengeMessage);
-        }
-        if (challenge.derivedDidKey) {
-          setDerivedDidKey(challenge.derivedDidKey);
-        }
-      } else if (challenge.status === 'initiated') {
-        setCurrentStep('submit-key');
-      } else {
-        // 'consumed' | 'failed' | unknown - treat as needing a fresh proof.
-        setCurrentStep('generate');
-      }
-
-      if (serverCommands) {
-        setCommands(serverCommands);
-      }
+    if (localStep && STEP_ORDER[localStep] > STEP_ORDER[serverStep]) {
+      return;
     }
-  }
+
+    localStepRef.current = null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrentStep(serverStep);
+
+    const { challenge, commands: serverCommands } = statusData;
+
+    if (challenge?.challengeMessage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setChallengeMessage(challenge.challengeMessage);
+    }
+    if (challenge?.derivedDidKey) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDerivedDidKey(challenge.derivedDidKey);
+    }
+    if (serverCommands) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCommands(serverCommands);
+    }
+  }, [statusData]);
 
   const handleSetCommands = useCallback((cmds: string[]) => {
     setCommands(cmds);
@@ -92,7 +111,7 @@ export const KeypairVerificationContextProvider = ({
       externalDidKey: statusData?.externalDidKey ?? null,
       activeDidKeySource: statusData?.activeDidKeySource ?? 'platform',
       isLoading,
-      setCurrentStep,
+      setCurrentStep: setCurrentStepTracked,
       setCommands: handleSetCommands,
       setChallengeMessage: handleSetChallengeMessage,
       setDerivedDidKey: handleSetDerivedDidKey,
@@ -104,6 +123,7 @@ export const KeypairVerificationContextProvider = ({
       derivedDidKey,
       statusData,
       isLoading,
+      setCurrentStepTracked,
       handleSetCommands,
       handleSetChallengeMessage,
       handleSetDerivedDidKey,

@@ -112,20 +112,27 @@ export const CardWithBadge = ({
           ) : null}
         </div>
         <div className="flex flex-col items-center gap-2">
-          <div className="relative me-2 h-[5.5rem] w-[5.5rem]">
+          <div className="relative h-[5.5rem] w-[5.5rem] overflow-hidden rounded-full">
             {'iconName' in image && (
               <Icon
                 icon={image.iconName}
                 className="h-full w-full fill-grey-4 text-grey-4"
               />
             )}
-            {'imageUrl' in image && (
-              <Image
-                src={image.imageUrl}
-                fill
-                alt={image.alt}
-              />
-            )}
+            {'imageUrl' in image &&
+              (image.imageUrl ? (
+                <Image
+                  src={image.imageUrl}
+                  fill
+                  alt={image.alt}
+                  className="object-cover"
+                />
+              ) : (
+                <Icon
+                  icon="AccountCircle"
+                  className="h-full w-full fill-grey-4 text-grey-4"
+                />
+              ))}
           </div>
           <p className="w-full truncate text-center text-xl text-black">
             {title}

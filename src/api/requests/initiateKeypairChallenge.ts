@@ -7,9 +7,12 @@ export type InitiateKeypairChallengeResponse = {
   commands: string[];
 };
 
-export const initiateKeypairChallenge = (token: string) =>
+export const initiateKeypairChallenge = (
+  token: string,
+  keyFilePrefix?: string,
+) =>
   axios.post<never, AxiosResponse<InitiateKeypairChallengeResponse>>(
     '/v1/keypair-challenge/initiate',
-    {},
+    { keyFilePrefix },
     getHeaders(token),
   );

@@ -6,7 +6,10 @@ import { CredentialType } from '@/shared/typings/CredentialType';
 export type SendCredentialsRequestPayload = {
   templates: Omit<VerifiedCredentialsTemplate, 'id'>[];
   issuerId: string;
-  credentialType: CredentialType.Member | CredentialType.DataSupplier;
+  credentialType:
+    | CredentialType.Member
+    | CredentialType.DataSupplier
+    | CredentialType.LicciumDataSupplier;
 };
 
 export type SendCredentialsRequestResponse = never;

@@ -29,8 +29,13 @@
         "requirements": "Info about requirements"
       },
       "datasupplier": {
-        "title": "Data Supplier",
-        "description": "This credential attests that you are a verified data supplier.",
+        "title": "Open Future Data Supplier",
+        "description": "This credential attests that you are a verified Open Future data supplier.",
+        "requirements": ""
+      },
+      "liccium_datasupplier": {
+        "title": "Liccium Data Supplier",
+        "description": "This credential attests that you are a verified Liccium data supplier.",
         "requirements": ""
       },
       "connect": {
@@ -44,8 +49,13 @@
         "requirements": "Info about requirements"
       },
       "external_keypair": {
-        "title": "Data Supplier",
-        "description": "This credential attests that you are a verified data supplier.",
+        "title": "Open Future Data Supplier",
+        "description": "This credential attests that you are a verified Open Future data supplier.",
+        "requirements": ""
+      },
+      "liccium_external_keypair": {
+        "title": "Liccium Data Supplier",
+        "description": "This credential attests that you are a verified Liccium data supplier.",
         "requirements": ""
       },
       "external_keypair_verification": {
