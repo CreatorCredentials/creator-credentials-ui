@@ -14,6 +14,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.Wallet]: 'AccountBalanceWallet',
   [CredentialType.Member]: 'Group',
   [CredentialType.DataSupplier]: 'Verified',
+  [CredentialType.LicciumDataSupplier]: 'Verified',
   [CredentialType.Domain]: 'Public',
   [CredentialType.DidWeb]: 'Web',
   [CredentialType.Connect]: 'Connect',
