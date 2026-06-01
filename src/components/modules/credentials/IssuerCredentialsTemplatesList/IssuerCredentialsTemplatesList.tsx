@@ -19,7 +19,11 @@ const CREDENTIAL_TYPE_TO_TEMPLATE: Partial<
   },
   [CredentialType.DataSupplier]: {
     templateType: CredentialTemplateType.ExternalKeypair,
-    name: 'Data Supplier',
+    name: 'OpenFuture Data Supplier',
+  },
+  [CredentialType.LicciumDataSupplier]: {
+    templateType: CredentialTemplateType.LicciumExternalKeypair,
+    name: 'Liccium Data Supplier',
   },
 };
 

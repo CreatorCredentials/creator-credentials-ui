@@ -112,7 +112,11 @@ export const CardWithBadge = ({
           ) : null}
         </div>
         <div className="flex flex-col items-center gap-2">
-          <div className="relative h-[5.5rem] w-[5.5rem] overflow-hidden rounded-full">
+          <div
+            className={clsxm('relative h-[5.5rem] w-[5.5rem] overflow-hidden', {
+              'rounded-full': 'imageUrl' in image,
+            })}
+          >
             {'iconName' in image && (
               <Icon
                 icon={image.iconName}
