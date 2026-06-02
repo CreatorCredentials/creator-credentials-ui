@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
@@ -10,11 +11,15 @@ import { QueryKeys } from '@/api/queryKeys';
 import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorCredentialDetailsCard } from '@/components/shared/CreatorCredentialDetailsCard';
+import { ConfirmationModal } from '@/components/shared/ConfirmationModal';
 import { CreatorsFilters } from '../CreatorsFilters';
 import { CredentialsCardAcceptRejectFooter } from '../CredentialsCardAcceptRejectFooter';
 
 export const IssuerIssuedCredentials = () => {
   const { t } = useTranslation('issuer-creators');
+  const [credentialIdToDelete, setCredentialIdToDelete] = useState<
+    string | null
+  >(null);
 
   const queryClient = useQueryClient();
   const { data, status, isLoading } = useIssuersCredentials(
@@ -73,9 +78,7 @@ export const IssuerIssuedCredentials = () => {
               backRoute="/issuer/credentials/issued"
               dropdownItems={[
                 {
-                  onClick: () => {
-                    deleteMemberCredential({ credentialId: credential.id });
-                  },
+                  onClick: () => setCredentialIdToDelete(credential.id),
                   children: 'Delete credential',
                 },
               ]}
@@ -96,6 +99,19 @@ export const IssuerIssuedCredentials = () => {
           ) : null;
         })}
       </div>
+      {credentialIdToDelete && (
+        <ConfirmationModal
+          title="Delete credential"
+          message="Are you sure you want to delete this credential? This action cannot be undone."
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          onConfirm={() => {
+            deleteMemberCredential({ credentialId: credentialIdToDelete });
+            setCredentialIdToDelete(null);
+          }}
+          onCancel={() => setCredentialIdToDelete(null)}
+        />
+      )}
     </>
   );
 };
