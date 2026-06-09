@@ -7,9 +7,13 @@ import { useSetOrganizationName } from '@/api/mutations/useSetOrganizationName';
 
 type Props = {
   currentValue: string | null;
+  isLoading?: boolean;
 };
 
-export const OrganizationNameSection = ({ currentValue }: Props) => {
+export const OrganizationNameSection = ({
+  currentValue,
+  isLoading: isDataLoading,
+}: Props) => {
   const queryClient = useQueryClient();
   const [value, setValue] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +48,16 @@ export const OrganizationNameSection = ({ currentValue }: Props) => {
   };
 
   const isSet = currentValue !== null && currentValue !== undefined;
+
+  if (isDataLoading) {
+    return (
+      <div className="flex flex-col gap-3">
+        <div className="h-4 w-36 animate-pulse rounded bg-gray-200" />
+        <div className="h-3 w-64 animate-pulse rounded bg-gray-200" />
+        <div className="h-10 w-full animate-pulse rounded bg-gray-200" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-3">

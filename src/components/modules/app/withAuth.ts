@@ -54,6 +54,23 @@ export function withAuth<
         }
       }
 
+      // If the user accepted ToS during sign-up (stored in a short-lived cookie),
+      // write it to Clerk publicMetadata so the backend webhook can verify it.
+      const pendingTosLink = context.req.cookies?.pendingTosLink;
+      if (pendingTosLink && !user.publicMetadata.termsAreAccepted) {
+        await client.users.updateUserMetadata(userId, {
+          publicMetadata: {
+            termsAreAccepted: true,
+            termsLink: decodeURIComponent(pendingTosLink),
+          },
+        });
+        // Clear the cookie so it isn't reprocessed on subsequent requests.
+        context.res.setHeader(
+          'Set-Cookie',
+          'pendingTosLink=; Path=/; Max-Age=0; SameSite=Lax',
+        );
+      }
+
       if (
         user.publicMetadata.role &&
         options?.roles &&
