@@ -34,8 +34,11 @@ export const IssuerProfileFormWrapper = () => {
       queryClient.invalidateQueries([QueryKeys.issuerProfile]);
       toast.success('Profile updated successfully.');
     },
-    onError: (err: AxiosError<{ message?: string }>) => {
-      toast.error(err?.response?.data?.message ?? t('errors.fetching-profile'));
+    onError: (err) => {
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      toast.error(
+        axiosErr?.response?.data?.message ?? t('errors.fetching-profile'),
+      );
     },
   });
 
