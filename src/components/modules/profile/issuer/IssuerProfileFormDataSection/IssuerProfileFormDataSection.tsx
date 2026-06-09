@@ -26,9 +26,6 @@ export const IssuerProfileFormDataSection = ({
         control={control}
         name="domain"
         disabled={disabled || isLoading}
-        inputProps={{
-          readOnly: true,
-        }}
       />
       <FormTextField
         label={t('data.fields.company-name.label')}

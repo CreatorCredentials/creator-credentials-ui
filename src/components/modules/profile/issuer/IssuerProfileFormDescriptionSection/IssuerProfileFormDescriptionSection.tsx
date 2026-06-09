@@ -25,7 +25,6 @@ export const IssuerProfileFormDescriptionSection = ({
         name="description"
         disabled={disabled || isLoading}
         inputProps={{
-          readOnly: true,
           className: 'resize-none text-base',
           rows: 3,
         }}

@@ -24,6 +24,7 @@ export type User = {
   activeSigningCertSource: 'platform' | 'external';
   credentialsToIssue: string[];
   organizationName: string | null;
+  description: string;
 };
 
 export type GetUserResponse = User;

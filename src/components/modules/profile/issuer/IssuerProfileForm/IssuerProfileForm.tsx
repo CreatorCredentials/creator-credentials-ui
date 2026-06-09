@@ -1,4 +1,5 @@
 import { FormEventHandler } from 'react';
+import { Button } from 'flowbite-react';
 import { IssuerProfileFormDataSection } from '../IssuerProfileFormDataSection';
 import { IssuerProfileFormDescriptionSection } from '../IssuerProfileFormDescriptionSection';
 import { IssuerProfileFormLegalDocumentsSection } from '../IssuerProfileFormLegalDocumentsSection';
@@ -28,6 +29,16 @@ export const IssuerProfileForm = ({
         disabled={disabled}
       />
       <IssuerProfileFormLegalDocumentsSection />
+      <div className="flex justify-end pt-2">
+        <Button
+          type="submit"
+          color="primary"
+          isProcessing={isLoading}
+          disabled={isLoading || disabled}
+        >
+          Save
+        </Button>
+      </div>
     </div>
   </form>
 );

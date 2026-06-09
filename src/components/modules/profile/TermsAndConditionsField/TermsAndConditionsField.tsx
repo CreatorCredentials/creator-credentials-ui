@@ -3,7 +3,13 @@ import { useId } from 'react';
 import { FormLabel } from '@/components/formFields/FormLabel';
 import { TermsAndConditionsTrans } from '@/components/shared/TermsAndConditionsTrans';
 
-export const TermsAndConditionsField = () => {
+type TermsAndConditionsFieldProps = {
+  href?: string;
+};
+
+export const TermsAndConditionsField = ({
+  href,
+}: TermsAndConditionsFieldProps) => {
   const fieldId = useId();
 
   return (
@@ -15,7 +21,10 @@ export const TermsAndConditionsField = () => {
         disabled
       />
       <FormLabel htmlFor={fieldId}>
-        <TermsAndConditionsTrans agreed />
+        <TermsAndConditionsTrans
+          agreed
+          href={href}
+        />
       </FormLabel>
     </div>
   );

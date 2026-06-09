@@ -1,6 +1,6 @@
 {
   "label": {
-    "agreed": "I agreed to the following <link1>Terms & Conditions</link1>",
-    "will-agree": "I agree for <link1>Terms & Conditions</link1>"
+    "agreed": "I agreed to the <link1>Terms of Service</link1>",
+    "will-agree": "I agree to the <link1>Terms of Service</link1>"
   }
 }

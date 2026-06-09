@@ -25,6 +25,8 @@ import { Icon } from '@/components/shared/Icon';
 import { useToast } from '@/shared/hooks/useToast';
 import { DefaultIssuerSignupContextFormStepsValues } from '@/components/modules/authorization/issuer/IssuerSignupContext/IssuerSignupContext.constants';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
+import { config } from '@/shared/constants/config';
+import { setPendingTosLinkCookie } from '@/shared/utils/tos';
 
 const FORM_STEP = 'email';
 
@@ -69,6 +71,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
   > = (data) => {
     try {
       updateStep('email', data);
+      setPendingTosLinkCookie(config.ISSUER_TERMS_URL);
       router.push('/auth/signup/issuer/verification');
     } catch (err) {
       toast.error(t('errors.send-email'));

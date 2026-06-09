@@ -6,10 +6,12 @@ import { useTranslation } from '@/shared/utils/useTranslation';
 
 export type TermsAndConditionsTransProps = {
   agreed?: boolean;
+  href?: string;
 };
 
 export const TermsAndConditionsTrans = ({
   agreed,
+  href,
 }: TermsAndConditionsTransProps) => {
   const tKey = agreed ? 'label.agreed' : 'label.will-agree';
 
@@ -21,8 +23,9 @@ export const TermsAndConditionsTrans = ({
         link1: (
           <a
             className="underline underline-offset-[3px]"
-            href={config.TERMS_AND_CONDITIONS_URL}
+            href={href ?? config.TERMS_AND_CONDITIONS_URL}
             target="_blank"
+            rel="noopener noreferrer"
           />
         ),
       }}

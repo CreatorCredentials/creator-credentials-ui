@@ -6,6 +6,7 @@ import { FormCheckbox } from '@/components/formFields/FormCheckbox';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { TermsAndConditionsTrans } from '@/components/shared/TermsAndConditionsTrans';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
+import { config } from '@/shared/constants/config';
 import { EmailDomain } from './EmailDomain';
 import { IssuerSignupEmailFormContextType } from './IssuerSignupEmailForm.types';
 
@@ -65,7 +66,7 @@ export const IssuerSignupEmailForm = ({
           }}
         />
         <FormCheckbox
-          label={<TermsAndConditionsTrans />}
+          label={<TermsAndConditionsTrans href={config.ISSUER_TERMS_URL} />}
           name="termsAndConditions"
           control={control}
           disabled={isLoading}

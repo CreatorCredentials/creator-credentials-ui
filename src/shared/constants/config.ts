@@ -26,6 +26,10 @@ export const config = {
     return process.env.API_MOCKING || 'disabled';
   },
   TERMS_AND_CONDITIONS_URL: 'https://creatorcredentials.com',
+  CREATOR_TERMS_URL:
+    'https://docs.creatorcredentials.com/legal-information/terms-of-service/tos-for-creators',
+  ISSUER_TERMS_URL:
+    'https://docs.creatorcredentials.com/legal-information/terms-of-service/tos-for-issuers',
   get NEST_API_URL(): string {
     return requireEnv(
       process.env.NEST_API_URL || process.env.NEXT_PUBLIC_NEST_API_URL,
