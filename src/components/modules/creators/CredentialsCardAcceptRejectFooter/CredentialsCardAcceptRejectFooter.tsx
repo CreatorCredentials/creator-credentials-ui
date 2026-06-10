@@ -803,6 +803,8 @@ const SupportingEvidenceSection = ({
   const email = (co?.credentialSubject as Record<string, unknown>)?.email as
     | string
     | undefined;
+  const organizationName = (co?.credentialSubject as Record<string, unknown>)
+    ?.organizationName as string | undefined;
 
   const isExternalKeypair = types.includes('ExternalKeypairVerification');
 
@@ -893,6 +895,14 @@ const SupportingEvidenceSection = ({
             tone="neutral"
             label="Same as (keypair DID)"
             value={verifiedKeypairDid as string}
+            mono
+          />
+        )}
+        {isExternalKeypair && Boolean(organizationName) && (
+          <DetailRow
+            tone="neutral"
+            label="Organization name"
+            value={organizationName as string}
             mono
           />
         )}
