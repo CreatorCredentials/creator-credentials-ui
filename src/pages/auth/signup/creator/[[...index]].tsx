@@ -1,8 +1,9 @@
 import { SignUp } from '@clerk/nextjs';
 import { GetServerSideProps } from 'next';
 import { ReactElement, useState } from 'react';
-import { Button, Checkbox } from 'flowbite-react';
+import { Checkbox } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
+import { AccessibleButton } from '@/components/shared/AccessibleButton';
 import { BaseAuthFormCard } from '@/components/modules/authorization/BaseAuthFormCard';
 import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/WelcomeHeader';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
@@ -64,13 +65,13 @@ const CreatorSignupPage: NextPageWithLayout = () => {
                 </a>
               </label>
             </div>
-            <Button
+            <AccessibleButton
               color="primary"
               disabled={!tosAccepted}
               onClick={handleAcceptAndContinue}
             >
               Continue to Sign Up
-            </Button>
+            </AccessibleButton>
           </div>
         )}
       </BaseAuthFormCard>

@@ -1,7 +1,7 @@
-import { Button } from 'flowbite-react';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from '@/shared/utils/useTranslation';
+import { AccessibleButton } from '@/components/shared/AccessibleButton';
 import { Icon } from '@/components/shared/Icon';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { LoginFormContextType } from './LoginForm.types';
@@ -33,7 +33,7 @@ export const LoginForm = ({
         disabled={isLoading}
       />
       <div className="flex justify-center">
-        <Button
+        <AccessibleButton
           type="submit"
           disabled={!isValid || isLoading}
           isProcessing={isLoading}
@@ -44,7 +44,7 @@ export const LoginForm = ({
             icon="ArrowRight"
             className="ms-2"
           />
-        </Button>
+        </AccessibleButton>
       </div>
     </form>
   );

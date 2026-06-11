@@ -8,8 +8,8 @@ import {
   useForm,
   useWatch,
 } from 'react-hook-form';
-import { Button } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
+import { AccessibleButton } from '@/components/shared/AccessibleButton';
 import { BlankLayout } from '@/components/layouts/blankLayout/BlankLayout';
 import {
   IssuerSignupContextProvider,
@@ -101,7 +101,7 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
               emailInputDomain={formSteps['details'].domain}
               renderButtons={({ isValid }) => (
                 <div className="flex flex-col gap-2.5">
-                  <Button
+                  <AccessibleButton
                     type="submit"
                     disabled={!isValid || !termsAndConditions}
                     isProcessing={false}
@@ -112,18 +112,18 @@ const IssuerSignupEmailPage: NextPageWithLayout = () => {
                       icon="ArrowRight"
                       className="ms-2"
                     />
-                  </Button>
-                  <Button
+                  </AccessibleButton>
+                  <AccessibleButton
+                    type="button"
                     color="outline"
                     onClick={goBackHandler}
-                    disabled={false}
                   >
                     <Icon
                       icon="ArrowLeft"
                       className="me-2"
                     />
                     <p>{t('go-back', { ns: 'common' })}</p>
-                  </Button>
+                  </AccessibleButton>
                 </div>
               )}
             />

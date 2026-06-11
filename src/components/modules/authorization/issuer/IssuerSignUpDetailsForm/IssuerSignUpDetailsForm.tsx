@@ -1,7 +1,7 @@
-import { Button } from 'flowbite-react';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from '@/shared/utils/useTranslation';
+import { AccessibleButton } from '@/components/shared/AccessibleButton';
 import { Icon } from '@/components/shared/Icon';
 import { FormTextField } from '@/components/formFields/FormTextField';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
@@ -50,7 +50,7 @@ export const IssuerSignupDetailsForm = ({
         />
       </div>
       <div className="flex justify-center">
-        <Button
+        <AccessibleButton
           type="submit"
           disabled={!isValid || isLoading}
           isProcessing={isLoading}
@@ -61,7 +61,7 @@ export const IssuerSignupDetailsForm = ({
             icon="ArrowRight"
             className="ms-2"
           />
-        </Button>
+        </AccessibleButton>
       </div>
     </form>
   );

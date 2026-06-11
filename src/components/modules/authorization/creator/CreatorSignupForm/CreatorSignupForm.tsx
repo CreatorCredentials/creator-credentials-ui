@@ -1,9 +1,9 @@
-import { Button } from 'flowbite-react';
 import { FormEventHandler } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { FormCheckbox } from '@/components/formFields/FormCheckbox';
 import { FormTextField } from '@/components/formFields/FormTextField';
+import { AccessibleButton } from '@/components/shared/AccessibleButton';
 import { Icon } from '@/components/shared/Icon';
 import { TermsAndConditionsTrans } from '@/components/shared/TermsAndConditionsTrans';
 import { CreatorSignupFormContextType } from './CreatorSignupFormContextType';
@@ -47,7 +47,7 @@ export const CreatorSignupForm = ({
         }}
       />
       <div className="flex justify-center">
-        <Button
+        <AccessibleButton
           type="submit"
           disabled={!isValid || !termsAndConditionsValue || isLoading}
           isProcessing={isLoading}
@@ -58,7 +58,7 @@ export const CreatorSignupForm = ({
             icon="ArrowRight"
             className="ms-2"
           />
-        </Button>
+        </AccessibleButton>
       </div>
     </form>
   );
