@@ -6,7 +6,6 @@ import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationS
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { CreatorCardAcceptRejectFooter } from '../CreatorCardAcceptRejectFooter';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 export const IssuerRequestedCreators = () => {
   const { t } = useTranslation('issuer-creators');
@@ -27,7 +26,6 @@ export const IssuerRequestedCreators = () => {
 
   return (
     <>
-      <CreatorsFilters />
       <div className="grid grid-cols-3 gap-4">
         {data.creators.map((creator) => (
           <CreatorDetailsCard

@@ -29,6 +29,8 @@
   "close": "Close",
   "cancel": "Cancel",
   "selected": "Selected",
+  "revoked": "Revoked",
+  "actions": "Actions",
   "credentials-import": "Import Credentials Page",
   "credentials-import-button": "Import credentials",
   "navigation": {
@@ -61,10 +63,10 @@
   "sorting": {
     "label": "Sorting",
     "items": {
-      "a-z": "A-Z",
-      "z-a": "Z-A",
-      "last-date": "Last date",
-      "newest-date": "Newest date"
+      "name-asc": "Name A–Z",
+      "name-desc": "Name Z–A",
+      "newest": "Newest first",
+      "oldest": "Oldest first"
     }
   }
 }

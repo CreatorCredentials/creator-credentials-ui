@@ -7,6 +7,7 @@ import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { useCreatorCredentials } from '@/api/queries/useCreatorCredentials';
 import { CreatorIssuedCredentials } from '../CreatorIssuedCredentials';
 import { CreatorPendingCredentials } from '../CreatorPendingCredentials';
+import { CreatorRevokedCredentials } from '../CreatorRevokedCredentials';
 
 export const CreatorCredentialsTabs = () => {
   const { t } = useTranslation('creator-credentials');
@@ -39,6 +40,13 @@ export const CreatorCredentialsTabs = () => {
       </Tabs.Item>
       <Tabs.Item title={t('tabs.pending')}>
         <CreatorPendingCredentials credentials={credentialsArray} />
+      </Tabs.Item>
+      <Tabs.Item
+        title={
+          <span data-testid="creator-tab-revoked">{t('tabs.revoked')}</span>
+        }
+      >
+        <CreatorRevokedCredentials credentials={credentialsArray} />
       </Tabs.Item>
     </TabsComponent>
   );

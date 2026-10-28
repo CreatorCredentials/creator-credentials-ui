@@ -1,115 +1,205 @@
-import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useMemo, useState } from 'react';
+import { Alert, Button, Spinner } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
-import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
+import { clsxm } from '@/shared/utils/clsxm';
 import { Loader } from '@/components/shared/Loader';
 import { useIssuersCredentials } from '@/api/queries/useIssuersCredentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { ColoredBadge } from '@/components/shared/ColoredBadge';
-import { useDeleteMemberCredential } from '@/api/mutations/useDeleteMemberCredential';
-import { QueryKeys } from '@/api/queryKeys';
-import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
-import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
+import { IssuedCredential } from '@/shared/typings/Credentials';
+import { CredentialAction } from '@/shared/typings/CredentialAction';
 import { CreatorCredentialDetailsCard } from '@/components/shared/CreatorCredentialDetailsCard';
-import { ConfirmationModal } from '@/components/shared/ConfirmationModal';
-import { CreatorsFilters } from '../CreatorsFilters';
-import { CredentialsCardAcceptRejectFooter } from '../CredentialsCardAcceptRejectFooter';
+import {
+  CredentialsSort,
+  CredentialTypeLabelResolver,
+  filterCredentials,
+  sortCredentials,
+} from '@/shared/utils/credentialsList';
+import { verifyCredentialAction } from '@/shared/utils/credentialActions';
+import { CreatorsFilters, CredentialsView } from '../CreatorsFilters';
+import { IssuedCredentialsTable } from '../IssuedCredentialsTable';
+import { IssuedCredentialStatus } from '../IssuedCredentialStatus';
+import { RevokeCredentialModal } from '../RevokeCredentialModal';
+
+type IssuedStatusFilter =
+  | CredentialVerificationStatus.Success
+  | CredentialVerificationStatus.Revoked;
+
+const STATUS_FILTERS: IssuedStatusFilter[] = [
+  CredentialVerificationStatus.Success,
+  CredentialVerificationStatus.Revoked,
+];
+
+type StatusChipsProps = {
+  value: IssuedStatusFilter;
+  onChange: (status: IssuedStatusFilter) => void;
+};
+
+const StatusChips = ({ value, onChange }: StatusChipsProps) => {
+  const { t } = useTranslation('issuer-credentials');
+
+  return (
+    <div className="mb-6 flex gap-2">
+      {STATUS_FILTERS.map((status) => (
+        <Button
+          key={status}
+          pill
+          size="xs"
+          color={status === value ? 'primary' : 'outline'}
+          aria-pressed={status === value}
+          data-testid={`issued-status-${status.toLowerCase()}`}
+          onClick={() => onChange(status)}
+        >
+          {t(`issued.status.${status.toLowerCase()}`)}
+        </Button>
+      ))}
+    </div>
+  );
+};
+
+const EmptyState = ({ message }: { message: string }) => (
+  <p
+    className="text-xl text-grey-4"
+    data-testid="issued-empty"
+  >
+    {message}
+  </p>
+);
 
 export const IssuerIssuedCredentials = () => {
-  const { t } = useTranslation('issuer-creators');
-  const [credentialIdToDelete, setCredentialIdToDelete] = useState<
+  const { t } = useTranslation('issuer-credentials');
+  const { t: tCards } = useTranslation('cards');
+  const [statusFilter, setStatusFilter] = useState<IssuedStatusFilter>(
+    CredentialVerificationStatus.Success,
+  );
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<CredentialsSort>('newest');
+  const [view, setView] = useState<CredentialsView>('cards');
+  const [credentialIdToRevoke, setCredentialIdToRevoke] = useState<
     string | null
   >(null);
 
-  const queryClient = useQueryClient();
-  const { data, status, isLoading } = useIssuersCredentials(
-    {
-      params: {
-        status: CredentialVerificationStatus.Success,
-      },
-    },
-    // TODO: Decide whether we want to keep this functionality after removing MSW
-    {
-      staleTime: 60,
-      refetchOnMount: false,
-    },
+  const { data, isError, isLoading, isFetching, isPreviousData } =
+    useIssuersCredentials(
+      { params: { status: statusFilter } },
+      { keepPreviousData: true },
+    );
+  // Cached rows of the previous status chip are shown until the new ones arrive.
+  const isSwitchingStatus = isPreviousData && isFetching;
+
+  const typeLabelOf = useCallback<CredentialTypeLabelResolver>(
+    (credential) =>
+      tCards(`credential.types.${credential.type.toLowerCase()}.title`),
+    [tCards],
   );
 
-  const {
-    data: creatorsData,
-    status: cStatus,
-    isLoading: cIsLoading,
-  } = useIssuerCreators({
-    params: {
-      status: CreatorVerificationStatus.Accepted,
-    },
-  });
+  const credentials = data?.credentials;
+  const visibleCredentials = useMemo(
+    () =>
+      sortCredentials(
+        filterCredentials(credentials ?? [], query, typeLabelOf),
+        sort,
+      ),
+    [credentials, query, sort, typeLabelOf],
+  );
 
-  const { mutateAsync: deleteMemberCredential } = useDeleteMemberCredential({
-    onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.issuersCredentials]);
-    },
-  });
+  const actionsFor = (credential: IssuedCredential): CredentialAction[] => [
+    ...(credential.status === CredentialVerificationStatus.Success
+      ? [
+          {
+            children: t('issued.actions.revoke'),
+            disabled: isSwitchingStatus,
+            onClick: () => setCredentialIdToRevoke(credential.id),
+            'data-testid': 'credential-revoke',
+          },
+        ]
+      : []),
+    ...verifyCredentialAction(credential, t('verify', { ns: 'common' })),
+  ];
 
-  if (status === 'error' || cStatus === 'error') {
-    return <ApiErrorMessage message={t('errors.fetching-creators')} />;
-  }
-
-  if (isLoading || cIsLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
+  const renderList = () => {
+    if (!credentials?.length) {
+      return <EmptyState message={t('issued.empty.no-credentials')} />;
+    }
+    if (visibleCredentials.length === 0) {
+      return <EmptyState message={t('issued.empty.no-matches')} />;
+    }
+    if (view === 'table') {
+      return (
+        <IssuedCredentialsTable
+          credentials={visibleCredentials}
+          actionsFor={actionsFor}
+          typeLabelOf={typeLabelOf}
+        />
+      );
+    }
+    return (
+      <div className="grid grid-cols-3 gap-4">
+        {visibleCredentials.map((credential) => (
+          <CreatorCredentialDetailsCard
+            key={credential.id}
+            additionalBadgeType="credential"
+            credential={credential}
+            subtitle={t('issued.subtitle')}
+            dropdownItems={actionsFor(credential)}
+            renderFooter={() => (
+              <IssuedCredentialStatus
+                credential={credential}
+                className="self-center"
+              />
+            )}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <>
-      <CreatorsFilters />
-      <div className="grid grid-cols-3 gap-4">
-        {data.credentials.map((credential) => {
-          const creator = creatorsData?.creators.find(
-            (c) => parseInt(c.id) === credential.data.userId,
-          );
-
-          return creator ? (
-            <CreatorCredentialDetailsCard
-              additionalBadgeType={'credential'}
-              key={creator.id}
-              credential={credential}
-              creator={creator}
-              subtitle={'Issued credential'}
-              backRoute="/issuer/credentials/issued"
-              dropdownItems={[
-                {
-                  onClick: () => setCredentialIdToDelete(credential.id),
-                  children: 'Delete credential',
-                },
-              ]}
-              renderFooter={() =>
-                credential.status === CredentialVerificationStatus.Pending ? (
-                  <CredentialsCardAcceptRejectFooter
-                    credential={credential}
-                    creator={creator}
-                  />
-                ) : (
-                  <ColoredBadge
-                    badgeType="accepted"
-                    className="self-center"
-                  />
-                )
-              }
-            />
-          ) : null;
-        })}
+      <CreatorsFilters
+        query={query}
+        onQueryChange={setQuery}
+        sort={sort}
+        onSortChange={setSort}
+        view={view}
+        onViewChange={setView}
+      />
+      <StatusChips
+        value={statusFilter}
+        onChange={setStatusFilter}
+      />
+      {isError && (
+        <Alert
+          color="failure"
+          className="mb-4"
+          data-testid="issued-error-banner"
+        >
+          {t('errors.fetching-credentials')}
+        </Alert>
+      )}
+      <div
+        className="relative"
+        aria-busy={isSwitchingStatus}
+        data-testid="issued-list"
+      >
+        {isSwitchingStatus && (
+          <Spinner
+            size="lg"
+            className="absolute inset-x-0 top-2 z-10 mx-auto"
+            data-testid="issued-switching"
+          />
+        )}
+        <div className={clsxm({ 'opacity-50': isSwitchingStatus })}>
+          {renderList()}
+        </div>
       </div>
-      {credentialIdToDelete && (
-        <ConfirmationModal
-          title="Delete credential"
-          message="Are you sure you want to delete this credential? This action cannot be undone."
-          confirmLabel="Delete"
-          cancelLabel="Cancel"
-          onConfirm={() => {
-            deleteMemberCredential({ credentialId: credentialIdToDelete });
-            setCredentialIdToDelete(null);
-          }}
-          onCancel={() => setCredentialIdToDelete(null)}
+      {credentialIdToRevoke && (
+        <RevokeCredentialModal
+          credentialId={credentialIdToRevoke}
+          onClose={() => setCredentialIdToRevoke(null)}
         />
       )}
     </>

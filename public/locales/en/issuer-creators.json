@@ -19,12 +19,7 @@
       "description-data-supplier": "This is a list of data suppliers, you approved in the past."
     }
   },
-  "filters": {
-    "search": {
-      "placeholder": "Search by name, domain, or e-mail"
-    },
-    "period": {
-      "placeholder": "Select acceptance time period"
-    }
+  "errors": {
+    "fetching-creators": "There was an error fetching your creators. Please try again later."
   }
 }

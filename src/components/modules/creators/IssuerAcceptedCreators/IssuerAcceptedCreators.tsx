@@ -4,7 +4,6 @@ import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 export const IssuerAcceptedCreators = () => {
   const { t } = useTranslation('issuer-creators');
@@ -32,7 +31,6 @@ export const IssuerAcceptedCreators = () => {
 
   return (
     <>
-      <CreatorsFilters />
       <div className="grid grid-cols-3 gap-4">
         {data.creators.map((creator) => (
           <CreatorDetailsCard

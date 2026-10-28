@@ -10,7 +10,6 @@ import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 import { CredentialsCardAcceptRejectFooter } from '../CredentialsCardAcceptRejectFooter';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 const CREDENTIAL_TYPE_LABELS: Partial<Record<CredentialType, string>> = {
   [CredentialType.Member]: 'Membership',
@@ -46,7 +45,6 @@ export const IssuerRequestedCredentials = () => {
 
   return (
     <>
-      <CreatorsFilters />
       <div className="-mx-10 grid grid-cols-2 gap-6 px-10">
         {data.credentials.map((credential) => {
           const creator = creatorsData?.creators.find(

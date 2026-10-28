@@ -1,5 +1,5 @@
 import { getHeaders } from '@/shared/utils/tokenHeader';
-import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
+import { IssuedCredential } from '@/shared/typings/Credentials';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import axios from '../axiosNest';
 
@@ -8,7 +8,7 @@ export type GetIssuersCredentialsSearchParams = {
 };
 
 export type GetIssuersCredentialsResponse = {
-  credentials: VerifiedCredentialsUnion[];
+  credentials: IssuedCredential[];
 };
 
 export const getIssuersCredentials = (

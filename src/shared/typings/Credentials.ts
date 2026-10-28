@@ -1,3 +1,4 @@
+import { CreatorConnectionStatus } from './CreatorConnectionStatus';
 import { CredentialType } from './CredentialType';
 import { CredentialVerificationStatus } from './CredentialVerificationStatus';
 
@@ -6,6 +7,10 @@ type BaseCredential<T extends CredentialType, D extends object> = {
   status?: CredentialVerificationStatus;
   type: T;
   data: D;
+  issuedAt?: string | null;
+  updatedAt?: string | null;
+  revokedAt?: string | null;
+  revokedReason?: string | null;
 };
 
 export type EmailCredential = BaseCredential<
@@ -120,6 +125,16 @@ export type ExternalKeypairVerificationCredential = BaseCredential<
   }
 >;
 
+export type CreatorCredential = BaseCredential<
+  CredentialType.Creator,
+  {
+    verifiedBy: string;
+    userId?: number;
+    // eslint-disable-next-line
+    credentialObject?: any;
+  }
+>;
+
 export type VerifiedCredentialsUnion =
   | EmailCredential
   | WalletCredential
@@ -129,7 +144,23 @@ export type VerifiedCredentialsUnion =
   | LicciumDataSupplierCredential
   | ConnectCredential
   | DidWebCredential
-  | ExternalKeypairVerificationCredential;
+  | ExternalKeypairVerificationCredential
+  | CreatorCredential;
+
+export type CredentialCreator = {
+  id: number;
+  name: string | null;
+  email: string | null;
+  didKey: string;
+};
+
+/** A credential as listed for its issuer: carries the creator it was issued to. */
+export type IssuedCredential = VerifiedCredentialsUnion & {
+  issuedAt?: string | null;
+  updatedAt?: string | null;
+  connectionStatus?: CreatorConnectionStatus | null;
+  creator?: CredentialCreator | null;
+};
 
 export type CreatorCredentials = {
   email: EmailCredential;
@@ -142,6 +173,7 @@ export type CreatorCredentials = {
     | LicciumDataSupplierCredential
   )[];
   keypairVerifications: ExternalKeypairVerificationCredential[];
+  verifiableCreator: CreatorCredential | null;
 };
 
 export type IssuerCredentials = {

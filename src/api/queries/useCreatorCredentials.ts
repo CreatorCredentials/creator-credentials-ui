@@ -25,6 +25,7 @@ export const useCreatorCredentials = (
       return getCreatorCredentials(token);
     },
     refetchInterval: 60000,
+    refetchOnWindowFocus: true,
     ...options,
   });
 };

@@ -10,4 +10,5 @@ export type BadgeType =
   | 'template'
   | 'active'
   | 'accepted'
-  | 'selected';
+  | 'selected'
+  | 'revoked';

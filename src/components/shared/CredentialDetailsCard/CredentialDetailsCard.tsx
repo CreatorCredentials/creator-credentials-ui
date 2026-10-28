@@ -5,6 +5,7 @@ import { CredentialType } from '@/shared/typings/CredentialType';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
+import { verifyCredentialAction } from '@/shared/utils/credentialActions';
 import { CardWithBadge } from '../CardWithBadge';
 import { Icon, IconName } from '../Icon';
 import { DidKeyPemModal } from '../DidKeyPemModal/DidKeyPemModal';
@@ -19,6 +20,7 @@ const CREDENTIAL_TYPE_TO_ICON_NAME_MAP: Record<CredentialType, IconName> = {
   [CredentialType.DidWeb]: 'Web',
   [CredentialType.Connect]: 'Connect',
   [CredentialType.ExternalKeypairVerification]: 'AssuredWorkload',
+  [CredentialType.Creator]: 'Verified',
 };
 
 type CredentialDetailsCardProps = {
@@ -27,32 +29,24 @@ type CredentialDetailsCardProps = {
     | ((credential: Omit<VerifiedCredentialsUnion, 'id'>) => React.ReactNode)
     | null;
   dropdownItems?: DropdownItemProps<ElementType>[];
+  testId?: string;
 };
 
 export const CredentialDetailsCard = ({
   credential,
   renderFooter,
   dropdownItems,
+  testId,
 }: CredentialDetailsCardProps) => {
   const { t } = useTranslation('cards');
   const { data, type } = credential;
   const { copy } = useCopyToClipboard();
   const [pemModalDid, setPemModalDid] = useState<string | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const jwt = (data as any)?.credentialObject?.proof?.jwt as string | undefined;
-  const verifyItem = jwt
-    ? [
-        {
-          children: 'Verify',
-          onClick: () =>
-            window.open(
-              `https://jwt.io/#token=${encodeURIComponent(jwt)}`,
-              '_blank',
-            ),
-        },
-      ]
-    : [];
+  const verifyItem = verifyCredentialAction(
+    credential,
+    t('verify', { ns: 'common' }),
+  );
 
   const keypairDid =
     type === CredentialType.ExternalKeypairVerification && 'sameAs' in data
@@ -94,6 +88,7 @@ export const CredentialDetailsCard = ({
         }}
         title={t(`credential.types.${type.toLowerCase()}.title`)}
         dropdownItems={allDropdownItems}
+        testId={testId}
         content={
           <>
             <p className="mb-2 text-base">
@@ -130,6 +125,14 @@ export const CredentialDetailsCard = ({
                 className="whitespace-pre-wrap"
               >
                 {data.domain}
+              </CardWithBadge.ContentWithIcon>
+            )}
+            {type === CredentialType.Creator && 'verifiedBy' in data && (
+              <CardWithBadge.ContentWithIcon
+                iconName="Verified"
+                className="whitespace-pre-wrap"
+              >
+                {data.verifiedBy}
               </CardWithBadge.ContentWithIcon>
             )}
             {type === CredentialType.ExternalKeypairVerification &&

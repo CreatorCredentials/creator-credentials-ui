@@ -1,119 +1,74 @@
-import React, { ElementType } from 'react';
-import Link from 'next/link';
-import { DropdownItemProps, Tooltip } from 'flowbite-react';
-import { Creator } from '@/shared/typings/Creator';
-import {
-  truncateEmailAddress,
-  truncateWalletAddress,
-} from '@/shared/utils/truncateWalletAddress';
+import React from 'react';
+import { Tooltip } from 'flowbite-react';
+import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
 import { useIsDataSupplierIssuer } from '@/shared/hooks/useIsDataSupplierIssuer';
-// import { CardWithBadge } from '../CardWithBadge';
-import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
-// import { CredentialDetailsCard } from '../CredentialDetailsCard';
+import { IssuedCredential } from '@/shared/typings/Credentials';
+import { CredentialAction } from '@/shared/typings/CredentialAction';
+import { CreatorConnectionStatus } from '@/shared/typings/CreatorConnectionStatus';
+import { creatorDisplayName, creatorOf } from '@/shared/utils/credentialsList';
+import { EMPTY_VALUE_PLACEHOLDER } from '@/shared/constants/placeholders';
+import { ConnectionRevokedMarker } from '@/components/modules/creators/ConnectionRevokedMarker';
 import { CardWithBadgeForCred } from '../CardWithBadgeForCred';
 
 type CreatorCredentialDetailsCardProps = {
-  creator: Creator;
-  credential: VerifiedCredentialsUnion;
+  credential: IssuedCredential;
   subtitle?: string;
-  backRoute?: string;
   additionalBadgeType?: BadgeType;
-  renderFooter?: ((creator: Creator) => React.ReactNode) | null;
-  dropdownItems?: DropdownItemProps<ElementType>[];
+  renderFooter?: ((credential: IssuedCredential) => React.ReactNode) | null;
+  dropdownItems?: CredentialAction[];
 };
 
 export const CreatorCredentialDetailsCard = ({
-  creator,
   credential,
+  subtitle,
   renderFooter,
   dropdownItems,
-  backRoute,
   additionalBadgeType = undefined,
 }: CreatorCredentialDetailsCardProps) => {
-  const { imageUrl, title, credentials } = creator;
+  const { email, didKey } = creatorOf(credential);
   const { copy } = useCopyToClipboard();
   const isDataSupplierIssuer = useIsDataSupplierIssuer();
+  const isConnectionRevoked =
+    credential.connectionStatus === CreatorConnectionStatus.Revoked;
 
-  const walletAddress = credentials.walletAddress;
-  const truncatedWalletAddress = walletAddress
-    ? truncateWalletAddress(walletAddress)
-    : null;
-
-  const walletAddressClickHandler = () => {
-    if (walletAddress) {
-      copy(walletAddress);
-    }
-  };
-
-  const emailAddress = credentials.email;
-
-  const truncatedEmailAddress = emailAddress
-    ? truncateEmailAddress(emailAddress)
-    : null;
-
-  const emailAddressClickHandler = () => {
-    if (emailAddress) {
-      copy(emailAddress);
-    }
-  };
   return (
     <CardWithBadgeForCred
       badgeType={isDataSupplierIssuer ? 'dataSupplier' : 'creator'}
       additionalBadgeType={additionalBadgeType}
       credential={credential}
-      image={{
-        imageUrl,
-        alt: 'Creator image',
-      }}
-      title={truncateEmailAddress(title)}
-      dropdownItems={
-        dropdownItems || [
-          {
-            children: 'Show details',
-            as: Link,
-            href:
-              `/issuer/creators/${creator.id}` +
-              (backRoute ? `?backRoute=${encodeURIComponent(backRoute)}` : ''),
-          },
-        ]
-      }
+      image={{ iconName: 'AccountCircle' }}
+      title={creatorDisplayName(credential) || EMPTY_VALUE_PLACEHOLDER}
+      subtitle={subtitle}
+      dropdownItems={dropdownItems}
       content={
         <>
-          {emailAddress ? (
-            <Tooltip content={emailAddress}>
-              <CardWithBadgeForCred.ContentWithIcon
-                iconName="Mail"
-                className="whitespace-pre-wrap"
-                onClick={emailAddressClickHandler}
-              >
-                {truncatedEmailAddress}
-              </CardWithBadgeForCred.ContentWithIcon>
-            </Tooltip>
-          ) : null}
-          {walletAddress ? (
-            <Tooltip content={walletAddress}>
-              <CardWithBadgeForCred.ContentWithIcon
-                iconName="AccountBalanceWallet"
-                className="whitespace-pre-wrap"
-                onClick={walletAddressClickHandler}
-              >
-                {truncatedWalletAddress}
-              </CardWithBadgeForCred.ContentWithIcon>
-            </Tooltip>
-          ) : null}
-          {credentials.domain && (
+          {email ? (
             <CardWithBadgeForCred.ContentWithIcon
-              iconName="Public"
+              iconName="Mail"
               className="whitespace-pre-wrap"
+              onClick={() => copy(email)}
+              testId="credential-email"
             >
-              {credentials.domain}
+              {email}
             </CardWithBadgeForCred.ContentWithIcon>
-          )}
+          ) : null}
+          {didKey ? (
+            <Tooltip content={didKey}>
+              <CardWithBadgeForCred.ContentWithIcon
+                iconName="AssuredWorkload"
+                className="whitespace-pre-wrap"
+                onClick={() => copy(didKey)}
+              >
+                {truncateWalletAddress(didKey)}
+              </CardWithBadgeForCred.ContentWithIcon>
+            </Tooltip>
+          ) : null}
+          {isConnectionRevoked && <ConnectionRevokedMarker className="mt-2" />}
         </>
       }
-      footer={renderFooter && renderFooter(creator)}
+      footer={renderFooter && renderFooter(credential)}
     />
   );
 };
