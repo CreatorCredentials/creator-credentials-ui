@@ -38,12 +38,14 @@ export const useRevokeCredential = (
       );
     },
     ...options,
-    onSuccess: async (data, variables, context) => {
+    onSuccess: async (data, variables, onMutateResult, context) => {
       await Promise.all([
-        queryClient.invalidateQueries([QueryKeys.issuersCredentials]),
-        queryClient.invalidateQueries([QueryKeys.issuerCreators]),
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.issuersCredentials],
+        }),
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.issuerCreators] }),
       ]);
-      return options?.onSuccess?.(data, variables, context);
+      return options?.onSuccess?.(data, variables, onMutateResult, context);
     },
   });
 };

@@ -5,7 +5,7 @@ Next.js (pages router) frontend for the Creator Credentials platform: Clerk-auth
 ## Stack
 
 - **Next.js 16, pages router** (`src/pages`); SSR guards via `getServerSideProps` + a `withAuth` wrapper
-- **Clerk** (`@clerk/nextjs`) – the **only live auth** (edge middleware + hosted `<SignIn>` / `<SignUp>` / `<UserProfile>`)
+- **Clerk** (`@clerk/nextjs`) – the **only live auth** (request proxy + hosted `<SignIn>` / `<SignUp>` / `<UserProfile>`)
 - **TanStack Query v4** (`@tanstack/react-query`) – request/mutation hooks over `axios`
 - **flowbite** + **flowbite-react** + **tailwindcss** – UI
 - **next-i18next** / **i18next** – i18n (**en only**)
@@ -31,7 +31,7 @@ Next.js (pages router) frontend for the Creator Credentials platform: Clerk-auth
 | `NEST_API_URL` | `NEXT_PUBLIC_NEST_API_URL` | `https://localhost:3200` | **Client** backend base for `axiosNest` (all `src/api/requests`) |
 | `NEST_API_SSR_URL` | `NEXT_PUBLIC_NEST_API_SSR_URL` | `https://host.docker.internal:3200` | **SSR-only** backend base for `axiosSSRNest` (`getServerSideProps`) |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | (is public) | `pk_test_...` | Clerk client key |
-| `CLERK_SECRET_KEY` | – | `sk_test_...` | Clerk server key (SSR `clerkClient`, edge middleware) |
+| `CLERK_SECRET_KEY` | – | `sk_test_...` | Clerk server key (SSR `clerkClient`, request proxy) |
 | `FRONTEND_APP_PORT` | – | `3105` | Dev/prod server port (`start:prod`, docker) |
 | `DEBUG_I18N` | – | `disabled` | Toggles i18next debug in `next-i18next.config.js` |
 | `DISABLE_I18N_TRANSLATIONS` | – | `true` | When true the app renders raw i18n keys (dev) |
@@ -79,7 +79,7 @@ pnpm run test:unit           # tsc typecheck + vitest
 
 ## Auth model
 
-**Clerk is the only live auth.** `ClerkProvider` wraps the app (`_app.tsx`) with `signInUrl`/`signUpUrl` pointing at `/welcome`. Edge middleware (`src/middleware.ts`) protects **`/creator*` and `/issuer*` only**; unauthenticated hits redirect to `/welcome`. Protected pages additionally run the `withAuth` SSR guard.
+**Clerk is the only live auth.** `ClerkProvider` wraps the app (`_app.tsx`) with `signInUrl`/`signUpUrl` pointing at `/welcome`. The Next.js proxy (`src/proxy.ts`) protects **`/creator*` and `/issuer*` only**; unauthenticated hits redirect to `/welcome`. Protected pages additionally run the `withAuth` SSR guard.
 
 **Role by signup URL.** There is no post-signup "pick a role" screen. The user's role is chosen implicitly by which `/welcome` link they follow (`/auth/signup/creator` vs `/auth/signup/issuer`), then persisted on first hit of a `/creator*` or `/issuer*` page: `withAuth` reads Clerk `publicMetadata.role`, and if unset infers it from the URL and writes it back to Clerk (`withAuth.ts:37-55`). It also promotes the `pendingTosLink` cookie into `publicMetadata.termsAreAccepted` + `termsLink` so the backend webhook can gate user creation on ToS acceptance.
 

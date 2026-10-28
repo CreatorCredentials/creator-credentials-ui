@@ -21,7 +21,7 @@ type CertVerificationContextProviderProps = {
 export const CertVerificationContextProvider = ({
   children,
 }: CertVerificationContextProviderProps) => {
-  const { data: statusData, isLoading } = useCertChallengeStatus();
+  const { data: statusData, isPending: isLoading } = useCertChallengeStatus();
 
   const [currentStep, setCurrentStep] =
     useState<CertVerificationStep>('submit-cert');

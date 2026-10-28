@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Tabs, TabsComponent } from 'flowbite-react';
+import { Tabs } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { Loader } from '@/components/shared/Loader';
 import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
@@ -12,7 +12,7 @@ import { CreatorRevokedCredentials } from '../CreatorRevokedCredentials';
 export const CreatorCredentialsTabs = () => {
   const { t } = useTranslation('creator-credentials');
 
-  const { isLoading, status, data } = useCreatorCredentials();
+  const { isPending, status, data } = useCreatorCredentials();
 
   const credentialsArray = useMemo(
     () =>
@@ -26,12 +26,12 @@ export const CreatorCredentialsTabs = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 
   return (
-    <TabsComponent style="underline">
+    <Tabs variant="underline">
       <Tabs.Item
         active
         title={t('tabs.issued')}
@@ -48,6 +48,6 @@ export const CreatorCredentialsTabs = () => {
       >
         <CreatorRevokedCredentials credentials={credentialsArray} />
       </Tabs.Item>
-    </TabsComponent>
+    </Tabs>
   );
 };

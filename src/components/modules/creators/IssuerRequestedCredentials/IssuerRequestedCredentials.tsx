@@ -20,7 +20,7 @@ export const IssuerRequestedCredentials = () => {
   const { t } = useTranslation('issuer-creators');
   const router = useRouter();
 
-  const { data, status, isLoading } = useIssuersCredentials({
+  const { data, status, isPending } = useIssuersCredentials({
     params: {
       status: CredentialVerificationStatus.Pending,
     },
@@ -28,7 +28,7 @@ export const IssuerRequestedCredentials = () => {
   const {
     data: creatorsData,
     status: cStatus,
-    isLoading: cIsLoading,
+    isPending: cIsLoading,
   } = useIssuerCreators({
     params: {
       status: CreatorVerificationStatus.Accepted,
@@ -39,7 +39,7 @@ export const IssuerRequestedCredentials = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading || cIsLoading) {
+  if (isPending || cIsLoading) {
     return <Loader />;
   }
 

@@ -8,7 +8,7 @@ import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 export const IssuerAcceptedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isLoading } = useIssuerCreators(
+  const { data, status, isPending } = useIssuerCreators(
     {
       params: {
         status: CreatorVerificationStatus.Accepted,
@@ -25,7 +25,7 @@ export const IssuerAcceptedCreators = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

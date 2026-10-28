@@ -1,8 +1,5 @@
 export type KeypairVerificationStep =
-  | 'generate'
-  | 'submit-key'
-  | 'verify-signature'
-  | 'completed';
+  'generate' | 'submit-key' | 'verify-signature' | 'completed';
 
 export type KeypairVerificationContextType = {
   currentStep: KeypairVerificationStep;

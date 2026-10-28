@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Alert, Button, Spinner } from 'flowbite-react';
+import { keepPreviousData } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { clsxm } from '@/shared/utils/clsxm';
 import { Loader } from '@/components/shared/Loader';
@@ -21,8 +22,7 @@ import { IssuedCredentialStatus } from '../IssuedCredentialStatus';
 import { RevokeCredentialModal } from '../RevokeCredentialModal';
 
 type IssuedStatusFilter =
-  | CredentialVerificationStatus.Success
-  | CredentialVerificationStatus.Revoked;
+  CredentialVerificationStatus.Success | CredentialVerificationStatus.Revoked;
 
 const STATUS_FILTERS: IssuedStatusFilter[] = [
   CredentialVerificationStatus.Success,
@@ -78,13 +78,13 @@ export const IssuerIssuedCredentials = () => {
     string | null
   >(null);
 
-  const { data, isError, isLoading, isFetching, isPreviousData } =
+  const { data, isError, isPending, isFetching, isPlaceholderData } =
     useIssuersCredentials(
       { params: { status: statusFilter } },
-      { keepPreviousData: true },
+      { placeholderData: keepPreviousData },
     );
   // Cached rows of the previous status chip are shown until the new ones arrive.
-  const isSwitchingStatus = isPreviousData && isFetching;
+  const isSwitchingStatus = isPlaceholderData && isFetching;
 
   const typeLabelOf = useCallback<CredentialTypeLabelResolver>(
     (credential) =>
@@ -116,7 +116,7 @@ export const IssuerIssuedCredentials = () => {
     ...verifyCredentialAction(credential, t('verify', { ns: 'common' })),
   ];
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

@@ -14,18 +14,16 @@ export const useIssuerCredentials = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuerCredentialsResponse>(
-    [QueryKeys.issuerCredentials],
-    async () => {
+  return useQuery<GetIssuerCredentialsResponse>({
+    queryKey: [QueryKeys.issuerCredentials],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useCreatorCredentials call');
       }
       return getIssuerCredentials(token);
     },
-    {
-      refetchInterval: 60000,
-      ...options,
-    },
-  );
+    refetchInterval: 60000,
+    ...options,
+  });
 };

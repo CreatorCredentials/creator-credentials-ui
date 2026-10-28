@@ -8,15 +8,15 @@ export const useCreatorIssuers = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuersResponse>(
-    [QueryKeys.creatorIssuers],
-    async () => {
+  return useQuery<GetIssuersResponse>({
+    queryKey: [QueryKeys.creatorIssuers],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useCreatorIssuers call');
       }
       return getIssuers(token).then((res) => res.data);
     },
-    options,
-  );
+    ...options,
+  });
 };

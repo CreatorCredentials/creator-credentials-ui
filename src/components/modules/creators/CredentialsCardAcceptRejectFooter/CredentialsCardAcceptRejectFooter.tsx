@@ -68,34 +68,40 @@ export const CredentialsCardAcceptRejectFooter = ({
   >(null);
   const [missingSupportingVC, setMissingSupportingVC] = React.useState(false);
 
-  const { mutateAsync: acceptAsync, isLoading: isAccepting } =
+  const { mutateAsync: acceptAsync, isPending: isAccepting } =
     useAcceptCredentialsIssuanceRequest({
       onSuccess: () => {
-        queryClient.invalidateQueries([
-          QueryKeys.issuersCredentials,
-          { status: CreatorVerificationStatus.Pending },
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: [
+            QueryKeys.issuersCredentials,
+            { status: CreatorVerificationStatus.Pending },
+          ],
+        });
       },
     });
 
-  const { mutateAsync: rejectAsync, isLoading: isRejecting } =
+  const { mutateAsync: rejectAsync, isPending: isRejecting } =
     useRejectCredentialsIssuanceRequest({
       onSuccess: () => {
-        queryClient.invalidateQueries([
-          QueryKeys.issuersCredentials,
-          { status: CredentialVerificationStatus.Pending },
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: [
+            QueryKeys.issuersCredentials,
+            { status: CredentialVerificationStatus.Pending },
+          ],
+        });
       },
     });
   const {
     mutateAsync: verifyAcceptSignatureAsync,
-    isLoading: isVerifyingAccept,
+    isPending: isVerifyingAccept,
   } = useVerifyAcceptedCredentialSignature({
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        QueryKeys.issuersCredentials,
-        { status: CredentialVerificationStatus.Pending },
-      ]);
+      queryClient.invalidateQueries({
+        queryKey: [
+          QueryKeys.issuersCredentials,
+          { status: CredentialVerificationStatus.Pending },
+        ],
+      });
     },
   });
 
@@ -796,13 +802,11 @@ const SupportingEvidenceSection = ({
       : [];
 
   const subjectId = (co?.credentialSubject as Record<string, unknown>)?.id as
-    | string
-    | undefined;
+    string | undefined;
   const verifiedKeypairDid = (co?.credentialSubject as Record<string, unknown>)
     ?.sameAs as string | undefined;
   const email = (co?.credentialSubject as Record<string, unknown>)?.email as
-    | string
-    | undefined;
+    string | undefined;
   const organizationName = (co?.credentialSubject as Record<string, unknown>)
     ?.organizationName as string | undefined;
 

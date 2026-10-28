@@ -16,9 +16,9 @@ export const useIssuerDetailsWithCredentials = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuerDetailsWithCredentialsResponse>(
-    [QueryKeys.creatorIssuerDetails, issuerId],
-    async () => {
+  return useQuery<GetIssuerDetailsWithCredentialsResponse>({
+    queryKey: [QueryKeys.creatorIssuerDetails, issuerId],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useIssuerDetailsWithCredentials call');
@@ -27,8 +27,6 @@ export const useIssuerDetailsWithCredentials = (
         (res) => res.data,
       );
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

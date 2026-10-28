@@ -67,10 +67,12 @@ describe('useRevokeCredential', () => {
       });
 
     await waitFor(() => expect(invalidateQueries).toHaveBeenCalledTimes(2));
-    expect(invalidateQueries).toHaveBeenCalledWith([
-      QueryKeys.issuersCredentials,
-    ]);
-    expect(invalidateQueries).toHaveBeenCalledWith([QueryKeys.issuerCreators]);
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: [QueryKeys.issuersCredentials],
+    });
+    expect(invalidateQueries).toHaveBeenCalledWith({
+      queryKey: [QueryKeys.issuerCreators],
+    });
     expect(settled).toBe(false);
 
     invalidation.resolve();

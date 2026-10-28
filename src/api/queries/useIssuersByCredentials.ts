@@ -13,11 +13,9 @@ export const useIssuersByCredentials = (
     'queryFn' | 'queryKey'
   >,
 ) =>
-  useQuery<GetIssuersBySelectedCredentialsResponse>(
-    [QueryKeys.issuersByCredentials, credentials],
-    () =>
+  useQuery<GetIssuersBySelectedCredentialsResponse>({
+    queryKey: [QueryKeys.issuersByCredentials, credentials],
+    queryFn: () =>
       getIssuersBySelectedCredentials({ credentials }).then((res) => res.data),
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });

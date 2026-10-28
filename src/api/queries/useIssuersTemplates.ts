@@ -14,10 +14,9 @@ export const useIssuersTemplates = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuersTemplatesResponse>(
-    [QueryKeys.creatorsRequestableTemplates],
-
-    async () => {
+  return useQuery<GetIssuersTemplatesResponse>({
+    queryKey: [QueryKeys.creatorsRequestableTemplates],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useIssuersTemplates call');
@@ -25,8 +24,6 @@ export const useIssuersTemplates = (
 
       return getIssuersTemplates(token).then((res) => res.data);
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

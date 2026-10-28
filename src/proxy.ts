@@ -26,7 +26,7 @@ export default clerkMiddleware(async (auth, req) => {
 // };
 export const config = {
   matcher: [
-    // Run middleware only where auth protection can apply. Include the bare
+    // Run the proxy only where auth protection can apply. Include the bare
     // paths so direct visits to `/creator` and `/issuer` are protected too.
     '/creator',
     '/creator/:path*',

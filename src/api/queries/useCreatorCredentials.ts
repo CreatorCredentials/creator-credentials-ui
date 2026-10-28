@@ -10,7 +10,7 @@ import {
 export const useCreatorCredentials = (
   options?: Omit<
     UseQueryOptions<GetCreatorCredentialsResponse, AxiosError>,
-    'queryFn'
+    'queryFn' | 'queryKey'
   >,
 ) => {
   const auth = useAuth();

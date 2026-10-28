@@ -20,9 +20,11 @@ export const KeypairVerificationSubmitKeyCard = () => {
 
   const [publicKeyPem, setPublicKeyPem] = useState('');
 
-  const { mutateAsync, isLoading } = useSubmitKeypairPublicKey({
+  const { mutateAsync, isPending } = useSubmitKeypairPublicKey({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.keypairChallengeStatus]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.keypairChallengeStatus],
+      });
     },
   });
 
@@ -87,8 +89,8 @@ export const KeypairVerificationSubmitKeyCard = () => {
             color="primary"
             className="self-start"
             onClick={handleSubmit}
-            isProcessing={isLoading}
-            disabled={isLoading || !publicKeyPem.trim()}
+            isProcessing={isPending}
+            disabled={isPending || !publicKeyPem.trim()}
           >
             Submit Public Key
           </Button>

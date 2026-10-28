@@ -12,10 +12,8 @@ export const useRequestableCredentials = (
     'queryFn' | 'queryKey'
   >,
 ) =>
-  useQuery<GetRequestableCredentialsResponse>(
-    [QueryKeys.requestableCredentials, issuerId],
-    () => getRequestableCredentials(issuerId).then((res) => res.data),
-    {
-      ...options,
-    },
-  );
+  useQuery<GetRequestableCredentialsResponse>({
+    queryKey: [QueryKeys.requestableCredentials, issuerId],
+    queryFn: () => getRequestableCredentials(issuerId).then((res) => res.data),
+    ...options,
+  });

@@ -26,21 +26,25 @@ export const useMetaMask = ({} // optimisticUpdate = true,
 
   const {
     mutateAsync: mutateConnectWallet,
-    isLoading: isConnectingMutationRunning,
+    isPending: isConnectingMutationRunning,
   } = useConnectMetaMaskWallet({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.creatorVerifiedCredentials],
+      });
     },
   });
 
-  const { mutateAsync: mutateDisconnectWallet, isLoading: isDisconnecting } =
+  const { mutateAsync: mutateDisconnectWallet, isPending: isDisconnecting } =
     useDisconnectMetaMaskWallet({
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.creatorVerifiedCredentials],
+        });
       },
     });
 
-  const { data, isLoading: isLoadingNonce } = useGenerateMetaMaskNonce();
+  const { data, isPending: isLoadingNonce } = useGenerateMetaMaskNonce();
   const nonce = data?.nonce;
 
   const connect = async () => {

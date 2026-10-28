@@ -15,9 +15,9 @@ export const useCredentialsRequestDetails = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetCredentialsRequestDetailsResponse>(
-    [QueryKeys.credentialsRequestDetails, creatorId],
-    async () => {
+  return useQuery<GetCredentialsRequestDetailsResponse>({
+    queryKey: [QueryKeys.credentialsRequestDetails, creatorId],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useCredentialsRequestDetails call');
@@ -26,8 +26,6 @@ export const useCredentialsRequestDetails = (
         (res) => res.data,
       );
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

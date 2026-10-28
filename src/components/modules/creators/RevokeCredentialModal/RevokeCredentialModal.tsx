@@ -20,7 +20,7 @@ export const RevokeCredentialModal = ({
   const toast = useToast();
   const reasonFieldId = useId();
   const [reason, setReason] = useState('');
-  const { mutateAsync: revokeCredential, isLoading } = useRevokeCredential();
+  const { mutateAsync: revokeCredential, isPending } = useRevokeCredential();
 
   const confirmHandler = async () => {
     try {
@@ -42,7 +42,7 @@ export const RevokeCredentialModal = ({
       title={t('issued.revoke.title')}
       message={t('issued.revoke.message')}
       confirmLabel={t('issued.revoke.confirm')}
-      isProcessing={isLoading}
+      isProcessing={isPending}
       testIds={{
         modal: 'revoke-modal',
         confirm: 'revoke-confirm',
@@ -62,7 +62,7 @@ export const RevokeCredentialModal = ({
           maxLength={REASON_MAX_LENGTH}
           placeholder={t('issued.revoke.reason-placeholder')}
           value={reason}
-          disabled={isLoading}
+          disabled={isPending}
           onChange={(event) => setReason(event.target.value)}
           data-testid="revoke-reason"
         />

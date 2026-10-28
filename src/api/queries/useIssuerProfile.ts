@@ -15,15 +15,15 @@ export const useIssuerProfile = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuerProfileResponse, AxiosError>(
-    [QueryKeys.issuerProfile],
-    async () => {
+  return useQuery<GetIssuerProfileResponse, AxiosError>({
+    queryKey: [QueryKeys.issuerProfile],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useIssuerProfile call');
       }
       return getIssuerProfile(token).then((res) => res.data);
     },
-    options,
-  );
+    ...options,
+  });
 };

@@ -24,23 +24,27 @@ export const CreatorCardAcceptRejectFooter = ({
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: acceptAsync, isLoading: isAccepting } =
+  const { mutateAsync: acceptAsync, isPending: isAccepting } =
     useAcceptCreatorConnectionRequest({
       onSuccess: () => {
-        queryClient.invalidateQueries([
-          QueryKeys.issuerCreators,
-          { status: CreatorVerificationStatus.Pending },
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Pending },
+          ],
+        });
       },
     });
 
-  const { mutateAsync: rejectAsync, isLoading: isRejecting } =
+  const { mutateAsync: rejectAsync, isPending: isRejecting } =
     useRejectCreatorConnectionRequest({
       onSuccess: () => {
-        queryClient.invalidateQueries([
-          QueryKeys.issuerCreators,
-          { status: CreatorVerificationStatus.Pending },
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: [
+            QueryKeys.issuerCreators,
+            { status: CreatorVerificationStatus.Pending },
+          ],
+        });
       },
     });
 

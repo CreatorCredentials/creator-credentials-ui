@@ -18,7 +18,7 @@ export const IssuerVerificationCards = () => {
 
   const {
     data: credentials,
-    isLoading,
+    isPending,
     status,
   } = useIssuerCredentials({
     staleTime: 1000 * 60 * 1, // 1 minute
@@ -28,7 +28,7 @@ export const IssuerVerificationCards = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
   const email = credentials.email.data.address;

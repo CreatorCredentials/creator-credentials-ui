@@ -13,8 +13,6 @@ export default defineConfig({
     reporters: 'verbose',
     coverage: {
       reporter: ['text', 'json', 'html', 'cobertura'],
-      all: true,
-      excludeNodeModules: true,
       include: ['./src/**/*.tsx'],
     },
   },

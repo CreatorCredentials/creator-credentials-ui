@@ -32,9 +32,9 @@ const OrganizationNameGate = ({
   const [value, setValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const { mutateAsync, isLoading } = useSetOrganizationName({
+  const { mutateAsync, isPending } = useSetOrganizationName({
     onSuccess: (user) => {
-      queryClient.invalidateQueries([QueryKeys.getUser]);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
       if (user.organizationName) {
         onSaved(user.organizationName);
       }
@@ -86,14 +86,14 @@ const OrganizationNameGate = ({
             placeholder="e.g. Acme Media GmbH"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            disabled={isLoading}
+            disabled={isPending}
             required
           />
           <Button
             type="submit"
             color="primary"
-            isProcessing={isLoading}
-            disabled={isLoading || !value.trim()}
+            isProcessing={isPending}
+            disabled={isPending || !value.trim()}
           >
             Save & continue
           </Button>
@@ -229,8 +229,12 @@ export const CredentialsRequestVerifyKeypair = () => {
 
       if (cancelled) return;
 
-      await queryClient.cancelQueries([QueryKeys.keypairChallengeStatus]);
-      queryClient.removeQueries([QueryKeys.keypairChallengeStatus]);
+      await queryClient.cancelQueries({
+        queryKey: [QueryKeys.keypairChallengeStatus],
+      });
+      queryClient.removeQueries({
+        queryKey: [QueryKeys.keypairChallengeStatus],
+      });
       setResetDone(true);
     };
 

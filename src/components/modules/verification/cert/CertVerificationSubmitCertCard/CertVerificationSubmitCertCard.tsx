@@ -16,13 +16,15 @@ export const CertVerificationSubmitCertCard = () => {
   const [certPem, setCertPem] = useState('');
 
   const invalidate = () => {
-    queryClient.invalidateQueries([QueryKeys.certChallengeStatus]);
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.certChallengeStatus],
+    });
   };
 
-  const { mutateAsync: initiate, isLoading: isInitiating } =
+  const { mutateAsync: initiate, isPending: isInitiating } =
     useInitiateCertChallenge({ onSuccess: invalidate });
 
-  const { mutateAsync: submitCert, isLoading: isSubmitting } = useSubmitCertPem(
+  const { mutateAsync: submitCert, isPending: isSubmitting } = useSubmitCertPem(
     { onSuccess: invalidate },
   );
 

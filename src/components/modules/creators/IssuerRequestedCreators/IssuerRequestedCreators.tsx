@@ -10,7 +10,7 @@ import { CreatorCardAcceptRejectFooter } from '../CreatorCardAcceptRejectFooter'
 export const IssuerRequestedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isLoading } = useIssuerCreators({
+  const { data, status, isPending } = useIssuerCreators({
     params: {
       status: CreatorVerificationStatus.Pending,
     },
@@ -20,7 +20,7 @@ export const IssuerRequestedCreators = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

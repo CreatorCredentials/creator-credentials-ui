@@ -19,9 +19,11 @@ export const DidWebVerificationJsonFileCard = () => {
   const { currentJsonFileContent, currentStep, setCurrentStep } =
     useDidWebVerificationContext();
 
-  const { mutateAsync, isLoading } = useConfirmDidWebJsonFileUpload({
+  const { mutateAsync, isPending } = useConfirmDidWebJsonFileUpload({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.issuerCredentials],
+      });
       // queryClient.setQueryData<GetIssuerCredentialsResponse>(
       //   [QueryKeys.issuerCredentials],
       //   (oldData) => {
@@ -91,7 +93,7 @@ export const DidWebVerificationJsonFileCard = () => {
           <Button
             color="outline"
             className="self-start"
-            isProcessing={isLoading}
+            isProcessing={isPending}
             disabled={currentStep === 'verification'}
             onClick={handleDownloadClick}
           >
@@ -105,7 +107,7 @@ export const DidWebVerificationJsonFileCard = () => {
             color="primary"
             className="self-start"
             onClick={confirmButtonHandler}
-            isProcessing={isLoading}
+            isProcessing={isPending}
             disabled={currentStep === 'verification'}
           >
             {t('cards.json-file.buttons.confirm-upload')}

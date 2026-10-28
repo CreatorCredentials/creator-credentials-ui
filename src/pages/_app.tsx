@@ -1,5 +1,5 @@
-import 'globals.css';
-import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import '../globals.css';
+import { HydrationBoundary, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Flowbite } from 'flowbite-react';
 import { appWithTranslation } from 'next-i18next/pages';
@@ -49,7 +49,7 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
       >
         <AppMetadata />
         <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
+          <HydrationBoundary state={pageProps.dehydratedState}>
             <Flowbite theme={{ theme: flowbiteTheme }}>
               <div className={clsxm(inter.className, 'contents')}>
                 {getLayout(<Component {...pageProps} />)}
@@ -58,9 +58,9 @@ function CreatorCredentialsApp({ Component, pageProps }: AppPropsWithLayout) {
             </Flowbite>
             <ReactQueryDevtools
               initialIsOpen={false}
-              position="bottom-right"
+              buttonPosition="bottom-right"
             />
-          </Hydrate>
+          </HydrationBoundary>
         </QueryClientProvider>
       </ClerkProvider>
     </>

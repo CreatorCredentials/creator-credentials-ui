@@ -31,7 +31,9 @@ export const useDisconnectDomain = (
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.creatorVerifiedCredentials]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.creatorVerifiedCredentials],
+      });
     },
     ...options,
   });

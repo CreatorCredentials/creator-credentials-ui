@@ -6,10 +6,10 @@ import { RevokeCredentialModal } from './RevokeCredentialModal';
 
 const mutateAsync = vi.fn();
 const toast = { success: vi.fn(), error: vi.fn() };
-let isLoading = false;
+let isPending = false;
 
 vi.mock('@/api/mutations/useRevokeCredential', () => ({
-  useRevokeCredential: () => ({ mutateAsync, isLoading }),
+  useRevokeCredential: () => ({ mutateAsync, isPending }),
 }));
 
 vi.mock('@/shared/hooks/useToast', () => ({
@@ -21,7 +21,7 @@ describe('RevokeCredentialModal', () => {
     mutateAsync.mockReset();
     toast.success.mockReset();
     toast.error.mockReset();
-    isLoading = false;
+    isPending = false;
   });
 
   it('revokes with the typed reason and closes on success', async () => {
@@ -103,7 +103,7 @@ describe('RevokeCredentialModal', () => {
   });
 
   it('cannot be dismissed while the request is in flight', async () => {
-    isLoading = true;
+    isPending = true;
     const onClose = vi.fn();
     render(
       <RevokeCredentialModal

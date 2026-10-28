@@ -20,7 +20,7 @@ export const CredentialsRequestDataConfirmation = () => {
   const {
     mutateAsync: sendCredentialsRequest,
     isSuccess: successfullyRequestedCredentials,
-    isLoading: isRequestingCredentials,
+    isPending: isRequestingCredentials,
   } = useSendCredentialsRequest({
     onError: (error: AxiosError) => {
       if (error.response?.status === 409) {

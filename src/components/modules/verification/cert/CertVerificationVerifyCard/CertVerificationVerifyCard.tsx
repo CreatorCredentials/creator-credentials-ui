@@ -14,18 +14,22 @@ export const CertVerificationVerifyCard = () => {
   const [signature, setSignature] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const { mutateAsync: verifySignature, isLoading: isVerifying } =
+  const { mutateAsync: verifySignature, isPending: isVerifying } =
     useVerifyCertSignature({
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.certChallengeStatus]);
-        queryClient.invalidateQueries([QueryKeys.getUser]);
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.certChallengeStatus],
+        });
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
       },
     });
 
-  const { mutateAsync: resetChallenge, isLoading: isResetting } =
+  const { mutateAsync: resetChallenge, isPending: isResetting } =
     useResetCertChallenge({
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.certChallengeStatus]);
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.certChallengeStatus],
+        });
       },
     });
 

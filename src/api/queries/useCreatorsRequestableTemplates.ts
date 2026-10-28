@@ -14,10 +14,9 @@ export const useCreatorsRequestableTemplates = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetCreatorsRequestableTemplatesResponse>(
-    [QueryKeys.creatorsRequestableTemplates],
-
-    async () => {
+  return useQuery<GetCreatorsRequestableTemplatesResponse>({
+    queryKey: [QueryKeys.creatorsRequestableTemplates],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useCredentialsRequestDetails call');
@@ -25,8 +24,6 @@ export const useCreatorsRequestableTemplates = (
 
       return getCreatorsRequestableTemplates(token).then((res) => res.data);
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

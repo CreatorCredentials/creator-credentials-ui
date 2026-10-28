@@ -11,9 +11,9 @@ import { IssuerIssuedCredentials } from './IssuerIssuedCredentials';
 type QueryState = {
   data?: { credentials: IssuedCredential[] };
   isError?: boolean;
-  isLoading?: boolean;
+  isPending?: boolean;
   isFetching?: boolean;
-  isPreviousData?: boolean;
+  isPlaceholderData?: boolean;
 };
 
 const useIssuersCredentials = vi.fn();
@@ -24,16 +24,16 @@ vi.mock('@/api/queries/useIssuersCredentials', () => ({
     useIssuersCredentials(...args);
     return {
       isError: false,
-      isLoading: false,
+      isPending: false,
       isFetching: false,
-      isPreviousData: false,
+      isPlaceholderData: false,
       ...queryState,
     };
   },
 }));
 
 vi.mock('@/api/mutations/useRevokeCredential', () => ({
-  useRevokeCredential: () => ({ mutateAsync: vi.fn(), isLoading: false }),
+  useRevokeCredential: () => ({ mutateAsync: vi.fn(), isPending: false }),
 }));
 
 vi.mock('@/shared/hooks/useIsDataSupplierIssuer', () => ({
@@ -148,7 +148,7 @@ describe('IssuerIssuedCredentials', () => {
     queryState = {
       data: { credentials: [issued] },
       isFetching: true,
-      isPreviousData: true,
+      isPlaceholderData: true,
     };
     render(<IssuerIssuedCredentials />);
 
