@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getAuth, clerkClient } from '@clerk/nextjs/server';
-import { UserRole } from '@/shared/typings/UserRole';
+import { HOME_PATH_BY_ROLE, UserRole } from '@/shared/typings/UserRole';
 
 export function withAuth<
   P extends { [key: string]: unknown } = { [key: string]: unknown },
@@ -36,10 +36,7 @@ export function withAuth<
 
       const userRoleFromMetadata = user.publicMetadata.role;
 
-      if (
-        userRoleFromMetadata !== UserRole.Creator &&
-        userRoleFromMetadata !== UserRole.Issuer
-      ) {
+      if (!isKnownRole(userRoleFromMetadata)) {
         const route = context.req.url;
         let newRole = null;
         if (route?.includes('issuer')) newRole = UserRole.Issuer;
@@ -76,13 +73,16 @@ export function withAuth<
         options?.roles &&
         !isUserRoleEligible(user.publicMetadata.role as UserRole, options.roles)
       ) {
+        // The admin area does not exist for other roles; everyone else is
+        // sent to the home page of their own role.
+        if (isAdminOnly(options.roles)) {
+          return { notFound: true } as GetServerSidePropsResult<P>;
+        }
         return {
           redirect: {
             destination:
               options?.redirect ||
-              (user.publicMetadata.role === UserRole.Creator
-                ? '/creator'
-                : '/issuer'),
+              homePathFor(user.publicMetadata.role as UserRole),
             statusCode: 302,
           },
         } as GetServerSidePropsResult<P>;
@@ -99,6 +99,17 @@ export function withAuth<
     }
   };
 }
+
+const isKnownRole = (role: unknown): role is UserRole =>
+  Object.values(UserRole).includes(role as UserRole);
+
+const homePathFor = (role: UserRole): string =>
+  HOME_PATH_BY_ROLE[role] ?? HOME_PATH_BY_ROLE[UserRole.Creator];
+
+const isAdminOnly = (eligibleRoles: UserRole | UserRole[]): boolean =>
+  Array.isArray(eligibleRoles)
+    ? eligibleRoles.every((role) => role === UserRole.Admin)
+    : eligibleRoles === UserRole.Admin;
 
 const isUserRoleEligible = (
   userRole: UserRole,

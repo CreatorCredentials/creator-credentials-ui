@@ -44,7 +44,9 @@
     "signout": "Sign-out",
     "requested": "Requested",
     "accepted": "Accepted",
-    "issued": "Issued"
+    "issued": "Issued",
+    "users": "Users",
+    "verify": "Verify"
   },
   "badges": {
     "verification": "Verification",

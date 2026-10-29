@@ -41,10 +41,26 @@ export const CREATOR_ERIN: CredentialCreator = {
   didKey: 'did:key:zDnaeErinKafvN7ax6XkU6utX9VEBcVTZNKmBz94tTday',
 };
 
+export const ISSUER_ID = 1;
+export const ADMIN_ID = 99;
+export const ADMIN_NAME = 'Platform Admin';
+
+const CLERK_ROLE: Record<Role, ClerkRole> = {
+  issuer: ClerkRole.Issuer,
+  creator: ClerkRole.Creator,
+  admin: ClerkRole.Admin,
+};
+
+const USER_ID: Record<Role, number> = {
+  issuer: ISSUER_ID,
+  creator: CREATOR_ALICE.id,
+  admin: ADMIN_ID,
+};
+
 const baseUser = (role: Role): User => ({
-  id: role === 'issuer' ? 1 : CREATOR_ALICE.id,
+  id: USER_ID[role],
   clerkId: `user_e2e_${role}`,
-  clerkRole: role === 'issuer' ? ClerkRole.Issuer : ClerkRole.Creator,
+  clerkRole: CLERK_ROLE[role],
   credentials: [],
   publicAddress: '',
   createdAt: CREATED_AT,

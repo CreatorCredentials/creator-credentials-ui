@@ -22,8 +22,16 @@ import {
 export const PLATFORM_ISSUER_DID = `did:web:${PLATFORM_HOST}`;
 export const ISSUER_DID = `did:web:${ISSUER_DOMAIN}`;
 export const VERIFIABLE_CREATOR_TYPE = 'VerifiableCreator';
-export const SAMPLE_JWT =
-  'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YyI6e319.c2lnbmF0dXJl';
+const SAMPLE_JWT_HEADER = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9';
+const SAMPLE_JWT_PAYLOAD = 'eyJ2YyI6e319';
+
+/** Deterministic stand-in for the compact JWS that signs credential `id`. */
+export const jwtFor = (id: string): string =>
+  `${SAMPLE_JWT_HEADER}.${SAMPLE_JWT_PAYLOAD}.sig-${id}`;
+
+export const SAMPLE_JWT = jwtFor('sample');
+/** A JWS no fixture credential was signed with: the verifier rejects its signature. */
+export const TAMPERED_JWT = `${SAMPLE_JWT_HEADER}.${SAMPLE_JWT_PAYLOAD}.tampered`;
 
 type Revocation = {
   at: string;
@@ -39,23 +47,24 @@ export type IssuedRecord = {
   connectionStatus: CreatorConnectionStatus | null;
 };
 
-const credentialObject = (
+export const credentialObject = (
   id: string,
   type: string,
   subject: CredentialCreator,
   validFrom: string,
   claims: Record<string, string>,
+  issuer = ISSUER_DID,
 ) => ({
   '@context': ['https://www.w3.org/ns/credentials/v2'],
   id: `urn:uuid:e2e-${id}`,
   type: ['VerifiableCredential', 'VerifiableAttestation', type],
-  issuer: ISSUER_DID,
+  issuer,
   validFrom,
   credentialSubject: { id: subject.didKey, ...claims },
-  proof: { type: 'JwtProof2020', jwt: SAMPLE_JWT },
+  proof: { type: 'JwtProof2020', jwt: jwtFor(id) },
 });
 
-type MembershipInput = {
+export type MembershipInput = {
   id: string;
   creator: CredentialCreator;
   issuedAt: string;
@@ -63,7 +72,7 @@ type MembershipInput = {
   revoked?: Revocation;
 };
 
-const membershipRecord = ({
+export const membershipRecord = ({
   id,
   creator,
   issuedAt,

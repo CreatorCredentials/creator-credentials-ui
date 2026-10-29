@@ -15,7 +15,7 @@ const baseURL = appBaseUrl();
 
 const roleProject = (role: Role) => ({
   name: role,
-  testMatch: `**/${role}-*.spec.ts`,
+  testMatch: [`**/${role}-*.spec.ts`, `**/${role}.spec.ts`],
   dependencies: ['setup'],
   use: { storageState: authStatePath(role) },
 });

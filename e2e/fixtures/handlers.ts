@@ -1,4 +1,8 @@
+import { GetAdminCredentialsSearchParams } from '@/api/requests/getAdminCredentials';
+import { GetAdminUsersSearchParams } from '@/api/requests/getAdminUsers';
+import { ClerkRole } from '@/api/requests/getUser';
 import { SendCredentialsRequestPayload } from '@/api/requests/sendCredentialsRequest';
+import { CredentialType } from '@/shared/typings/CredentialType';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
 import { ApiState } from './apiState';
 
@@ -28,6 +32,10 @@ const serverError = (): MockResponse => ({
   status: 500,
   body: { statusCode: 500, message: 'Internal server error' },
 });
+const badRequest = (message: string): MockResponse => ({
+  status: 400,
+  body: { statusCode: 400, message },
+});
 
 /** Answer for `/v1/**` requests no route covers; the caller logs them. */
 export const notMocked = (): MockResponse => ({
@@ -36,6 +44,31 @@ export const notMocked = (): MockResponse => ({
 });
 
 const statusParam = (url: URL): string => url.searchParams.get('status') ?? '';
+
+const optionalParam = (url: URL, name: string): string | undefined =>
+  url.searchParams.get(name) ?? undefined;
+
+const numberParam = (url: URL, name: string): number | undefined => {
+  const value = url.searchParams.get(name);
+  return value === null ? undefined : Number(value);
+};
+
+const adminCredentialsParams = (url: URL): GetAdminCredentialsSearchParams => ({
+  status: optionalParam(url, 'status') as
+    CredentialVerificationStatus | undefined,
+  type: optionalParam(url, 'type') as CredentialType | undefined,
+  issuerId: numberParam(url, 'issuerId'),
+  q: optionalParam(url, 'q'),
+  page: numberParam(url, 'page'),
+  pageSize: numberParam(url, 'pageSize'),
+});
+
+const adminUsersParams = (url: URL): GetAdminUsersSearchParams => ({
+  role: optionalParam(url, 'role') as ClerkRole | undefined,
+  q: optionalParam(url, 'q'),
+  page: numberParam(url, 'page'),
+  pageSize: numberParam(url, 'pageSize'),
+});
 
 const listIssuedCredentials: Handler = (state, { url }) => {
   const status = statusParam(url);
@@ -62,6 +95,25 @@ const revokeCredential: Handler = (state, { body }, { id }) => {
     case 'not-found':
       return notFound();
   }
+};
+
+const adminRevokeCredential: Handler = (state, { body }, { id }) => {
+  if (state.flags.failRevoke) {
+    return serverError();
+  }
+  const reason = (body as { reason?: string } | null)?.reason;
+  const outcome = state.adminRevoke(id, reason);
+  return outcome.kind === 'revoked' ? ok(outcome.credential) : notFound();
+};
+
+const adminCredentialDetails: Handler = (state, _request, { id }) => {
+  const credential = state.adminCredential(id);
+  return credential ? ok(credential) : notFound();
+};
+
+const verifyCredential: Handler = (state, { body }) => {
+  const result = state.verify(body);
+  return result ? ok(result) : badRequest('Malformed verification request');
 };
 
 const acceptCredentialRequest: Handler = (state, _request, { id }) => {
@@ -140,9 +192,40 @@ export const API_ROUTES: RouteDefinition[] = [
     handle: acceptCredentialRequest,
   },
   {
+    method: 'POST',
+    pattern: /^\/v1\/credentials\/verify$/,
+    handle: verifyCredential,
+  },
+  {
     method: 'GET',
     pattern: /^\/v1\/templates\/creator$/,
     handle: (state) => ok({ templates: state.templates() }),
+  },
+  {
+    method: 'GET',
+    pattern: /^\/v1\/admin\/credentials$/,
+    handle: (state, { url }) =>
+      ok(state.adminCredentials(adminCredentialsParams(url))),
+  },
+  {
+    method: 'GET',
+    pattern: /^\/v1\/admin\/credentials\/(?<id>[^/]+)$/,
+    handle: adminCredentialDetails,
+  },
+  {
+    method: 'POST',
+    pattern: /^\/v1\/admin\/credentials\/(?<id>[^/]+)\/revoke$/,
+    handle: adminRevokeCredential,
+  },
+  {
+    method: 'GET',
+    pattern: /^\/v1\/admin\/users$/,
+    handle: (state, { url }) => ok(state.adminUsers(adminUsersParams(url))),
+  },
+  {
+    method: 'GET',
+    pattern: /^\/v1\/admin\/stats$/,
+    handle: (state) => ok(state.adminStats()),
   },
 ];
 

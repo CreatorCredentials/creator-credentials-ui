@@ -5,6 +5,7 @@ import { UserRole } from '@/shared/typings/UserRole';
 import { BrandImage } from '@/components/shared/BrandImage';
 import { CreatorNavigationItems } from './CreatorNavigationItems';
 import { IssuerNavigationItems } from './IssuerNavigationItems';
+import { AdminNavigationItems } from './AdminNavigationItems';
 
 export const Navigation = () => {
   const user = useUser();
@@ -21,6 +22,8 @@ export const Navigation = () => {
         return CreatorNavigationItems;
       case UserRole.Issuer:
         return IssuerNavigationItems;
+      case UserRole.Admin:
+        return AdminNavigationItems;
       default:
         return null;
     }

@@ -13,6 +13,7 @@ import {
 const HOME_PATH: Record<Role, string> = {
   issuer: '/issuer',
   creator: '/creator',
+  admin: '/admin/credentials',
 };
 const CLERK_LOADED_PATH = '/welcome';
 const EMPTY_STORAGE_STATE = { cookies: [], origins: [] };

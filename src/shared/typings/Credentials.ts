@@ -182,3 +182,28 @@ export type IssuerCredentials = {
   didWeb: DidWebCredential | null;
   membership: MembershipCredential[];
 };
+
+export type CredentialIssuer = {
+  id: number;
+  name: string | null;
+  domain: string | null;
+};
+
+export type CredentialRevoker = {
+  id: number;
+  name: string | null;
+  role: string;
+};
+
+/** Entry of the platform's Bitstring Status List the credential is checked against. */
+export type StatusListEntry = {
+  credential: string;
+  index: number;
+};
+
+/** A credential as listed for the platform admin: creator, issuer, revoker and status-list entry. */
+export type AdminCredential = IssuedCredential & {
+  issuer: CredentialIssuer | null;
+  revokedBy: CredentialRevoker | null;
+  statusList: StatusListEntry | null;
+};

@@ -1,4 +1,5 @@
 import { useTranslation as i18nUseTranslation } from 'next-i18next/pages';
+import * as admin from '@/public/locales/en/admin.json';
 import * as cards from '@/public/locales/en/cards.json';
 import * as common from '@/public/locales/en/common.json';
 import * as creatorCredentialsRequest from '@/public/locales/en/creator-credentials-request.json';
@@ -27,6 +28,7 @@ import * as welcome from '@/public/locales/en/welcome.json';
 import { config } from '../constants/config';
 
 const translateObject = {
+  admin: admin,
   cards: cards,
   common: common,
   'creator-credentials-request': creatorCredentialsRequest,

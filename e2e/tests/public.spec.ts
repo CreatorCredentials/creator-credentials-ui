@@ -30,7 +30,7 @@ test.describe('public pages', () => {
     );
   });
 
-  for (const protectedPath of ['/issuer', '/creator']) {
+  for (const protectedPath of ['/issuer', '/creator', '/admin']) {
     test(`P1 ${protectedPath} redirects an anonymous visitor to /welcome`, async ({
       page,
     }) => {

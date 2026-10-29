@@ -20,6 +20,7 @@ module.exports = {
       : './public/locales',
   ns: [
     'common',
+    'admin',
     'cards',
     'creator-credentials-request',
     'creator-credentials',

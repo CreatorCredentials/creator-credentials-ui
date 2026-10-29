@@ -1,9 +1,9 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-export type Role = 'issuer' | 'creator';
+export type Role = 'issuer' | 'creator' | 'admin';
 
-export const ROLES: Role[] = ['issuer', 'creator'];
+export const ROLES: Role[] = ['issuer', 'creator', 'admin'];
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const LOCAL_ENV_FILE = path.join(REPO_ROOT, '.env.local');
