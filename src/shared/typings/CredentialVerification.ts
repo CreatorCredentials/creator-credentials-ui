@@ -1,4 +1,13 @@
-export type RevocationStatus = 'valid' | 'revoked' | 'unknown';
+/** `unknown`: no status entry to check; `error`: the status list check failed, see `reason`. */
+export type RevocationStatus = 'valid' | 'revoked' | 'unknown' | 'error';
+
+export type RevocationErrorReason =
+  | 'MALFORMED_VALUE_ERROR'
+  | 'STATUS_RETRIEVAL_ERROR'
+  | 'STATUS_VERIFICATION_ERROR'
+  | 'STATUS_LIST_LENGTH_ERROR'
+  | 'RANGE_ERROR'
+  | 'UNSUPPORTED_STATUS_SIZE';
 
 export type SignatureCheck = {
   valid: boolean;
@@ -15,6 +24,7 @@ export type ValidityCheck = {
 export type RevocationCheck = {
   status: RevocationStatus;
   checkedAt: string;
+  reason?: RevocationErrorReason;
 };
 
 export type VerificationChecks = {

@@ -122,7 +122,15 @@
       "valid-until": "Valid until",
       "checked-at": "Checked at",
       "no-status-entry": "The credential carries no status entry, so revocation cannot be checked.",
-      "raw": "Raw response"
+      "raw": "Raw response",
+      "reason": {
+        "MALFORMED_VALUE_ERROR": "The status entry of the credential is malformed.",
+        "STATUS_RETRIEVAL_ERROR": "The status list could not be fetched.",
+        "STATUS_VERIFICATION_ERROR": "The status list is not a verifiable Bitstring Status List credential.",
+        "STATUS_LIST_LENGTH_ERROR": "The status list is shorter than the minimum the standard requires.",
+        "RANGE_ERROR": "The status index points outside the status list.",
+        "UNSUPPORTED_STATUS_SIZE": "The status list uses a multi-bit status that this verifier does not support."
+      }
     },
     "empty-input": "Paste a JWT or a credential JSON first.",
     "invalid-json-input": "The input is not a valid credential JSON."

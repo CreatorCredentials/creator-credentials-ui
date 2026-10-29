@@ -36,6 +36,8 @@ const revocationOutcome = (check: RevocationCheck): CheckOutcome => {
       return 'revoked';
     case 'unknown':
       return 'unknown';
+    case 'error':
+      return 'failed';
   }
 };
 
@@ -126,6 +128,13 @@ const RevocationFacts = ({ check }: { check: RevocationCheck }) => {
     <>
       {check.status === 'unknown' && (
         <dt className="col-span-2">{t('verify.result.no-status-entry')}</dt>
+      )}
+      {check.status === 'error' && (
+        <dt className="col-span-2">
+          {t(
+            `verify.result.reason.${check.reason ?? 'STATUS_RETRIEVAL_ERROR'}`,
+          )}
+        </dt>
       )}
       <Fact
         label={t('verify.result.checked-at')}

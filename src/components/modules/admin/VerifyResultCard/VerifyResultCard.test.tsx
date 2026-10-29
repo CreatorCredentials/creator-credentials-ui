@@ -119,6 +119,32 @@ describe('VerifyResultCard', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows a failed status list check as failed with its reason', () => {
+    render(
+      <VerifyResultCard
+        result={{
+          ...validResult,
+          valid: false,
+          checks: {
+            ...validResult.checks,
+            revocation: {
+              status: 'error',
+              reason: 'STATUS_VERIFICATION_ERROR',
+              checkedAt: CHECKED_AT,
+            },
+          },
+        }}
+      />,
+    );
+
+    expect(check('revocation')).toHaveAttribute('data-outcome', 'failed');
+    expect(
+      within(check('revocation')).getByText(
+        'verify.result.reason.STATUS_VERIFICATION_ERROR',
+      ),
+    ).toBeInTheDocument();
+  });
+
   it('exposes the raw response in a collapsible block', () => {
     render(<VerifyResultCard result={validResult} />);
 
