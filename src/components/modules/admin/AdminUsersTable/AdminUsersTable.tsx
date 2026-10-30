@@ -1,4 +1,4 @@
-import { Button, Table } from 'flowbite-react';
+import { Table } from 'flowbite-react';
 import Link from 'next/link';
 import { ElementType } from 'react';
 import { useTranslation } from '@/shared/utils/useTranslation';
@@ -7,6 +7,7 @@ import { EMPTY_VALUE_PLACEHOLDER } from '@/shared/constants/placeholders';
 import { ClerkRole } from '@/api/requests/getUser';
 import { AdminUser } from '@/shared/typings/AdminUser';
 import { CopyableDid } from '@/components/shared/CopyableDid';
+import { ActionsMenu } from '@/components/shared/ActionsMenu';
 
 const COLUMN_T_KEYS = [
   'name',
@@ -72,9 +73,7 @@ export const AdminUsersTable = ({ users }: AdminUsersTableProps) => {
                 {displayName(user)}
               </div>
               {user.email && (
-                <div className="break-words text-xs text-grey-4">
-                  {user.email}
-                </div>
+                <div className="break-words text-grey-4">{user.email}</div>
               )}
             </Table.Cell>
             <Table.Cell>
@@ -98,16 +97,17 @@ export const AdminUsersTable = ({ users }: AdminUsersTableProps) => {
               </time>
             </Table.Cell>
             <Table.Cell className="text-right">
-              <Button
-                as={Link as ElementType}
-                href={credentialsHrefOf(user)}
-                size="xs"
-                color="outline"
-                className="inline-flex"
-                data-testid="admin-user-credentials"
-              >
-                {t('users.actions.credentials')}
-              </Button>
+              <ActionsMenu
+                items={[
+                  {
+                    as: Link as ElementType,
+                    href: credentialsHrefOf(user),
+                    children: t('users.actions.credentials'),
+                    'data-testid': 'admin-user-credentials',
+                  },
+                ]}
+                testId="admin-user-menu"
+              />
             </Table.Cell>
           </Table.Row>
         ))}

@@ -14,7 +14,7 @@ type StatProps = {
 };
 
 const Stat = ({ label, value }: StatProps) => (
-  <div className="flex flex-col rounded-md border border-gray-200 px-4 py-2">
+  <div className="flex flex-col rounded-md border border-grey-2 px-4 py-2">
     <span className="text-xs uppercase text-grey-4">{label}</span>
     <span className="text-lg text-black">{value}</span>
   </div>
