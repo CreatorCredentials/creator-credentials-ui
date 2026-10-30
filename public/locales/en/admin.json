@@ -6,7 +6,8 @@
   },
   "stats": {
     "users": "Users",
-    "revocations-last-30-days": "Revocations (30 days)"
+    "revocations-last-30-days": "Revocations (30 days)",
+    "status-list": "Revocation list"
   },
   "credentials": {
     "header": {

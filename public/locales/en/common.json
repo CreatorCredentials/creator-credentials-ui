@@ -70,5 +70,6 @@
       "newest": "Newest first",
       "oldest": "Oldest first"
     }
-  }
+  },
+  "revocation-list": "Revocation list"
 }
