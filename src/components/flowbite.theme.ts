@@ -21,13 +21,49 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   textInput: {
     field: {
       base: 'relative w-full fill-grey-4',
+      icon: {
+        base: 'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4',
+        svg: 'h-5 w-5 text-grey-4',
+      },
       input: {
         base: 'block w-full border border-grey-2 disabled:cursor-not-allowed disabled:opacity-50 placeholder-grey-4',
         sizes: {
           md: 'py-2 text-sm px-4',
           lg: 'py-3 text-sm px-4',
         },
+        withIcon: {
+          on: 'pl-12',
+          off: '',
+        },
       },
+    },
+  },
+  // Flowbite paints the table background with an absolutely positioned div
+  // that ends up above the cell text in this layout; the wrapper carries the
+  // card styling instead and the shadow element stays hidden.
+  table: {
+    root: {
+      base: 'w-full text-left text-sm text-grey-4',
+      shadow: 'hidden',
+      wrapper:
+        'relative overflow-x-auto rounded-lg border border-neutral-100 bg-white shadow',
+    },
+    head: {
+      base: 'text-xs uppercase text-grey-4',
+      cell: {
+        base: 'bg-grey-1 px-6 py-3 font-medium',
+      },
+    },
+    body: {
+      base: 'divide-y divide-grey-2',
+      cell: {
+        base: 'px-6 py-4 align-middle',
+      },
+    },
+    row: {
+      base: '',
+      hovered: 'hover:bg-grey-1',
+      striped: 'odd:bg-white even:bg-grey-1',
     },
   },
   label: {
