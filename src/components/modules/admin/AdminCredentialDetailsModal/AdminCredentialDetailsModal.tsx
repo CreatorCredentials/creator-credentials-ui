@@ -92,9 +92,15 @@ export const AdminCredentialDetailsModal = ({
                   index: String(credential.statusList.index),
                 })}
               </div>
-              <div className="text-grey-4">
+              <a
+                href={credential.statusList.credential}
+                target="_blank"
+                rel="noreferrer"
+                className="break-all text-primary underline underline-offset-[3px]"
+                data-testid="admin-status-list-link"
+              >
                 {credential.statusList.credential}
-              </div>
+              </a>
             </>
           ) : (
             <span data-testid="admin-no-status-entry">

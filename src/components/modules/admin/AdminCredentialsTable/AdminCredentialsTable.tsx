@@ -10,7 +10,10 @@ import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ActionsMenu } from '@/components/shared/ActionsMenu';
 import { CredentialAction } from '@/shared/typings/CredentialAction';
-import { verifyCredentialAction } from '@/shared/utils/credentialActions';
+import {
+  revocationListAction,
+  verifyCredentialAction,
+} from '@/shared/utils/credentialActions';
 import { credentialFileName } from '@/shared/utils/credentialFileName';
 import { downloadJson } from '@/shared/utils/downloadJson';
 
@@ -72,6 +75,7 @@ export const AdminCredentialsTable = ({
         ]
       : []),
     ...verifyCredentialAction(credential, tCommon('verify')),
+    ...revocationListAction(credential, tCommon('revocation-list')),
     ...(credential.status === CredentialVerificationStatus.Success
       ? [
           {

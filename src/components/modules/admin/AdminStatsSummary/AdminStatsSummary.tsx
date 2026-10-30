@@ -1,6 +1,8 @@
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useAdminStats } from '@/api/queries/useAdminStats';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
+import { platformStatusListUrl } from '@/shared/utils/credentialActions';
+import { Icon } from '@/components/shared/Icon';
 
 const STATUSES = [
   CredentialVerificationStatus.Success,
@@ -52,6 +54,19 @@ export const AdminStatsSummary = () => {
         label={t('stats.revocations-last-30-days')}
         value={data.revocationsLast30Days}
       />
+      <a
+        href={platformStatusListUrl()}
+        target="_blank"
+        rel="noreferrer"
+        className="ml-auto inline-flex items-center gap-2 self-center text-sm text-primary underline underline-offset-[3px] hover:text-primary-hover"
+        data-testid="admin-status-list"
+      >
+        {t('stats.status-list')}
+        <Icon
+          icon="ArrowRight"
+          className="h-4 w-4"
+        />
+      </a>
     </div>
   );
 };

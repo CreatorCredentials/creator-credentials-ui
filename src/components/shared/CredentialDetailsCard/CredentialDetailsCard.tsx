@@ -5,7 +5,10 @@ import { CredentialType } from '@/shared/typings/CredentialType';
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import { truncateWalletAddress } from '@/shared/utils/truncateWalletAddress';
 import { useCopyToClipboard } from '@/shared/hooks/useCopyToClipboard';
-import { verifyCredentialAction } from '@/shared/utils/credentialActions';
+import {
+  revocationListAction,
+  verifyCredentialAction,
+} from '@/shared/utils/credentialActions';
 import { CardWithBadge } from '../CardWithBadge';
 import { Icon, IconName } from '../Icon';
 import { DidKeyPemModal } from '../DidKeyPemModal/DidKeyPemModal';
@@ -43,10 +46,10 @@ export const CredentialDetailsCard = ({
   const { copy } = useCopyToClipboard();
   const [pemModalDid, setPemModalDid] = useState<string | null>(null);
 
-  const verifyItem = verifyCredentialAction(
-    credential,
-    t('verify', { ns: 'common' }),
-  );
+  const verifyItem = [
+    ...verifyCredentialAction(credential, t('verify', { ns: 'common' })),
+    ...revocationListAction(credential, t('revocation-list', { ns: 'common' })),
+  ];
 
   const keypairDid =
     type === CredentialType.ExternalKeypairVerification && 'sameAs' in data
