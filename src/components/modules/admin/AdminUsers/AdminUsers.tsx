@@ -1,34 +1,21 @@
-import { Alert, Button, Spinner, Table, TextInput } from 'flowbite-react';
-import Link from 'next/link';
-import { ElementType } from 'react';
+import { Alert, Button, Spinner, TextInput } from 'flowbite-react';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { clsxm } from '@/shared/utils/clsxm';
-import { formatDate } from '@/shared/utils/formatDate';
-import { EMPTY_VALUE_PLACEHOLDER } from '@/shared/constants/placeholders';
 import { Icon } from '@/components/shared/Icon';
 import { Loader } from '@/components/shared/Loader';
 import { useAdminUsers } from '@/api/queries/useAdminUsers';
 import { ClerkRole } from '@/api/requests/getUser';
-import { AdminUser } from '@/shared/typings/AdminUser';
 import {
   FIRST_PAGE,
   PagedFilters,
   usePagedFilters,
 } from '@/shared/hooks/usePagedFilters';
 import { AdminPagination } from '../AdminPagination';
+import { AdminUsersTable } from '../AdminUsersTable';
 
 const PAGE_SIZE = 20;
 const ROLE_FILTERS = [ClerkRole.Issuer, ClerkRole.Creator] as const;
-const COLUMN_T_KEYS = [
-  'name',
-  'email',
-  'did',
-  'domain',
-  'credentials',
-  'issued',
-  'created-on',
-] as const;
 
 type UsersFilters = PagedFilters & { role: ClerkRole };
 
@@ -36,19 +23,6 @@ const INITIAL_FILTERS: UsersFilters = {
   role: ClerkRole.Issuer,
   q: '',
   page: FIRST_PAGE,
-};
-
-const displayName = (user: AdminUser) =>
-  user.organizationName || user.name || EMPTY_VALUE_PLACEHOLDER;
-
-/** The admin credentials list narrowed to what this user issued or holds. */
-const credentialsHrefOf = (user: AdminUser): string => {
-  const query = new URLSearchParams(
-    user.role === ClerkRole.Issuer
-      ? { issuerId: String(user.id) }
-      : { q: user.didKey },
-  );
-  return `/admin/credentials?${query}`;
 };
 
 export const AdminUsers = () => {
@@ -84,60 +58,7 @@ export const AdminUsers = () => {
     }
     return (
       <>
-        <Table
-          hoverable
-          data-testid="admin-users-table"
-        >
-          <Table.Head>
-            {COLUMN_T_KEYS.map((column) => (
-              <Table.HeadCell key={column}>
-                {t(`users.table.${column}`)}
-              </Table.HeadCell>
-            ))}
-            <Table.HeadCell>
-              <span className="sr-only">{t('users.table.actions')}</span>
-            </Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {data.items.map((user) => (
-              <Table.Row
-                key={user.id}
-                data-testid="admin-user-row"
-              >
-                <Table.Cell className="font-medium text-black">
-                  {displayName(user)}
-                </Table.Cell>
-                <Table.Cell className="break-all">
-                  {user.email || EMPTY_VALUE_PLACEHOLDER}
-                </Table.Cell>
-                <Table.Cell className="max-w-xs break-all text-xs">
-                  {user.didKey}
-                </Table.Cell>
-                <Table.Cell>
-                  {user.domain || user.didWeb || EMPTY_VALUE_PLACEHOLDER}
-                </Table.Cell>
-                <Table.Cell>{user.counts.credentials}</Table.Cell>
-                <Table.Cell>{user.counts.issuedCredentials}</Table.Cell>
-                <Table.Cell>
-                  <time dateTime={user.createdAt}>
-                    {formatDate(user.createdAt)}
-                  </time>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    as={Link as ElementType}
-                    href={credentialsHrefOf(user)}
-                    size="xs"
-                    color="outline"
-                    data-testid="admin-user-credentials"
-                  >
-                    {t('users.actions.credentials')}
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        <AdminUsersTable users={data.items} />
         <AdminPagination
           page={data.page}
           pageSize={data.pageSize}

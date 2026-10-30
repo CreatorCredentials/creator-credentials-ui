@@ -59,7 +59,10 @@ export class AdminCredentialsPage {
   }
 
   async openDetails(rowText: string): Promise<void> {
-    await this.rowWithText(rowText).getByTestId(TestId.adminView).click();
+    await this.rowWithText(rowText)
+      .first()
+      .getByTestId(TestId.adminView)
+      .click();
     await expect(this.detailsModal).toBeVisible();
   }
 
@@ -69,7 +72,10 @@ export class AdminCredentialsPage {
   }
 
   async openRevokeDialog(rowText: string): Promise<void> {
-    await this.rowWithText(rowText).getByTestId(TestId.adminRevoke).click();
+    await this.rowWithText(rowText)
+      .first()
+      .getByTestId(TestId.adminRevoke)
+      .click();
     await expect(this.revokeModal).toBeVisible();
   }
 

@@ -77,7 +77,7 @@ export const AdminCredentialsTable = ({
                   {creatorDisplayName(credential) || EMPTY_VALUE_PLACEHOLDER}
                 </div>
                 {email && (
-                  <div className="break-all text-xs font-normal text-grey-4">
+                  <div className="break-words text-xs font-normal text-grey-4">
                     {email}
                   </div>
                 )}
@@ -86,7 +86,7 @@ export const AdminCredentialsTable = ({
                 {issuerDisplayName(credential, t('credentials.self-issued'))}
               </Table.Cell>
               <Table.Cell>{typeLabelOf(credential.type)}</Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="whitespace-nowrap">
                 <time dateTime={credential.issuedAt ?? undefined}>
                   {formatDate(credential.issuedAt)}
                 </time>
@@ -98,7 +98,7 @@ export const AdminCredentialsTable = ({
                   EMPTY_VALUE_PLACEHOLDER
                 )}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="whitespace-nowrap">
                 <div className="flex items-center justify-end gap-2">
                   <Button
                     size="xs"
