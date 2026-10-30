@@ -58,13 +58,13 @@ export const IssuedCredentialsTable = ({
               key={credential.id}
               data-testid="credential-row"
             >
-              <Table.Cell className="break-words font-medium text-black">
+              <Table.Cell className="min-w-[10rem] break-words font-medium text-black">
                 {creatorDisplayName(credential) || EMPTY_VALUE_PLACEHOLDER}
               </Table.Cell>
               <Table.Cell className="max-w-xs">
                 {email ? (
                   <button
-                    className="break-all text-left"
+                    className="break-words text-left"
                     onClick={() => copy(email)}
                     data-testid="credential-email"
                   >
@@ -75,7 +75,7 @@ export const IssuedCredentialsTable = ({
                 )}
               </Table.Cell>
               <Table.Cell>{typeLabelOf(credential)}</Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="whitespace-nowrap">
                 <time dateTime={credential.issuedAt ?? undefined}>
                   {formatDate(credential.issuedAt)}
                 </time>

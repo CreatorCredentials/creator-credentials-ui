@@ -66,7 +66,9 @@ test.describe('admin: credentials', () => {
     await expect(adminPage.rows.nth(3)).toContainText(CAROL);
     await expect(adminPage.paginationSummary()).toHaveText('1–4 of 4');
     await expect(page.getByTestId(TestId.adminStats)).toContainText('Users');
-    await expect(adminPage.table()).not.toContainText('Accept');
+    await expect(
+      adminPage.table().getByRole('button', { name: /^accept$/i }),
+    ).toHaveCount(0);
   });
 
   test('A2 status chips, type and issuer selects narrow the server-side list', async () => {
@@ -152,8 +154,12 @@ test.describe('admin: credentials', () => {
       .click();
     const download = await downloadPromise;
 
+    // Browsers replace the colons of the ISO timestamp in file names.
     expect(download.suggestedFilename()).toBe(
-      `${ISSUER_NAME} ${aliceCredentialObject?.validFrom}.json`,
+      `${ISSUER_NAME} ${aliceCredentialObject?.validFrom}.json`.replace(
+        /:/g,
+        '_',
+      ),
     );
   });
 
