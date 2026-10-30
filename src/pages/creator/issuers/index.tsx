@@ -1,4 +1,4 @@
-import { Spinner, Tabs, TabsComponent } from 'flowbite-react';
+import { Spinner, Tabs } from 'flowbite-react';
 import { GetServerSideProps } from 'next';
 import { useMemo } from 'react';
 import { useTranslation } from '@/shared/utils/useTranslation';
@@ -70,7 +70,7 @@ const CreatorIssuersPage: NextPageWithLayout = () => {
           className="absolute inset-0 m-auto"
         />
       ) : (
-        <TabsComponent style="underline">
+        <Tabs variant="underline">
           {connected.length && (
             <Tabs.Item
               active
@@ -89,7 +89,7 @@ const CreatorIssuersPage: NextPageWithLayout = () => {
               <AvailableIssuers issuers={available} />
             </Tabs.Item>
           )}
-        </TabsComponent>
+        </Tabs>
       )}
     </>
   );

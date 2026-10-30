@@ -40,10 +40,12 @@ export const CreatorDetailsCard = ({
 
   const { mutateAsync: revokeAsync } = useRevokeCreatorConnectionRequest({
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        QueryKeys.issuerCreators,
-        { status: CreatorVerificationStatus.Accepted },
-      ]);
+      queryClient.invalidateQueries({
+        queryKey: [
+          QueryKeys.issuerCreators,
+          { status: CreatorVerificationStatus.Accepted },
+        ],
+      });
     },
   });
   return (

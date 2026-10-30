@@ -24,7 +24,7 @@ export const DidWebVerificationEnterDomainCard = () => {
 
   const { handleSubmit } = form;
 
-  const { mutateAsync, isLoading } = useCreateDidWebJsonFile();
+  const { mutateAsync, isPending } = useCreateDidWebJsonFile();
 
   const webDomainSubmitHandler: SubmitHandler<
     DidWebVerificationEnterDomainFormContextType
@@ -46,7 +46,7 @@ export const DidWebVerificationEnterDomainCard = () => {
           <DidWebVerificationEnterDomainForm
             disabled={currentStep === 'verification'}
             handleSubmit={handleSubmit(webDomainSubmitHandler)}
-            isLoading={isLoading}
+            isLoading={isPending}
           />
         </div>
       </FormProvider>

@@ -20,19 +20,17 @@ export const useIssuerCreators = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuerCreatorsResponse>(
-    [QueryKeys.issuerCreators, params],
-    async () => {
+  return useQuery<GetIssuerCreatorsResponse>({
+    queryKey: [QueryKeys.issuerCreators, params],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useIssuerCreators call');
       }
       return getIssuerCreators(params, token).then((res) => res.data);
     },
-    {
-      ...options,
-      refetchInterval: 60000,
-      refetchOnMount: true,
-    },
-  );
+    ...options,
+    refetchInterval: 60000,
+    refetchOnMount: true,
+  });
 };

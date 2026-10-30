@@ -1,7 +1,5 @@
 export type CertVerificationStep =
-  | 'submit-cert'
-  | 'verify-signature'
-  | 'completed';
+  'submit-cert' | 'verify-signature' | 'completed';
 
 export type CertVerificationContextType = {
   currentStep: CertVerificationStep;

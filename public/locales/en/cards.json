@@ -18,6 +18,11 @@
         "description": "Verified domain name",
         "requirements": "Info about requirements"
       },
+      "did_web": {
+        "title": "did:web",
+        "description": "Verified did:web identifier",
+        "requirements": "Info about requirements"
+      },
       "wallet": {
         "title": "Wallet",
         "description": "Verified wallet",
@@ -62,6 +67,11 @@
         "title": "Keypair Verification",
         "description": "Platform-issued proof that the creator completed an external keypair challenge and controls the associated DID key.",
         "requirements": "Issued automatically during Data Supplier credential request"
+      },
+      "creator": {
+        "title": "Verified Creator",
+        "description": "This credential attests that your creator account was verified by the platform named in it.",
+        "requirements": "Issued automatically when your Liccium account is connected"
       }
     }
   }

@@ -31,7 +31,9 @@ export const useDisconnectDidWeb = (
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.issuerCredentials],
+      });
     },
     ...options,
   });

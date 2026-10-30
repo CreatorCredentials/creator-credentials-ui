@@ -9,18 +9,16 @@ export const useGetIssuers = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetIssuersResponse>(
-    [QueryKeys.getIssuers],
-    async () => {
+  return useQuery<GetIssuersResponse>({
+    queryKey: [QueryKeys.getIssuers],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useGetIssuers call');
       }
       return getIssuers(token).then((res) => res.data);
     },
-    {
-      ...options,
-      refetchInterval: 60000,
-    },
-  );
+    ...options,
+    refetchInterval: 60000,
+  });
 };

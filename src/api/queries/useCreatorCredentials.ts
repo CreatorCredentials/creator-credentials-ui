@@ -10,7 +10,7 @@ import {
 export const useCreatorCredentials = (
   options?: Omit<
     UseQueryOptions<GetCreatorCredentialsResponse, AxiosError>,
-    'queryFn'
+    'queryFn' | 'queryKey'
   >,
 ) => {
   const auth = useAuth();
@@ -25,6 +25,7 @@ export const useCreatorCredentials = (
       return getCreatorCredentials(token);
     },
     refetchInterval: 60000,
+    refetchOnWindowFocus: true,
     ...options,
   });
 };

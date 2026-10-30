@@ -14,17 +14,15 @@ export const useGenerateMetaMaskNonce = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GenerateMetaMaskNonceResponse>(
-    [],
-    async () => {
+  return useQuery<GenerateMetaMaskNonceResponse>({
+    queryKey: [],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useGenerateMetaMaskNonce call');
       }
       return generateMetaMaskNonce(token).then((res) => res.data);
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

@@ -29,23 +29,23 @@ export const ConnectionRequestDetails = ({
   const {
     data,
     status,
-    isLoading: isLoadingIssuerDetails,
+    isPending: isLoadingIssuerDetails,
   } = useIssuerDetailsWithCredentials({
     issuerId,
   });
 
   const {
     mutateAsync,
-    isLoading: isConfirmingRequest,
+    isPending: isConfirmingRequest,
     isSuccess: successfullyConfirmedRequest,
   } = useConfirmCreatorToIssuerConnectionRequest({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.creatorIssuers]);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.creatorIssuers] });
     },
   });
 
   const {
-    isLoading,
+    isPending,
     status: credStatus,
     data: credentials,
   } = useCreatorCredentials();
@@ -74,7 +74,7 @@ export const ConnectionRequestDetails = ({
     }
   };
 
-  if (isLoadingIssuerDetails || isLoading) {
+  if (isLoadingIssuerDetails || isPending) {
     return <Loader />;
   }
 

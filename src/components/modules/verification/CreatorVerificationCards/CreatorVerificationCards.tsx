@@ -12,7 +12,7 @@ export const CreatorVerificationCards = () => {
 
   const {
     data: verifiableCredentials,
-    isLoading,
+    isPending,
     status,
   } = useCreatorCredentials({
     staleTime: 1000 * 60 * 1, // 1 minute
@@ -22,7 +22,7 @@ export const CreatorVerificationCards = () => {
     return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

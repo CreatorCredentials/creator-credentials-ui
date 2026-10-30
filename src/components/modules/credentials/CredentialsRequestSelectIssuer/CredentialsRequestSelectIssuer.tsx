@@ -26,7 +26,7 @@ export const CredentialsRequestSelectIssuer = () => {
     templates,
   } = useCredentialsRequestContext();
 
-  const { data, isFetching, isLoading, status } = useGetIssuers({});
+  const { data, isFetching, isPending, status } = useGetIssuers({});
   const { connected } = useMemo(() => {
     const all =
       data?.filter(
@@ -54,7 +54,7 @@ export const CredentialsRequestSelectIssuer = () => {
       return <ApiErrorMessage message={t('errors.fetching-issuers')} />;
     }
 
-    if (isLoading) {
+    if (isPending) {
       return <Loader />;
     }
 
@@ -98,7 +98,7 @@ export const CredentialsRequestSelectIssuer = () => {
         </div>
       </div>
     );
-  }, [connected, isLoading, selectedIssuer, status, t, toggleIssuerSelection]);
+  }, [connected, isPending, selectedIssuer, status, t, toggleIssuerSelection]);
 
   return (
     <>
@@ -117,12 +117,12 @@ export const CredentialsRequestSelectIssuer = () => {
       <FormFooter>
         <FormFooter.BackButton
           onClick={stepper.prevStep}
-          disabled={isLoading || isFetching}
+          disabled={isPending || isFetching}
         />
         <FormFooter.NextButton
           onClick={stepper.nextStep}
           disabled={
-            (!selectedIssuer && !preSelectedIssuerId) || isLoading || isFetching
+            (!selectedIssuer && !preSelectedIssuerId) || isPending || isFetching
           }
         />
       </FormFooter>

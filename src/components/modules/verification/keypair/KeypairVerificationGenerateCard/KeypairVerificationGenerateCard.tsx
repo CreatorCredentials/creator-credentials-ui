@@ -408,9 +408,11 @@ export const KeypairVerificationGenerateCard = () => {
 
   const [origin, setOrigin] = useState<KeypairOriginChoice>('new');
 
-  const { mutateAsync, isLoading } = useInitiateKeypairChallenge({
+  const { mutateAsync, isPending } = useInitiateKeypairChallenge({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.keypairChallengeStatus]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.keypairChallengeStatus],
+      });
     },
   });
 
@@ -580,8 +582,8 @@ export const KeypairVerificationGenerateCard = () => {
             color="primary"
             className="self-start"
             onClick={handleInitiate}
-            isProcessing={isLoading}
-            disabled={isLoading}
+            isProcessing={isPending}
+            disabled={isPending}
           >
             I have my keypair files - continue to Step 2
           </Button>

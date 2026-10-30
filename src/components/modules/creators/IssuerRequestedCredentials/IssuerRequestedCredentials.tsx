@@ -10,7 +10,6 @@ import { useIssuerCreators } from '@/api/queries/useIssuerCreators';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 import { CredentialsCardAcceptRejectFooter } from '../CredentialsCardAcceptRejectFooter';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 const CREDENTIAL_TYPE_LABELS: Partial<Record<CredentialType, string>> = {
   [CredentialType.Member]: 'Membership',
@@ -21,7 +20,7 @@ export const IssuerRequestedCredentials = () => {
   const { t } = useTranslation('issuer-creators');
   const router = useRouter();
 
-  const { data, status, isLoading } = useIssuersCredentials({
+  const { data, status, isPending } = useIssuersCredentials({
     params: {
       status: CredentialVerificationStatus.Pending,
     },
@@ -29,7 +28,7 @@ export const IssuerRequestedCredentials = () => {
   const {
     data: creatorsData,
     status: cStatus,
-    isLoading: cIsLoading,
+    isPending: cIsLoading,
   } = useIssuerCreators({
     params: {
       status: CreatorVerificationStatus.Accepted,
@@ -40,13 +39,12 @@ export const IssuerRequestedCredentials = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading || cIsLoading) {
+  if (isPending || cIsLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      <CreatorsFilters />
       <div className="-mx-10 grid grid-cols-2 gap-6 px-10">
         {data.credentials.map((credential) => {
           const creator = creatorsData?.creators.find(

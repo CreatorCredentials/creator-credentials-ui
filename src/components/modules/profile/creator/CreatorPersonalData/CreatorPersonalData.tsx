@@ -39,9 +39,9 @@ const EditableFieldSection = ({
     setValue(currentValue);
   }, [currentValue]);
 
-  const { mutateAsync, isLoading } = useUpdateUserProfile({
+  const { mutateAsync, isPending } = useUpdateUserProfile({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.getUser]);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
       setSuccess(true);
       setError(null);
     },
@@ -94,7 +94,7 @@ const EditableFieldSection = ({
                 setValue(e.target.value);
                 setSuccess(false);
               }}
-              disabled={isLoading}
+              disabled={isPending}
               rows={3}
             />
           ) : (
@@ -105,14 +105,14 @@ const EditableFieldSection = ({
                 setValue(e.target.value);
                 setSuccess(false);
               }}
-              disabled={isLoading}
+              disabled={isPending}
             />
           )}
           <Button
             type="submit"
             color="primary"
-            isProcessing={isLoading}
-            disabled={isLoading || !isDirty}
+            isProcessing={isPending}
+            disabled={isPending || !isDirty}
           >
             Save
           </Button>
@@ -134,7 +134,7 @@ const EditableFieldSection = ({
 
 export const CreatorPersonalData = ({}: CreatorPersonalDataProps) => {
   const { t } = useTranslation('creator-profile');
-  const { data: user, isLoading } = useGetUser();
+  const { data: user, isPending } = useGetUser();
 
   return (
     <article className="flex flex-col gap-6">
@@ -142,13 +142,13 @@ export const CreatorPersonalData = ({}: CreatorPersonalDataProps) => {
       <div className="flex max-w-[40rem] flex-col gap-6">
         <OrganizationNameSection
           currentValue={user?.organizationName ?? null}
-          isLoading={isLoading}
+          isLoading={isPending}
         />
         <EditableFieldSection
           label="Description"
           hint="A short description of you or your organisation."
           currentValue={user?.description ?? ''}
-          isDataLoading={isLoading}
+          isDataLoading={isPending}
           multiline
           fieldKey="description"
         />
@@ -156,7 +156,7 @@ export const CreatorPersonalData = ({}: CreatorPersonalDataProps) => {
           label="Domain"
           hint="Your website domain (e.g. example.com)."
           currentValue={user?.domain ?? ''}
-          isDataLoading={isLoading}
+          isDataLoading={isPending}
           fieldKey="domain"
         />
       </div>

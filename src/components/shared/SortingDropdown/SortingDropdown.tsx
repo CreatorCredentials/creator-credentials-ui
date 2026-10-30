@@ -3,45 +3,45 @@ import React from 'react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { Icon, IconName } from '../Icon';
 
-const SORT_ITEMS: {
+export type SortingOption<T extends string> = {
+  value: T;
   labelTkey: string;
   icon: IconName;
-}[] = [
-  {
-    labelTkey: 'sorting.items.a-z',
-    icon: 'ArchiveFilled',
-  },
-  {
-    labelTkey: 'sorting.items.z-a',
-    icon: 'UnarchiveFilled',
-  },
-  {
-    labelTkey: 'sorting.items.last-date',
-    icon: 'EventFilled',
-  },
-  {
-    labelTkey: 'sorting.items.newest-date',
-    icon: 'EventTodayFilled',
-  },
-];
+};
 
-export const SortingDropdown = () => {
+type SortingDropdownProps<T extends string> = {
+  value: T;
+  options: SortingOption<T>[];
+  onChange: (value: T) => void;
+  testId?: string;
+};
+
+export const SortingDropdown = <T extends string>({
+  value,
+  options,
+  onChange,
+  testId,
+}: SortingDropdownProps<T>) => {
   const { t } = useTranslation('common');
+  const selected = options.find((option) => option.value === value);
 
   return (
     <Dropdown
-      label={t('sorting.label')}
+      label={`${t('sorting.label')}: ${selected ? t(selected.labelTkey) : ''}`}
       color="outline-black"
+      data-testid={testId}
     >
-      {SORT_ITEMS.map(({ icon, labelTkey }) => (
+      {options.map(({ value: optionValue, icon, labelTkey }) => (
         <Dropdown.Item
-          key={labelTkey}
+          key={optionValue}
+          aria-current={optionValue === value}
           icon={() => (
             <Icon
               icon={icon}
               className="me-2"
             />
           )}
+          onClick={() => onChange(optionValue)}
         >
           {t(labelTkey)}
         </Dropdown.Item>

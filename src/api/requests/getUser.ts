@@ -4,6 +4,7 @@ import nestInstance, { AxiosRequestConfig } from '../axiosNest';
 export enum ClerkRole {
   Issuer = 'issuer',
   Creator = 'creator',
+  Admin = 'admin',
 }
 export type User = {
   id: number;

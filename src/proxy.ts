@@ -1,7 +1,11 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-const isProtectedRoute = createRouteMatcher(['/creator(.*)', '/issuer(.*)']);
+const isProtectedRoute = createRouteMatcher([
+  '/creator(.*)',
+  '/issuer(.*)',
+  '/admin(.*)',
+]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (!isProtectedRoute(req)) {
@@ -26,11 +30,14 @@ export default clerkMiddleware(async (auth, req) => {
 // };
 export const config = {
   matcher: [
-    // Run middleware only where auth protection can apply. Include the bare
-    // paths so direct visits to `/creator` and `/issuer` are protected too.
+    // Run the proxy only where auth protection can apply. Include the bare
+    // paths so direct visits to `/creator`, `/issuer` and `/admin` are
+    // protected too.
     '/creator',
     '/creator/:path*',
     '/issuer',
     '/issuer/:path*',
+    '/admin',
+    '/admin/:path*',
   ],
 };

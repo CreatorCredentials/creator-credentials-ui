@@ -20,9 +20,11 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
   const { txtRecord, currentStep, setCurrentStep } =
     useDomainVerificationContext();
 
-  const { mutateAsync, isLoading } = useConfirmDomainTxtRecordCreation({
+  const { mutateAsync, isPending } = useConfirmDomainTxtRecordCreation({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.issuerCredentials]);
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.issuerCredentials],
+      });
     },
   });
 
@@ -66,7 +68,7 @@ export const DomainVerificationUpdateTxtRecordCard = () => {
           color="primary"
           className="self-start"
           onClick={confirmButtonHandler}
-          isProcessing={isLoading}
+          isProcessing={isPending}
           disabled={currentStep === 'verification'}
         >
           {t('cards.update-txt-record.button')}

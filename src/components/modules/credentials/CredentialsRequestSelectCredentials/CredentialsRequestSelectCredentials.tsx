@@ -22,10 +22,10 @@ export const CredentialsRequestSelectCredentials = () => {
   const { stepper, templates, stepKeys, preSelectedIssuerId } =
     useCredentialsRequestContext();
 
-  const { data, isFetching, isLoading, status } =
+  const { data, isFetching, isPending, status } =
     useCreatorsRequestableTemplates();
 
-  const { data: issuersData, isLoading: issuersLoading } = useGetIssuers({});
+  const { data: issuersData, isPending: issuersLoading } = useGetIssuers({});
 
   // Collect the credential types that relevant connected issuers actually
   // support. When a specific issuer is pre-selected, only that issuer counts;
@@ -69,7 +69,7 @@ export const CredentialsRequestSelectCredentials = () => {
       return <ApiErrorMessage message={t('errors.fetching-credentials')} />;
     }
 
-    if (isLoading) {
+    if (isPending) {
       return <Loader />;
     }
 
@@ -116,7 +116,7 @@ export const CredentialsRequestSelectCredentials = () => {
         </div>
       </div>
     );
-  }, [templates, templatesToRender, isLoading, status, t]);
+  }, [templates, templatesToRender, isPending, status, t]);
 
   return (
     <>
@@ -136,7 +136,7 @@ export const CredentialsRequestSelectCredentials = () => {
         <FormFooter.NextButton
           onClick={stepper.nextStep}
           disabled={
-            templates.selectedItems.length === 0 || isLoading || isFetching
+            templates.selectedItems.length === 0 || isPending || isFetching
           }
         />
       </FormFooter>

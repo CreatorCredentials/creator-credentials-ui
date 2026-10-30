@@ -16,4 +16,8 @@ export const QueryKeys = {
   creatorsRequestableTemplates: 'creatorsRequestableTemplates',
   keypairChallengeStatus: 'keypairChallengeStatus',
   certChallengeStatus: 'certChallengeStatus',
+  adminCredentials: 'adminCredentials',
+  adminCredential: 'adminCredential',
+  adminUsers: 'adminUsers',
+  adminStats: 'adminStats',
 };

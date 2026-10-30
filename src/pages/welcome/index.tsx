@@ -10,7 +10,7 @@ import { WelcomeHeader } from '@/components/modules/welcome/WelcomeHeader/Welcom
 import { LinkButton } from '@/components/shared/LinkButton';
 import { NextPageWithLayout } from '@/shared/typings/NextPageWithLayout';
 import { getI18nProps } from '@/shared/utils/i18n';
-import { UserRole } from '@/shared/typings/UserRole';
+import { HOME_PATH_BY_ROLE, UserRole } from '@/shared/typings/UserRole';
 
 const WelcomePage: NextPageWithLayout = () => {
   const { t } = useTranslation('welcome');
@@ -25,14 +25,12 @@ const WelcomePage: NextPageWithLayout = () => {
     }
     if (!user.isSignedIn) return;
 
-    const role = user.user?.publicMetadata.role;
-    if (role === UserRole.Issuer) {
-      router.push('/issuer');
-    } else {
-      // Creator role or no role yet - send to creator dashboard.
-      // withAuth there will assign the role via Clerk metadata if missing.
-      router.push('/creator');
-    }
+    const role = user.user?.publicMetadata.role as UserRole | undefined;
+    // No role yet - send to the creator dashboard; withAuth there assigns
+    // the role via Clerk metadata.
+    router.push(
+      (role && HOME_PATH_BY_ROLE[role]) ?? HOME_PATH_BY_ROLE[UserRole.Creator],
+    );
   }, [user, router]);
 
   return (

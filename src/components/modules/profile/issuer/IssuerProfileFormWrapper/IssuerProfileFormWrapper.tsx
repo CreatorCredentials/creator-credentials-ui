@@ -20,7 +20,7 @@ export const IssuerProfileFormWrapper = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const { data, status, isLoading } = useIssuerProfile();
+  const { data, status, isPending } = useIssuerProfile();
 
   const form = useForm<IssuerProfileFormContextType>({
     resolver: joiResolver(IssuerProfileFormSchema),
@@ -29,9 +29,9 @@ export const IssuerProfileFormWrapper = () => {
     mode: 'onBlur',
   });
 
-  const { mutateAsync, isLoading: isSaving } = useUpdateUserProfile({
+  const { mutateAsync, isPending: isSaving } = useUpdateUserProfile({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.issuerProfile]);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.issuerProfile] });
       toast.success('Profile updated successfully.');
     },
     onError: (err) => {
@@ -55,7 +55,7 @@ export const IssuerProfileFormWrapper = () => {
     return <ApiErrorMessage message={t('errors.fetching-profile')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

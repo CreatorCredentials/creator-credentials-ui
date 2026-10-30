@@ -1,0 +1,138 @@
+{
+  "pagination": {
+    "summary": "{{from}}–{{to}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "stats": {
+    "users": "Users",
+    "revocations-last-30-days": "Revocations (30 days)"
+  },
+  "credentials": {
+    "header": {
+      "title": "All credentials",
+      "description": "Every credential on the platform, across issuers and creators."
+    },
+    "filters": {
+      "search-placeholder": "Search by creator or issuer name, e-mail or DID",
+      "type": "Type",
+      "all-types": "All types",
+      "issuer": "Issuer",
+      "all-issuers": "All issuers"
+    },
+    "status": {
+      "success": "Issued",
+      "pending": "Pending",
+      "revoked": "Revoked"
+    },
+    "table": {
+      "creator": "Creator",
+      "issuer": "Issuer",
+      "type": "Type",
+      "issued-on": "Issued on",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View",
+      "revoke": "Revoke"
+    },
+    "self-issued": "Platform",
+    "empty": "No credentials match these filters.",
+    "error": "There was an error fetching the credentials. Please try again later.",
+    "details": {
+      "title": "Credential details",
+      "creator": "Creator",
+      "issuer": "Issuer",
+      "type": "Type",
+      "status": "Status",
+      "issued-at": "Issued on",
+      "updated-at": "Updated on",
+      "revoked-at": "Revoked on",
+      "revoked-by": "Revoked by",
+      "reason": "Reason",
+      "status-list": "Status list entry",
+      "status-list-index": "Index {{index}}",
+      "no-status-entry": "No status entry",
+      "credential-object": "Credential object",
+      "no-credential-object": "This credential has no signed object yet."
+    },
+    "revoke": {
+      "title": "Revoke credential",
+      "message": "The creator and the issuer are notified and the credential is flagged in the status list. The record is kept under the Revoked filter.",
+      "reason-label": "Reason (optional)",
+      "reason-placeholder": "Why is this credential being revoked?",
+      "confirm": "Revoke",
+      "success": "Credential revoked.",
+      "error": "Failed to revoke the credential. Please try again later."
+    }
+  },
+  "users": {
+    "header": {
+      "title": "Users",
+      "description": "Issuers and creators registered on the platform."
+    },
+    "search-placeholder": "Search by name, e-mail or DID",
+    "role": {
+      "issuer": "Issuers",
+      "creator": "Creators"
+    },
+    "table": {
+      "name": "Name",
+      "email": "E-mail",
+      "did": "DID",
+      "domain": "Domain",
+      "credentials": "Credentials",
+      "issued": "Issued",
+      "created-on": "Registered on",
+      "actions": "Actions"
+    },
+    "actions": {
+      "credentials": "Credentials"
+    },
+    "empty": "No users match these filters.",
+    "error": "There was an error fetching the users. Please try again later."
+  },
+  "verify": {
+    "header": {
+      "title": "Verify a credential",
+      "description": "Paste a compact JWT or a credential JSON with its proof. The signature, the validity period and the revocation status are checked."
+    },
+    "input-label": "JWT or credential JSON",
+    "input-placeholder": "eyJhbGciOi... or { \"@context\": [...], \"proof\": { \"jwt\": \"...\" } }",
+    "submit": "Verify",
+    "error": "The verification request failed. Please try again later.",
+    "result": {
+      "valid": "Valid credential",
+      "invalid": "Invalid credential",
+      "checks": {
+        "signature": "Signature",
+        "validity": "Validity",
+        "revocation": "Revocation"
+      },
+      "outcome": {
+        "passed": "Passed",
+        "failed": "Failed",
+        "revoked": "Revoked",
+        "unknown": "Unknown"
+      },
+      "issuer-did": "Issuer DID",
+      "certificate-subject": "Certificate subject",
+      "valid-from": "Valid from",
+      "valid-until": "Valid until",
+      "checked-at": "Checked at",
+      "no-status-entry": "The credential carries no status entry, so revocation cannot be checked.",
+      "raw": "Raw response",
+      "reason": {
+        "MALFORMED_VALUE_ERROR": "The status entry of the credential is malformed.",
+        "STATUS_RETRIEVAL_ERROR": "The status list could not be fetched.",
+        "STATUS_VERIFICATION_ERROR": "The status list is not a verifiable Bitstring Status List credential.",
+        "STATUS_LIST_LENGTH_ERROR": "The status list is shorter than the minimum the standard requires.",
+        "RANGE_ERROR": "The status index points outside the status list.",
+        "UNSUPPORTED_STATUS_SIZE": "The status list uses a multi-bit status that this verifier does not support."
+      }
+    },
+    "empty-input": "Paste a JWT or a credential JSON first.",
+    "invalid-json-input": "The input is not a valid credential JSON."
+  }
+}

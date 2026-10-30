@@ -12,14 +12,16 @@ export const KeypairVerificationStatusCard = () => {
     useKeypairVerificationContext();
 
   const invalidateAll = () => {
-    queryClient.invalidateQueries([QueryKeys.keypairChallengeStatus]);
-    queryClient.invalidateQueries([QueryKeys.getUser]);
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.keypairChallengeStatus],
+    });
+    queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
   };
 
-  const { mutateAsync: removeKey, isLoading: isRemoving } =
+  const { mutateAsync: removeKey, isPending: isRemoving } =
     useRemoveExternalDidKey({ onSuccess: invalidateAll });
 
-  const { mutateAsync: updateSource, isLoading: isUpdatingSource } =
+  const { mutateAsync: updateSource, isPending: isUpdatingSource } =
     useUpdateActiveDidKeySource({ onSuccess: invalidateAll });
 
   const handleRemove = async () => {

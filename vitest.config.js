@@ -8,13 +8,11 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
-    testMatch: ['./src/**/*.test.{tsx,ts}'],
+    include: ['src/**/*.test.{ts,tsx}'],
     globals: true,
     reporters: 'verbose',
     coverage: {
       reporter: ['text', 'json', 'html', 'cobertura'],
-      all: true,
-      excludeNodeModules: true,
       include: ['./src/**/*.tsx'],
     },
   },

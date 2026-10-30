@@ -6,12 +6,11 @@ import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationS
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { CreatorCardAcceptRejectFooter } from '../CreatorCardAcceptRejectFooter';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 export const IssuerRequestedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isLoading } = useIssuerCreators({
+  const { data, status, isPending } = useIssuerCreators({
     params: {
       status: CreatorVerificationStatus.Pending,
     },
@@ -21,13 +20,12 @@ export const IssuerRequestedCreators = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 
   return (
     <>
-      <CreatorsFilters />
       <div className="grid grid-cols-3 gap-4">
         {data.creators.map((creator) => (
           <CreatorDetailsCard

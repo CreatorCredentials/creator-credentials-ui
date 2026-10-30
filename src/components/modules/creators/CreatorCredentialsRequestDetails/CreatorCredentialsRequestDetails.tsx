@@ -25,7 +25,7 @@ export const CreatorCredentialsRequestDetails = ({
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data, status, isLoading } = useCredentialsRequestDetails(creatorId);
+  const { data, status, isPending } = useCredentialsRequestDetails(creatorId);
 
   const filteredCredentials = useMemo(() => {
     return data
@@ -41,7 +41,7 @@ export const CreatorCredentialsRequestDetails = ({
     return <ApiErrorMessage message={t('errors.fetching-details')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

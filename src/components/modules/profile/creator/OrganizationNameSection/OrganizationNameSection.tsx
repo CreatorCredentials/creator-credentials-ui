@@ -19,9 +19,9 @@ export const OrganizationNameSection = ({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const { mutateAsync, isLoading } = useSetOrganizationName({
+  const { mutateAsync, isPending } = useSetOrganizationName({
     onSuccess: () => {
-      queryClient.invalidateQueries([QueryKeys.getUser]);
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
       setSuccess(true);
       setError(null);
     },
@@ -102,14 +102,14 @@ export const OrganizationNameSection = ({
               placeholder="e.g. Acme Media GmbH"
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              disabled={isLoading}
+              disabled={isPending}
               required
             />
             <Button
               type="submit"
               color="primary"
-              isProcessing={isLoading}
-              disabled={isLoading || !value.trim()}
+              isProcessing={isPending}
+              disabled={isPending || !value.trim()}
             >
               Save
             </Button>

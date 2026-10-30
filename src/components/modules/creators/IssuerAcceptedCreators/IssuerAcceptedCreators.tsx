@@ -4,12 +4,11 @@ import { ApiErrorMessage } from '@/components/shared/ApiErrorMessage';
 import { Loader } from '@/components/shared/Loader';
 import { CreatorVerificationStatus } from '@/shared/typings/CreatorVerificationStatus';
 import { CreatorDetailsCard } from '@/components/shared/CreatorDetailsCard';
-import { CreatorsFilters } from '../CreatorsFilters';
 
 export const IssuerAcceptedCreators = () => {
   const { t } = useTranslation('issuer-creators');
 
-  const { data, status, isLoading } = useIssuerCreators(
+  const { data, status, isPending } = useIssuerCreators(
     {
       params: {
         status: CreatorVerificationStatus.Accepted,
@@ -26,13 +25,12 @@ export const IssuerAcceptedCreators = () => {
     return <ApiErrorMessage message={t('errors.fetching-creators')} />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 
   return (
     <>
-      <CreatorsFilters />
       <div className="grid grid-cols-3 gap-4">
         {data.creators.map((creator) => (
           <CreatorDetailsCard

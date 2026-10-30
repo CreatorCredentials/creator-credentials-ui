@@ -9,17 +9,15 @@ export const useGetUser = (
 ) => {
   const auth = useAuth();
 
-  return useQuery<GetUserResponse>(
-    [QueryKeys.getUser],
-    async () => {
+  return useQuery<GetUserResponse>({
+    queryKey: [QueryKeys.getUser],
+    queryFn: async () => {
       const token = await auth.getToken();
       if (!token) {
         throw new Error('Unauthorised useGetUser call');
       }
       return getUser(token).then((res) => res.data);
     },
-    {
-      ...options,
-    },
-  );
+    ...options,
+  });
 };

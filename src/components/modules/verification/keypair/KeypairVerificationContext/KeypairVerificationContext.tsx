@@ -43,7 +43,8 @@ type KeypairVerificationContextProviderProps = {
 export const KeypairVerificationContextProvider = ({
   children,
 }: KeypairVerificationContextProviderProps) => {
-  const { data: statusData, isLoading } = useKeypairChallengeStatus();
+  const { data: statusData, isPending: isLoading } =
+    useKeypairChallengeStatus();
 
   const [currentStep, setCurrentStep] =
     useState<KeypairVerificationStep>('generate');

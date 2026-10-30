@@ -52,6 +52,7 @@ type CardWithBadgeProps = {
   className?: string | ClassValue;
   image: { iconName: IconName } | { imageUrl: string; alt: string };
   dropdownItems?: DropdownItemProps<ElementType>[];
+  testId?: string;
 };
 
 const defaultDropdownItems: DropdownItemProps<ElementType>[] = [];
@@ -73,8 +74,12 @@ export const CardWithBadge = ({
   className,
   image,
   dropdownItems = defaultDropdownItems,
+  testId,
 }: CardWithBadgeProps) => (
-  <Card className={clsxm('relative overflow-hidden', className)}>
+  <Card
+    className={clsxm('relative overflow-hidden', className)}
+    data-testid={testId}
+  >
     <article className="flex flex-1 flex-col gap-2">
       <header className="flex flex-col gap-2">
         <div className="-mt-4 flex justify-between">

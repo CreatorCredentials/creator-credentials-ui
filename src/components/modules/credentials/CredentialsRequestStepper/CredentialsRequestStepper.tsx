@@ -2,10 +2,7 @@ import { useTranslation } from '@/shared/utils/useTranslation';
 import { Stepper } from '@/components/shared/Stepper';
 
 export type CredentialsRequestStepKey =
-  | 'select-credential'
-  | 'select-issuer'
-  | 'verify-keypair'
-  | 'confirm-data';
+  'select-credential' | 'select-issuer' | 'verify-keypair' | 'confirm-data';
 
 export const CREDENTIALS_REQUEST_BASE_STEP_KEYS: CredentialsRequestStepKey[] = [
   'select-credential',

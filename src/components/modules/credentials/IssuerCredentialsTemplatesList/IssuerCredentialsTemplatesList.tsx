@@ -30,7 +30,7 @@ const CREDENTIAL_TYPE_TO_TEMPLATE: Partial<
 export const IssuerCredentialsTemplatesList = () => {
   const { t } = useTranslation('issuer-credentials');
 
-  const { data: user, isLoading } = useGetUser();
+  const { data: user, isPending } = useGetUser();
 
   const hasExternalCert = Boolean(user?.externalCertPem);
 
@@ -45,7 +45,7 @@ export const IssuerCredentialsTemplatesList = () => {
     [user?.credentialsToIssue],
   );
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader />;
   }
 

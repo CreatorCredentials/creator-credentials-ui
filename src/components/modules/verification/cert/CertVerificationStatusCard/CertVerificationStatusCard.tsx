@@ -12,11 +12,13 @@ export const CertVerificationStatusCard = () => {
   const { copy } = useCopyToClipboard();
 
   const invalidateAll = () => {
-    queryClient.invalidateQueries([QueryKeys.certChallengeStatus]);
-    queryClient.invalidateQueries([QueryKeys.getUser]);
+    queryClient.invalidateQueries({
+      queryKey: [QueryKeys.certChallengeStatus],
+    });
+    queryClient.invalidateQueries({ queryKey: [QueryKeys.getUser] });
   };
 
-  const { mutateAsync: removeCert, isLoading: isRemoving } =
+  const { mutateAsync: removeCert, isPending: isRemoving } =
     useRemoveExternalCert({ onSuccess: invalidateAll });
 
   const handleRemove = async () => {

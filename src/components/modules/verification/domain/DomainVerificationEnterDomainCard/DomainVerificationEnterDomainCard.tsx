@@ -33,7 +33,7 @@ export const DomainVerificationEnterDomainCard = () => {
 
   const { handleSubmit } = form;
 
-  const { mutateAsync, isLoading } = useCreateTxtRecordForDomain();
+  const { mutateAsync, isPending } = useCreateTxtRecordForDomain();
 
   const webDomainSubmitHandler: SubmitHandler<
     DomainVerificationEnterDomainFormContextType
@@ -55,7 +55,7 @@ export const DomainVerificationEnterDomainCard = () => {
           <DomainVerificationEnterDomainForm
             disabled={currentStep === 'verification'}
             handleSubmit={handleSubmit(webDomainSubmitHandler)}
-            isLoading={isLoading}
+            isLoading={isPending}
           />
         </div>
       </FormProvider>
