@@ -58,11 +58,17 @@ export class AdminCredentialsPage {
       .selectOption({ label: issuerName });
   }
 
-  async openDetails(rowText: string): Promise<void> {
+  /** Opens the actions menu of the newest row matching `rowText`. */
+  async openMenu(rowText: string): Promise<void> {
     await this.rowWithText(rowText)
       .first()
-      .getByTestId(TestId.adminView)
+      .getByTestId(TestId.adminMenu)
       .click();
+  }
+
+  async openDetails(rowText: string): Promise<void> {
+    await this.openMenu(rowText);
+    await this.page.getByTestId(TestId.adminView).click();
     await expect(this.detailsModal).toBeVisible();
   }
 
@@ -72,10 +78,8 @@ export class AdminCredentialsPage {
   }
 
   async openRevokeDialog(rowText: string): Promise<void> {
-    await this.rowWithText(rowText)
-      .first()
-      .getByTestId(TestId.adminRevoke)
-      .click();
+    await this.openMenu(rowText);
+    await this.page.getByTestId(TestId.adminRevoke).click();
     await expect(this.revokeModal).toBeVisible();
   }
 

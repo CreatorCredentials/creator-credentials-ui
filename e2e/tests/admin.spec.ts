@@ -148,10 +148,8 @@ test.describe('admin: credentials', () => {
 
   test('A5 download saves the credential object as JSON', async ({ page }) => {
     const downloadPromise = page.waitForEvent('download');
-    await adminPage
-      .rowWithText(ALICE)
-      .getByTestId(TestId.adminDownload)
-      .click();
+    await adminPage.openMenu(ALICE);
+    await page.getByTestId(TestId.adminDownload).click();
     const download = await downloadPromise;
 
     // Browsers replace the colons of the ISO timestamp in file names.
@@ -236,7 +234,8 @@ test.describe('admin: credentials', () => {
     await expect(rows.first()).toContainText(ALICE);
 
     await page.getByTestId('admin-users-role-issuer').click();
-    await globexRow.getByTestId(TestId.adminUserCredentials).click();
+    await globexRow.getByTestId(TestId.adminUserMenu).click();
+    await page.getByTestId(TestId.adminUserCredentials).click();
 
     await expect(page).toHaveURL(/\/admin\/credentials\?issuerId=2$/);
     await expect(adminPage.rows).toHaveCount(1);
