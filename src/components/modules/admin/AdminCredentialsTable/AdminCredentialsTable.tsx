@@ -1,4 +1,4 @@
-import { Button, Table } from 'flowbite-react';
+import { Table } from 'flowbite-react';
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { AdminCredential } from '@/shared/typings/Credentials';
 import { CredentialType } from '@/shared/typings/CredentialType';
@@ -8,7 +8,11 @@ import { formatDate } from '@/shared/utils/formatDate';
 import { EMPTY_VALUE_PLACEHOLDER } from '@/shared/constants/placeholders';
 import { ColoredBadge } from '@/components/shared/ColoredBadge';
 import { BadgeType } from '@/shared/typings/BadgeType';
-import { CredentialDownloadButton } from '@/components/modules/credentials/CredentialDownloadButton';
+import { ActionsMenu } from '@/components/shared/ActionsMenu';
+import { CredentialAction } from '@/shared/typings/CredentialAction';
+import { verifyCredentialAction } from '@/shared/utils/credentialActions';
+import { credentialFileName } from '@/shared/utils/credentialFileName';
+import { downloadJson } from '@/shared/utils/downloadJson';
 
 const COLUMN_T_KEYS = [
   'creator',
@@ -46,6 +50,39 @@ export const AdminCredentialsTable = ({
   onRevoke,
 }: AdminCredentialsTableProps) => {
   const { t } = useTranslation('admin');
+  const { t: tCommon } = useTranslation('common');
+
+  const actionsFor = (credential: AdminCredential): CredentialAction[] => [
+    {
+      children: t('credentials.actions.view'),
+      onClick: () => onView(credential),
+      'data-testid': 'admin-view',
+    },
+    ...(credential.data.credentialObject
+      ? [
+          {
+            children: tCommon('download'),
+            onClick: () =>
+              downloadJson(
+                credentialFileName(credential),
+                credential.data.credentialObject,
+              ),
+            'data-testid': 'admin-download',
+          },
+        ]
+      : []),
+    ...verifyCredentialAction(credential, tCommon('verify')),
+    ...(credential.status === CredentialVerificationStatus.Success
+      ? [
+          {
+            children: t('credentials.actions.revoke'),
+            className: 'text-alert',
+            onClick: () => onRevoke(credential),
+            'data-testid': 'admin-revoke',
+          },
+        ]
+      : []),
+  ];
 
   return (
     <Table
@@ -77,7 +114,7 @@ export const AdminCredentialsTable = ({
                   {creatorDisplayName(credential) || EMPTY_VALUE_PLACEHOLDER}
                 </div>
                 {email && (
-                  <div className="break-words text-xs font-normal text-grey-4">
+                  <div className="break-words font-normal text-grey-4">
                     {email}
                   </div>
                 )}
@@ -98,36 +135,11 @@ export const AdminCredentialsTable = ({
                   EMPTY_VALUE_PLACEHOLDER
                 )}
               </Table.Cell>
-              <Table.Cell className="whitespace-nowrap">
-                <div className="flex items-center justify-end gap-2">
-                  <Button
-                    size="xs"
-                    color="outline"
-                    data-testid="admin-view"
-                    onClick={() => onView(credential)}
-                  >
-                    {t('credentials.actions.view')}
-                  </Button>
-                  {credential.data.credentialObject && (
-                    <CredentialDownloadButton
-                      credential={credential}
-                      size="xs"
-                      className="self-auto"
-                      testId="admin-download"
-                    />
-                  )}
-                  {credential.status ===
-                    CredentialVerificationStatus.Success && (
-                    <Button
-                      size="xs"
-                      color="failure"
-                      data-testid="admin-revoke"
-                      onClick={() => onRevoke(credential)}
-                    >
-                      {t('credentials.actions.revoke')}
-                    </Button>
-                  )}
-                </div>
+              <Table.Cell className="text-right">
+                <ActionsMenu
+                  items={actionsFor(credential)}
+                  testId="admin-menu"
+                />
               </Table.Cell>
             </Table.Row>
           );

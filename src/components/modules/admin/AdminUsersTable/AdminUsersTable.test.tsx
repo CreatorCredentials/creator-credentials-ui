@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { render } from '@/shared/utils/testUtils';
 import { ClerkRole } from '@/api/requests/getUser';
 import { AdminUser } from '@/shared/typings/AdminUser';
@@ -46,12 +46,19 @@ describe('AdminUsersTable', () => {
     expect(within(row).getByText('04 May 2026')).toBeInTheDocument();
   });
 
-  it('links issuers to their issued credentials and creators to their own', () => {
+  it('links issuers to their issued credentials and creators to their own', async () => {
     render(<AdminUsersTable users={[issuer, creator]} />);
+    const menus = screen.getAllByTestId('admin-user-menu');
 
-    const links = screen.getAllByTestId('admin-user-credentials');
-    expect(links[0]).toHaveAttribute('href', '/admin/credentials?issuerId=10');
-    expect(links[1]).toHaveAttribute(
+    fireEvent.click(menus[0]);
+    expect(await screen.findByTestId('admin-user-credentials')).toHaveAttribute(
+      'href',
+      '/admin/credentials?issuerId=10',
+    );
+
+    fireEvent.click(menus[1]);
+    const links = await screen.findAllByTestId('admin-user-credentials');
+    expect(links.at(-1)).toHaveAttribute(
       'href',
       `/admin/credentials?q=${encodeURIComponent(creator.didKey)}`,
     );

@@ -40,28 +40,29 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
   },
   // Flowbite paints the table background with an absolutely positioned div
   // that ends up above the cell text in this layout; the wrapper carries the
-  // card styling instead and the shadow element stays hidden.
+  // card styling instead and the shadow element stays hidden. The wrapper
+  // does not clip: row action menus open inside the cells, and tables are
+  // designed to fit the layout's minimum width.
   table: {
     root: {
       base: 'w-full text-left text-sm text-grey-4',
       shadow: 'hidden',
-      wrapper:
-        'relative overflow-x-auto rounded-lg border border-neutral-100 bg-white shadow',
+      wrapper: 'relative rounded-lg border border-neutral-100 bg-white shadow',
     },
     head: {
-      base: 'text-xs uppercase text-grey-4',
+      base: 'group/head text-xs uppercase text-grey-4',
       cell: {
-        base: 'bg-grey-1 px-6 py-3 font-medium',
+        base: 'bg-grey-1 px-3 py-3 font-medium group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg',
       },
     },
     body: {
-      base: 'divide-y divide-grey-2',
+      base: 'group/body divide-y divide-grey-2',
       cell: {
-        base: 'px-6 py-4 align-middle',
+        base: 'px-3 py-4 align-middle group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg',
       },
     },
     row: {
-      base: '',
+      base: 'group/row',
       hovered: 'hover:bg-grey-1',
       striped: 'odd:bg-white even:bg-grey-1',
     },

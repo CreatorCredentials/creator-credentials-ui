@@ -20,7 +20,7 @@ export const CopyableDid = ({ did, className, testId }: CopyableDidProps) => {
       data-testid={testId}
     >
       <code
-        className="truncate font-mono text-xs text-grey-4"
+        className="truncate font-mono text-sm text-grey-4"
         title={did}
       >
         {shortenDid(did)}
@@ -35,8 +35,8 @@ export const CopyableDid = ({ did, className, testId }: CopyableDidProps) => {
   );
 };
 
-const VISIBLE_HEAD = 12;
-const VISIBLE_TAIL = 5;
+const VISIBLE_HEAD = 8;
+const VISIBLE_TAIL = 4;
 
 /** `did:key:z6MkhaXg…Rb2fg` — keeps the method and both ends, which is what people compare by eye. */
 export const shortenDid = (did: string): string =>
