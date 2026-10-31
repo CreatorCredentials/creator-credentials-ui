@@ -72,6 +72,29 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       base: 'text-sm',
     },
   },
+  // Flowbite's own pagination classes are not picked up by the Tailwind
+  // content scan (its theme lives in .mjs files), so the control is themed
+  // here in the app palette: segmented pills with the primary page filled.
+  pagination: {
+    pages: {
+      base: 'inline-flex items-center gap-1',
+      showIcon: 'inline-flex',
+      previous: {
+        base: 'inline-flex items-center gap-1 rounded-lg border border-grey-2 bg-white px-3 py-2 text-sm text-grey-4 enabled:hover:bg-grey-1 enabled:hover:text-black disabled:cursor-not-allowed disabled:opacity-50',
+        icon: 'h-4 w-4',
+      },
+      next: {
+        base: 'inline-flex items-center gap-1 rounded-lg border border-grey-2 bg-white px-3 py-2 text-sm text-grey-4 enabled:hover:bg-grey-1 enabled:hover:text-black disabled:cursor-not-allowed disabled:opacity-50',
+        icon: 'h-4 w-4',
+      },
+      selector: {
+        base: 'min-w-[2.5rem] rounded-lg border border-grey-2 bg-white px-3 py-2 text-sm text-grey-4 enabled:hover:bg-grey-1 enabled:hover:text-black',
+        active:
+          'border-primary bg-primary text-white enabled:hover:bg-primary-hover enabled:hover:text-white',
+        disabled: 'cursor-not-allowed opacity-50',
+      },
+    },
+  },
   checkbox: {
     root: {
       base: 'h-4 w-4 rounded focus:ring-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 bg-white',
