@@ -1,11 +1,11 @@
-import { Card, Dropdown, DropdownItemProps } from 'flowbite-react';
+import { Card, DropdownItemProps } from 'flowbite-react';
 import { ElementType, ReactNode } from 'react';
 import Image from 'next/image';
 import { BadgeType } from '@/shared/typings/BadgeType';
 import { ClassValue, clsxm } from '@/shared/utils/clsxm';
 import { ColoredBadge } from '../ColoredBadge';
 import { Icon, IconName } from '../Icon';
-import { IconButton } from '../IconButton';
+import { ActionsMenu } from '../ActionsMenu';
 
 type ContentWithIconProps = {
   iconName: IconName;
@@ -94,25 +94,7 @@ export const CardWithBadge = ({
 
           {dropdownItems.length > 0 ? (
             <div className="relative -me-4 h-6 w-6 self-end">
-              <Dropdown
-                label=""
-                dismissOnClick={true}
-                color="outline-black"
-                renderTrigger={() => (
-                  <IconButton
-                    icon="MoreHoriz"
-                    className="relative p-0"
-                  />
-                )}
-              >
-                {dropdownItems.map((item, index) => (
-                  <Dropdown.Item
-                    {...item}
-                    className={clsxm('min-w-[300px]', item.className)}
-                    key={item.key || index}
-                  />
-                ))}
-              </Dropdown>
+              <ActionsMenu items={dropdownItems} />
             </div>
           ) : null}
         </div>

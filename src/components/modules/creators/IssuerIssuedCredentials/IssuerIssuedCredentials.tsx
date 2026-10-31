@@ -15,7 +15,10 @@ import {
   filterCredentials,
   sortCredentials,
 } from '@/shared/utils/credentialsList';
-import { verifyCredentialAction } from '@/shared/utils/credentialActions';
+import {
+  revocationListAction,
+  verifyCredentialAction,
+} from '@/shared/utils/credentialActions';
 import { CreatorsFilters, CredentialsView } from '../CreatorsFilters';
 import { IssuedCredentialsTable } from '../IssuedCredentialsTable';
 import { IssuedCredentialStatus } from '../IssuedCredentialStatus';
@@ -114,6 +117,7 @@ export const IssuerIssuedCredentials = () => {
         ]
       : []),
     ...verifyCredentialAction(credential, t('verify', { ns: 'common' })),
+    ...revocationListAction(credential, t('revocation-list', { ns: 'common' })),
   ];
 
   if (isPending) {
