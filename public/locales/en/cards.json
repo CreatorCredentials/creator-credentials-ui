@@ -70,8 +70,8 @@
       },
       "creator": {
         "title": "Verified Creator",
-        "description": "This credential attests that your creator account was verified by the platform named in it.",
-        "requirements": "Issued automatically when your Liccium account is connected"
+        "description": "This credential attests that the issuer named in it has verified you as a creator.",
+        "requirements": "Requested from an issuer that offers it; the issuer must hold an imported certificate and you complete a keypair challenge."
       }
     }
   }

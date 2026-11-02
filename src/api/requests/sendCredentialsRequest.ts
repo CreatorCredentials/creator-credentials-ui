@@ -9,7 +9,8 @@ export type SendCredentialsRequestPayload = {
   credentialType:
     | CredentialType.Member
     | CredentialType.DataSupplier
-    | CredentialType.LicciumDataSupplier;
+    | CredentialType.LicciumDataSupplier
+    | CredentialType.Creator;
 };
 
 export type SendCredentialsRequestResponse = never;
