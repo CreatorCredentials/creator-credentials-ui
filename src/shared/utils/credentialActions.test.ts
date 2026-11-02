@@ -1,5 +1,6 @@
 import { VerifiedCredentialsUnion } from '@/shared/typings/Credentials';
 import {
+  platformRevokedCredentialsUrl,
   platformStatusListUrl,
   revocationListAction,
   statusListUrlOf,
@@ -50,5 +51,14 @@ describe('platformStatusListUrl', () => {
   it('points at the backend status list without a double slash', () => {
     process.env.NEST_API_URL = 'https://api.example.org/';
     expect(platformStatusListUrl()).toBe(LIST_URL);
+  });
+});
+
+describe('platformRevokedCredentialsUrl', () => {
+  it('points at the backend registry of legacy revocations', () => {
+    process.env.NEST_API_URL = 'https://api.example.org/';
+    expect(platformRevokedCredentialsUrl()).toBe(
+      'https://api.example.org/v1/revoked-credentials',
+    );
   });
 });

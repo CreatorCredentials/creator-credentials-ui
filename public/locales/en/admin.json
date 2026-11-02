@@ -7,7 +7,8 @@
   "stats": {
     "users": "Users",
     "revocations-last-30-days": "Revocations (30 days)",
-    "status-list": "Revocation list"
+    "status-list": "Revocation list",
+    "revoked-credentials": "Legacy revocations"
   },
   "credentials": {
     "header": {
@@ -130,7 +131,8 @@
         "STATUS_LIST_LENGTH_ERROR": "The status list is shorter than the minimum the standard requires.",
         "RANGE_ERROR": "The status index points outside the status list.",
         "UNSUPPORTED_STATUS_SIZE": "The status list uses a multi-bit status that this verifier does not support."
-      }
+      },
+      "platform-record": "The credential carries no status entry; the status comes from the platform's own record of this credential."
     },
     "empty-input": "Paste a JWT or a credential JSON first.",
     "invalid-json-input": "The input is not a valid credential JSON."

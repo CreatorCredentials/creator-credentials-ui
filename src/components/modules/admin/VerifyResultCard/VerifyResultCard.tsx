@@ -129,6 +129,9 @@ const RevocationFacts = ({ check }: { check: RevocationCheck }) => {
       {check.status === 'unknown' && (
         <dt className="col-span-2">{t('verify.result.no-status-entry')}</dt>
       )}
+      {check.source === 'platform-record' && (
+        <dt className="col-span-2">{t('verify.result.platform-record')}</dt>
+      )}
       {check.status === 'error' && (
         <dt className="col-span-2">
           {t(
