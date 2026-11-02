@@ -3,11 +3,13 @@ export enum CredentialTemplateType {
   Student = 'STUDENT',
   ExternalKeypair = 'EXTERNAL_KEYPAIR',
   LicciumExternalKeypair = 'LICCIUM_EXTERNAL_KEYPAIR',
+  Creator = 'CREATOR',
 }
 
 export const KEYPAIR_REQUIRED_TEMPLATE_TYPES: CredentialTemplateType[] = [
   CredentialTemplateType.ExternalKeypair,
   CredentialTemplateType.LicciumExternalKeypair,
+  CredentialTemplateType.Creator,
 ];
 
 /**
@@ -22,4 +24,5 @@ export const TEMPLATE_TYPE_TO_CREDENTIAL_TYPE: Partial<
   [CredentialTemplateType.Student]: 'STUDENT',
   [CredentialTemplateType.ExternalKeypair]: 'DATASUPPLIER',
   [CredentialTemplateType.LicciumExternalKeypair]: 'LICCIUM_DATASUPPLIER',
+  [CredentialTemplateType.Creator]: 'CREATOR',
 };

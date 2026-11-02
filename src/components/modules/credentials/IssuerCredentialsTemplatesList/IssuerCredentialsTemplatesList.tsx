@@ -25,6 +25,10 @@ const CREDENTIAL_TYPE_TO_TEMPLATE: Partial<
     templateType: CredentialTemplateType.LicciumExternalKeypair,
     name: 'Liccium Data Supplier',
   },
+  [CredentialType.Creator]: {
+    templateType: CredentialTemplateType.Creator,
+    name: 'Verified Creator',
+  },
 };
 
 export const IssuerCredentialsTemplatesList = () => {
