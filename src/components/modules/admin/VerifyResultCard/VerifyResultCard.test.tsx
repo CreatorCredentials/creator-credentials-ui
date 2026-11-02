@@ -41,6 +41,7 @@ const T = {
   failed: 'verify.result.outcome.failed',
   revoked: 'verify.result.outcome.revoked',
   noStatusEntry: 'verify.result.no-status-entry',
+  platformRecord: 'verify.result.platform-record',
 };
 
 describe('VerifyResultCard', () => {
@@ -117,6 +118,50 @@ describe('VerifyResultCard', () => {
     expect(
       within(check('revocation')).getByText(T.noStatusEntry),
     ).toBeInTheDocument();
+  });
+
+  it('explains a revocation answered from the platform record', () => {
+    render(
+      <VerifyResultCard
+        result={withChecks({
+          revocation: {
+            status: 'revoked',
+            checkedAt: CHECKED_AT,
+            source: 'platform-record',
+          },
+        })}
+      />,
+    );
+
+    expect(check('revocation')).toHaveAttribute('data-outcome', 'revoked');
+    expect(
+      within(check('revocation')).getByText(T.platformRecord),
+    ).toBeInTheDocument();
+  });
+
+  it('says nothing about the source when the status list answered', () => {
+    render(
+      <VerifyResultCard
+        result={{
+          ...validResult,
+          checks: {
+            ...validResult.checks,
+            revocation: {
+              status: 'valid',
+              checkedAt: CHECKED_AT,
+              source: 'status-list',
+            },
+          },
+        }}
+      />,
+    );
+
+    expect(
+      within(check('revocation')).queryByText(T.platformRecord),
+    ).not.toBeInTheDocument();
+    expect(
+      within(check('revocation')).queryByText(T.noStatusEntry),
+    ).not.toBeInTheDocument();
   });
 
   it('shows a failed status list check as failed with its reason', () => {

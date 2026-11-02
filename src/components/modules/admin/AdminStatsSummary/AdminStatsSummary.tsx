@@ -1,7 +1,10 @@
 import { useTranslation } from '@/shared/utils/useTranslation';
 import { useAdminStats } from '@/api/queries/useAdminStats';
 import { CredentialVerificationStatus } from '@/shared/typings/CredentialVerificationStatus';
-import { platformStatusListUrl } from '@/shared/utils/credentialActions';
+import {
+  platformRevokedCredentialsUrl,
+  platformStatusListUrl,
+} from '@/shared/utils/credentialActions';
 import { Icon } from '@/components/shared/Icon';
 
 const STATUSES = [
@@ -20,6 +23,28 @@ const Stat = ({ label, value }: StatProps) => (
     <span className="text-xs uppercase text-grey-4">{label}</span>
     <span className="text-lg text-black">{value}</span>
   </div>
+);
+
+type PublicListLinkProps = {
+  href: string;
+  label: string;
+  testId: string;
+};
+
+const PublicListLink = ({ href, label, testId }: PublicListLinkProps) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    className="inline-flex items-center gap-2 text-sm text-primary underline underline-offset-[3px] hover:text-primary-hover"
+    data-testid={testId}
+  >
+    {label}
+    <Icon
+      icon="ArrowRight"
+      className="h-4 w-4"
+    />
+  </a>
 );
 
 const sum = (counts: Record<string, number>) =>
@@ -54,19 +79,18 @@ export const AdminStatsSummary = () => {
         label={t('stats.revocations-last-30-days')}
         value={data.revocationsLast30Days}
       />
-      <a
-        href={platformStatusListUrl()}
-        target="_blank"
-        rel="noreferrer"
-        className="ml-auto inline-flex items-center gap-2 self-center text-sm text-primary underline underline-offset-[3px] hover:text-primary-hover"
-        data-testid="admin-status-list"
-      >
-        {t('stats.status-list')}
-        <Icon
-          icon="ArrowRight"
-          className="h-4 w-4"
+      <div className="ml-auto flex flex-col items-end justify-center gap-1">
+        <PublicListLink
+          href={platformStatusListUrl()}
+          label={t('stats.status-list')}
+          testId="admin-status-list"
         />
-      </a>
+        <PublicListLink
+          href={platformRevokedCredentialsUrl()}
+          label={t('stats.revoked-credentials')}
+          testId="admin-revoked-credentials"
+        />
+      </div>
     </div>
   );
 };
