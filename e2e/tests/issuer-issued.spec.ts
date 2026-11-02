@@ -138,13 +138,23 @@ test.describe('issuer: issued credentials', () => {
     ).toBe(0);
   });
 
-  test('I6 a failing revoke shows an error toast and leaves the grid unchanged', async () => {
+  test('I6 a failing revoke shows an error toast, keeps the dialog and leaves the grid unchanged', async ({
+    page,
+  }) => {
     api.flags.failRevoke = true;
 
     await issuedPage.openRevokeDialog(BOB);
     await issuedPage.confirmRevoke(REVOKE_REASON);
 
     await expect(issuedPage.toast(REVOKE_ERROR_TOAST)).toBeVisible();
+    // The dialog stays open with the typed reason so the issuer can retry.
+    await expect(page.getByTestId(TestId.revokeModal)).toBeVisible();
+    await expect(page.getByTestId(TestId.revokeReason)).toHaveValue(
+      REVOKE_REASON,
+    );
+    await page.getByTestId(TestId.revokeCancel).click();
+    await expect(page.getByTestId(TestId.revokeModal)).toHaveCount(0);
+
     await expect(issuedPage.cardEmails()).toHaveText(NEWEST_FIRST);
     await issuedPage.showStatus('revoked');
     await expect(issuedPage.cardEmails()).toHaveText([ALICE]);
