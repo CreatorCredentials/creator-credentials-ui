@@ -4,6 +4,7 @@ import { config } from '@/shared/constants/config';
 
 const JWT_VERIFIER_URL = 'https://jwt.io/#token=';
 const PLATFORM_STATUS_LIST_PATH = '/v1/status-lists/1';
+const PLATFORM_REVOKED_CREDENTIALS_PATH = '/v1/revoked-credentials';
 
 type CredentialObjectWithProof = {
   credentialObject?: {
@@ -19,9 +20,16 @@ export const statusListUrlOf = (
   (credential.data as CredentialObjectWithProof).credentialObject
     ?.credentialStatus?.statusListCredential;
 
+const platformUrl = (path: string): string =>
+  `${config.NEST_API_URL.replace(/\/$/, '')}${path}`;
+
 /** The platform's own revocation list, served publicly by the backend. */
 export const platformStatusListUrl = (): string =>
-  `${config.NEST_API_URL.replace(/\/$/, '')}${PLATFORM_STATUS_LIST_PATH}`;
+  platformUrl(PLATFORM_STATUS_LIST_PATH);
+
+/** Public registry of revoked credentials issued before status lists, i.e. without a status entry. */
+export const platformRevokedCredentialsUrl = (): string =>
+  platformUrl(PLATFORM_REVOKED_CREDENTIALS_PATH);
 
 const openInNewTab = (url: string) => window.open(url, '_blank', 'noopener');
 
