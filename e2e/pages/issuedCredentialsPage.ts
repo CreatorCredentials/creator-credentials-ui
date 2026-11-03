@@ -39,6 +39,11 @@ export class IssuedCredentialsPage {
     return this.page.getByTestId(TestId.issuedEmpty);
   }
 
+  /** Whatever the loaded page shows: the first card, or the empty state when nothing was issued. */
+  listOrEmptyState(): Locator {
+    return this.cards.first().or(this.emptyState());
+  }
+
   errorBanner(): Locator {
     return this.page.getByTestId(TestId.issuedErrorBanner);
   }
