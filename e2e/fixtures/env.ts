@@ -31,6 +31,19 @@ export const appBaseUrl = (): string => `http://localhost:${appPort()}`;
 
 export const isRealApi = (): boolean => process.env.E2E_API === REAL_API_MODE;
 
+/**
+ * Origin of the backend the browser talks to, without a trailing slash.
+ * Resolved like `config.NEST_API_URL` in the app: `next.config.js` exposes both variables to the browser.
+ */
+export const backendUrl = (): string => {
+  const url =
+    process.env.NEST_API_URL || process.env.NEXT_PUBLIC_NEST_API_URL || '';
+  if (!url) {
+    throw new Error('NEST_API_URL / NEXT_PUBLIC_NEST_API_URL not set');
+  }
+  return url.replace(/\/$/, '');
+};
+
 export type RoleCredentials = {
   identifier: string;
   password: string;

@@ -32,6 +32,23 @@ export class AdminCredentialsPage {
     return this.page.getByTestId(TestId.adminEmpty);
   }
 
+  /** Whatever the loaded page shows: the table, or the empty state when no credential matches. */
+  listOrEmptyState(): Locator {
+    return this.table().or(this.emptyState());
+  }
+
+  statsStrip(): Locator {
+    return this.page.getByTestId(TestId.adminStats);
+  }
+
+  statusListLink(): Locator {
+    return this.page.getByTestId(TestId.adminStatusList);
+  }
+
+  revokedCredentialsLink(): Locator {
+    return this.page.getByTestId(TestId.adminRevokedCredentials);
+  }
+
   paginationSummary(): Locator {
     return this.page.getByTestId(TestId.adminPaginationSummary);
   }

@@ -28,7 +28,7 @@ for the port and the Clerk keys; the app itself reads it as usual.
 | Mode | How | What happens |
 |---|---|---|
 | Mocked API (default) | nothing to set | Every backend call (`**/v1/**`, Clerk hosts excluded) is answered from `e2e/fixtures/` through an in-memory `ApiState` per test, so revoking a credential changes what later requests return. Unmocked calls get a 404 and a console warning. |
-| Real API | `E2E_API=real` | No routes are installed; requests reach the backend configured in `NEST_API_URL`. Scenarios that assert fixture content are skipped; `C5 sending a connection request` runs only in this mode because `/creator/issuers/request` is server-rendered from the backend. |
+| Real API | `E2E_API=real` | No routes are installed; requests reach the backend configured in `NEST_API_URL` / `NEXT_PUBLIC_NEST_API_URL`. Scenarios that assert fixture content are skipped. The `*-smoke.spec.ts` files run only in this mode: each role opens its main pages and checks the heading, the list or empty state, that every `/v1/` call answered 2xx and that nothing unexpected reached `console.error` (`e2e/fixtures/pageHealth.ts`). `C5 sending a connection request` also runs only here because `/creator/issuers/request` is server-rendered from the backend. |
 
 ## Authentication
 
@@ -49,6 +49,7 @@ your shell profile, not in the repo):
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` | Clerk **development** instance keys, read from `.env.local` |
 | `FRONTEND_APP_PORT` | Port of the app under test (optional, default 3000) |
 | `E2E_API` | `real` to disable mocking (optional) |
+| `NEST_API_URL`, `NEXT_PUBLIC_NEST_API_URL` | Backend the browser calls (`NEST_API_URL` wins, as in the app); set both when `.env.local` points elsewhere. The smoke tests check the admin revocation-list links against it (real mode) |
 
 When a role's variables are missing, its tests are reported as skipped with
 the message `E2E_<ROLE>_EMAIL / E2E_<ROLE>_PASSWORD not set`; the public
@@ -75,14 +76,16 @@ scenarios still run.
 playwright.config.ts        projects: setup, public, issuer, creator, admin
 e2e/auth.setup.ts           Clerk sign-in per role → e2e/.auth/<role>.json
 e2e/fixtures/env.ts         env variables, role credentials, paths
+e2e/fixtures/apiUrls.ts     backend vs Clerk URL predicates shared by mocking and smoke
 e2e/fixtures/mockApi.ts     mockApi(page, { role, failRevoke?, failIssuedList? })
+e2e/fixtures/pageHealth.ts  `health` fixture: backend responses, failed requests, console errors
 e2e/fixtures/apiState.ts    in-memory backend state and mutations
 e2e/fixtures/handlers.ts    route table (method + path → handler)
 e2e/fixtures/data/          typed fixtures (import the app's own typings)
 e2e/fixtures/data/admin.ts  admin view: second issuer, users with counts, stats
 e2e/fixtures/testIds.ts     data-testid hooks used by the suite
 e2e/pages/                  page objects
-e2e/tests/*.spec.ts         one file per area
+e2e/tests/*.spec.ts         one file per area; *-smoke.spec.ts need E2E_API=real
 ```
 
 Fixture story: the signed-in issuer is "Acme Publishing"; the signed-in creator
