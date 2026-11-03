@@ -32,8 +32,10 @@ export class CreatorCredentialsPage {
     await expect(this.revokedSection()).toBeVisible();
   }
 
-  /** Re-focusing the tab is what makes the credentials query refetch. */
+  /** Returning to the tab is what makes the credentials query refetch; TanStack Query watches `visibilitychange`. */
   async refocusWindow(): Promise<void> {
-    await this.page.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await this.page.evaluate(() =>
+      window.dispatchEvent(new Event('visibilitychange')),
+    );
   }
 }
