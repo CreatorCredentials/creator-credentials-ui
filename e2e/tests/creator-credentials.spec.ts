@@ -32,7 +32,10 @@ test.describe('creator: credentials', () => {
   test('C1 lists issued credentials and the Verified Creator card with verifiedBy', async () => {
     const issued = credentialsPage.activePanel();
 
-    await expect(issued.getByText(CREATOR_ALICE.email ?? '')).toBeVisible();
+    // The e-mail card repeats the address in a tooltip, so the copy button is the one visible occurrence.
+    await expect(
+      issued.getByRole('button', { name: CREATOR_ALICE.email ?? '' }),
+    ).toBeVisible();
     await expect(issued.getByText(ISSUER_NAME)).toBeVisible();
 
     const verifiedCreator = credentialsPage.verifiedCreatorCard();
