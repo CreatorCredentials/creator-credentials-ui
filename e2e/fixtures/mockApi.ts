@@ -1,14 +1,8 @@
 import { Page, Request, Route } from '@playwright/test';
 import { ApiScenario, ApiState } from './apiState';
+import { API_URL_PATTERN, isClerkUrl } from './apiUrls';
 import { isRealApi } from './env';
 import { matchRoute, MockResponse, notMocked } from './handlers';
-
-/** Every backend call goes through `/v1/`; Clerk's frontend API does too, so hosts are checked. */
-export const API_URL_PATTERN = '**/v1/**';
-const CLERK_HOST_PATTERN = /(^|\.)clerk\.(accounts\.dev|com)$|^clerk\./;
-
-const isClerkRequest = (url: URL): boolean =>
-  CLERK_HOST_PATTERN.test(url.hostname);
 
 const corsHeaders = (request: Request): Record<string, string> => ({
   'access-control-allow-origin': request.headers().origin ?? '*',
@@ -39,7 +33,7 @@ const fulfill = (route: Route, request: Request, response: MockResponse) =>
 const handleApiRoute = (route: Route, state: ApiState): Promise<void> => {
   const request = route.request();
   const url = new URL(request.url());
-  if (isClerkRequest(url)) {
+  if (isClerkUrl(url)) {
     return route.fallback();
   }
   if (request.method() === 'OPTIONS') {
